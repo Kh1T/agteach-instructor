@@ -1,6 +1,6 @@
 # AgTeach - Instructor Interface
 
-Our video training platform provides a powerful and intuitive interface for instructors to create, manage, and monetize their educational content with modern web technologies to ensure a smooth and responsive user experience.
+Our Agricultural Training Video platform provides a powerful and intuitive interface for instructors to create, manage, and monetize their educational content with modern web technologies to ensure a smooth and responsive user experience.
 
 ## Table of Contents
 
