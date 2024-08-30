@@ -135,7 +135,7 @@ To start working on this project, follow these steps:
 1. Clone the repository:
 
 ```
-git clone https://git.clp.kr/anbschool/2nd/alphabeez/team-projects/agteach-capstone-guest.git
+git clone https://git.clp.kr/anbschool/2nd/alphabeez/team-projects/agteach-capstone-instructor.git
 
 ```
 
