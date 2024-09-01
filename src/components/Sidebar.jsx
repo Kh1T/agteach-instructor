@@ -9,7 +9,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import { NavLink, useLocation } from "react-router-dom";
+import { useLocation, Link as RouterLink } from "react-router-dom";
 
 import logoIcon from "../assets/logo.svg";
 import dashboardIcon from "../assets/dashboard-sidebar-icon.svg";
@@ -19,6 +19,7 @@ import purchasedIcon from "../assets/purchased-sidebar-icon.svg";
 import enrollmentIcon from "../assets/enrollment-sidebar-icon.svg";
 import balanceIcon from "../assets/balance-sidebar-icon.svg";
 import settingIcon from "../assets/setting-sidebar-icon.svg";
+import { Link } from "@mui/material";
 
 export default function Sidebar() {
   const sidebarList = [
@@ -79,11 +80,26 @@ export default function Sidebar() {
         <Toolbar />
         <List>
           {sidebarList.map(({ title, icon, route }, index) => (
-            <NavLink to={route} key={title}>
+            <Link
+              component={RouterLink}
+              to={route}
+              key={title}
+              underline="none"
+              sx={{
+                "& .MuiListItem-root": {
+                  backgroundColor:
+                    route === pathname ? "blue.main" : "common.white",
+                  
+                },
+                "& .MuiListItemText-root": {
+                    color: route === pathname ? "common.white" : "dark.300",
+                },
+              }}
+            >
               <ListItem
                 key={title}
                 disablePadding
-                selected={route === pathname}
+                // selected={route === pathname}
               >
                 <ListItemButton>
                   <ListItemIcon>
@@ -101,7 +117,7 @@ export default function Sidebar() {
                   <ListItemText primary={title} sx={{ color: "dark.300" }} />
                 </ListItemButton>
               </ListItem>
-            </NavLink>
+            </Link>
           ))}
         </List>
       </Drawer>
