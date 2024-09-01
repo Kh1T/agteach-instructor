@@ -15,6 +15,8 @@ import {
   Typography,
 } from "@mui/material";
 import CustomTableMui from "./CustomTableMui";
+import { useState } from "react";
+import CustomTableHeader from "./CustomTableHeader";
 
 function RecentTransaction() {
   function createData(name, calories, fat, carbs, protein) {
@@ -28,6 +30,7 @@ function RecentTransaction() {
     createData(4, "Sok", "1-1-2024", "10$"),
   ];
   const data = { headers, rows };
+  const [transaction, setTransaction] = useState()
   return (
     <>
       <Stack
@@ -38,7 +41,8 @@ function RecentTransaction() {
           alignItems: "flex-start",
         }}
       >
-        <Stack
+        <CustomTableHeader title="Recent Transaction" content="Found(4) Items"/>
+        {/* <Stack
           direction="column"
           sx={{
             alignItems: "flex-start",
@@ -46,19 +50,19 @@ function RecentTransaction() {
         >
           <Typography variant="h6">Recent Transaction</Typography>
           <Typography>Found(4) Items</Typography>
-        </Stack>
+        </Stack> */}
         <Box sx={{ minWidth: 180 }}>
           <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Transaction</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
+            <InputLabel id="demo-simple-select">Transaction</InputLabel>
+            <Select 
               id="demo-simple-select"
-              value="Transaction"
+              value={transaction}
+              onChange={(e)=> setTransaction(e.target.value)}
               label="Transaction"
+              defaultValue="10"
             >
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+              <MenuItem value={10}>Course</MenuItem>
+              <MenuItem value={20}>Product</MenuItem>
             </Select>
           </FormControl>
         </Box>

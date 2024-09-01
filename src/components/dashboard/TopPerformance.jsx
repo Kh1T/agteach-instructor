@@ -1,3 +1,5 @@
+import { Box, Stack } from "@mui/material";
+import CustomTableHeader from "../CustomTableHeader";
 import CustomTableMui from "../CustomTableMui";
 
 function TopPerformance() {
@@ -14,10 +16,15 @@ function TopPerformance() {
   ]
   const data = {headers, rows}
   return (
-    <>
-      <h2>Top(5) Performance </h2>
+    <Box sx={{
+      boxShadow: 2,
+      p:4
+    }}>
+      <Stack spacing={2}>
+      <CustomTableHeader title="Top(5) Performance" content="In this month"/>
       <CustomTableMui data={data} />
-    </>
+      </Stack>
+    </Box>
   );
 }
 
