@@ -11,6 +11,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { useLocation } from "react-router-dom";
 
+import logoIcon from "../assets/logo.svg";
 import dashboardIcon from "../assets/dashboard-sidebar-icon.svg";
 import courseIcon from "../assets/course-sidebar-icon.svg";
 import productIcon from "../assets/product-sidebar-icon.svg";
@@ -21,7 +22,7 @@ import settingIcon from "../assets/setting-sidebar-icon.svg";
 
 export default function Sidebar() {
   const sidebarList = [
-    { title: "Dashboard", icon: dashboardIcon, route: "/dashboard" },
+    { title: "Dashboard", icon: dashboardIcon, route: "/" },
     { title: "Course", icon: courseIcon, route: "/course" },
     { title: "Product", icon: productIcon, route: "/product" },
     { title: "Purchased", icon: purchasedIcon, route: "/purchased" },
@@ -56,7 +57,18 @@ export default function Sidebar() {
         variant="permanent"
         anchor="left"
       >
-        Icon
+        <Box
+        
+          component="img"
+          sx={{
+            mt: 5,
+            ml: 2,
+            height: 48,
+            width: 38,
+          }}
+          alt="logo"
+          src={logoIcon}
+        />
         <Toolbar />
         <List>
           {sidebarList.map(({ title, icon, route }, index) => (
