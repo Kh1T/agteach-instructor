@@ -21,7 +21,7 @@ import balanceIcon from "../assets/balance-sidebar-icon.svg";
 import settingIcon from "../assets/setting-sidebar-icon.svg";
 import { Link } from "@mui/material";
 
-export default function Sidebar() {
+export default function Sidebar({ children }) {
   const sidebarList = [
     { title: "Dashboard", icon: dashboardIcon, route: "/" },
     { title: "Course", icon: courseIcon, route: "/course" },
@@ -89,10 +89,9 @@ export default function Sidebar() {
                 "& .MuiListItem-root": {
                   backgroundColor:
                     route === pathname ? "blue.main" : "common.white",
-                  
                 },
                 "& .MuiListItemText-root": {
-                    color: route === pathname ? "common.white" : "dark.300",
+                  color: route === pathname ? "common.white" : "dark.300",
                 },
               }}
             >
@@ -121,6 +120,18 @@ export default function Sidebar() {
           ))}
         </List>
       </Drawer>
+      <Box
+        component="main"
+        sx={{
+          flexGrow: 1,
+          bgcolor: "background.default",
+          pl: 15,
+          pr: 30,
+          pt: 10,
+        }}
+      >
+        {children}
+      </Box>
     </Box>
   );
   return sideBarContent;
