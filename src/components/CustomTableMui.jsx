@@ -22,15 +22,11 @@ export default function CustomTableMui({ data }) {
           {rows.map((row) => (
             <TableRow
               key={row.name}
-              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              // sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
-              <TableCell component="th" scope="row">
-                {row.name}
-              </TableCell>
-              <TableCell>{row.calories}</TableCell>
-              <TableCell>{row.fat}</TableCell>
-              <TableCell>{row.carbs}</TableCell>
-              <TableCell>{row.protein}</TableCell>
+              {Object.values(row).map((cell, cellIndex)=>(
+                <TableCell key={cellIndex}>{cell}</TableCell>
+              ))}
             </TableRow>
           ))}
         </TableBody>
