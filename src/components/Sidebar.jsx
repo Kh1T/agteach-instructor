@@ -9,7 +9,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import { useLocation } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
 import logoIcon from "../assets/logo.svg";
 import dashboardIcon from "../assets/dashboard-sidebar-icon.svg";
@@ -37,11 +37,19 @@ export default function Sidebar() {
       <CssBaseline />
       <AppBar
         position="fixed"
-        sx={{ width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px` }}
+        sx={{
+          width: `calc(100% - ${drawerWidth}px)`,
+          pl: 15,
+          ml: `${drawerWidth}px`,
+          backgroundColor: "common.white",
+          color: "common.black",
+          boxShadow: "none",
+          borderBottom: 1,
+        }}
       >
         <Toolbar>
           <Typography variant="h6" noWrap component="div">
-            Permanent drawer
+            {sidebarList.find((element) => element.route === pathname).title}
           </Typography>
         </Toolbar>
       </AppBar>
@@ -58,7 +66,6 @@ export default function Sidebar() {
         anchor="left"
       >
         <Box
-        
           component="img"
           sx={{
             mt: 5,
@@ -72,23 +79,29 @@ export default function Sidebar() {
         <Toolbar />
         <List>
           {sidebarList.map(({ title, icon, route }, index) => (
-            <ListItem key={title} disablePadding selected={route === pathname}>
-              <ListItemButton>
-                <ListItemIcon>
-                  <Box
-                    component="img"
-                    sx={{
-                      height: 25,
-                      width: 25,
-                    }}
-                    alt={title}
-                    src={icon}
-                  />
-                  {/* <img src={icon} /> */}
-                </ListItemIcon>
-                <ListItemText primary={title} sx={{ color: "dark.300" }} />
-              </ListItemButton>
-            </ListItem>
+            <NavLink to={route} key={title}>
+              <ListItem
+                key={title}
+                disablePadding
+                selected={route === pathname}
+              >
+                <ListItemButton>
+                  <ListItemIcon>
+                    <Box
+                      component="img"
+                      sx={{
+                        height: 25,
+                        width: 25,
+                      }}
+                      alt={title}
+                      src={icon}
+                    />
+                    {/* <img src={icon} /> */}
+                  </ListItemIcon>
+                  <ListItemText primary={title} sx={{ color: "dark.300" }} />
+                </ListItemButton>
+              </ListItem>
+            </NavLink>
           ))}
         </List>
       </Drawer>
