@@ -1,9 +1,9 @@
-function EnromentPage() {
+function DashboardPage() {
     return (
         <>
-            <h1>Enroment page</h1>
+            <h1>Dashboard page</h1>
         </>
     )
 }
 
-export default EnromentPage
+export default DashboardPage
