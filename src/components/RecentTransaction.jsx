@@ -5,7 +5,16 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { Box, FormControl, InputLabel, MenuItem, Select, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  Stack,
+  Typography,
+} from "@mui/material";
+import CustomTableMui from "./CustomTableMui";
 
 function RecentTransaction() {
   function createData(name, calories, fat, carbs, protein) {
@@ -18,44 +27,44 @@ function RecentTransaction() {
     createData(3, "Sok", "1-1-2024", "10$"),
     createData(4, "Sok", "1-1-2024", "10$"),
   ];
-
+  const data = { headers, rows };
   return (
     <>
       <Stack
-          direction="row"
+        direction="row"
+        sx={{
+          p: 3,
+          justifyContent: "space-between",
+          alignItems: "flex-start",
+        }}
+      >
+        <Stack
+          direction="column"
           sx={{
-            p:3,
-            justifyContent: "space-between",
             alignItems: "flex-start",
           }}
         >
-          <Stack
-            direction="column"
-            sx={{
-              alignItems: "flex-start",
-            }}
-          >
-            <Typography variant="h6">Recent Transaction</Typography>
-            <Typography>Found(4) Items</Typography>
-          </Stack>
-          <Box sx={{ minWidth: 180 }}>
-            <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Transaction</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value="Transaction"
-                label="Transaction"
-              >
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
-              </Select>
-            </FormControl>
-          </Box>
+          <Typography variant="h6">Recent Transaction</Typography>
+          <Typography>Found(4) Items</Typography>
         </Stack>
-
-      <TableContainer component={Paper}>
+        <Box sx={{ minWidth: 180 }}>
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">Transaction</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value="Transaction"
+              label="Transaction"
+            >
+              <MenuItem value={10}>Ten</MenuItem>
+              <MenuItem value={20}>Twenty</MenuItem>
+              <MenuItem value={30}>Thirty</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
+      </Stack>
+      <CustomTableMui data={data} />
+      {/* <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
@@ -81,7 +90,7 @@ function RecentTransaction() {
             ))}
           </TableBody>
         </Table>
-      </TableContainer>
+      </TableContainer> */}
     </>
   );
 }
