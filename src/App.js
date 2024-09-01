@@ -1,27 +1,25 @@
-import logo from "./logo.svg";
-import "./App.css";
 import { ThemeProvider } from "@emotion/react";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
 import theme from "./theme/theme";
+import RootLayout from "./pages/Root";
+import DashboardPage from "./pages/Dashboard";
+import LoginPage from "./pages/Login";
 
 function App() {
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <RootLayout />,
+      children: [
+        { index: true, element: <DashboardPage /> },
+        { path: "/login", element: <LoginPage /> },
+      ],
+    },
+  ]);
   return (
     <ThemeProvider theme={theme}>
-      {/* <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div> */}
+      <RouterProvider router={router} />
     </ThemeProvider>
   );
 }
