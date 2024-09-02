@@ -1,4 +1,5 @@
 import logo from "./logo.svg";
+import LoginPage from "./pages/Login";
 import "./App.css";
 import { ThemeProvider } from "@emotion/react";
 import theme from "./theme/theme";
@@ -22,6 +23,8 @@ function App() {
           </a>
         </header>
       </div> */}
+
+      <LoginPage />
     </ThemeProvider>
   );
 }
