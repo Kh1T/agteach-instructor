@@ -11,7 +11,7 @@ import { useLocation, Link as RouterLink, useParams } from "react-router-dom";
 import logoIcon from "../assets/logo.svg";
 import avtarChip from "../assets/avatar-chip.png";
 import logoutIcon from "../assets/logout-sidebar-icon.svg";
-import { Avatar, Chip, Link, Stack } from "@mui/material";
+import { Avatar, Chip, Container, Link, Stack } from "@mui/material";
 
 import sidebarList from "../data/sideBarData";
 
@@ -25,7 +25,6 @@ export default function Sidebar({ children }) {
     if (param.courseId) element.route = `/course/${param.courseId}/edit`;
     return element.route === pathname;
   }).title;
-
 
   const drawerContent = (
     <Drawer
@@ -195,29 +194,20 @@ export default function Sidebar({ children }) {
     </AppBar>
   );
   const childContent = (
-    <Box
-      component="main"
+    <Container
+      maxWidth="1300px"
       sx={{
-        display: "flex",
-        flexDirection: "row",
-        width: "100%",
-        justifyContent: "center",
         mt: 20,
+        maxWidth: "1300px",
+        "@media (min-width: 0px)": { paddingRight: 0, paddingLeft: 0 },
+        "&.MuiContainer-root": {
+          px: 0,
+        },
       }}
     >
-      <Box
-        sx={{
-          width: "100%",
-          maxWidth: 1300,
-          display: "flex",
-          flexDirection: "row",
-
-          justifyContent: "center",
-        }}
-      >
-        {children}
-      </Box>
-    </Box>
+      {children}
+    </Container>
+    
   );
   const sideBarContent = (
     <Box sx={{ display: "flex" }}>
