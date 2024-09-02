@@ -9,8 +9,8 @@ import Paper from "@mui/material/Paper";
 export default function CustomTableMui({ data }) {
     const {headers, rows} = data
   const content = (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+    <TableContainer >
+      <Table aria-label="simple table">
         <TableHead>
           <TableRow>
             {headers.map((title, id) => (
@@ -25,7 +25,7 @@ export default function CustomTableMui({ data }) {
               // sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               {Object.values(row).map((cell, cellIndex)=>(
-                <TableCell key={cellIndex}>{cell}</TableCell>
+                <TableCell key={cellIndex} >{cell}</TableCell>
               ))}
             </TableRow>
           ))}

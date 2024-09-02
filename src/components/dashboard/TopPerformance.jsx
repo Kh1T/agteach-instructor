@@ -1,6 +1,14 @@
-import { Box, Stack } from "@mui/material";
+import {
+  Box,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  Stack,
+} from "@mui/material";
 import CustomTableHeader from "../CustomTableHeader";
 import CustomTableMui from "../CustomTableMui";
+import { useState } from "react";
 
 function TopPerformance() {
   function createData(...rest) {
@@ -13,16 +21,46 @@ function TopPerformance() {
     createData(3, "Advanced Vegetable Farming", "Course", "$150"),
     createData(4, "Advanced Vegetable Farming", "Course", "$150"),
     createData(5, "Advanced Vegetable Farming", "Course", "$150"),
-  ]
-  const data = {headers, rows}
+  ];
+
+  const [transaction, setTransaction] = useState();
+  const data = { headers, rows };
   return (
-    <Box sx={{
-      boxShadow: 2,
-      p:4
-    }}>
-      <Stack spacing={2}>
-      <CustomTableHeader title="Top(5) Performance" content="In this month"/>
-      <CustomTableMui data={data} />
+    <Box
+      sx={{
+        boxShadow: 2,
+        p: 4,
+      }}
+    >
+      <Stack spacing={0.5}>
+        <Stack
+          direction="row"
+          sx={{
+            justifyContent: "space-between",
+            alignItems: "flex-start",
+          }}
+        >
+          <CustomTableHeader
+            title="Top(5) Performance"
+            content="In this month"
+          />
+          <Box sx={{ minWidth: 180 }}>
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select">Transaction</InputLabel>
+              <Select
+                id="demo-simple-select"
+                value={transaction}
+                onChange={(e) => setTransaction(e.target.value)}
+                label="Transaction"
+                defaultValue="10"
+              >
+                <MenuItem value={10}>Course</MenuItem>
+                <MenuItem value={20}>Product</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+        </Stack>
+        <CustomTableMui data={data} />
       </Stack>
     </Box>
   );

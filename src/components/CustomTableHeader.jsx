@@ -5,11 +5,11 @@ export default function CustomTableHeader({title, content}){
         <Stack
           direction="column"
           sx={{
-            alignItems: "flex-start",
+            alignItems: "flex-start"
           }}
         >
-          <Typography variant="h6">{title}</Typography>
-          <Typography>{content}</Typography>
+          <Typography variant="bmdsm" sx={{color: "dark.400"}}>{title}</Typography>
+          <Typography variant="bsr" sx={{color: "dark.400"}}>{content}</Typography>
         </Stack>
     )
 }

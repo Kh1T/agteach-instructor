@@ -16,7 +16,7 @@ export default function SimpleBarChart() {
   return (
     <BarChart
       //   width='{100%}',
-      height={300}
+      height={350}
       series={[
           { data: pData, label: "Course", id: "pvId" },
           { data: uData, label: "Product", id: "uvId" },

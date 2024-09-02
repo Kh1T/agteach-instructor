@@ -19,8 +19,8 @@ import { useState } from "react";
 import CustomTableHeader from "./CustomTableHeader";
 
 function RecentTransaction() {
-  function createData(name, calories, fat, carbs, protein) {
-    return { name, calories, fat, carbs, protein };
+  function createData(...rest) {
+    return { ...rest };
   }
   const headers = ["No", "Name", "Date", "Amount"];
   const rows = [
@@ -28,20 +28,30 @@ function RecentTransaction() {
     createData(2, "Sok", "1-1-2024", "10$"),
     createData(3, "Sok", "1-1-2024", "10$"),
     createData(4, "Sok", "1-1-2024", "10$"),
+    createData(5, "Sok", "1-1-2024", "10$"),
   ];
   const data = { headers, rows };
-  const [transaction, setTransaction] = useState()
+  const [transaction, setTransaction] = useState();
   return (
-    <>
+    <Paper
+      sx={{
+        height: "440px",
+      }}
+    >
       <Stack
         direction="row"
         sx={{
-          p: 3,
+          pt: "30px",
+          pb: "15px",
+          px: "20px",
           justifyContent: "space-between",
           alignItems: "flex-start",
         }}
       >
-        <CustomTableHeader title="Recent Transaction" content="Found(4) Items"/>
+        <CustomTableHeader
+          title="Recent Transaction"
+          content="Found(5) Items"
+        />
         {/* <Stack
           direction="column"
           sx={{
@@ -54,10 +64,10 @@ function RecentTransaction() {
         <Box sx={{ minWidth: 180 }}>
           <FormControl fullWidth>
             <InputLabel id="demo-simple-select">Transaction</InputLabel>
-            <Select 
+            <Select
               id="demo-simple-select"
               value={transaction}
-              onChange={(e)=> setTransaction(e.target.value)}
+              onChange={(e) => setTransaction(e.target.value)}
               label="Transaction"
               defaultValue="10"
             >
@@ -95,7 +105,7 @@ function RecentTransaction() {
           </TableBody>
         </Table>
       </TableContainer> */}
-    </>
+    </Paper>
   );
 }
 
