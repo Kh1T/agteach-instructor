@@ -6,7 +6,7 @@ import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
-import { useLocation, Link as RouterLink } from "react-router-dom";
+import { useLocation, Link as RouterLink, useParams } from "react-router-dom";
 
 import logoIcon from "../assets/logo.svg";
 import avtarChip from "../assets/avatar-chip.png";
@@ -18,6 +18,15 @@ import sidebarList from "../data/sideBarData";
 export default function Sidebar({ children }) {
   const { pathname } = useLocation();
   const drawerWidth = 250;
+  const param = useParams();
+  console.log(param);
+  const headerTitle = sidebarList.find((element) => {
+    if (param.productId) element.route = `/product/${param.productId}/edit`;
+    if (param.courseId) element.route = `/course/${param.courseId}/edit`;
+    return element.route === pathname;
+  }).title;
+
+
   const drawerContent = (
     <Drawer
       sx={{
@@ -52,42 +61,45 @@ export default function Sidebar({ children }) {
             src={logoIcon}
           />
           <Toolbar />
-          {sidebarList.map(({ title, icon, route }, index) => (
-            <Link
-              component={RouterLink}
-              to={route}
-              key={title}
-              underline="none"
-              sx={{
-                "& .MuiListItem-root": {
-                  backgroundColor:
-                    route === pathname ? "purple.main" : "common.white",
-                  borderRadius: 1,
-                },
-                "& .MuiTypography-root": {
-                  color: route === pathname ? "common.white" : "dark.300",
-                },
-              }}
-            >
-              <ListItem key={title} disablePadding>
-                <ListItemButton>
-                  <Box
-                    component="img"
-                    sx={{
-                      height: 25,
-                      width: 25,
-                      pr: "15px",
-                    }}
-                    alt={title}
-                    src={icon}
-                  />
-                  <Typography variant="bmdr" sx={{ color: "dark.300" }}>
-                    {title}
-                  </Typography>
-                </ListItemButton>
-              </ListItem>
-            </Link>
-          ))}
+          {sidebarList.map(
+            ({ title, icon, route }, index) =>
+              icon && (
+                <Link
+                  component={RouterLink}
+                  to={route}
+                  key={title}
+                  underline="none"
+                  sx={{
+                    "& .MuiListItem-root": {
+                      backgroundColor:
+                        route === pathname ? "purple.main" : "common.white",
+                      borderRadius: 1,
+                    },
+                    "& .MuiTypography-root": {
+                      color: route === pathname ? "common.white" : "dark.300",
+                    },
+                  }}
+                >
+                  <ListItem key={title} disablePadding>
+                    <ListItemButton>
+                      <Box
+                        component="img"
+                        sx={{
+                          height: 25,
+                          width: 25,
+                          pr: "15px",
+                        }}
+                        alt={title}
+                        src={icon}
+                      />
+                      <Typography variant="bmdr" sx={{ color: "dark.300" }}>
+                        {title}
+                      </Typography>
+                    </ListItemButton>
+                  </ListItem>
+                </Link>
+              )
+          )}
         </List>
       </Stack>
 
@@ -155,12 +167,7 @@ export default function Sidebar({ children }) {
             }}
           >
             <Stack direction="column" spacing="2">
-              <Typography variant="h3">
-                {
-                  sidebarList.find((element) => element.route === pathname)
-                    .title
-                }
-              </Typography>
+              <Typography variant="h3">{headerTitle && headerTitle}</Typography>
               <Typography variant="bsr" sx={{ color: "dark.300" }}>
                 {
                   sidebarList.find((element) => element.route === pathname)
