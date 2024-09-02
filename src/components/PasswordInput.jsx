@@ -1,47 +1,50 @@
-// import InputAdornment from "@mui/material";
-// import InputLabel from "@mui/material/InputLabel";
-// import OutlinedInput from "@mui/material/OutlinedInput";
-// import Visibility from "@mui/icons-material/Visibility";
-// import VisibilityOff from "@mui/icons-material/VisibilityOff";
-// import IconButton from "@mui/material/IconButton";
-// import FormControl from "@mui/material";
+import {
+  InputAdornment,
+  InputLabel,
+  OutlinedInput,
+  IconButton,
+  FormControl,
+} from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
-// function PasswordInput() {
-//   const [showPassword, setShowPassword] = useState(false);
+import { useState } from "react";
 
-//   const handleClickShowPassword = () => setShowPassword((show) => !show);
+function PasswordInput() {
+  const [showPassword, setShowPassword] = useState(false);
 
-//   const handleMouseDownPassword = (event) => {
-//     event.preventDefault();
-//   };
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
 
-//   const handleMouseUpPassword = (event) => {
-//     event.preventDefault();
-//   };
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
 
-//   return (
-//     <FormControl variant="outlined">
-//       <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
-//       <OutlinedInput
-//         id="outlined-adornment-password"
-//         type={showPassword ? "text" : "password"}
-//         endAdornment={
-//           <InputAdornment position="end">
-//             <IconButton
-//               aria-label="toggle password visibility"
-//               onClick={handleClickShowPassword}
-//               onMouseDown={handleMouseDownPassword}
-//               onMouseUp={handleMouseUpPassword}
-//               edge="end"
-//             >
-//               {showPassword ? <VisibilityOff /> : <Visibility />}
-//             </IconButton>
-//           </InputAdornment>
-//         }
-//         label="Password"
-//       />
-//     </FormControl>
-//   );
-// }
+  const handleMouseUpPassword = (event) => {
+    event.preventDefault();
+  };
 
-// export default PasswordInput;
+  return (
+    <FormControl variant="outlined">
+      <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+      <OutlinedInput
+        id="outlined-adornment-password"
+        type={showPassword ? "text" : "password"}
+        endAdornment={
+          <InputAdornment position="end">
+            <IconButton
+              aria-label="toggle password visibility"
+              onClick={handleClickShowPassword}
+              onMouseDown={handleMouseDownPassword}
+              onMouseUp={handleMouseUpPassword}
+              edge="end"
+            >
+              {showPassword ? <VisibilityOff /> : <Visibility />}
+            </IconButton>
+          </InputAdornment>
+        }
+        label="Password"
+      />
+    </FormControl>
+  );
+}
+
+export default PasswordInput;

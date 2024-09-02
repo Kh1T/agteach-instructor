@@ -1,14 +1,8 @@
-import {
-  TextField,
-  InputAdornment,
-  InputLabel,
-  OutlinedInput,
-  IconButton,
-} from "@mui/material";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
-
-import { useState } from "react";
+import { TextField } from "@mui/material";
+import PasswordInput from "../components/PasswordInput";
 import loginImg from "./../assets/login/login-img.png";
+import logo from "./../assets/login/agteach-logo.svg";
+
 import {
   Box,
   Button,
@@ -21,18 +15,9 @@ import {
 import { useTheme } from "@emotion/react";
 
 function LoginPage() {
-  const [showPassword, setShowPassword] = useState(false);
   const theme = useTheme();
 
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
-
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
-
-  const handleMouseUpPassword = (event) => {
-    event.preventDefault();
-  };
+  console.log(theme.typography.h1);
 
   return (
     <Stack
@@ -42,9 +27,20 @@ function LoginPage() {
       alignItems="center"
       spacing="10%"
     >
-      <div>
-        <Box sx={{ position: "relative" }}>
+      <div style={{ position: "relative" }}>
+        <Box>
           <img src={loginImg} alt="login-img" style={{ height: "100vh" }} />
+        </Box>
+        <Box
+          sx={{
+            position: "absolute",
+            top: "40%",
+            left: "40%",
+            zIndex: "tooltip",
+          }}
+        >
+          <img src={logo} alt="logo" />
+          <p style={theme.typography.h1}>Teach and Sell</p>
         </Box>
       </div>
 
@@ -57,29 +53,9 @@ function LoginPage() {
         </div>
         <form style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
           <TextField label="Enter your email" required />
-          <FormControl variant="outlined">
-            <InputLabel htmlFor="outlined-adornment-password">
-              Password
-            </InputLabel>
-            <OutlinedInput
-              id="outlined-adornment-password"
-              type={showPassword ? "text" : "password"}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
-                    onMouseDown={handleMouseDownPassword}
-                    onMouseUp={handleMouseUpPassword}
-                    edge="end"
-                  >
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              }
-              label="Password"
-            />
-          </FormControl>
+
+          <PasswordInput />
+
           <FormControlLabel
             control={<Checkbox value="remember" />}
             label="Keep me logged in"
