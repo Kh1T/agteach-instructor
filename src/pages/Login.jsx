@@ -3,14 +3,7 @@ import PasswordInput from "../components/PasswordInput";
 import loginImg from "./../assets/login/login-img.png";
 import logo from "./../assets/login/agteach-logo.svg";
 
-import {
-  Box,
-  Button,
-  Checkbox,
-  FormControl,
-  FormControlLabel,
-  Stack,
-} from "@mui/material";
+import { Box, Button, Checkbox, FormControlLabel, Stack } from "@mui/material";
 
 import { useTheme } from "@emotion/react";
 
@@ -27,7 +20,7 @@ function LoginPage() {
       alignItems="center"
       spacing="10%"
     >
-      <div style={{ position: "relative" }}>
+      <Box style={{ position: "relative" }}>
         <Box>
           <img src={loginImg} alt="login-img" style={{ height: "100vh" }} />
         </Box>
@@ -40,18 +33,24 @@ function LoginPage() {
           }}
         >
           <img src={logo} alt="logo" />
-          <Typography sx={theme.typography.h2}>Teach and Sell</Typography>
-          {/* <p style={}></p> */}
+          <Typography sx={theme.typography.h1}>Teach and Sell</Typography>
+          <Typography sx={theme.typography}>
+            aspiring farmers and plant enthusiasts, offering a one-stop solution
+            for all needs on agricultural journey
+          </Typography>
         </Box>
-      </div>
+      </Box>
 
       <Stack>
-        <div style={{ textAlign: "center" }}>
-          <h1>Welcome back Instructor</h1>
+        <Box style={{ textAlign: "center" }}>
+          <Typography sx={theme.typography.h1}>
+            Welcome back Instructor
+          </Typography>
+
           <p style={{ color: theme.palette.dark["300"] }}>
             Please login to continue to your account.
           </p>
-        </div>
+        </Box>
         <form style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
           <TextField label="Enter your email" required />
 
