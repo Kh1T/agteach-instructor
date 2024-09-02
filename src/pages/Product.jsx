@@ -1,9 +1,11 @@
+import { Box, Stack, Typography } from "@mui/material";
+
 function ProductPage() {
-    return (
-        <>
-            <h1>Product page</h1>
-        </>
-    )
+  return (
+    <Box sx={{ width: "100%" }}>
+      <Typography variant="h2">Product</Typography>
+    </Box>
+  );
 }
 
-export default ProductPage
+export default ProductPage;
