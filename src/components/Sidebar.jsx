@@ -19,39 +19,134 @@ import purchasedIcon from "../assets/purchased-sidebar-icon.svg";
 import enrollmentIcon from "../assets/enrollment-sidebar-icon.svg";
 import balanceIcon from "../assets/balance-sidebar-icon.svg";
 import settingIcon from "../assets/setting-sidebar-icon.svg";
-import { Link } from "@mui/material";
+import avtarChip from "../assets/avatar-chip.png";
+import logoutIcon from "../assets/logout-sidebar-icon.svg";
+import { Avatar, Chip, Link, Stack } from "@mui/material";
 
-export default function Sidebar() {
+export default function Sidebar({ children }) {
   const sidebarList = [
-    { title: "Dashboard", icon: dashboardIcon, route: "/" },
-    { title: "Course", icon: courseIcon, route: "/course" },
-    { title: "Product", icon: productIcon, route: "/product" },
-    { title: "Purchased", icon: purchasedIcon, route: "/purchased" },
-    { title: "Enrollment", icon: enrollmentIcon, route: "/enrollment" },
-    { title: "Balance", icon: balanceIcon, route: "/balance" },
-    { title: "Setting", icon: settingIcon, route: "/setting" },
+    {
+      title: "Dashboard",
+      icon: dashboardIcon,
+      route: "/",
+      description: "Overview intructor dashboard",
+    },
+    {
+      title: "Course",
+      icon: courseIcon,
+      route: "/course",
+      description: "View or List more courses",
+    },
+    {
+      title: "Product",
+      icon: productIcon,
+      route: "/product",
+      description: "View or List more products",
+    },
+    {
+      title: "Purchased",
+      icon: purchasedIcon,
+      route: "/purchased",
+      description: "View purchased history",
+    },
+    {
+      title: "Enrollment",
+      icon: enrollmentIcon,
+      route: "/enrollment",
+      description: "View enrolled history",
+    },
+    {
+      title: "Balance",
+      icon: balanceIcon,
+      route: "/balance",
+      description: "View your buisness progress",
+    },
+    {
+      title: "Setting",
+      icon: settingIcon,
+      route: "/setting",
+      description: "Make change to your profile",
+    },
   ];
   const { pathname } = useLocation();
-  const drawerWidth = 240;
+  const drawerWidth = 250;
   const sideBarContent = (
     <Box sx={{ display: "flex" }}>
-      <CssBaseline />
+      {/* <CssBaseline /> */}
       <AppBar
         position="fixed"
         sx={{
           width: `calc(100% - ${drawerWidth}px)`,
-          pl: 15,
+          // pl: 15,
+          pt: 5,
           ml: `${drawerWidth}px`,
           backgroundColor: "common.white",
           color: "common.black",
           boxShadow: "none",
-          borderBottom: 1,
         }}
       >
-        <Toolbar>
-          <Typography variant="h6" noWrap component="div">
-            {sidebarList.find((element) => element.route === pathname).title}
-          </Typography>
+        <Toolbar
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            flexDirection: "row",
+            px: 0,
+            "@media (min-width: 0px)": { paddingRight: 0, paddingLeft: 0 },
+            width: "100%",
+          }}
+        >
+          <Box
+            sx={{
+              width: "100%",
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+              maxWidth: 1300,
+              // borderStyle: "dashed",
+              borderBottom: 1,
+              borderBottomStyle: "dashed",
+              borderColor: "grey.300",
+            }}
+          >
+            <Stack
+              direction="row"
+              sx={{
+                width: "100%",
+                pb: 2,
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
+              <Stack direction="column" spacing="2">
+                <Typography variant="h3">
+                  {
+                    sidebarList.find((element) => element.route === pathname)
+                      .title
+                  }
+                </Typography>
+                <Typography variant="bsr" sx={{ color: "dark.300" }}>
+                  {
+                    sidebarList.find((element) => element.route === pathname)
+                      .description
+                  }
+                </Typography>
+              </Stack>
+              <Chip
+                avatar={<Avatar src={avtarChip} label="Avatar" />}
+                label="Jack Ma"
+                sx={{
+                  height: "40px",
+                  borderRadius: "63px",
+                  // mb: "30px",
+                  backgroundColor: "common.black",
+                  "& .MuiChip-label": {
+                    color: "common.white",
+                    fontSize: 18,
+                  },
+                }}
+              />
+            </Stack>
+          </Box>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -61,66 +156,120 @@ export default function Sidebar() {
           "& .MuiDrawer-paper": {
             width: drawerWidth,
             boxSizing: "border-box",
+            px: "20px",
+            py: 5,
           },
         }}
         variant="permanent"
         anchor="left"
       >
-        <Box
-          component="img"
+        <Stack
+          direction="column"
           sx={{
-            mt: 5,
-            ml: 2,
-            height: 48,
-            width: 38,
+            height: "100%",
+            justifyContent: "space-between",
           }}
-          alt="logo"
-          src={logoIcon}
-        />
-        <Toolbar />
-        <List>
-          {sidebarList.map(({ title, icon, route }, index) => (
-            <Link
-              component={RouterLink}
-              to={route}
-              key={title}
-              underline="none"
+        >
+          <List>
+            <Box
+              component="img"
               sx={{
-                "& .MuiListItem-root": {
-                  backgroundColor:
-                    route === pathname ? "blue.main" : "common.white",
-                  
-                },
-                "& .MuiListItemText-root": {
-                    color: route === pathname ? "common.white" : "dark.300",
-                },
+                ml: 2,
+                height: 48,
+                width: 38,
               }}
-            >
-              <ListItem
+              alt="logo"
+              src={logoIcon}
+            />
+            <Toolbar />
+            {sidebarList.map(({ title, icon, route }, index) => (
+              <Link
+                component={RouterLink}
+                to={route}
                 key={title}
-                disablePadding
-                // selected={route === pathname}
+                underline="none"
+                sx={{
+                  "& .MuiListItem-root": {
+                    backgroundColor:
+                      route === pathname ? "purple.main" : "common.white",
+                    borderRadius: 1,
+                  },
+                  "& .MuiTypography-root": {
+                    color: route === pathname ? "common.white" : "dark.300",
+                  },
+                }}
               >
-                <ListItemButton>
-                  <ListItemIcon>
+                <ListItem
+                  key={title}
+                  // sx={{display:"flex", flexDirection:"column", }}
+                  disablePadding
+                  // selected={route === pathname}
+                >
+                  <ListItemButton>
                     <Box
                       component="img"
                       sx={{
                         height: 25,
                         width: 25,
+                        pr: "15px",
                       }}
                       alt={title}
                       src={icon}
                     />
                     {/* <img src={icon} /> */}
-                  </ListItemIcon>
-                  <ListItemText primary={title} sx={{ color: "dark.300" }} />
-                </ListItemButton>
-              </ListItem>
-            </Link>
-          ))}
-        </List>
+                    {/* <ListItemText primary={title} sx={{ color: "dark.300" }} /> */}
+                    <Typography variant="bmdr" sx={{ color: "dark.300" }}>
+                      {title}
+                    </Typography>
+                  </ListItemButton>
+                </ListItem>
+              </Link>
+            ))}
+          </List>
+        </Stack>
+
+        <Box>
+          <ListItemButton>
+            <Box
+              component="img"
+              src={logoutIcon}
+              sx={{
+                height: 25,
+                width: 25,
+                pr: "15px",
+              }}
+            />
+            <Typography variant="bmdr" sx={{ color: "dark.300" }}>
+              Logout
+            </Typography>
+          </ListItemButton>
+        </Box>
       </Drawer>
+      <Box
+        component="main"
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          // justifyContent: "center",
+          // flexGrow: 1,
+          width: "100%",
+          justifyContent: "center",
+          mt: 20,
+        }}
+      >
+        <Box
+          sx={{
+            width: "100%",
+            maxWidth: 1300,
+            display: "flex",
+            flexDirection: "row",
+
+            justifyContent: "center",
+          }}
+        >
+          {children}
+        </Box>
+      </Box>
     </Box>
   );
   return sideBarContent;
