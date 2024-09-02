@@ -10,6 +10,7 @@ import loginImg from "./../assets/login/login-img.png";
 import {
   Button,
   Checkbox,
+  Container,
   FormControl,
   FormControlLabel,
   Stack,
@@ -31,10 +32,18 @@ function LoginPage() {
     event.preventDefault();
   };
 
-  console.log(theme.palette.grey);
   return (
-    <Stack direction="row" justify="center" alignItems="center" spacing="260px">
-      <img src={loginImg} alt="login-img" />
+    <Stack
+      direction="row"
+      justify="center"
+      height="100%"
+      alignItems="center"
+      spacing="10%"
+    >
+      <div>
+        <img src={loginImg} alt="login-img" style={{ height: "100vh" }} />
+      </div>
+
       <Stack>
         <div style={{ textAlign: "center" }}>
           <h1>Welcome back Instructor</h1>
@@ -86,7 +95,7 @@ function LoginPage() {
             Login
           </Button>
           <p>
-            Need an account?<a href="#">Create one</a>
+            Need an account ? <a href="#">Create one</a>
           </p>
         </form>
       </Stack>
