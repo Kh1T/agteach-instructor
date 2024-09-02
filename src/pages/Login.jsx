@@ -1,4 +1,4 @@
-import { TextField } from "@mui/material";
+import { TextField, Typography } from "@mui/material";
 import PasswordInput from "../components/PasswordInput";
 import loginImg from "./../assets/login/login-img.png";
 import logo from "./../assets/login/agteach-logo.svg";
@@ -35,12 +35,13 @@ function LoginPage() {
           sx={{
             position: "absolute",
             top: "40%",
-            left: "40%",
+            left: "30%",
             zIndex: "tooltip",
           }}
         >
           <img src={logo} alt="logo" />
-          <p style={theme.typography.h1}>Teach and Sell</p>
+          <Typography sx={theme.typography.h2}>Teach and Sell</Typography>
+          {/* <p style={}></p> */}
         </Box>
       </div>
 
