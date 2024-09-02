@@ -1,16 +1,18 @@
-import TextField from "@mui/material/TextField";
-import InputAdornment from "@mui/material/InputAdornment";
-import InputLabel from "@mui/material/InputLabel";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import IconButton from "@mui/material/IconButton";
+import {
+  TextField,
+  InputAdornment,
+  InputLabel,
+  OutlinedInput,
+  IconButton,
+} from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+
 import { useState } from "react";
 import loginImg from "./../assets/login/login-img.png";
 import {
+  Box,
   Button,
   Checkbox,
-  Container,
   FormControl,
   FormControlLabel,
   Stack,
@@ -41,7 +43,9 @@ function LoginPage() {
       spacing="10%"
     >
       <div>
-        <img src={loginImg} alt="login-img" style={{ height: "100vh" }} />
+        <Box sx={{ position: "relative" }}>
+          <img src={loginImg} alt="login-img" style={{ height: "100vh" }} />
+        </Box>
       </div>
 
       <Stack>
