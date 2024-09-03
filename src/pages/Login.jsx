@@ -3,14 +3,19 @@ import PasswordInput from "../components/PasswordInput";
 import loginImg from "./../assets/login/login-img.png";
 import logo from "./../assets/login/agteach-logo.svg";
 
-import { Box, Button, Checkbox, FormControlLabel, Stack } from "@mui/material";
+import {
+  Box,
+  Button,
+  Checkbox,
+  FormControlLabel,
+  Stack,
+  FormControl,
+} from "@mui/material";
 
 import { useTheme } from "@emotion/react";
 
 function LoginPage() {
   const theme = useTheme();
-
-  console.log(theme.typography.h1);
 
   return (
     <Stack
@@ -33,25 +38,35 @@ function LoginPage() {
           }}
         >
           <img src={logo} alt="logo" />
-          <Typography sx={theme.typography.h1}>Teach and Sell</Typography>
-          <Typography sx={theme.typography}>
-            aspiring farmers and plant enthusiasts, offering a one-stop solution
-            for all needs on agricultural journey
-          </Typography>
+          <Box width="350px">
+            <Typography variant="h1" color="white">
+              Teach and Sell
+            </Typography>
+            <Typography variant="bmdr" color="white">
+              aspiring farmers and plant enthusiasts, offering a one-stop
+              solution for all needs on agricultural journey
+            </Typography>
+          </Box>
         </Box>
       </Box>
 
-      <Stack>
-        <Box style={{ textAlign: "center" }}>
+      <Stack gap="20px">
+        <Box
+          display="flex"
+          flexDirection="column"
+          textAlign="center"
+          gap="10px"
+        >
           <Typography sx={theme.typography.h1}>
             Welcome back Instructor
           </Typography>
-
-          <p style={{ color: theme.palette.dark["300"] }}>
+          <Typography color="dark.300">
             Please login to continue to your account.
-          </p>
+          </Typography>
         </Box>
-        <form style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+        <FormControl
+          sx={{ display: "flex", flexDirection: "column", gap: "20px" }}
+        >
           <TextField label="Enter your email" required />
 
           <PasswordInput />
@@ -74,10 +89,10 @@ function LoginPage() {
           >
             Login
           </Button>
-          <p>
+          <Typography>
             Need an account ? <a href="#">Create one</a>
-          </p>
-        </form>
+          </Typography>
+        </FormControl>
       </Stack>
     </Stack>
   );
