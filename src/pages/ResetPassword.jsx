@@ -35,7 +35,7 @@ function ResetPassword() {
           color="primary"
           fullWidth
         >
-          Send reset link
+          Reset Password
         </Button>
       </Stack>
     </Stack>
