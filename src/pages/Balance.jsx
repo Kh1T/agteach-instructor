@@ -7,7 +7,7 @@ import TotalCard from "../components/balance/TotalCard";
 import QueryHeader from "../components/QueryHeader";
 import { useState } from "react";
 import CustomTableMui from "../components/CustomTableMui";
-import CustomTableHeader from "../components/CustomTableHeader";
+import CustomPanel from "../components/balance/CustomPanel";
 function BalancePage() {
   const [selectState, setSelectState] = useState("");
   const [value, setValue] = useState(0);
@@ -22,13 +22,7 @@ function BalancePage() {
     createData(3, "Sok", "1-1-2024", "10$"),
     createData(4, "Sok", "1-1-2024", "10$"),
     createData(5, "Sok", "1-1-2024", "10$"),
-  ];  const rowsProduct = [
-    createData(1, "Sok", "1-1-2024", "10$"),
-    createData(2, "Sok", "1-1-2024", "10$"),
-    createData(3, "Sok", "1-1-2024", "10$"),
-    createData(4, "Sok", "1-1-2024", "10$"),
-    createData(5, "Sok", "1-1-2024", "10$"),
-  ];
+  ];  
   return (
     <Stack spacing={5} sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
@@ -73,41 +67,29 @@ function BalancePage() {
           <Tab label="Product" id="tab-2" />
         </Tabs>
       </Box>
-      <CustomTabPanel value={value} index={0}>
+      <CustomPanel value={value} index={0}>
         <Box>
+          Course
           <QueryHeader
             useSelectState={[selectState, setSelectState]}
             selectData={["Newest", "Oldest"]}
           />
           <CustomTableMui data={{ headers, rows}} />
         </Box>
-      </CustomTabPanel>
+      </CustomPanel>
 
-      <CustomTabPanel value={value} index={1}>
+      <CustomPanel value={value} index={1}>
         <Box>
+          Product
           <QueryHeader
             useSelectState={[selectState, setSelectState]}
             selectData={["Newest", "Oldest"]}
           />
           <CustomTableMui data={{ headers, rows }} />
         </Box>
-      </CustomTabPanel>
+      </CustomPanel>
     </Stack>
   );
 }
-function CustomTabPanel(props) {
-  const { children, value, index, ...other } = props;
 
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
-    </div>
-  );
-}
 export default BalancePage;
