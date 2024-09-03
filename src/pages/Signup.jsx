@@ -63,17 +63,6 @@ function Signup() {
             register={register}
             errors={errors}
           />
-          {/* <InputField register={register} errors={errors} /> */}
-          {/* <TextField
-            // label="Username"
-            {...register("username", { required: "Username is required" })}
-            error={!!errors.username} // Error state
-            helperText={errors.username?.message} // Error message
-            fullWidth
-            margin="normal"
-          /> */}
-
-          {/* <Test register={register} errors={errors} /> */}
 
           <Button
             sx={{
