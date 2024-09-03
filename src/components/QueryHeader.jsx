@@ -5,19 +5,26 @@ import CustomSelect from "./CustomSelect";
 
 /**
  * QueryHeader component
- * @param {function} useSelectState - state to store selected value ex: [state, setState]
- * @param {array} selectData - array of select data
- * @param {function} handleCreateNew - handle create new
- * @param {function} handleSearch - handle search
- * @param {string} placeholder - placeholder text for TextField
+ * @description A component that displays a search bar and create new button
+ * @param {object} props
+ * @param {React.RefObject<HTMLInputElement>} [props.searchRef=null] - Reference to the search text input
+ * @param {function} props.useSelectState - state to store selected value ex: [state, setState]
+ * @param {array} props.selectData - array of select data
+ * @param {function} props.handleCreateNew - function to handle create new button
+ * @param {function} props.handleSearch - function to handle search button
+ * @param {string} [props.labelCreate="Create New"] - label for create new button
+ * @param {string} [props.placeholder="Search"] - placeholder for search input
  * @returns {ReactElement} QueryHeader component
  */
 export default function QueryHeader({
+  searchRef = null,
   useSelectState,
   selectData,
   handleCreateNew,
   handleSearch,
+  labelCreate = "Create New",
   placeholder = "Search",
+  isCreateNew = true,
 }) {
   // const selectComponent =
   const content = (
@@ -28,6 +35,7 @@ export default function QueryHeader({
           label="Search"
           variant="outlined"
           placeholder={placeholder}
+          inputRef={searchRef}
           sx={{ width: 300 }}
         />
         <CustomSelect
@@ -47,14 +55,16 @@ export default function QueryHeader({
           Search
         </Button>
       </Stack>
-      <Button
-        variant="contained"
-        sx={{ backgroundColor: "purple.main", textTransform: "uppercase" }}
-        handleCreateNew={handleCreateNew}
-      >
-        Create Product
-        <AddIcon sx={{ ml: 1 }} />
-      </Button>
+      {isCreateNew && (
+        <Button
+          variant="contained"
+          sx={{ backgroundColor: "purple.main", textTransform: "uppercase" }}
+          handleCreateNew={handleCreateNew}
+        >
+          {labelCreate}
+          <AddIcon sx={{ ml: 1 }} />
+        </Button>
+      )}
     </Stack>
   );
   return content;
