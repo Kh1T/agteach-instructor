@@ -1,15 +1,9 @@
 import Paper from "@mui/material/Paper";
-import {
-  Box,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  Stack,
-} from "@mui/material";
+import { Stack } from "@mui/material";
 import CustomTableMui from "./CustomTableMui";
 import { useState } from "react";
 import CustomTableHeader from "./CustomTableHeader";
+import CustomSelect from "./CustomSelect";
 
 function RecentTransaction() {
   function createData(...rest) {
@@ -45,21 +39,11 @@ function RecentTransaction() {
           title="Recent Transaction"
           content="Found(5) Items"
         />
-        <Box sx={{ minWidth: 180 }}>
-          <FormControl fullWidth>
-            <InputLabel id="demo-simple-select">Transaction</InputLabel>
-            <Select
-              id="demo-simple-select"
-              value={transaction}
-              onChange={(e) => setTransaction(e.target.value)}
-              label="Transaction"
-              defaultValue="10"
-            >
-              <MenuItem value={10}>Course</MenuItem>
-              <MenuItem value={20}>Product</MenuItem>
-            </Select>
-          </FormControl>
-        </Box>
+        <CustomSelect
+          label="Transaction"
+          useSelectState={[transaction, setTransaction]}
+          selectData={["Course", "Product"]}
+        />
       </Stack>
       <CustomTableMui data={data} />{" "}
     </Paper>

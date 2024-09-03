@@ -1,5 +1,4 @@
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-
+import { Box, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
 /**
  * CustomSelect component
@@ -12,19 +11,23 @@ export default function CustomSelect({ label, useSelectState, selectData }) {
   const [selectState, setSelectState] = useSelectState;
 
   return (
-    <FormControl >
-      <InputLabel id="demo-simple-select">{label}</InputLabel>
-      <Select
-        id="demo-simple-select"
-        value={selectState}
-        onChange={(e) => setSelectState(e.target.value)}
-        label="Transaction"
-        defaultValue="10"
-      >
-        {selectData.map((item, id) => (
-          <MenuItem value={id * 10} key={id}>{item}</MenuItem>
-        ))}
-      </Select>
-    </FormControl>
+    <Box sx={{ minWidth: 180 }}>
+      <FormControl fullWidth>
+        <InputLabel id="demo-simple-select">{label}</InputLabel>
+        <Select
+          id="demo-simple-select"
+          value={selectState}
+          onChange={(e) => setSelectState(e.target.value)}
+          label="Transaction"
+          defaultValue="10"
+        >
+          {selectData.map((item, id) => (
+            <MenuItem value={id * 10} key={id}>
+              {item}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+    </Box>
   );
 }

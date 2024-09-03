@@ -7,7 +7,7 @@ import CardSale from "../components/dashboard/CardSale";
 import Overview from "../components/dashboard/Overview";
 import NotApprove from "../components/dashboard/NotApprove";
 export default function DashboardPage() {
-  const isApprove = false;
+  const isApprove = true;
   const notApprovedContent = <NotApprove />;
   const approvedContent = (
     <>
