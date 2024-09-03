@@ -25,7 +25,7 @@ function App() {
         </header>
       </div> */}
 
-      <LoginPage />
+      {/* <LoginPage /> */}
       {/* <ForgotPassword /> */}
       {/* <ResetPassword /> */}
     </ThemeProvider>
