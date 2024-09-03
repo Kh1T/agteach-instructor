@@ -4,7 +4,7 @@ import ProductQuantity from "../components/ProductComponents/ProductQuantity";
 import ProductPhoto from "../components/ProductComponents/ProductPhoto";
 import AdditionalPhoto from "../components/ProductComponents/AdditionalPhoto";
 
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import ProductPrice from "../components/ProductComponents/ProductPrice";
 
 function NewProductPage() {
