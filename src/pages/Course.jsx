@@ -1,17 +1,20 @@
 import { useState } from "react";
 import CustomSelect from "../components/CustomSelect";
+import QueryHeader from "../components/QueryHeader";
 
 function CoursePage() {
-  const [test, setTest] = useState(0);
+  const [selectState, setSelectState] = useState();
   const label = "Sort";
-  console.log(test);
+  function handleCreateNew() {}
+  function handleSearch() {}
   return (
     <>
-      <h1>Course page</h1>
-      <CustomSelect 
-        label = {label}
-        useSelectState={[test, setTest]}
+      <QueryHeader
+        label={label}
+        useSelectState={[selectState, setSelectState]}
         selectData={["Newest", "Oldest", "World"]}
+        handleCreateNew={handleCreateNew}
+        handleSearch={handleSearch}
       />
     </>
   );

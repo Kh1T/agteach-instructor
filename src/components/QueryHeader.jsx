@@ -1,21 +1,52 @@
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { Button, Stack, TextField } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
 
-export default function QueryHeader({useSelectState, selectData}){
-    const [selectState, setSelectState] = useSelectState
-    const selectComponent = (
-        <FormControl     fullWidth>
-              <InputLabel    id="demo-simple-select">Sort</InputLabel>
-              <Select   
-                id="demo-simple-select"
-                value={selectState}
-                onChange={(e) => setSelectState(e.target.value)}
-                label="Transaction"
-                defaultValue="10"
-              >
-                
-                <MenuItem value={10}>Newest</MenuItem>
-                <MenuItem value={20}>Oldest</MenuItem>
-              </Select>
-            </FormControl>
-    )
+import CustomSelect from "./CustomSelect";
+
+export default function QueryHeader({
+  useSelectState,
+  selectData,
+  handleCreateNew,
+  handleSearch,
+  placeholder = "Search",
+}) {
+  // const selectComponent =
+  const content = (
+    <Stack direction="row" sx={{ justifyContent: "space-between", mb: 2 }}>
+      <Stack direction="row" spacing={2}>
+        <TextField
+          id="search"
+          label="Search"
+          variant="outlined"
+          placeholder={placeholder}
+          sx={{ width: 300 }}
+        />
+        <CustomSelect
+          label="Sort"
+          useSelectState={useSelectState}
+          selectData={selectData}
+        />
+        <Button
+          variant="outlined"
+          sx={{
+            textTransform: "uppercase",
+            color: "purple.main",
+            borderColor: "purple.main",
+          }}
+          onClick={handleSearch}
+        >
+          Search
+        </Button>
+      </Stack>
+      <Button
+        variant="contained"
+        sx={{ backgroundColor: "purple.main", textTransform: "uppercase" }}
+        handleCreateNew={handleCreateNew}
+      >
+        Create Product
+        <AddIcon sx={{ ml: 1 }} />
+      </Button>
+    </Stack>
+  );
+  return content;
 }

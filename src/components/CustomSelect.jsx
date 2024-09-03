@@ -12,7 +12,7 @@ export default function CustomSelect({ label, useSelectState, selectData }) {
   const [selectState, setSelectState] = useSelectState;
 
   return (
-    <FormControl fullWidth>
+    <FormControl >
       <InputLabel id="demo-simple-select">{label}</InputLabel>
       <Select
         id="demo-simple-select"
