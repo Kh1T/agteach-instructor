@@ -11,12 +11,12 @@ import { Link as RouterLink } from "react-router-dom";
  * @param {ReactNode} children the content of the button
  * @returns {ReactElement}
  */
-export default function ButtonComponent({ path, color, children }) {
+export default function ButtonComponent({ path, color, children, ...props }) {
   return (
     
     <Box width='100%'>
       <Link component={RouterLink} to={path}>
-        <Button variant="contained" color={color}>
+        <Button variant="contained" color={color} {...props}>
           {children}
         </Button>
       </Link>

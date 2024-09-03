@@ -2,6 +2,7 @@ import { Button, Stack, TextField } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 
 import CustomSelect from "./CustomSelect";
+import ButtonComponent from "./ButtonComponent";
 
 /**
  * QueryHeader component
@@ -9,7 +10,7 @@ import CustomSelect from "./CustomSelect";
  * @param {object} props
  * @param {React.RefObject<HTMLInputElement>} [props.searchRef=null] - Reference to the search text input
  * @param {function} props.useSelectState - state to store selected value ex: [state, setState]
- * @param {array} props.selectData - array of select data
+ * @param {array} props.selectData - array of select data eg: ["Newest", "Oldest"]
  * @param {function} props.handleCreateNew - function to handle create new button
  * @param {function} props.handleSearch - function to handle search button
  * @param {string} [props.labelCreate="Create New"] - label for create new button
@@ -17,11 +18,11 @@ import CustomSelect from "./CustomSelect";
  * @returns {ReactElement} QueryHeader component
  */
 export default function QueryHeader({
-  searchRef = null,
   useSelectState,
-  selectData,
-  handleCreateNew,
   handleSearch,
+  searchRef = null,
+  selectData=["Newest", "Oldest"],
+  pathCreated = "/",
   labelCreate = "Create New",
   placeholder = "Search",
   isCreateNew = true,
@@ -56,14 +57,15 @@ export default function QueryHeader({
         </Button>
       </Stack>
       {isCreateNew && (
-        <Button
+        <ButtonComponent
           variant="contained"
           sx={{ backgroundColor: "purple.main", textTransform: "uppercase" }}
-          handleCreateNew={handleCreateNew}
+          // handleCreateNew={handleCreateNew}
+          path={pathCreated}
         >
           {labelCreate}
           <AddIcon sx={{ ml: 1 }} />
-        </Button>
+        </ButtonComponent>
       )}
     </Stack>
   );
