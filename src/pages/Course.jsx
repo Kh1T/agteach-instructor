@@ -1,6 +1,7 @@
 import { useState } from "react";
 import QueryHeader from "../components/QueryHeader";
 import CustomTableMui from "../components/CustomTableMui";
+import { data } from "../data/sampleDashboardData";
 
 function CoursePage() {
   const [selectState, setSelectState] = useState();
@@ -15,8 +16,9 @@ function CoursePage() {
         selectData={["Newest", "Oldest", "World"]}
         handleCreateNew={handleCreateNew}
         handleSearch={handleSearch}
+        labelCreate="Create Course"
       />
-      <CustomTableMui />
+      <CustomTableMui data={data}/>
     </>
   );
 }
