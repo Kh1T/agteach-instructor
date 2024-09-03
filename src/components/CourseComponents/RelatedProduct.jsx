@@ -4,7 +4,7 @@ import {
   TextField,
   Typography,
   List,
-  ListItem,
+  ListItem, Stack
 } from "@mui/material";
 import ProductCard from "./ProductCard";
 import ButtonComponent from "../ButtonInBox";
@@ -19,12 +19,14 @@ export default function RelatedProduct() {
         icon={<Inventory2OutlinedIcon sx={{ color: "common.white" }} />}
       />
       <Divider sx={{ my: 2 }} />
-      <Typography variant="h6" fontWeight={"bold"}>
-        Choose a feature image for your course
-      </Typography>
-      <Typography variant="subtitle2">
-        Most of customer will decided to buy a course based on an image{" "}
-      </Typography>
+      <Stack gap={1}>
+        <Typography variant="blgsm">
+          Choose a feature image for your course
+        </Typography>
+        <Typography variant="bsr">
+          Most of customer will decided to buy a course based on an image{" "}
+        </Typography>
+      </Stack>
       <Box sx={{ my: 2, gap: 2, display: "flex", alignItems: "center" }}>
         <TextField
           sx={{ my: 2, minWidth: "300px" }}

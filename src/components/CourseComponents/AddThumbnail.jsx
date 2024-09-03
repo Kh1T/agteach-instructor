@@ -1,4 +1,3 @@
-
 import { Divider, Stack, Typography, Box } from "@mui/material";
 import InsertPhotoIcon from "@mui/icons-material/InsertPhoto";
 import { styled } from "@mui/material/styles";
@@ -30,24 +29,29 @@ const style = {
 };
 
 export default function AddThumbnail() {
-    const fileInputRef = useRef(null); // Create a ref for the file input
+  const fileInputRef = useRef(null); // Create a ref for the file input
 
-    const handleClick = () => {
-      if (fileInputRef.current) {
-        fileInputRef.current.click(); // Trigger the file input click
-      }
-    };
-    return (
-      <Box>
-        <IconWithTitle title={"Add Thumbnail"} icon={<WallpaperOutlinedIcon sx={{color: 'common.white'}}/>}/>
-        <Divider sx={{ my: 2 }} />
-        <Typography variant="h6" fontWeight={"bold"}>
+  const handleClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click(); // Trigger the file input click
+    }
+  };
+  return (
+    <Box>
+      <IconWithTitle
+        title={"Add Thumbnail"}
+        icon={<WallpaperOutlinedIcon sx={{ color: "common.white" }} />}
+      />
+      <Divider sx={{ my: 2 }} />
+      <Stack gap={1}>
+        <Typography variant="blgsm">
           Choose a feature image for your course
         </Typography>
-        <Typography variant="subtitle2">
+        <Typography variant="bsr">
           Most of customer will decided to buy a course based on an image{" "}
         </Typography>
-        {/* <Box display={"flex"} gap={2}>
+      </Stack>
+      {/* <Box display={"flex"} gap={2}>
         <Box maxHeight={"65px"}>
           <img src="https://picsum.photos/id/255/65/65" />
         </Box>
@@ -83,21 +87,20 @@ export default function AddThumbnail() {
           </Button>
         </Stack>
       </Box> */}
-        <Stack tabIndex={-1} sx={style} onClick={handleClick}>
-          <InsertPhotoIcon />
-          <Typography color="gray">
-            Upload Course image, png, jpg, webp
-          </Typography>
-          <Typography color="gray">580 x 580 (Limit size: 1 MB)</Typography>
+      <Stack tabIndex={-1} sx={style} onClick={handleClick}>
+        <InsertPhotoIcon />
+        <Typography color="gray">
+          Upload Course image, png, jpg, webp
+        </Typography>
+        <Typography color="gray">580 x 580 (Limit size: 1 MB)</Typography>
 
-          <VisuallyHiddenInput
-            type="file"
-            ref={fileInputRef}
-            onChange={(event) => console.log(event.target.files)}
-            multiple
-          />
-        </Stack>
-      </Box>
-    );
-
+        <VisuallyHiddenInput
+          type="file"
+          ref={fileInputRef}
+          onChange={(event) => console.log(event.target.files)}
+          multiple
+        />
+      </Stack>
+    </Box>
+  );
 }

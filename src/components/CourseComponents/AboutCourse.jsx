@@ -1,4 +1,4 @@
-import { TextField, Box, Divider, Typography } from "@mui/material";
+import { TextField, Box, Divider, Typography, Stack } from "@mui/material";
 import IconWithTitle from "../IconWithTitle";
 import NewspaperOutlinedIcon from "@mui/icons-material/NewspaperOutlined";
 export default function AboutCourse() {
@@ -9,29 +9,31 @@ export default function AboutCourse() {
         icon={<NewspaperOutlinedIcon sx={{ color: "common.white" }} />}
       />
       <Divider sx={{ my: 2 }} />
-      <Typography variant="h6" fontWeight={"bold"}>
-        Let’s craft a course title
-      </Typography>
-      <Typography variant="subtitle2">
-        Crafted a good title would help your content engage more students.
-      </Typography>
+      <Stack gap={1}>
+        <Typography variant="blgsm">Let’s craft a course title</Typography>
+        <Typography variant="bsr">
+          Crafted a good title would help your content engage more students.
+        </Typography>
+      </Stack>
       <TextField
         sx={{ my: 2 }}
         fullWidth
         id="outlined-controlled"
         label="Enter your course title"
       />
-      <Typography variant="subtitle2" sx={{ mt: 2 }}>
+      <Typography variant="bsr" sx={{ mt: 2 }}>
         eg: How to plant an indoor tomatoes 100% edible
       </Typography>
 
       <Box mt={4}>
-        <Typography variant="h6" fontWeight={"bold"}>
-          Tell us more about your course
-        </Typography>
-        <Typography variant="subtitle2">
-          Crafted a good title would help your content engage more students.
-        </Typography>
+        <Stack gap={1}>
+          <Typography variant="blgsm">
+            Tell us more about your course
+          </Typography>
+          <Typography variant="bsr">
+            Crafted a good title would help your content engage more students.
+          </Typography>
+        </Stack>
         <TextField
           sx={{ my: 2 }}
           fullWidth
@@ -40,11 +42,11 @@ export default function AboutCourse() {
         />
       </Box>
 
-      <Box mt={4}>
-        <Typography variant="h6" fontWeight={"bold"}>
+      <Stack gap={1} mt={4}>
+        <Typography variant="blgsm">
           What student will learn in this course?
         </Typography>
-        <Typography variant="subtitle2">
+        <Typography variant="bsr">
           Describe the learning objective of this course that learner expect to
           achieve after completing this course
         </Typography>
@@ -54,7 +56,7 @@ export default function AboutCourse() {
           id="outlined-controlled"
           label="What  they will learn in this course: "
         />
-      </Box>
+      </Stack>
     </Box>
   );
 }

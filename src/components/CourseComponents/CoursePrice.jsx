@@ -5,6 +5,7 @@ import {
   Typography,
   ListItem,
   List,
+  Stack,
 } from "@mui/material";
 
 import AttachMoneyOutlinedIcon from "@mui/icons-material/AttachMoneyOutlined";
@@ -12,14 +13,17 @@ import IconWithTitle from "../IconWithTitle";
 export default function CoursePrice() {
   return (
     <Box className="container">
-      <IconWithTitle title={"COURSE PRICE"} icon={<AttachMoneyOutlinedIcon sx={{color: 'common.white'}}/>} />
+      <IconWithTitle
+        title={"COURSE PRICE"}
+        icon={<AttachMoneyOutlinedIcon sx={{ color: "common.white" }} />}
+      />
       <Divider sx={{ my: 2 }} />
-      <Typography variant="h6" fontWeight={"bold"}>
-        Tell us about your Course price
-      </Typography>
-      <Typography variant="subtitle2">
-        Choosing a correct price strategy will help engage more customer
-      </Typography>
+      <Stack gap={1}>
+        <Typography variant="blgsm">Tell us about your Course price</Typography>
+        <Typography variant="bsr">
+          Choosing a correct price strategy will help engage more customer
+        </Typography>
+      </Stack>
       <TextField
         fullWidth
         sx={{ my: 2 }}
