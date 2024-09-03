@@ -1,30 +1,36 @@
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { Box, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
 
 /**
  * CustomSelect component
- * @param {object} props
- * @param {function} props.useSelectState - state to store selected value ex: [state, setState]
- * @param {array} props.selectData - array of select data
- * @returns {ReactElement}
+ * @description A component that renders a select dropdown with a list of items
+ * @param {string} id - The id of the select element
+ * @param {string} label - The label of the select element
+ * @param {array} useSelectState - The state to store the selected value
+ * @param {array} selectData - The array of select data eg: ["Newest", "Oldest", "World"]
+ * @returns {ReactElement} CustomSelect component
  */
-export default function CustomSelect({ label, useSelectState, selectData }) {
+export default function CustomSelect({ id, label, useSelectState, selectData }) {
   const [selectState, setSelectState] = useSelectState;
 
   return (
-    <FormControl >
-      <InputLabel id="demo-simple-select">{label}</InputLabel>
-      <Select
-        id="demo-simple-select"
-        value={selectState}
-        onChange={(e) => setSelectState(e.target.value)}
-        label="Transaction"
-        defaultValue="10"
-      >
-        {selectData.map((item, id) => (
-          <MenuItem value={id * 10} key={id}>{item}</MenuItem>
-        ))}
-      </Select>
-    </FormControl>
+    <Box sx={{ minWidth: 180 }}>
+      <FormControl fullWidth>
+        <InputLabel id={id}>{label}</InputLabel>
+        <Select
+          id={id}
+          value={selectState}
+          onChange={(e) => setSelectState(e.target.value)}
+          label="Transaction"
+          defaultValue="10"
+        >
+          {selectData.map((item, id) => (
+            <MenuItem value={id * 10} key={id}>
+              {item}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+    </Box>
   );
 }
