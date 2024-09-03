@@ -16,21 +16,16 @@ function ForgotPassword() {
   const gap = "20px";
 
   return (
-    <Stack
-      flexDirection="column"
-      alignItems="center"
-      justifyContent="space-between"
-      height="60vh"
-    >
+    <Stack flexDirection="column" alignItems="center" gap="100px">
       <img
         style={{ width: "100px", height: "50px", paddingTop: "100px" }}
         src={agtechDark}
-        alt=""
+        alt="dark-logo"
       />
       <Stack
         direction="row"
         alignItems="center"
-        justifyContent="space-between"
+        justifyContent="space-around"
         width="40%"
       >
         <Stack textAlign="center" gap={gap}>
