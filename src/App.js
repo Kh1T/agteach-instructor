@@ -28,8 +28,8 @@ function App() {
 
       {/* <LoginPage /> */}
       {/* <ForgotPassword /> */}
-      {/* <ResetPassword /> */}
-      <Signup />
+      <ResetPassword />
+      {/* <Signup /> */}
     </ThemeProvider>
   );
 }

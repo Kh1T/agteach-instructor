@@ -32,7 +32,7 @@ function InputField({
               required: `${fieldName} is required`,
             })}
             error={!!errors[nameLowerCase]} // Error state
-            helperText={errors[nameLowerCase]?.message}
+            // helperText={errors[nameLowerCase]?.message}
             id="outlined-adornment-password"
             type={showPassword ? "text" : "password"}
             label={fieldName}

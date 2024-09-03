@@ -27,8 +27,6 @@ function Signup() {
     console.log(data);
   };
 
-  onSubmit();
-
   return (
     <Grid2 container spacing={15} alignItems={"center"}>
       <SideBarImg />
