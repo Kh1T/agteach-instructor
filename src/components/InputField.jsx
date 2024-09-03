@@ -1,4 +1,3 @@
-// import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import {
   InputAdornment,
   InputLabel,
@@ -8,23 +7,18 @@ import {
   TextField,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-
 import { useState } from "react";
 
 function InputField({
   fieldName = "Password",
   fieldType = "text",
-  isError = false,
+  register,
+  errors,
 }) {
+  const nameLowerCase = fieldName.toLowerCase();
   const [showPassword, setShowPassword] = useState(false);
-
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
-
-  const handleMouseUpPassword = (event) => {
+  const preventDefault = (event) => {
     event.preventDefault();
   };
 
@@ -32,28 +26,38 @@ function InputField({
     <FormControl variant="outlined">
       {fieldType === "password" ? (
         <>
-          <InputLabel>{fieldName}</InputLabel>
+          <InputLabel error={!!errors[nameLowerCase]}>{fieldName}</InputLabel>
           <OutlinedInput
+            {...register(nameLowerCase, {
+              required: `${fieldName} is required`,
+            })}
+            error={!!errors[nameLowerCase]} // Error state
+            helperText={errors[nameLowerCase]?.message}
             id="outlined-adornment-password"
             type={showPassword ? "text" : "password"}
+            label={fieldName}
             endAdornment={
               <InputAdornment position="end">
                 <IconButton
                   aria-label="toggle password visibility"
                   onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                  onMouseUp={handleMouseUpPassword}
+                  onMouseDown={preventDefault}
+                  onMouseUp={preventDefault}
                   edge="end"
                 >
                   {showPassword ? <VisibilityOff /> : <Visibility />}
                 </IconButton>
               </InputAdornment>
             }
-            label={fieldName}
           />
         </>
       ) : (
-        <TextField label={fieldName} error={isError} />
+        <TextField
+          label={fieldName}
+          {...register(nameLowerCase, { required: `${fieldName} is required` })}
+          error={!!errors[nameLowerCase]} // Error state
+          helperText={errors[nameLowerCase]?.message}
+        />
       )}
     </FormControl>
   );
