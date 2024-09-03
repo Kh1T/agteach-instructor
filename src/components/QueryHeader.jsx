@@ -3,6 +3,15 @@ import AddIcon from "@mui/icons-material/Add";
 
 import CustomSelect from "./CustomSelect";
 
+/**
+ * QueryHeader component
+ * @param {function} useSelectState - state to store selected value ex: [state, setState]
+ * @param {array} selectData - array of select data
+ * @param {function} handleCreateNew - handle create new
+ * @param {function} handleSearch - handle search
+ * @param {string} placeholder - placeholder text for TextField
+ * @returns {ReactElement} QueryHeader component
+ */
 export default function QueryHeader({
   useSelectState,
   selectData,

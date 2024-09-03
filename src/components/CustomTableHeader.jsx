@@ -1,5 +1,11 @@
 import { Stack, Typography } from "@mui/material";
 
+/**
+ * CustomTableHeader component
+ * @param {string} title - title of the content
+ * @param {string} content - content of the header
+ * @returns {ReactElement} CustomTableHeader component
+ */
 export default function CustomTableHeader({title, content}){
     return(
         <Stack

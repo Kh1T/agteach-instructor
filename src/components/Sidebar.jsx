@@ -15,6 +15,16 @@ import { Avatar, Chip, Container, Link, Stack } from "@mui/material";
 
 import sidebarList from "../data/sideBarData";
 
+/**
+ * Sidebar component that renders a drawer and app bar with content.
+ *
+ * This component accepts a children prop which is rendered between the app bar and drawer.
+ * The app bar will render a title and description based on the route that is currently active.
+ * The drawer will render a list of links based on the sidebarList data.
+ *
+ * @prop {React.ReactNode} children - The content to be rendered between the app bar and drawer.
+ * @returns {React.ReactNode} A React component that renders a drawer and app bar with content.
+ */
 export default function Sidebar({ children }) {
   const { pathname } = useLocation();
   const drawerWidth = 250;

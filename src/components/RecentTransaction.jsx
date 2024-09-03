@@ -5,6 +5,11 @@ import { useState } from "react";
 import CustomTableHeader from "./CustomTableHeader";
 import CustomSelect from "./CustomSelect";
 
+/**
+ * RecentTransaction component
+ * @description A component that displays a table of recent transactions with a select dropdown to filter by course or product
+ * @returns {ReactElement} A JSX element representing the RecentTransaction component
+ */
 function RecentTransaction() {
   function createData(...rest) {
     return { ...rest };
