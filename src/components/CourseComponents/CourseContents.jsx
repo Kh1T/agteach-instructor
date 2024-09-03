@@ -24,7 +24,7 @@ export default function CourseContents() {
       <Divider sx={{ my: 2 }} />
       <Box bgcolor={"grey.100"}>
         <Stack direction={"row"} padding={2} justifyContent={"space-between"}>
-          <Typography variant="h6">
+          <Typography  variant="blgr">
             <strong>Section 1:</strong> Write your section title below
           </Typography>
           <MoreVertIcon />
