@@ -3,28 +3,20 @@ import {
   Box,
   Typography,
   Button,
-  Checkbox,
-  FormControlLabel,
   FormControl,
-  TextField,
-  InputLabel,
-  Input,
-  FormHelperText,
+  Grid2,
 } from "@mui/material";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 import InputField from "../components/InputField";
 import SideBarImg from "../components/SideBarImg";
 
 function Signup() {
+  console.log(AdapterDayjs);
   return (
-    <Stack
-      direction="row"
-      justify="center"
-      height="100%"
-      alignItems="center"
-      spacing="5em"
-      pr="40px"
-    >
+    <Grid2 container spacing={15} alignItems={"center"}>
       <SideBarImg />
       <Stack gap="20px">
         <Box
@@ -43,7 +35,10 @@ function Signup() {
           sx={{ display: "flex", flexDirection: "column", gap: "20px" }}
         >
           <InputField fieldName="Username" />
-          <InputField fieldName="Date of Birth" />
+          {/* <InputField fieldName="Date of Birth" /> */}
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DatePicker label="Date of Birth" />
+          </LocalizationProvider>
           <InputField fieldName="Email" />
           <InputField fieldName="Password" fieldType="password" />
 
@@ -65,7 +60,7 @@ function Signup() {
           </Typography>
         </FormControl>
       </Stack>
-    </Stack>
+    </Grid2>
   );
 }
 
