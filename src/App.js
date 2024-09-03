@@ -1,5 +1,6 @@
 import LoginPage from "./pages/Login";
 import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 import "./App.css";
 import { ThemeProvider } from "@emotion/react";
 import theme from "./theme/theme";
@@ -25,7 +26,8 @@ function App() {
       </div> */}
 
       {/* <LoginPage /> */}
-      <ForgotPassword />
+      {/* <ForgotPassword /> */}
+      <ResetPassword />
     </ThemeProvider>
   );
 }
