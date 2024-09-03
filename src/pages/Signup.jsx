@@ -25,9 +25,9 @@ function Signup() {
           textAlign="center"
           gap="10px"
         >
-          <Typography variant="h1">Welcome back Instructor</Typography>
+          <Typography variant="h1">Create Account</Typography>
           <Typography color="dark.300">
-            Please login to continue to your account.
+            Get your account now to explore further on AgTeach.
           </Typography>
         </Box>
 
