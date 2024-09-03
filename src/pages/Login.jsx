@@ -1,4 +1,4 @@
-import { TextField, Typography } from "@mui/material";
+import { Grid2, TextField, Typography } from "@mui/material";
 import InputField from "../components/InputField";
 import SideBarImg from "../components/SideBarImg";
 import loginImg from "./../assets/login/login-img.png";
@@ -19,13 +19,7 @@ function LoginPage() {
   const theme = useTheme();
 
   return (
-    <Stack
-      direction="row"
-      justify="center"
-      height="100%"
-      alignItems="center"
-      spacing="10%"
-    >
+    <Grid2 container alignItems="center" spacing={10}>
       <SideBarImg />
       <Stack gap="20px">
         <Box
@@ -71,7 +65,7 @@ function LoginPage() {
           </Typography>
         </FormControl>
       </Stack>
-    </Stack>
+    </Grid2>
   );
 }
 
