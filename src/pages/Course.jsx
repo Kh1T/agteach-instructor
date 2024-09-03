@@ -1,5 +1,6 @@
 import { useState } from "react";
 import QueryHeader from "../components/QueryHeader";
+import CustomTableMui from "../components/CustomTableMui";
 
 function CoursePage() {
   const [selectState, setSelectState] = useState();
@@ -15,6 +16,7 @@ function CoursePage() {
         handleCreateNew={handleCreateNew}
         handleSearch={handleSearch}
       />
+      <CustomTableMui />
     </>
   );
 }
