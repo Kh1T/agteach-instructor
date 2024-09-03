@@ -1,4 +1,4 @@
-import { Divider, Stack, Typography } from "@mui/material";
+import { Divider, Stack, Typography, Box } from "@mui/material";
 import InsertPhotoIcon from "@mui/icons-material/InsertPhoto";
 import { styled } from "@mui/material/styles";
 import * as React from "react";
@@ -23,6 +23,8 @@ const style = {
   padding: "32px",
   border: "2px dashed grey",
   cursor: "pointer",
+  my:4,
+  
 };
 
 export default function ProductPhoto() {
@@ -34,11 +36,15 @@ export default function ProductPhoto() {
     }
   };
   return (
-    <>
-      <h2>Product Photo</h2>
-      <Divider />
-      <h3>Choose a feature image for your product</h3>
-      <p>Most of customer will decided to buy a product based on an image </p>
+    <Box>
+      <Typography variant="h3">Product Photo</Typography>
+      <Divider sx={{ my: 2 }} />
+      <Typography variant="h6" fontWeight={"bold"}>
+        Choose a feature image for your product
+      </Typography>
+      <Typography variant="subtitle2">
+        Most of customer will decided to buy a product based on an image{" "}
+      </Typography>
       {/* <Box display={"flex"} gap={2}>
         <Box maxHeight={"65px"}>
           <img src="https://picsum.photos/id/255/65/65" />
@@ -75,14 +81,12 @@ export default function ProductPhoto() {
           </Button>
         </Stack>
       </Box> */}
-      <Stack
-        tabIndex={-1}
-        sx={style}
-        onClick={handleClick}
-      >
+      <Stack tabIndex={-1} sx={style} onClick={handleClick}>
         <InsertPhotoIcon />
-        <Typography>Upload Product image, png, jpg, webp</Typography>
-        <Typography>580 x 580 (Limit size: 1 MB)</Typography>
+        <Typography color="gray">
+          Upload Product image, png, jpg, webp
+        </Typography>
+        <Typography color="gray">580 x 580 (Limit size: 1 MB)</Typography>
 
         <VisuallyHiddenInput
           type="file"
@@ -91,6 +95,6 @@ export default function ProductPhoto() {
           multiple
         />
       </Stack>
-    </>
+    </Box>
   );
 }

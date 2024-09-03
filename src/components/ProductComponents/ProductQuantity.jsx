@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { Box, Divider, Stack, TextField, Button } from "@mui/material";
+import {
+  Box,
+  Divider,
+  Stack,
+  TextField,
+  Button,
+  Typography,
+} from "@mui/material";
 import { Remove, Add } from "@mui/icons-material";
 
 export default function ProductQuantity() {
@@ -14,12 +21,16 @@ export default function ProductQuantity() {
   };
 
   return (
-    <Box className="container">
-      <h2>Product Quantity</h2>
-      <Divider />
-      <h3>How many products are in stock?</h3>
-      <p>Help explain what does the product do and key feature</p>
-      <Stack direction={"row"} spacing={2}>
+    <Box className="container" mt={3}>
+      <Typography variant="h3">Product Quantity</Typography>
+      <Divider sx={{ my: 2 }} />
+      <Typography variant="h6" fontWeight={"bold"}>
+        How many products are in stock?
+      </Typography>
+      <Typography variant="subtitle2">
+        Help explain what does the product do and key feature
+      </Typography>
+      <Stack direction={"row"} spacing={2} my={4}>
         <TextField
           type="number"
           value={quantity}
@@ -38,6 +49,7 @@ export default function ProductQuantity() {
           <Add />
         </Button>
       </Stack>
+      <Divider sx={{ my: 4 }} />
     </Box>
   );
 }
