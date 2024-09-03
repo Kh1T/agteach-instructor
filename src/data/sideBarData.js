@@ -73,6 +73,14 @@ const sidebarList = [
       route: "/setting",
       description: "Make change to your profile",
     },
+    
+    {
+      title: "Login",
+      icon: null,
+      route: "/login",
+      description: "Login to your account",
+    },
+
   ];
 
   export default sidebarList;

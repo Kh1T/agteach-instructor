@@ -23,8 +23,9 @@ export default function Sidebar({ children }) {
   const headerTitle = sidebarList.find((element) => {
     if (param.productId) element.route = `/product/${param.productId}/edit`;
     if (param.courseId) element.route = `/course/${param.courseId}/edit`;
+    if (element.route !== pathname) return false;
     return element.route === pathname;
-  }).title;
+  }).title ;
 
   const drawerContent = (
     <Drawer
