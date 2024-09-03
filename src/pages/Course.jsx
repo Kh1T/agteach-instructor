@@ -19,14 +19,6 @@ function CoursePage() {
       />
       <ChipDelivery isDelivered={true} />
       <ChipDelivery isDelivered={false} />
-      <Typography variant="bmdsm" sx={{ color: "red.main" }}>
-        <Chip
-          icon={<FiberManualRecordIcon />}
-          size="big"
-          label="Not Yet Delivered"
-          sx={{ color: "red.main", backgroundColor: "#E2111C10" }}
-        />
-      </Typography>
     </>
   );
 }
