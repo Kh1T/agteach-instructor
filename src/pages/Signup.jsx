@@ -1,30 +1,29 @@
-import { TextField, Typography } from "@mui/material";
-import InputField from "../components/InputField";
-import SideBarImg from "../components/SideBarImg";
-import loginImg from "./../assets/login/login-img.png";
-import logo from "./../assets/login/agteach-logo.svg";
-
 import {
+  Stack,
   Box,
+  Typography,
   Button,
   Checkbox,
   FormControlLabel,
-  Stack,
   FormControl,
+  TextField,
+  InputLabel,
+  Input,
+  FormHelperText,
 } from "@mui/material";
 
-import { useTheme } from "@emotion/react";
+import InputField from "../components/InputField";
+import SideBarImg from "../components/SideBarImg";
 
-function LoginPage() {
-  const theme = useTheme();
-
+function Signup() {
   return (
     <Stack
       direction="row"
       justify="center"
       height="100%"
       alignItems="center"
-      spacing="10%"
+      spacing="5em"
+      pr="40px"
     >
       <SideBarImg />
       <Stack gap="20px">
@@ -34,40 +33,35 @@ function LoginPage() {
           textAlign="center"
           gap="10px"
         >
-          <Typography sx={theme.typography.h1}>
-            Welcome back Instructor
-          </Typography>
+          <Typography variant="h1">Welcome back Instructor</Typography>
           <Typography color="dark.300">
             Please login to continue to your account.
           </Typography>
         </Box>
+
         <FormControl
           sx={{ display: "flex", flexDirection: "column", gap: "20px" }}
         >
-          <TextField label="Enter your email" required />
+          <InputField fieldName="Username" />
+          <InputField fieldName="Date of Birth" />
+          <InputField fieldName="Email" />
+          <InputField fieldName="Password" fieldType="password" />
 
-          <InputField fieldName={"Password"} fieldType="password" />
-
-          <FormControlLabel
-            control={<Checkbox value="remember" />}
-            label="Keep me logged in"
-          />
-          <a href="#">Forgot Password ?</a>
           <Button
             sx={{
               width: 460,
               height: 50,
               borderRadius: 2,
+              width: "100%",
             }}
             type="submit"
-            fullWidth
             variant="contained"
             color="primary"
           >
             Login
           </Button>
-          <Typography>
-            Need an account ? <a href="#">Create one</a>
+          <Typography textAlign="center">
+            Already have an account ? <a href="#">Go Back</a>
           </Typography>
         </FormControl>
       </Stack>
@@ -75,4 +69,4 @@ function LoginPage() {
   );
 }
 
-export default LoginPage;
+export default Signup;
