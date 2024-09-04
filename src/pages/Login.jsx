@@ -26,8 +26,16 @@ function LoginPage() {
   };
 
   return (
-    <Grid container alignItems="center" spacing={10}>
-      <Grid>
+    <Stack
+      direction="row"
+      alignItems="center"
+      sx={{
+        justifyContent: { xs: "center", md: "center", lg: "start" },
+      }}
+      mt={{ xs: 50, md: 50, lg: 0 }}
+      spacing={10}
+    >
+      <Grid sx={{ display: { xs: "none", md: "none", lg: "block" } }}>
         <SideBarImg />
       </Grid>
       <Grid>
@@ -73,7 +81,7 @@ function LoginPage() {
           </Box>
         </Stack>
       </Grid>
-    </Grid>
+    </Stack>
   );
 }
 
