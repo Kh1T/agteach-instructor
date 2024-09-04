@@ -24,8 +24,16 @@ function Signup() {
   };
 
   return (
-    <Grid2 container spacing={{ xs: 5, md: 15, lg: 20 }} alignItems={"center"}>
-      <SideBarImg />
+    <Grid2
+      container
+      sx={{ justifyContent: { xs: "center", md: "center", lg: "start" } }}
+      mt={{ xs: 50, md: 50, lg: 0 }}
+      spacing={{ xs: 5, md: 15, lg: 20 }}
+      alignItems={"center"}
+    >
+      <Grid2 sx={{ display: { xs: "none", md: "none", lg: "block" } }}>
+        <SideBarImg />
+      </Grid2>
       <Stack gap="20px">
         <Box
           display="flex"

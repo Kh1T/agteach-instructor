@@ -1,8 +1,3 @@
-import { TextField, Typography } from "@mui/material";
-import PasswordInput from "../components/PasswordInput";
-import loginImg from "./../assets/login/login-img.png";
-import logo from "./../assets/login/agteach-logo.svg";
-
 import {
   Grid2 as Grid,
   Typography,
