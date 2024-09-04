@@ -1,4 +1,4 @@
-import { Box, Divider, TextField, Typography, Stack } from "@mui/material";
+import { Box, Divider, TextField, Typography, Stack, DialogContent } from "@mui/material";
 import ProductCard from "./ProductCard";
 import ButtonComponent from "../CourseProductComponents/ButtonInBox";
 import Inventory2OutlinedIcon from "@mui/icons-material/Inventory2Outlined";
@@ -33,10 +33,12 @@ export default function RelatedProduct() {
       <ProductCard
         title={"Tool"}
         price={"100$"}
-        src={"https://picsum.photos/id/122/200/400"}
+        src={"https://picsum.photos/id/122/210/200"}
       />
 
-      <Typography component={"ul"}>
+      <Divider />
+
+      <Typography component={"ul"} paddingY={2}>
         <Typography component={"li"}>
           Please verify your course information before submitting
         </Typography>
