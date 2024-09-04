@@ -1,9 +1,9 @@
-import { textTransform } from '@mui/system';
+import { textTransform } from "@mui/system";
 const components = {
   MuiButton: {
     styleOverrides: {
       root: {
-        textTransform: 'none',
+        textTransform: "none",
       },
     },
     defaultProps: {
