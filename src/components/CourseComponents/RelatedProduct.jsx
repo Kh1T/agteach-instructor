@@ -3,6 +3,7 @@ import ProductCard from "./ProductCard";
 import ButtonComponent from "../ButtonInBox";
 import Inventory2OutlinedIcon from "@mui/icons-material/Inventory2Outlined";
 import IconWithTitle from "../IconWithTitle";
+import TextSection from "../TextSection";
 export default function RelatedProduct() {
   return (
     <Box>
@@ -12,14 +13,10 @@ export default function RelatedProduct() {
         icon={<Inventory2OutlinedIcon sx={{ color: "common.white" }} />}
       />
       <Divider sx={{ my: 2 }} />
-      <Stack gap={1}>
-        <Typography variant="blgsm">
-          Choose a feature image for your course
-        </Typography>
-        <Typography variant="bsr">
-          Most of customer will decided to buy a course based on an image{" "}
-        </Typography>
-      </Stack>
+      <TextSection
+        title="Suggest products for practical learning"
+        description="Recommend product that relevant to this course where students can buy for practical learning"
+      />
       <Box sx={{ my: 2, gap: 2, display: "flex", alignItems: "center" }}>
         <TextField
           sx={{ my: 2, minWidth: "300px" }}

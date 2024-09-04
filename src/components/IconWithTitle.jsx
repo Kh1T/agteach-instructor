@@ -13,7 +13,7 @@ const iconContainerStyle = {
 export default function IconWithTitle({title, icon, highlight}) {
     console.log(highlight)
   return (
-    <Stack direction="row" gap={1} alignItems="center">
+    <Stack direction="row" gap={1} alignItems="center" marginY={4}>
       <Box sx={iconContainerStyle}>{icon}</Box>
       <Typography variant={"h3"}>
         {title}{" "}
