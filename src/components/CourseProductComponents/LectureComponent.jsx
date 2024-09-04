@@ -36,39 +36,49 @@ const style = {
 };
 
 export default function LectureComponent() {
-  const fileInputRef = useRef(null); // Create a ref for the file input
+  const lectureInputRef = useRef(null);
 
   const handleClick = () => {
-    if (fileInputRef.current) {
-      fileInputRef.current.click(); // Trigger the file input click
+    if (lectureInputRef.current) {
+      lectureInputRef.current.click();
     }
   };
+
   return (
-    <Box paddingLeft={6} padding={2} bgcolor={"grey.300"}>
-      <Stack direction={"row"} justifyContent={"space-between"}>
+    <Box
+      paddingLeft={6}
+      padding={2}
+      bgcolor="grey.300"
+      sx={{ alignItems: "center" }}
+    >
+      <Stack direction="row" justifyContent="space-between">
         <Typography variant="bmdr">
           <strong>Lecture 1:</strong> Write your lecture title below
         </Typography>
         <Delete color="red" />
       </Stack>
       <TextField
-        sx={{ my: 2 }}
         fullWidth
-        id="outlined-controlled"
-        label="Title of Lecture "
+        label="Title of Lecture"
+        sx={{ my: 2 }}
+        variant="outlined"
       />
-      <Stack tabIndex={-1} sx={style} onClick={handleClick}>
+      <Stack sx={style} onClick={handleClick}>
         <UploadFileOutlinedIcon color="grey" />
         <Typography color="grey">Upload Lecture Video</Typography>
-
         <VisuallyHiddenInput
+          ref={lectureInputRef}
           type="file"
-          ref={fileInputRef}
-          onChange={(event) => console.log(event.target.files)}
           multiple
+          sx={{ display: "none" }}
         />
       </Stack>
-      <ButtonComponent text={"Add Lecture +"} variant={"outlined"} flexEnd />
+      <ButtonComponent
+        text="Add Lecture +"
+        variant="outlined"
+        flexEnd
+        sx={{ mt: 2 }}
+      />
     </Box>
   );
 }

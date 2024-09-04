@@ -30,14 +30,11 @@ export default function AboutCourse() {
           description="Crafted a good title would help your content engage more students."
         />
         <TextField
-          InputProps={{
-            style: {
-              height: "156px", // or any height you prefer
-            },
+          slotProps={{
+            input: { sx: { alignItems: "flex-start", height: "156px" } },
           }}
           sx={{ my: 2 }}
           fullWidth
-          id="outlined-controlled"
           label="Enter your course description"
         />
       </Box>
@@ -47,6 +44,9 @@ export default function AboutCourse() {
           achieve after completing this course"
       />
       <TextField
+        slotProps={{
+          input: { sx: { alignItems: "flex-start", height: "156px" } },
+        }}
         sx={{ my: 2 }}
         fullWidth
         id="outlined-controlled"
