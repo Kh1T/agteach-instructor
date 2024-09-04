@@ -5,6 +5,7 @@ import * as React from "react";
 import { useRef } from "react";
 import WallpaperOutlinedIcon from "@mui/icons-material/WallpaperOutlined";
 import IconWithTitle from "../IconWithTitle";
+import TextSection from "../TextSection";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -43,14 +44,10 @@ export default function AddThumbnail() {
         icon={<WallpaperOutlinedIcon sx={{ color: "common.white" }} />}
       />
       <Divider sx={{ my: 2 }} />
-      <Stack gap={1}>
-        <Typography variant="blgsm">
-          Choose a feature image for your course
-        </Typography>
-        <Typography variant="bsr">
-          Most of customer will decided to buy a course based on an image{" "}
-        </Typography>
-      </Stack>
+      <TextSection
+        title="Choose a feature image for your course"
+        description="Most of customer will decided to buy a course based on an image"
+      />
       {/* <Box display={"flex"} gap={2}>
         <Box maxHeight={"65px"}>
           <img src="https://picsum.photos/id/255/65/65" />

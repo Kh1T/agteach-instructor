@@ -10,6 +10,7 @@ import {
 
 import AttachMoneyOutlinedIcon from "@mui/icons-material/AttachMoneyOutlined";
 import IconWithTitle from "../IconWithTitle";
+import TextSection from "../TextSection";
 export default function CoursePrice() {
   return (
     <Box className="container">
@@ -18,25 +19,21 @@ export default function CoursePrice() {
         icon={<AttachMoneyOutlinedIcon sx={{ color: "common.white" }} />}
       />
       <Divider sx={{ my: 2 }} />
-      <Stack gap={1}>
-        <Typography variant="blgsm">Tell us about your Course price</Typography>
-        <Typography variant="bsr">
-          Choosing a correct price strategy will help engage more customer
-        </Typography>
-      </Stack>
+      <TextSection
+        title="Tell us about your Course price"
+        description="Choosing a correct price strategy will help engage more customer"
+      />
       <TextField
         fullWidth
         sx={{ my: 2 }}
         id="outlined-controlled"
         label="Price"
-        // value={name}
-        // onChange={(event) => {
-        //   setName(event.target.value);
-        // }}
       />
       <Typography component={"ul"}>
-        <Typography component={'li'}>NOTE: AgTeach will deduct 20% from your total sale</Typography>
-        <Typography component={'li'}>
+        <Typography component={"li"}>
+          NOTE: AgTeach will deduct 20% from your total sale
+        </Typography>
+        <Typography component={"li"}>
           Example, if the product is $100 we will deduct $20 from your sale
         </Typography>
       </Typography>
