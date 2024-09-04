@@ -53,14 +53,15 @@ export default function TableCompoent({ data }) {
                 key={row.name}
                 sx={{
                     // border: "1px dashed",
-                    borderStyle: "dashed",
+                    // "&:last-child tr, &:last-child th": { border: 0 } ,
+                    // borderStyle: "dashed",
                 }}
-                // sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 {Object.values(row).map((cell, cellIndex) => (
                   <TableCell key={cellIndex} sx={{
+                      borderBottom: "1px dashed",
                       borderColor: "grey.300",
-                    //   borderTop: "1px dashed",
+
                   }}>{cell}</TableCell>
                 ))}
               </TableRow>
