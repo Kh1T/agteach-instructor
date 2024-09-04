@@ -1,7 +1,7 @@
-import { TextField, Box, Divider, Typography, Stack } from "@mui/material";
-import IconWithTitle from "../IconWithTitle";
+import { TextField, Box, Divider, Typography } from "@mui/material";
+import IconWithTitle from "../CourseProductComponents/IconWithTitle";
 import NewspaperOutlinedIcon from "@mui/icons-material/NewspaperOutlined";
-import TextSection from "../TextSection";
+import TextSection from "../CourseProductComponents/TextSection";
 export default function AboutCourse() {
   return (
     <Box className="container">
@@ -30,6 +30,11 @@ export default function AboutCourse() {
           description="Crafted a good title would help your content engage more students."
         />
         <TextField
+          InputProps={{
+            style: {
+              height: "156px", // or any height you prefer
+            },
+          }}
           sx={{ my: 2 }}
           fullWidth
           id="outlined-controlled"
