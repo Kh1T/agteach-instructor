@@ -16,23 +16,27 @@ function InputField({
   errors,
 }) {
   const nameLowerCase = fieldName.toLowerCase();
+
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const preventDefault = (event) => {
     event.preventDefault();
   };
 
+  const registerField = register
+    ? register(nameLowerCase, { required: `${fieldName} is required` })
+    : {};
+  const errorState = errors ? !!errors[nameLowerCase] : false;
+  const helperText = errors ? errors[nameLowerCase]?.message : "";
+
   return (
     <FormControl variant="outlined">
       {fieldType === "password" ? (
         <>
-          <InputLabel error={!!errors[nameLowerCase]}>{fieldName}</InputLabel>
+          <InputLabel error={errorState}>{fieldName}</InputLabel>
           <OutlinedInput
-            {...register(nameLowerCase, {
-              required: `${fieldName} is required`,
-            })}
-            error={!!errors[nameLowerCase]} // Error state
-            // helperText={errors[nameLowerCase]?.message}
+            {...registerField}
+            error={errorState} // Error state
             id="outlined-adornment-password"
             type={showPassword ? "text" : "password"}
             label={fieldName}
@@ -54,9 +58,9 @@ function InputField({
       ) : (
         <TextField
           label={fieldName}
-          {...register(nameLowerCase, { required: `${fieldName} is required` })}
-          error={!!errors[nameLowerCase]} // Error state
-          helperText={errors[nameLowerCase]?.message}
+          {...registerField}
+          error={errorState} // Error state
+          helperText={helperText}
         />
       )}
     </FormControl>

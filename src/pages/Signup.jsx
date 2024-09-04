@@ -15,6 +15,7 @@ import { useForm } from "react-hook-form";
 import InputField from "../components/InputField";
 import SideBarImg from "../components/SideBarImg";
 import CustomButton from "../components/CustomButton";
+import { Link } from "react-router-dom";
 
 function Signup() {
   const {
@@ -64,7 +65,8 @@ function Signup() {
           <CustomButton>Create Account</CustomButton>
         </form>
         <Typography textAlign="center">
-          Already have an account? <a href="#">Go Back</a>
+          Already have an account?
+          <Link to="/login">Go Back</Link>
         </Typography>
       </Stack>
     </Grid2>

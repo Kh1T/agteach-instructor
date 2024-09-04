@@ -1,5 +1,5 @@
 import {
-  Grid2,
+  Grid2 as Grid,
   Typography,
   Box,
   Checkbox,
@@ -26,11 +26,11 @@ function LoginPage() {
   };
 
   return (
-    <Grid2 container alignItems="center" spacing={10} columns={12}>
-      <Grid2>
+    <Grid container alignItems="center" spacing={10}>
+      <Grid>
         <SideBarImg />
-      </Grid2>
-      <Grid2>
+      </Grid>
+      <Grid>
         <Stack>
           <Box
             display="flex"
@@ -67,13 +67,13 @@ function LoginPage() {
               <Link to="forgot">Forgot Password ?</Link>
               <CustomButton>Login</CustomButton>
               <Typography>
-                Need an account ? <Link href="#">Create one</Link>
+                Need an account ? <Link to="/signup">Create one</Link>
               </Typography>
             </form>
           </Box>
         </Stack>
-      </Grid2>
-    </Grid2>
+      </Grid>
+    </Grid>
   );
 }
 
