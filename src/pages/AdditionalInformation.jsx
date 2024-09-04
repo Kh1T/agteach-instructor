@@ -2,7 +2,6 @@ import {
   Box,
   Divider,
   Grid2 as Grid,
-  Menu,
   MenuItem,
   Stack,
   TextField,
@@ -17,14 +16,22 @@ function AdditionalInformation() {
     <Grid container justifyContent="center" direction="column" mt={12} gap={15}>
       <Box component="img" src={logo} />
       <Grid container justifyContent="center" alignItems="center" gap={12}>
-        <Stack textAlign="center">
+        <Stack textAlign="center" gap={2}>
           <Box
+            width={500}
+            height={500}
             border="none"
             component="iframe"
             src="https://lottie.host/embed/288044aa-d34d-480e-a0a5-90f2169ad2a9/3QIerLarqo.json"
           />
+
           <Typography variant="h3">Almost There</Typography>
-          <Typography variant="bmdr" color="dark.200">
+
+          <Typography
+            color="dark.200"
+            sx={{ width: "300px", margin: "0 auto" }}
+            textAlign="center"
+          >
             Just one more step. Add your personal information and contact to
             continue
           </Typography>
