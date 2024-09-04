@@ -8,6 +8,9 @@ import {
   Typography,
 } from "@mui/material";
 import { Remove, Add } from "@mui/icons-material";
+import ProductionQuantityLimitsIcon from "@mui/icons-material/ProductionQuantityLimits";
+import IconWithTitle from "../CourseProductComponents/IconWithTitle";
+import TextSection from "../CourseProductComponents/TextSection";
 
 export default function ProductQuantity() {
   const [quantity, setQuantity] = useState(0); // Initialize quantity state
@@ -22,14 +25,15 @@ export default function ProductQuantity() {
 
   return (
     <Box className="container" mt={3}>
-      <Typography variant="h3">Product Quantity</Typography>
+      <IconWithTitle
+        title={"Product Quantity"}
+        icon={<ProductionQuantityLimitsIcon sx={{ color: "common.white" }} />}
+      />
       <Divider sx={{ my: 2 }} />
-      <Typography variant="h6" fontWeight={"bold"}>
-        How many products are in stock?
-      </Typography>
-      <Typography variant="subtitle2">
-        Help explain what does the product do and key feature
-      </Typography>
+      <TextSection
+        title={"How many products are in stock?"}
+        description={"Help the customer know the Specific amounts available"}
+      />
       <Stack direction={"row"} spacing={2} my={4}>
         <TextField
           type="number"
