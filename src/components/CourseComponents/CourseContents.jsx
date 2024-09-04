@@ -6,9 +6,8 @@ import SectionComponent from "../CourseProductComponents/SectionComponent";
 
 import { v4 as uuidv4 } from "uuid";
 import { useState } from "react";
-
 export default function CourseContents() {
-  const [sections, setSection] = useState([{ id: uuidv4(), number: 1 }]);
+  const [sections, setSection] = useState([{ id: uuidv4(), number: 1 , type: "section"}]);
 
   const handleAddSection = () => {
     setSection((prevSections) => [
@@ -16,7 +15,7 @@ export default function CourseContents() {
         ...section,
         number: index + 1,
       })),
-      { id: uuidv4(), number: prevSections.length + 1 }, // Add a new lecture with the next number
+      { id: uuidv4(), number: prevSections.length + 1, type: "section" }, // Add a new lecture with the next number
     ]);
   };
 
@@ -41,6 +40,7 @@ export default function CourseContents() {
           id={section.id}
           number={section.number}
           onDelete={handleDeleteSection}
+          type={section.type}
         />
       ))}
       <Divider />

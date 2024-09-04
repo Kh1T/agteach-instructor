@@ -6,9 +6,12 @@ import { v4 as uuidv4 } from "uuid";
 import { Delete } from "@mui/icons-material";
 import { MoreVertRounded } from "@mui/icons-material";
 import { type } from "@testing-library/user-event/dist/type";
+import DeleteConfirmModal from "./DeleteConfirmModal";
 
-export default function SectionComponent({id, onDelete , number }) {
-  const [lectures, setLectures] = useState([{ id: uuidv4(), number: 1 , type:"lecture" }]);
+export default function SectionComponent({ id, onDelete, number , type }) {
+  const [lectures, setLectures] = useState([
+    { id: uuidv4(), number: 1, type: "lecture" },
+  ]);
 
   const handleAddLecture = () => {
     setLectures((prevLectures) => [
@@ -27,7 +30,6 @@ export default function SectionComponent({id, onDelete , number }) {
         .map((lecture, index) => ({
           ...lecture,
           number: index + 1,
-          
         }))
     );
   };
@@ -36,6 +38,20 @@ export default function SectionComponent({id, onDelete , number }) {
 
   const handleClickOnVert = () => {
     setShowDelete((prevShowDelete) => !prevShowDelete);
+  };
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const handleOpenModal = () => {
+    setModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+  };
+
+  const handleConfirmDelete = () => {
+    onDelete(id);
+    handleCloseModal();
   };
 
   return (
@@ -52,7 +68,7 @@ export default function SectionComponent({id, onDelete , number }) {
         <MoreVertRounded onClick={handleClickOnVert} />
         {showDelete && (
           <Stack
-            onClick={() => onDelete(id)} // Pass a function reference
+            onClick={ handleOpenModal } // Pass a function reference
             direction={"row"}
             boxShadow={"0px 2px 4px rgba(0, 0, 0, 0.15)"}
             sx={{
@@ -66,7 +82,7 @@ export default function SectionComponent({id, onDelete , number }) {
               justifyItems: "center",
             }}
           >
-            <Delete color="red"  />
+            <Delete color="red" />
             <Typography color="red">Delete</Typography>
           </Stack>
         )}
@@ -95,6 +111,12 @@ export default function SectionComponent({id, onDelete , number }) {
           sx={{ px: 2 }}
         />
       </Box>
+      <DeleteConfirmModal
+        open={modalOpen}
+        onClose={handleCloseModal}
+        onConfirm={handleConfirmDelete}
+        type={type}
+      />
     </Box>
   );
 }
