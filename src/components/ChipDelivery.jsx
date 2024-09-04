@@ -6,11 +6,16 @@ export default function ChipDelivery({ isDelivered }) {
   return (
     <Typography
       variant="bmdsm"
-      sx={{ color: isDelivered ? "blue.main" : "red.main" }}
+      size="8px"
+      sx={{ color: isDelivered ? "blue.main" : "red.main"}}
     >
       <Chip
-        icon={<FiberManualRecordIcon  color= {isDelivered ? "blue.main" : "red.main"} />}
-        // size="big"
+        icon={
+          <FiberManualRecordIcon 
+            color={isDelivered ? "blue.main" : "red.main"}            
+            sx={{ width: "8px", height: "8px" }}
+          />
+        }
         label={label}
         sx={{
           color: isDelivered ? "blue.main" : "red.main",
