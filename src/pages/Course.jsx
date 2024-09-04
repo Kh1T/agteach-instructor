@@ -1,13 +1,27 @@
 import { useRef, useState } from "react";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
 import QueryHeader from "../components/QueryHeader";
-import CustomTableMui from "../components/CustomTableMui";
-import { data } from "../data/sampleDashboardData";
+import TableComponent from "../components/TableComponent";
+import { courses } from "../data/coursesData";
 
 function CoursePage() {
   const [selectState, setSelectState] = useState(0);
   
   const searchRef = useRef();
   const label = "Sort";
+  const courseList = courses.map((item) => ({
+    ...item,
+    edit: (
+      // <Button variant="contained">
+        <EditIcon sx={{ cursor: "pointer"}} onClick={() => console.log(item.name)} />
+        
+      // </Button>
+    ),
+    delete: <DeleteIcon color="red" sx={{cursor: "pointer"}} onClick={() => console.log(item.name)} />
+  }));
+
+
   function handleSearch() {
     console.log(searchRef.current.value);
     console.log(selectState);
@@ -23,7 +37,8 @@ function CoursePage() {
         pathCreated="/course/new"
         labelCreate="Create Course"
       />
-      <CustomTableMui data={data}/>
+      <TableComponent data={courseList} isPagination={true}/>
+      {/* <CustomTableMui data={data}/> */}
     </>
   );
 }
