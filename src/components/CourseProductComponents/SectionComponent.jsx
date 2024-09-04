@@ -5,9 +5,10 @@ import ButtonComponent from "./ButtonInBox";
 import { v4 as uuidv4 } from "uuid";
 import { Delete } from "@mui/icons-material";
 import { MoreVertRounded } from "@mui/icons-material";
+import { type } from "@testing-library/user-event/dist/type";
 
 export default function SectionComponent({id, onDelete , number }) {
-  const [lectures, setLectures] = useState([{ id: uuidv4(), number: 1 }]);
+  const [lectures, setLectures] = useState([{ id: uuidv4(), number: 1 , type:"lecture" }]);
 
   const handleAddLecture = () => {
     setLectures((prevLectures) => [
@@ -15,7 +16,7 @@ export default function SectionComponent({id, onDelete , number }) {
         ...lecture,
         number: index + 1,
       })),
-      { id: uuidv4(), number: prevLectures.length + 1 }, // Add a new lecture with the next number
+      { id: uuidv4(), number: prevLectures.length + 1, type: "lecture" }, // Add a new lecture with the next number
     ]);
   };
 
@@ -23,7 +24,11 @@ export default function SectionComponent({id, onDelete , number }) {
     setLectures((prevLectures) =>
       prevLectures
         .filter((lecture) => lecture.id !== id)
-        .map((lecture, index) => ({ ...lecture, number: index + 1 }))
+        .map((lecture, index) => ({
+          ...lecture,
+          number: index + 1,
+          
+        }))
     );
   };
 
@@ -79,6 +84,7 @@ export default function SectionComponent({id, onDelete , number }) {
             id={lecture.id}
             number={lecture.number}
             onDelete={handleDeleteLecture}
+            type={lecture.type}
           />
         ))}
         <ButtonComponent
