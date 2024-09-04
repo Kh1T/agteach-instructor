@@ -1,12 +1,4 @@
-import {
-  Stack,
-  Box,
-  Typography,
-  Button,
-  FormControl,
-  Grid2,
-  TextField,
-} from "@mui/material";
+import { Stack, Box, Typography, Grid2 } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -16,6 +8,7 @@ import InputField from "../components/InputField";
 import SideBarImg from "../components/SideBarImg";
 import CustomButton from "../components/CustomButton";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 function Signup() {
   const {
@@ -24,8 +17,10 @@ function Signup() {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const [linkActive, setLinkActive] = useState(false);
+
+  const onSubmit = (data = false) => {
+    if (data) setLinkActive(true);
   };
 
   return (
@@ -62,9 +57,13 @@ function Signup() {
             register={register}
             errors={errors}
           />
-          <Link to="additional">
+          {linkActive ? (
+            <Link to="additional">
+              <CustomButton>Create Account</CustomButton>
+            </Link>
+          ) : (
             <CustomButton>Create Account</CustomButton>
-          </Link>
+          )}
         </form>
         <Typography textAlign="center">
           Already have an account?
