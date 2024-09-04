@@ -9,10 +9,10 @@ import {
   Button,
 } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
-import ButtonComponent from "../ButtonInBox";
+import ButtonComponent from "../CourseProductComponents/ButtonInBox";
 export default function ProductCard({ src, title, price }) {
   return (
-    <Card sx={{ maxWidth: 345, minHeight: 240, position: "relative" ,mb:4}}>
+    <Card sx={{ maxWidth: 345, minHeight: 240, position: "relative", mb: 4 }}>
       {/* Box for positioning the Remove button */}
       <Box sx={{ position: "absolute", top: 1, right: 1, zIndex: 1 }}>
         <IconButton sx={{ backgroundColor: "common.white" }}>

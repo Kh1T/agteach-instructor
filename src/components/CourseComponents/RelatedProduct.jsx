@@ -1,9 +1,9 @@
 import { Box, Divider, TextField, Typography, Stack } from "@mui/material";
 import ProductCard from "./ProductCard";
-import ButtonComponent from "../ButtonInBox";
+import ButtonComponent from "../CourseProductComponents/ButtonInBox";
 import Inventory2OutlinedIcon from "@mui/icons-material/Inventory2Outlined";
-import IconWithTitle from "../IconWithTitle";
-import TextSection from "../TextSection";
+import IconWithTitle from "../CourseProductComponents/IconWithTitle";
+import TextSection from "../CourseProductComponents/TextSection";
 export default function RelatedProduct() {
   return (
     <Box>

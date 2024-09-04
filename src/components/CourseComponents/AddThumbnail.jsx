@@ -4,8 +4,8 @@ import { styled } from "@mui/material/styles";
 import * as React from "react";
 import { useRef } from "react";
 import WallpaperOutlinedIcon from "@mui/icons-material/WallpaperOutlined";
-import IconWithTitle from "../IconWithTitle";
-import TextSection from "../TextSection";
+import IconWithTitle from "../CourseProductComponents/IconWithTitle";
+import TextSection from "../CourseProductComponents/TextSection";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",

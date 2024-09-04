@@ -4,7 +4,7 @@ import CourseContents from "../components/CourseComponents/CourseContents";
 import CoursePrice from "../components/CourseComponents/CoursePrice";
 import AddThumbnail from "../components/CourseComponents/AddThumbnail";
 import RelatedProduct from "../components/CourseComponents/RelatedProduct";
-import ButtonComponent from "../components/ButtonInBox";
+import ButtonComponent from "../components/CourseProductComponents/ButtonInBox";
 
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 

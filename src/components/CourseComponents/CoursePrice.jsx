@@ -9,8 +9,8 @@ import {
 } from "@mui/material";
 
 import AttachMoneyOutlinedIcon from "@mui/icons-material/AttachMoneyOutlined";
-import IconWithTitle from "../IconWithTitle";
-import TextSection from "../TextSection";
+import IconWithTitle from "../CourseProductComponents/IconWithTitle";
+import TextSection from "../CourseProductComponents/TextSection";
 export default function CoursePrice() {
   return (
     <Box className="container">

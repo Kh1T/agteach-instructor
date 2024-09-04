@@ -1,17 +1,10 @@
-import {
-  Box,
-  Typography,
-  TextField,
-  Divider,
-  Stack,
-} from "@mui/material";
+import { Box, Typography, TextField, Divider, Stack } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 
-import ButtonComponent from "../ButtonInBox";
-import IconWithTitle from "../IconWithTitle";
+import ButtonComponent from "../CourseProductComponents/ButtonInBox";
+import IconWithTitle from "../CourseProductComponents/IconWithTitle";
 import BurstModeOutlinedIcon from "@mui/icons-material/BurstModeOutlined";
-import LectureComponent from "../LectureComponent";
-
+import LectureComponent from "../CourseProductComponents/LectureComponent";
 
 export default function CourseContents() {
   return (
@@ -24,7 +17,7 @@ export default function CourseContents() {
       <Divider sx={{ my: 2 }} />
       <Box bgcolor={"grey.100"}>
         <Stack direction={"row"} padding={2} justifyContent={"space-between"}>
-          <Typography  variant="blgr">
+          <Typography variant="blgr">
             <strong>Section 1:</strong> Write your section title below
           </Typography>
           <MoreVertIcon />
