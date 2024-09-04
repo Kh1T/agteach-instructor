@@ -2,9 +2,10 @@ import { Delete } from "@mui/icons-material";
 import { Box, Typography, TextField, Stack } from "@mui/material";
 
 import { styled } from "@mui/material/styles";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 import UploadFileOutlinedIcon from "@mui/icons-material/UploadFileOutlined";
+import DeleteConfirmModal from "./DeleteConfirmModal";
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
   clipPath: "inset(50%)",
@@ -27,13 +28,27 @@ const style = {
   my: 0,
 };
 
-export default function LectureComponent({ id, onDelete , number }) {
+export default function LectureComponent({ id, onDelete, number , type }) {
+  const [modalOpen, setModalOpen] = useState(false);
   const lectureInputRef = useRef(null);
 
   const handleClick = () => {
     if (lectureInputRef.current) {
       lectureInputRef.current.click();
     }
+  };
+
+  const handleOpenModal = () => {
+    setModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+  };
+
+  const handleConfirmDelete = () => {
+    onDelete(id);
+    handleCloseModal();
   };
 
   return (
@@ -44,7 +59,7 @@ export default function LectureComponent({ id, onDelete , number }) {
         </Typography>
         <Delete
           color="red"
-          onClick={() => onDelete(id)} // Call the onDelete handler passed from parent
+          onClick={handleOpenModal} // Call the onDelete handler passed from parent
         />
       </Stack>
       <TextField
@@ -63,6 +78,12 @@ export default function LectureComponent({ id, onDelete , number }) {
           sx={{ display: "none" }}
         />
       </Stack>
+      <DeleteConfirmModal
+        open={modalOpen}
+        onClose={handleCloseModal}
+        onConfirm={handleConfirmDelete}
+        type={type}
+      />
     </Box>
   );
 }
