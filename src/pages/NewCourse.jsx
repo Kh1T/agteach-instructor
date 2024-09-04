@@ -22,7 +22,6 @@ function NewCoursePage() {
       <CoursePrice />
       <AddThumbnail />
       <RelatedProduct />
-
       <ButtonComponent
         text={"CREATE COURSE"}
         variant={"contained"}
