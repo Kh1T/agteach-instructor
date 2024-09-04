@@ -1,9 +1,43 @@
 import { ChevronLeft } from "@mui/icons-material";
-import { Box, Button, Stack, Typography } from "@mui/material";
+import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import CustomChip from "../components/CustomChip";
+import CustomTable from "../components/CustomTable";
 
 function PurchasedDetailPage() {
+  const purchasedDetail = [
+    {
+      id: 1,
+      productname: "Prunning Shears",
+      category: "Tools",
+      quantity: 2,
+      price: 100,
+      total: 200,
+      orderdate: "2022-01-01",
+    },
+    {
+      id: 2,
+      productname: "Feterlizer Kit",
+      category: "Feterlizers",
+      quantity: 3,
+      price: 50,
+      total: 150,
+      orderdate: "2022-01-02",
+    },
+  ];
+
+  const purchasedList = purchasedDetail.map((item) => ({
+    photos: (
+      <Box
+        src="https://img.freepik.com/free-photo/organic-cosmetic-product-with-dreamy-aesthetic-fresh-background_23-2151382816.jpg"
+        component={"img"}
+        width={70}
+            height={70}
+      />
+    ),
+    ...item,
+  }));
+
   return (
     <Stack alignItems="start" gap={5}>
       <Link>
@@ -40,8 +74,11 @@ function PurchasedDetailPage() {
             </Typography>
           </Stack>
         </Stack>
-        <CustomChip label="Not Yet Delivered" sx={{ padding: "50px" }} />
+        <CustomChip label="Not Yet Delivered" sx={{ py: "20px" }} />
       </Stack>
+      <Divider />
+      <Typography variant="h3">Purchased Detail</Typography>
+      <CustomTable data={purchasedList} />
     </Stack>
   );
 }
