@@ -74,7 +74,7 @@ function PurchasedDetailPage() {
             </Typography>
           </Stack>
         </Stack>
-        <CustomChip label="Not Yet Delivered" sx={{ py: "20px" }} />
+        <CustomChip label="Not Yet Delivered" danger sx={{ py: "20px" }} />
       </Stack>
       <Divider />
       <Typography variant="h3">Purchased Detail</Typography>
