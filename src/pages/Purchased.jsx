@@ -15,7 +15,6 @@ function PurchasedPage() {
       item.status = <CustomChip label="Delivered" />;
     } else {
       item.status = <CustomChip label="Not Delivered" />;
-      console.log("Status is set to Not Delivered");
     }
     return item;
   });
