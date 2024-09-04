@@ -1,4 +1,3 @@
-import { data } from "../data/sampleDashboardData";
 import { Box } from "@mui/material";
 import QueryHeader from "../components/QueryHeader";
 import { useState } from "react";
@@ -10,13 +9,15 @@ function PurchasedPage() {
   const label = "Filter";
   function handleCreateNew() {}
   function handleSearch() {}
-  const purcahaseList = purchased.map((item) => {
-    if (item.status) {
-      item.status = <CustomChip label="Delivered" />;
-    } else {
-      item.status = <CustomChip label="Not Delivered" />;
-    }
-    return item;
+  const purchasedList = purchased.map(item => {
+    // Create a deep copy of the item object
+    const newItem = { ...item }; // Shallow copy of the object
+  
+    // Modify the status in the copied object
+    newItem.status = item.status
+      ? <CustomChip label="Delivered" />
+      : <CustomChip label="Not Delivered" danger/>;
+    return newItem;
   });
   return (
     <Box>
@@ -28,7 +29,7 @@ function PurchasedPage() {
         handleSearch={handleSearch}
         isCreateNew={false}
       />
-      <CustomTable data={purcahaseList} rowLimit={10} isPagination={true} />
+      <CustomTable data={purchasedList} rowLimit={10} isPagination={true} />
     </Box>
   );
 }
