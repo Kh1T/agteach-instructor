@@ -14,7 +14,7 @@ import CustomButton from "../components/CustomButton";
 
 function AdditionalInformation() {
   return (
-    <Grid container justifyContent="center" direction="column" mt={12} gap={30}>
+    <Grid container justifyContent="center" direction="column" mt={12} gap={15}>
       <Box component="img" src={logo} />
       <Grid container justifyContent="center" alignItems="center" gap={12}>
         <Stack textAlign="center">

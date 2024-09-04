@@ -29,7 +29,7 @@ function Signup() {
   };
 
   return (
-    <Grid2 container spacing={15} alignItems={"center"}>
+    <Grid2 container spacing={{ xs: 5, md: 15, lg: 20 }} alignItems={"center"}>
       <SideBarImg />
       <Stack gap="20px">
         <Box
@@ -62,7 +62,9 @@ function Signup() {
             register={register}
             errors={errors}
           />
-          <CustomButton>Create Account</CustomButton>
+          <Link to="additional">
+            <CustomButton>Create Account</CustomButton>
+          </Link>
         </form>
         <Typography textAlign="center">
           Already have an account?
