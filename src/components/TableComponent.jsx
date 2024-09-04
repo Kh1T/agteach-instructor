@@ -8,9 +8,14 @@ import Paper from "@mui/material/Paper";
 import { TablePagination } from "@mui/material";
 import { useState } from "react";
 
-export default function CustomTableMui({ data }) {
+export default function TableCompoent({ data }) {
   // const tableHead = data.
-  const { headers, rows } = data;
+  let headers = Object.keys(data[0]).map(
+    (key) => key.charAt(0).toUpperCase() + key.slice(1)
+  );
+  let rows = data.map((item) => Object.values(item));
+  console.log(headers);
+  console.log(headers);
 
   // Pagination state
   const [page, setPage] = useState(0);
@@ -36,7 +41,7 @@ export default function CustomTableMui({ data }) {
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
-            <TableRow>
+            <TableRow sx={{ backgroundColor: "grey.100" }}>
               {headers.map((title, id) => (
                 <TableCell key={id}>{title}</TableCell>
               ))}
@@ -46,10 +51,17 @@ export default function CustomTableMui({ data }) {
             {displayedRows.map((row) => (
               <TableRow
                 key={row.name}
+                sx={{
+                    // border: "1px dashed",
+                    borderStyle: "dashed",
+                }}
                 // sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 {Object.values(row).map((cell, cellIndex) => (
-                  <TableCell key={cellIndex}>{cell}</TableCell>
+                  <TableCell key={cellIndex} sx={{
+                      borderColor: "grey.300",
+                    //   borderTop: "1px dashed",
+                  }}>{cell}</TableCell>
                 ))}
               </TableRow>
             ))}
