@@ -11,7 +11,7 @@ import Dot from '@mui/icons-material/FiberManualRecord';
  * @param {object} [props.sx={}] - Additional styles to be applied to the chip
  * @returns {ReactElement} A React component representing a chip
  */
-export const CustomChip = (props) => {
+export default function CustomChip(props){
   const { label, danger, ...sx } = props;
   return !danger ? (
     <Stack
