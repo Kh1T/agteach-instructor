@@ -1,26 +1,24 @@
-import {data} from "../data/sampleDashboardData";
+import { data } from "../data/sampleDashboardData";
 import { Box } from "@mui/material";
 import QueryHeader from "../components/QueryHeader";
 import { useState } from "react";
-import CustomTableMui from "../components/CustomTableMui";
 import CustomTable from "../components/CustomTable";
 import { purchased } from "../data/purchasedData";
+import { CustomChip } from "../components/CustomChip";
 function PurchasedPage() {
   const [selectState, setSelectState] = useState(0);
   const label = "Filter";
   function handleCreateNew() {}
   function handleSearch() {}
-  const purcahaseList  =purchased.map((item)=> {    
-    
-    if(item.status){
-      item.status = "Delivered"
-    } else{ item.status = "a" 
-      console.log('object');
+  const purcahaseList = purchased.map((item) => {
+    if (item.status) {
+      item.status = <CustomChip label="Delivered" />;
+    } else {
+      item.status = <CustomChip label="Not Delivered" />;
+      console.log("Status is set to Not Delivered");
     }
-
-    // item.status =  ?  "Deliverasdfed" : "Not Yet Delivered"
-    return item
-  })
+    return item;
+  });
   return (
     <Box>
       <QueryHeader
@@ -29,7 +27,7 @@ function PurchasedPage() {
         selectData={["All", "Delivered", "Not Delivered"]}
         handleCreateNew={handleCreateNew}
         handleSearch={handleSearch}
-        isCreateNew = {false}
+        isCreateNew={false}
       />
       <CustomTable data={purcahaseList} rowLimit={10} isPagination={true} />
     </Box>
