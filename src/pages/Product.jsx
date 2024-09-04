@@ -13,7 +13,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { products } from "../data/productsDummy";
-import TableCompoent from "../components/TableComponent";
+import TableComponent from "../components/TableComponent";
 function ProductPage() {
   const [sortBy, setSortBy] = useState();
 
@@ -114,7 +114,7 @@ function ProductPage() {
         </Button>
       </Stack>
       {/* <CustomTableMui data={data} /> */}
-      <TableCompoent data={productList} />
+      <TableComponent data={productList} rowLimit={10} isPagination={true} />
     </Box>
   );
 }
