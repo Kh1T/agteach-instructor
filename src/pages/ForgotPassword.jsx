@@ -20,12 +20,13 @@ function ForgotPassword() {
     <Grid
       container
       direction="column"
-      alignContent={"center"}
+      alignContent="center"
       justifyContent="space-between"
       spacing={25}
-      mt={2}
+      mt={4}
     >
       <Box component="img" src={agtechDark} alt="dark-logo" />
+
       <Grid
         container
         direction="row"
@@ -45,7 +46,8 @@ function ForgotPassword() {
             </Box>
           </Box>
         </Stack>
-        <Stack gap={gap}>
+        {/* Form input */}
+        <Stack gap={gap} sx={{ width: { sm: "100%", lg: "500px" } }}>
           <Stack gap={gap}>
             <Typography variant="blgsm">Enter your email address</Typography>
             <TextField
@@ -55,15 +57,13 @@ function ForgotPassword() {
             />
           </Stack>
           <Divider />
-          <Stack gap="15px" width="500px">
-            <CustomButton>Send reset link</CustomButton>
-            <Link to="..">
-              <CustomButton type="outlined">
-                <ArrowBackIosIcon sx={{ fontSize: "medium" }} />
-                Back to login
-              </CustomButton>
-            </Link>
-          </Stack>
+          <CustomButton>Send reset link</CustomButton>
+          <Link to="..">
+            <CustomButton type="outlined">
+              <ArrowBackIosIcon sx={{ fontSize: "medium" }} />
+              Back to login
+            </CustomButton>
+          </Link>
         </Stack>
       </Grid>
     </Grid>
