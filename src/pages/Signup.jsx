@@ -12,9 +12,9 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { useForm } from "react-hook-form";
 
-import Test from "./../components/Test";
 import InputField from "../components/InputField";
 import SideBarImg from "../components/SideBarImg";
+import CustomButton from "../components/CustomButton";
 
 function Signup() {
   const {
@@ -61,19 +61,7 @@ function Signup() {
             register={register}
             errors={errors}
           />
-
-          <Button
-            sx={{
-              height: 50,
-              borderRadius: 2,
-              width: "100%",
-            }}
-            type="submit"
-            variant="contained"
-            color="primary"
-          >
-            Login
-          </Button>
+          <CustomButton>Create Account</CustomButton>
         </form>
         <Typography textAlign="center">
           Already have an account? <a href="#">Go Back</a>

@@ -2,7 +2,6 @@ import {
   Grid2,
   Typography,
   Box,
-  Button,
   Checkbox,
   FormControlLabel,
   Stack,
@@ -12,6 +11,8 @@ import { useForm } from "react-hook-form";
 
 import InputField from "../components/InputField";
 import SideBarImg from "../components/SideBarImg";
+import { Link } from "react-router-dom";
+import CustomButton from "../components/CustomButton";
 
 function LoginPage() {
   const {
@@ -63,23 +64,10 @@ function LoginPage() {
                 control={<Checkbox value="remember" />}
                 label="Keep me logged in"
               />
-              <a href="#">Forgot Password ?</a>
-              <Button
-                sx={{
-                  width: 460,
-                  height: 50,
-                  borderRadius: 2,
-                  width: "100%",
-                }}
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-              >
-                Login
-              </Button>
+              <Link to="forgot">Forgot Password ?</Link>
+              <CustomButton>Login</CustomButton>
               <Typography>
-                Need an account ? <a href="#">Create one</a>
+                Need an account ? <Link href="#">Create one</Link>
               </Typography>
             </form>
           </Box>

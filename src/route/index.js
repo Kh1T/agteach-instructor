@@ -13,6 +13,8 @@ import NewProductPage from "../pages/NewProduct";
 import EditProductPage from "../pages/EditProduct";
 import NewCoursePage from "../pages/NewCourse";
 import EditCoursePage from "../pages/EditCourse";
+import ForgotPassword from "../pages/ForgotPassword";
+import Signup from "../pages/Signup";
 
 export const router = createBrowserRouter([
   {
@@ -44,5 +46,18 @@ export const router = createBrowserRouter([
     ],
   },
 
-  { path: "/login", element: <LoginPage /> },
+  {
+    path: "/login",
+    children: [
+      { index: true, element: <LoginPage /> },
+      { path: "forgot", element: <ForgotPassword /> },
+    ],
+  },
+  {
+    path: "/signup",
+    children: [
+      { index: true, element: <Signup /> },
+      { path: "forgot", element: <ForgotPassword /> },
+    ],
+  },
 ]);
