@@ -1,15 +1,7 @@
 import { Delete } from "@mui/icons-material";
-import {
-  Box,
-  Typography,
-  TextField,
-  Divider,
-  Stack,
-  Button,
-} from "@mui/material";
+import { Box, Typography, TextField, Stack } from "@mui/material";
 
 import { styled } from "@mui/material/styles";
-import ButtonComponent from "./ButtonInBox";
 import { useRef } from "react";
 
 import UploadFileOutlinedIcon from "@mui/icons-material/UploadFileOutlined";
@@ -35,7 +27,7 @@ const style = {
   my: 0,
 };
 
-export default function LectureComponent() {
+export default function LectureComponent({ id, onDelete , number }) {
   const lectureInputRef = useRef(null);
 
   const handleClick = () => {
@@ -45,17 +37,15 @@ export default function LectureComponent() {
   };
 
   return (
-    <Box
-      paddingLeft={6}
-      padding={2}
-      bgcolor="grey.300"
-      sx={{ alignItems: "center" }}
-    >
+    <Box sx={{ alignItems: "center", paddingTop: 4 }}>
       <Stack direction="row" justifyContent="space-between">
         <Typography variant="bmdr">
-          <strong>Lecture 1:</strong> Write your lecture title below
+          <strong>Lecture {number}:</strong> Write your lecture title below
         </Typography>
-        <Delete color="red" />
+        <Delete
+          color="red"
+          onClick={() => onDelete(id)} // Call the onDelete handler passed from parent
+        />
       </Stack>
       <TextField
         fullWidth
@@ -73,12 +63,6 @@ export default function LectureComponent() {
           sx={{ display: "none" }}
         />
       </Stack>
-      <ButtonComponent
-        text="Add Lecture +"
-        variant="outlined"
-        flexEnd
-        sx={{ mt: 2 }}
-      />
     </Box>
   );
 }
