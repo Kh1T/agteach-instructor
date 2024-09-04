@@ -27,8 +27,8 @@ function App() {
       </div> */}
 
       {/* <LoginPage /> */}
-      {/* <ForgotPassword /> */}
-      <ResetPassword />
+      <ForgotPassword />
+      {/* <ResetPassword /> */}
       {/* <Signup /> */}
     </ThemeProvider>
   );

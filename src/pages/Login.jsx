@@ -6,7 +6,6 @@ import {
   Checkbox,
   FormControlLabel,
   Stack,
-  FormControl,
 } from "@mui/material";
 
 import { useForm } from "react-hook-form";

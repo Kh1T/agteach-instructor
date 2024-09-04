@@ -5,6 +5,7 @@ import {
   Stack,
   TextField,
   Typography,
+  Grid2,
 } from "@mui/material";
 import agtechDark from "./../assets/login/logo-dark.svg";
 import ghostImg from "./../assets/login/ghost-img.png";
@@ -16,17 +17,23 @@ function ForgotPassword() {
   const gap = "20px";
 
   return (
-    <Stack flexDirection="column" alignItems="center" gap="100px">
-      <img
+    <Grid2
+      container
+      direction="column"
+      alignItems="center"
+      justifyContent="space-between"
+    >
+      <Box
         style={{ width: "100px", height: "50px", paddingTop: "100px" }}
         src={agtechDark}
         alt="dark-logo"
       />
-      <Stack
+      <Grid2
+        container
         direction="row"
+        justifyContent="center"
         alignItems="center"
-        justifyContent="space-around"
-        width="40%"
+        spacing={15}
       >
         <Stack textAlign="center" gap={gap}>
           <img src={ghostImg} alt="ghost-img" />
@@ -42,7 +49,7 @@ function ForgotPassword() {
         </Stack>
         <Stack gap={gap}>
           <Stack gap={gap}>
-            <Typography variant="blgsm" sx={theme.palette.dark[200]}>
+            <Typography variant="blgsm" color="dark.200">
               Enter your email address
             </Typography>
             <TextField
@@ -82,8 +89,8 @@ function ForgotPassword() {
             </Button>
           </Stack>
         </Stack>
-      </Stack>
-    </Stack>
+      </Grid2>
+    </Grid2>
   );
 }
 
