@@ -1,23 +1,21 @@
 import { TextField, Box, Divider, Typography, Stack } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
-import { iconContainerStyle } from "../../theme/IconBg";
+import IconWithTitle from "../CourseProductComponents/IconWithTitle";
+import TextSection from "../CourseProductComponents/TextSection";
 export default function AboutProduct() {
   let name = "";
   return (
     <Box className="container">
-      <Stack direction="row" gap={1} alignItems="center">
-        <Box sx={iconContainerStyle}>
-          <InfoIcon sx={{color: "common.white"}}/>
-        </Box>
-        <Typography variant={"h3"}>About this Product</Typography>
-      </Stack>
+      <IconWithTitle
+        title={"About this Product"}
+        icon={<InfoIcon sx={{ color: "common.white" }} />}
+      />
       <Divider sx={{ my: 2 }} />
-      <Typography variant="h6" fontWeight={"bold"}>
-        What is your product name?
-      </Typography>
-      <Typography variant="subtitle2" >
-        Your product name should be short and meaningful
-      </Typography>
+      <Typography variant="subtitle2"></Typography>
+      <TextSection
+        title={"What is your product name?"}
+        description={"Your product name should be short and meaningful."}
+      />
       <TextField
         sx={{ my: 2 }}
         fullWidth
@@ -28,15 +26,14 @@ export default function AboutProduct() {
         //   setName(event.target.value);
         // }}
       />
-      <Typography variant="subtitle2" sx={{ mt: 2 }}>
+      <Typography variant="bmdr" sx={{ mt: 2 }}>
         eg: Grow Lights - LED or fluorescent grow lights
       </Typography>
-      <Typography variant="h6" fontWeight={"bold"} marginTop={4}>
-        Tell us more about your product
-      </Typography>
-      <Typography variant="subtitle2" >
-        Help explain what does the product do and key feature
-      </Typography>
+
+      <TextSection
+        title={"Tell us more about your product"}
+        description={"Help explain what does the product do and key feature"}
+      />
       <TextField
         sx={{ my: 2 }}
         fullWidth

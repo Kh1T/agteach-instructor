@@ -3,6 +3,8 @@ import InsertPhotoIcon from "@mui/icons-material/InsertPhoto";
 import { styled } from "@mui/material/styles";
 import * as React from "react";
 import { useRef } from "react";
+import IconWithTitle from "../CourseProductComponents/IconWithTitle";
+import TextSection from "../CourseProductComponents/TextSection";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -37,14 +39,17 @@ export default function ProductPhoto() {
   };
   return (
     <Box>
-      <Typography variant="h3">Product Photo</Typography>
+      <IconWithTitle
+        title={"Product Photo"}
+        icon={<InsertPhotoIcon sx={{ color: "common.white" }} />}
+      />
       <Divider sx={{ my: 2 }} />
-      <Typography variant="h6" fontWeight={"bold"}>
-        Choose a feature image for your product
-      </Typography>
-      <Typography variant="subtitle2">
-        Most of customer will decided to buy a product based on an image{" "}
-      </Typography>
+      <TextSection
+        title={"Choose a feature image for your product"}
+        description={
+          "Most of customer will decided to buy a product based on an image"
+        }
+      />
       {/* <Box display={"flex"} gap={2}>
         <Box maxHeight={"65px"}>
           <img src="https://picsum.photos/id/255/65/65" />

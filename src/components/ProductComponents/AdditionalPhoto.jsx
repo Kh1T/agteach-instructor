@@ -4,38 +4,35 @@ import instructPhoto2 from "../../assets/product-page/product-photo-instruct2.pn
 import instructPhoto3 from "../../assets/product-page/product-photo-instruct3.png";
 import instructPhoto4 from "../../assets/product-page/product-photo-instruct4.png";
 
-import {
-  Box,
-  Button,
-  Divider,
-  ListItem,
-  Stack,
-  Typography,
-  List,
-} from "@mui/material";
+import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
+
+import { Box, Divider, Stack, Typography } from "@mui/material";
 import React from "react";
 import AddPhotoModal from "./AddPhotoModal";
+import IconWithTitle from "../CourseProductComponents/IconWithTitle";
+import TextSection from "../CourseProductComponents/TextSection";
 
 export default function AdditionalPhoto() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   return (
-    <Box sx={{ paddingBottom: "128px" }}>
-      {" "}
-      <Typography variant="h3">Additional Photo</Typography>
+    <Box>
+      <IconWithTitle
+        title={"Additional Photo"}
+        icon={<AddPhotoAlternateIcon sx={{ color: "common.white" }} />}
+      />
       <Divider
         sx={{
           my: 2,
         }}
       />
-      <Typography variant="h6" fontWeight={"bold"}>
-        Help your customer see the product better
-      </Typography>
-      <Typography variant="subtitle2">
-        Add more image will tend to help customer have an overview about your
-        product more
-      </Typography>
+      <TextSection
+        title={"Help your customer see the product better"}
+        description={
+          "Add more image will tend to help customer have an overview about your product more"
+        }
+      />
       <Stack
         direction={"row"}
         gap={1}
@@ -55,24 +52,16 @@ export default function AdditionalPhoto() {
           my: 2,
         }}
       />
-      <List>
-        <ListItem>
+      <Typography component={"ul"}>
+        <Typography component={"li"}>
           Please verify your course information before submitting
-        </ListItem>
-        <ListItem>
-          By clicking .<strong>CREATE PRODUCT</strong>. you ensure that all the
+        </Typography>
+        <Typography component={"li"}>
+          By clicking <strong>CREATE PRODUCT</strong> you ensure that all the
           provided course above information is following AgTeach Terms and
           Policy
-        </ListItem>
-      </List>
-      <Box display={"flex"}>
-        <Button
-          variant="contained"
-          sx={{ marginRight: "auto", bgcolor: "blue.main" }}
-        >
-          Create Product
-        </Button>
-      </Box>
+        </Typography>
+      </Typography>
     </Box>
   );
 }

@@ -4,16 +4,16 @@ import {
   Select,
   MenuItem,
   Divider,
-  Button,
   Typography,
   Stack,
   Box,
 } from "@mui/material";
 
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import CategoryIcon from "@mui/icons-material/Category";
 import React from "react";
-import { iconContainerStyle } from "../../theme/IconBg";
+import BurstModeIcon from "@mui/icons-material/BurstMode";
+import IconWithTitle from "../CourseProductComponents/IconWithTitle";
+import TextSection from "../CourseProductComponents/TextSection";
 
 export default function ProductCategoryForm() {
   const [selectedCategory, setSelectedCategory] = React.useState(0);
@@ -24,36 +24,20 @@ export default function ProductCategoryForm() {
 
   return (
     <Stack className="container" gap={1} alignItems="flex-start">
-      <Button
-        variant="text"
-        color="black"
-        startIcon={<ArrowBackIosIcon fontSize="small" color="gray" />}
-        sx={{ gap: 0, paddingLeft: 0 }}
-      >
-        Go Back
-      </Button>
-      
-
       <Box sx={{ width: "100%" }}>
-        <Stack direction="row" gap={1} alignItems="center">
-          <Box sx={iconContainerStyle}>
-            <CategoryIcon sx={{ color: "common.white" }} />
-          </Box>
-          <Typography variant="h3">Category</Typography>
-        </Stack>
+        <IconWithTitle
+          title={"Category"}
+          icon={<BurstModeIcon sx={{ color: "common.white" }} />}
+        />
 
         <Divider variant="fullWidth" sx={{ my: 2 }} />
-
-        <Typography variant="h6" fontWeight="bold" marginY={1}>
-          Product Category
-        </Typography>
-
-        <Typography variant="subtitle2">
-          Please choose an appropriate category for this product
-        </Typography>
+        <TextSection
+          title={"Product Category"}
+          description={"Please choose an appropriate category for this product"}
+        />
       </Box>
 
-      <FormControl fullWidth sx={{ my: 4 }}>
+      <FormControl fullWidth sx={{ my: 2 }}>
         <InputLabel id="category-select-label">Category</InputLabel>
         <Select
           labelId="category-select-label"

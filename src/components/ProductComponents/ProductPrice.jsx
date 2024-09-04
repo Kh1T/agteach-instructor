@@ -1,17 +1,30 @@
-import { Divider, Box, TextField, Typography, ListItem , List } from "@mui/material";
+import {
+  Divider,
+  Box,
+  TextField,
+  Typography,
+  ListItem,
+  List,
+} from "@mui/material";
+import IconWithTitle from "../CourseProductComponents/IconWithTitle";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+import TextSection from "../CourseProductComponents/TextSection";
 
 export default function ProductPrice() {
   let name = "";
   return (
     <Box className="container">
-      <Typography variant="h3">Product Price</Typography>
+      <IconWithTitle
+        title={"Product Price"}
+        icon={<AttachMoneyIcon sx={{ color: "common.white" }} />}
+      />
       <Divider sx={{ my: 2 }} />
-      <Typography variant="h6" fontWeight={"bold"}>
-        Tell us about your product price
-      </Typography>
-      <Typography variant="subtitle2">
-        Choosing a correct price strategy will help engage more customer
-      </Typography>
+      <TextSection
+        title={"Tell us about your product price"}
+        description={
+          "Choosing a correct price strategy will help engage more customers"
+        }
+      />
       <TextField
         sx={{ my: 2 }}
         id="outlined-controlled"
@@ -21,12 +34,12 @@ export default function ProductPrice() {
         //   setName(event.target.value);
         // }}
       />
-      <List sx={{ listStyleType: "disc" }}>
-        <ListItem>NOTE: AgTeach will deduct 20% from your total sale</ListItem>
-        <ListItem>
+      <Typography component={"ul"} >
+        <Typography component={"li"}>NOTE: AgTeach will deduct 20% from your total sale</Typography>
+        <Typography component={"li"}>
           Example, if the product is $100 we will deduct $20 from your sale
-        </ListItem>
-      </List>
+        </Typography>
+      </Typography>
     </Box>
   );
 }
