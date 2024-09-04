@@ -4,9 +4,14 @@ import { Box, Container, Grid2, Typography } from "@mui/material";
 
 function SideBarImg() {
   return (
-    <Box style={{ position: "relative" }}>
+    <Box sx={{ position: "relative" }}>
       <Box>
-        <img src={loginImg} alt="login-img" style={{ height: "100vh" }} />
+        <Box
+          component="img"
+          src={loginImg}
+          alt="login-img"
+          sx={{ width: "100%", height: "100vh" }}
+        />
       </Box>
       <Box
         sx={{
