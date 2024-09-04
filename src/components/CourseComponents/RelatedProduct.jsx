@@ -1,11 +1,4 @@
-import {
-  Box,
-  Divider,
-  TextField,
-  Typography,
-  List,
-  ListItem, Stack
-} from "@mui/material";
+import { Box, Divider, TextField, Typography, Stack } from "@mui/material";
 import ProductCard from "./ProductCard";
 import ButtonComponent from "../ButtonInBox";
 import Inventory2OutlinedIcon from "@mui/icons-material/Inventory2Outlined";
@@ -46,12 +39,16 @@ export default function RelatedProduct() {
         src={"https://picsum.photos/id/122/200/400"}
       />
 
-      <List sx={{ listStyleType: "disc" }}>
-        <ListItem>NOTE: AgTeach will deduct 20% from your total sale</ListItem>
-        <ListItem>
-          Example, if the product is $100 we will deduct $20 from your sale
-        </ListItem>
-      </List>
+      <Typography component={"ul"}>
+        <Typography component={"li"}>
+          Please verify your course information before submitting
+        </Typography>
+        <Typography component={"li"}>
+          By clicking <strong>CREATE COURSE</strong> you ensure that all the
+          provided course above information is following AgTeach Terms and
+          Policy
+        </Typography>
+      </Typography>
     </Box>
   );
 }

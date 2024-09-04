@@ -34,12 +34,12 @@ export default function CoursePrice() {
         //   setName(event.target.value);
         // }}
       />
-      <List sx={{ listStyleType: "disc" }}>
-        <ListItem>NOTE: AgTeach will deduct 20% from your total sale</ListItem>
-        <ListItem>
+      <Typography component={"ul"}>
+        <Typography component={'li'}>NOTE: AgTeach will deduct 20% from your total sale</Typography>
+        <Typography component={'li'}>
           Example, if the product is $100 we will deduct $20 from your sale
-        </ListItem>
-      </List>
+        </Typography>
+      </Typography>
     </Box>
   );
 }
