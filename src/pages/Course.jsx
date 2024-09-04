@@ -7,25 +7,27 @@ import { courses } from "../data/coursesData";
 
 function CoursePage() {
   const [selectState, setSelectState] = useState(0);
-  
+
   const searchRef = useRef();
   const label = "Sort";
   const courseList = courses.map((item) => ({
     ...item,
     edit: (
-      // <Button variant="contained">
-        <EditIcon sx={{ cursor: "pointer"}} onClick={() => console.log(item.name)} />
-        
-      // </Button>
+      <EditIcon
+        sx={{ cursor: "pointer" }}
+        onClick={() => console.log(item.name)}
+      />
     ),
-    delete: <DeleteIcon color="red" sx={{cursor: "pointer"}} onClick={() => console.log(item.name)} />
+    delete: (
+      <DeleteIcon
+        color="red"
+        sx={{ cursor: "pointer" }}
+        onClick={() => console.log(item.name)}
+      />
+    ),
   }));
 
-
-  function handleSearch() {
-    console.log(searchRef.current.value);
-    console.log(selectState);
-  }
+  function handleSearch() {}
   return (
     <>
       <QueryHeader
@@ -37,8 +39,7 @@ function CoursePage() {
         pathCreated="/course/new"
         labelCreate="Create Course"
       />
-      <TableComponent data={courseList} isPagination={true}/>
-      {/* <CustomTableMui data={data}/> */}
+      <TableComponent data={courseList} rowLimit={10} isPagination={true} />
     </>
   );
 }
