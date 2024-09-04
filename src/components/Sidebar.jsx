@@ -7,10 +7,10 @@ import Typography from "@mui/material/Typography";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import { useLocation, Link as RouterLink, useParams } from "react-router-dom";
+import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 
 import logoIcon from "../assets/logo.svg";
 import avtarChip from "../assets/avatar-chip.png";
-import logoutIcon from "../assets/logout-sidebar-icon.svg";
 import { Avatar, Chip, Container, Link, Stack } from "@mui/material";
 
 import sidebarList from "../data/sideBarData";
@@ -25,7 +25,7 @@ export default function Sidebar({ children }) {
     if (param.courseId) element.route = `/course/${param.courseId}/edit`;
     if (element.route !== pathname) return false;
     return element.route === pathname;
-  }).title ;
+  }).title;
 
   const drawerContent = (
     <Drawer
@@ -34,7 +34,9 @@ export default function Sidebar({ children }) {
         flexShrink: 0,
         "& .MuiDrawer-paper": {
           width: drawerWidth,
-          boxSizing: "border-box",
+          boxSizing: "border-box",          
+          borderRight: "0.5px dashed ",
+          borderColor: 'grey.400',
           px: "20px",
           py: 5,
         },
@@ -62,8 +64,9 @@ export default function Sidebar({ children }) {
           />
           <Toolbar />
           {sidebarList.map(
-            ({ title, icon, route }, index) =>
-              icon && (
+            // Icon here is a component of Icon from MUI
+            ({ title, Icon, route }, index) =>
+              Icon && (
                 <Link
                   component={RouterLink}
                   to={route}
@@ -82,15 +85,12 @@ export default function Sidebar({ children }) {
                 >
                   <ListItem key={title} disablePadding>
                     <ListItemButton>
-                      <Box
-                        component="img"
+                      <Icon
                         sx={{
-                          height: 25,
-                          width: 25,
-                          pr: "15px",
+                          color:
+                            route === pathname ? "common.white" : "dark.300",
+                          mr: "20px",
                         }}
-                        alt={title}
-                        src={icon}
                       />
                       <Typography variant="bmdr" sx={{ color: "dark.300" }}>
                         {title}
@@ -105,15 +105,7 @@ export default function Sidebar({ children }) {
 
       <Box>
         <ListItemButton>
-          <Box
-            component="img"
-            src={logoutIcon}
-            sx={{
-              height: 25,
-              width: 25,
-              pr: "15px",
-            }}
-          />
+          <LogoutOutlinedIcon sx={{ color: "dark.300", mr: "20px" }} />
           <Typography variant="bmdr" sx={{ color: "dark.300" }}>
             Logout
           </Typography>
@@ -151,7 +143,6 @@ export default function Sidebar({ children }) {
             flexDirection: "row",
             justifyContent: "center",
             maxWidth: 1300,
-            // borderStyle: "dashed",
             borderBottom: 1,
             borderBottomStyle: "dashed",
             borderColor: "grey.300",
@@ -208,7 +199,6 @@ export default function Sidebar({ children }) {
     >
       {children}
     </Container>
-    
   );
   const sideBarContent = (
     <Box sx={{ display: "flex" }}>
