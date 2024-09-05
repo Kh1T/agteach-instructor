@@ -1,32 +1,37 @@
 import {
   Box,
-  Button,
   Divider,
   Stack,
   TextField,
   Typography,
+  Grid2 as Grid,
 } from "@mui/material";
 import agtechDark from "./../assets/login/logo-dark.svg";
 import ghostImg from "./../assets/login/ghost-img.png";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import { useTheme } from "@emotion/react";
+import CustomButton from "../components/CustomButton";
+import { Link } from "react-router-dom";
 
 function ForgotPassword() {
-  const theme = useTheme();
   const gap = "20px";
 
   return (
-    <Stack flexDirection="column" alignItems="center" gap="100px">
-      <img
-        style={{ width: "100px", height: "50px", paddingTop: "100px" }}
-        src={agtechDark}
-        alt="dark-logo"
-      />
-      <Stack
+    <Grid
+      container
+      direction="column"
+      alignContent="center"
+      justifyContent="space-between"
+      spacing={25}
+      mt={4}
+    >
+      <Box component="img" src={agtechDark} alt="dark-logo" />
+
+      <Grid
+        container
         direction="row"
+        justifyContent="center"
         alignItems="center"
-        justifyContent="space-around"
-        width="40%"
+        spacing={15}
       >
         <Stack textAlign="center" gap={gap}>
           <img src={ghostImg} alt="ghost-img" />
@@ -40,11 +45,10 @@ function ForgotPassword() {
             </Box>
           </Box>
         </Stack>
-        <Stack gap={gap}>
+        {/* Form input */}
+        <Stack gap={gap} sx={{ width: { sm: "100%", lg: "500px" } }}>
           <Stack gap={gap}>
-            <Typography variant="blgsm" sx={theme.palette.dark[200]}>
-              Enter your email address
-            </Typography>
+            <Typography variant="blgsm">Enter your email address</Typography>
             <TextField
               label="Email *"
               placeholder="eg: johndoe@abc.xyz"
@@ -52,38 +56,18 @@ function ForgotPassword() {
             />
           </Stack>
           <Divider />
-          <Stack gap="15px">
-            <Button
-              sx={{
-                width: 460,
-                height: 50,
-                borderRadius: 2,
-              }}
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-            >
-              Send reset link
-            </Button>
-            <Button
-              sx={{
-                width: 460,
-                height: 50,
-                borderRadius: 2,
-              }}
-              type="submit"
-              fullWidth
-              variant="outlined"
-              color="primary"
-            >
+          <CustomButton color="primary" variant="contained">
+            Send reset link
+          </CustomButton>
+          <Link to="..">
+            <CustomButton color="primary" variant="outlined">
               <ArrowBackIosIcon sx={{ fontSize: "medium" }} />
               Back to login
-            </Button>
-          </Stack>
+            </CustomButton>
+          </Link>
         </Stack>
-      </Stack>
-    </Stack>
+      </Grid>
+    </Grid>
   );
 }
 

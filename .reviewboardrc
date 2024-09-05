@@ -1,5 +1,5 @@
 REVIEWBOARD_URL = "https://review.clp.kr/"
 REPOSITORY = "AlphaBeez/AgTeach/Instructor"
 REPOSITORY_TYPE = "git"
-BRANCH = "feature/feat-customtable-com"
-LAND_DEST_BRANCH = "feature/feat-customtable-com"
+BRANCH = "feature/feat-signup-page"
+LAND_DEST_BRANCH = "feature/feat-signup-page"
