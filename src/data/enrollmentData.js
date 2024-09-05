@@ -1,5 +1,4 @@
 import CustomButton from "../components/CustomButton";
-import { Button } from "@mui/material";
 
 const data = [
   {
