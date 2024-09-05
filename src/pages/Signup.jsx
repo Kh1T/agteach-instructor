@@ -67,10 +67,14 @@ function Signup() {
           />
           {linkActive ? (
             <Link to="additional">
-              <CustomButton>Create Account</CustomButton>
+              <CustomButton color="primary" variant="contained">
+                Create Account
+              </CustomButton>
             </Link>
           ) : (
-            <CustomButton>Create Account</CustomButton>
+            <CustomButton color="primary" variant="contained">
+              Create Account
+            </CustomButton>
           )}
         </form>
         <Typography textAlign="center">

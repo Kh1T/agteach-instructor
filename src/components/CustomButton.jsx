@@ -1,6 +1,6 @@
 import { Button } from "@mui/material";
 
-function CustomButton({ type = "contained", children }) {
+function CustomButton({ children, ...props }) {
   return (
     <Button
       sx={{
@@ -8,9 +8,7 @@ function CustomButton({ type = "contained", children }) {
         borderRadius: 2,
         width: "100%",
       }}
-      type="submit"
-      variant={type}
-      color="primary"
+      {...props}
     >
       {children}
     </Button>

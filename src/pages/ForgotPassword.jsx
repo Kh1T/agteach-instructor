@@ -56,9 +56,11 @@ function ForgotPassword() {
             />
           </Stack>
           <Divider />
-          <CustomButton>Send reset link</CustomButton>
+          <CustomButton color="primary" variant="contained">
+            Send reset link
+          </CustomButton>
           <Link to="..">
-            <CustomButton type="outlined">
+            <CustomButton color="primary" variant="outlined">
               <ArrowBackIosIcon sx={{ fontSize: "medium" }} />
               Back to login
             </CustomButton>

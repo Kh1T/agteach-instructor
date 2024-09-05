@@ -104,7 +104,9 @@ function AdditionalInformation() {
                 // Add props for validation (e.g., phone number format)
               />
             </Stack>
-            <CustomButton>Continue</CustomButton>
+            <CustomButton color="primary" variant="contained">
+              Continue
+            </CustomButton>
           </Stack>
         </form>
       </Grid>

@@ -1,6 +1,7 @@
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import agtechDark from "./../assets/login/logo-dark.svg";
 import InputField from "../components/InputField";
+import CustomButton from "../components/CustomButton";
 
 function ResetPassword() {
   const gap = "20px";
@@ -17,20 +18,9 @@ function ResetPassword() {
           <InputField fieldName="Confirm" fieldType="password" />
         </Stack>
         <Divider />
-
-        <Button
-          sx={{
-            width: 460,
-            height: 50,
-            borderRadius: 2,
-          }}
-          type="submit"
-          variant="contained"
-          color="primary"
-          fullWidth
-        >
+        <CustomButton color="primary" variant="contained">
           Reset Password
-        </Button>
+        </CustomButton>
       </Stack>
     </Stack>
   );

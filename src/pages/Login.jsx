@@ -75,7 +75,9 @@ function LoginPage() {
                 label="Keep me logged in"
               />
               <Link to="forgot">Forgot Password ?</Link>
-              <CustomButton>Login</CustomButton>
+              <CustomButton color="primary" variant="contained">
+                Login
+              </CustomButton>
               <Typography>
                 Need an account ? <Link to="/signup">Create one</Link>
               </Typography>
