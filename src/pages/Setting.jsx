@@ -43,9 +43,9 @@ function SettingPage() {
 
       {/* Information Section */}
       <Grid container direction="column" gap={5}>
-        <Stack height="100%" gap={2}>
+        <Box gap={2}>
           <Typography variant="h5">Personal Information</Typography>
-          <Grid container height="10vh" gap={2}>
+          <Grid container gap={2}>
             <Grid container gap={2}>
               <CustomInputField fieldName="First Name" />
               <CustomInputField fieldName="Last Name" />
@@ -55,7 +55,7 @@ function SettingPage() {
               <CustomInputField fieldName="Bio" multiline rows={4} fullWidth />
             </Grid>
           </Grid>
-        </Stack>
+        </Box>
 
         {/* Address Information Section */}
 
