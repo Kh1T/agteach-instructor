@@ -21,7 +21,7 @@ export default function AboutProduct() {
         fullWidth
         id="outlined-controlled"
         label="Title"
-        value={name}
+        // value={name}
         // onChange={(event) => {
         //   setName(event.target.value);
         // }}
@@ -42,7 +42,7 @@ export default function AboutProduct() {
         fullWidth
         id="outlined-controlled"
         label="Description"
-        value={name}
+        // value={name}
         // onChange={(event) => {
         //   setName(event.target.value);
         // }}
