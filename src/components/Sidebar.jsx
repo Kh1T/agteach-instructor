@@ -67,7 +67,7 @@ export default function Sidebar({ children }) {
           />
           <Toolbar />
           {sidebarList.map(
-            ({ title, icon, route }, index) =>
+            ({ title = "Title", icon, route }, index) =>
               icon && (
                 <Link
                   component={RouterLink}
