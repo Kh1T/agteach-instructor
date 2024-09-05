@@ -13,6 +13,10 @@ import NewProductPage from "../pages/NewProduct";
 import EditProductPage from "../pages/EditProduct";
 import NewCoursePage from "../pages/NewCourse";
 import EditCoursePage from "../pages/EditCourse";
+import ForgotPassword from "../pages/ForgotPassword";
+import Signup from "../pages/Signup";
+import AdditionalInformation from "../pages/AdditionalInformation";
+import ResetPassword from "../pages/ResetPassword";
 
 export const router = createBrowserRouter([
   {
@@ -20,7 +24,6 @@ export const router = createBrowserRouter([
     element: <RootLayout />,
     children: [
       { index: true, element: <DashboardPage /> },
-      { path: "/login", element: <LoginPage /> },
       {
         path: "/course",
         children: [
@@ -44,4 +47,21 @@ export const router = createBrowserRouter([
       { path: "/setting", element: <SettingPage /> },
     ],
   },
+
+  {
+    path: "/login",
+    children: [
+      { index: true, element: <LoginPage /> },
+      { path: "forgot", element: <ForgotPassword /> },
+    ],
+  },
+  {
+    path: "/signup",
+    children: [
+      { index: true, element: <Signup /> },
+      { path: "additional", element: <AdditionalInformation /> },
+    ],
+  },
+
+  { path: "/reset-password", element: <ResetPassword /> },
 ]);
