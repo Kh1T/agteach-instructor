@@ -79,8 +79,8 @@ export default function Sidebar({ children }) {
           />
           <Toolbar />
           {sidebarList.map(
-            ({ title = "Title", icon, route }, index) =>
-              icon && (
+            ({ title = "Title", Icon, route }, index) =>
+              Icon && (
                 <Link
                   component={RouterLink}
                   to={route}
@@ -132,7 +132,6 @@ export default function Sidebar({ children }) {
       position="fixed"
       sx={{
         width: `calc(100% - ${drawerWidth}px)`,
-        // pl: 15,
         pt: 5,
         ml: `${drawerWidth}px`,
         backgroundColor: "common.white",
@@ -145,8 +144,6 @@ export default function Sidebar({ children }) {
           display: "flex",
           justifyContent: "center",
           flexDirection: "row",
-          px: 0,
-          "@media (min-width: 0px)": { paddingRight: 0, paddingLeft: 0 },
           width: "100%",
         }}
       >
@@ -201,10 +198,6 @@ export default function Sidebar({ children }) {
       sx={{
         mt: 20,
         maxWidth: "1300px",
-        "@media (min-width: 0px)": { paddingRight: 0, paddingLeft: 0 },
-        "&.MuiContainer-root": {
-          px: 0,
-        },
       }}
     >
       {children}
