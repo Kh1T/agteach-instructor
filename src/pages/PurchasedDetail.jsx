@@ -1,6 +1,6 @@
 import { ChevronLeft } from "@mui/icons-material";
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CustomChip from "../components/CustomChip";
 import CustomTable from "../components/CustomTable";
 
@@ -38,11 +38,12 @@ function PurchasedDetailPage() {
     ...item,
   }));
 
+  const navigate = useNavigate()
   return (
     <Stack alignItems="start" gap={5}>
-      <Link>
-        <Button variant="Text" startIcon={<ChevronLeft />}>
-          <Typography variant="bsr" sx={{ textDecoration: "underline" }}>
+      <Link to={navigate(-1)}>
+        <Button variant="Text" sx={{color: "common.black"}} startIcon={<ChevronLeft />}>
+          <Typography variant="bsr" sx={{  textDecoration: "underline" }}>
             Go Back
           </Typography>
         </Button>
