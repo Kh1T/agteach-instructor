@@ -17,7 +17,7 @@ import ForgotPassword from "../pages/ForgotPassword";
 import Signup from "../pages/Signup";
 import AdditionalInformation from "../pages/AdditionalInformation";
 import ResetPassword from "../pages/ResetPassword";
-import EnrollmentItem from "../pages/EnrollmentItem";
+import EnrollmentDetailPage from "../pages/EnrollmentDetail";
 
 export const router = createBrowserRouter([
   {
@@ -33,6 +33,7 @@ export const router = createBrowserRouter([
       { path: "product/:productId/edit", element: <EditProductPage /> },
       { path: "purchased", element: <PurchasedPage /> },
       { path: "enrollment", element: <EnromentPage /> },
+      { path: "enrollment/:enrollmentId", element: <EnrollmentDetailPage /> },
       { path: "balance", element: <BalancePage /> },
       { path: "setting", element: <SettingPage /> },
     ],
