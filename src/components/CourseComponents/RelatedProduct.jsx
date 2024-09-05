@@ -19,6 +19,18 @@ import { fakeProductData } from "../../data/searchBarData";
 import AddedProduct from "../CourseProductComponents/AddedProduct";
 
 const allProduct = fakeProductData
+  /**
+   * RelatedProduct component
+   *
+   * This component displays a list of suggested products that are relevant to
+   * the course. It allows the user to search for products, add them to the
+   * course, and remove them.
+   *
+   * The component also displays a list of products that have already been
+   * added to the course.
+   *
+   * @returns A RelatedProduct component
+   */
 export default function RelatedProduct() {
   const [searchResults, setSearchResults] = useState([allProduct]);
   const [addedProducts, setAddedProducts] = useState([]);

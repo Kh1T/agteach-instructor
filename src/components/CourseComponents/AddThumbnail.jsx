@@ -5,6 +5,15 @@ import IconWithTitle from "../CourseProductComponents/IconWithTitle";
 import TextSection from "../CourseProductComponents/TextSection";
 import PhotoPreview from "../CourseProductComponents/PhotoPreview";
 
+/**
+ * AddThumbnail component for adding thumbnail image of course
+ *
+ * @returns {React.ReactElement} Box component with children
+ *   - IconWithTitle component with title and icon
+ *   - Divider component
+ *   - TextSection component with title and description
+ *   - PhotoPreview component with icon .
+ */
 export default function AddThumbnail() {
   return (
     <Box>

@@ -6,32 +6,49 @@ import SectionComponent from "../CourseProductComponents/SectionComponent";
 
 import { v4 as uuidv4 } from "uuid";
 import { useState } from "react";
-export default function CourseContents() {
-  const [sections, setSection] = useState([{ id: uuidv4(), number: 1 , type: "section"}]);
 
-  const handleAddSection = () => {
-    setSection((prevSections) => [
+  /**
+   * CourseContents component renders a list of sections, and allows adding/deleting of sections.
+   *
+   * It uses the SectionComponent component to render each section.
+   *
+   * When adding a new section, it increments the number of all existing sections by 1,
+   * and then appends the new section to the end of the list, with the next number.
+   *
+   * When deleting a section, it removes the section from the list and decrements the number of all existing sections by 1.
+   *
+   * @returns a JSX element containing the CourseContents component.
+   */
+export default function CourseContents() {
+  const [sections, setSections] = useState([{ id: uuidv4(), number: 1, type: "section" }]);
+
+  /**
+   * Add a new section to the course contents.
+   *
+   * When adding a new section, it increments the number of all existing sections by 1,
+   * and then appends the new section to the end of the list, with the next number.
+   */
+  const handleAddSection = () =>
+    setSections((prevSections) => [
       ...prevSections.map((section, index) => ({
         ...section,
         number: index + 1,
       })),
-      { id: uuidv4(), number: prevSections.length + 1, type: "section" }, // Add a new lecture with the next number
+      { id: uuidv4(), number: prevSections.length + 1, type: "section" },
     ]);
-  };
 
-  const handleDeleteSection = (id) => {
-    setSection((prevSections) =>
+  const handleDeleteSection = (id) =>
+    setSections((prevSections) =>
       prevSections
         .filter((section) => section.id !== id)
         .map((section, index) => ({ ...section, number: index + 1 }))
     );
-  };
-  
+
   return (
     <Box my={2}>
       <Typography variant="h3"> </Typography>
       <IconWithTitle
-        title={"Course Contents"}
+        title="Course Contents"
         icon={<BurstModeOutlinedIcon sx={{ color: "common.white" }} />}
       />
       <Divider sx={{ my: 2 }} />
@@ -47,9 +64,9 @@ export default function CourseContents() {
       <Divider />
       <ButtonComponent
         onClick={handleAddSection}
-        text={"Add Section +"}
+        text="Add Section +"
         flexEnd
-        variant={"contained"}
+        variant="contained"
       />
     </Box>
   );
