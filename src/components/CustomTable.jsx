@@ -48,7 +48,7 @@ export default function CustomTable({
       <TableContainer>
         <Table
           sx={{
-            minWidth: 650,
+            minWidth: 200,
             borderTop: "1px dashed",
             borderBottom: "1px dashed",
             borderColor: "grey.300",

@@ -10,7 +10,7 @@ function CoursePage() {
       <QueryHeader
         label={label}
         useSelectState={[selectState, setSelectState]}
-        selectData={["Newest", "Oldest", "World"]}
+        selectData={["Newest", "Oldest"]}
         handleCreateNew={handleCreateNew}
         handleSearch={handleSearch}
       />
