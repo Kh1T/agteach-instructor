@@ -20,7 +20,6 @@ function CustomPasswordField({ register, fieldName = "Password", errors }) {
     ? register(nameLowerCase, { required: `${fieldName} is required` })
     : {};
   const errorState = errors ? !!errors[nameLowerCase] : false;
-  const helperText = errors ? errors[nameLowerCase]?.message : "";
 
   return (
     <>

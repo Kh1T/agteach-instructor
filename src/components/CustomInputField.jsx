@@ -6,6 +6,7 @@ function CustomInputField({
   fieldType = "text",
   register,
   errors,
+  ...props
 }) {
   const nameLowerCase = fieldName.toLowerCase();
 
@@ -16,15 +17,17 @@ function CustomInputField({
   const helperText = errors ? errors[nameLowerCase]?.message : "";
 
   return (
-    <FormControl variant="outlined">
+    <FormControl variant="outlined" fullWidth>
       {fieldType === "password" ? (
         <CustomPasswordField register={register} errors={errors} />
       ) : (
         <TextField
+          fullWidth
           label={fieldName}
           {...registerField}
           error={errorState} // Error state
           helperText={helperText}
+          {...props}
         />
       )}
     </FormControl>
