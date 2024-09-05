@@ -25,7 +25,7 @@ function NewCoursePage() {
       <ButtonComponent
         text={"CREATE COURSE"}
         variant={"contained"}
-        bgcolor={"blue.main"}
+        bgcolor={"purple.main"}
       />
     </Box>
   );

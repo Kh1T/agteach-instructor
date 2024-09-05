@@ -9,4 +9,4 @@ function BalancePage() {
   );
 }
 
-export default BalancePage
+export default BalancePage;
