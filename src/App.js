@@ -1,3 +1,4 @@
+import "./App.css";
 import { ThemeProvider } from "@emotion/react";
 import { RouterProvider } from "react-router-dom";
 
