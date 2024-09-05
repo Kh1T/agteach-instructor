@@ -26,6 +26,7 @@ export default function CourseContents() {
         .map((section, index) => ({ ...section, number: index + 1 }))
     );
   };
+  
   return (
     <Box my={2}>
       <Typography variant="h3"> </Typography>

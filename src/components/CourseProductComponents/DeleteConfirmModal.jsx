@@ -18,7 +18,7 @@ const DeleteConfirmModal = ({ open, onClose, onConfirm, type }) => {
         <Box component="img" src={RecycleBagIcon} />
         <DialogTitle fontWeight={"bold"}>Delete Confirmation</DialogTitle>
         <Typography>Are you sure you want to delete this {type}?</Typography>
-        <Typography>You wont be able to retrieve it back</Typography>
+        <Typography>You won't be able to retrieve it back</Typography>
       </DialogContent>
       <DialogActions
         sx={{ justifyContent: "center", gap: 2, paddingBottom: 4 }}
