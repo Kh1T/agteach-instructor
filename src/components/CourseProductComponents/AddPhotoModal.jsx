@@ -11,7 +11,7 @@ const style = {
   bgcolor: "background.paper",
   boxShadow: 24,
   p: 4,
-  outline: "none"
+  outline: "none",
 };
 
 const styleSecondBox = {
@@ -25,8 +25,12 @@ const styleSecondBox = {
   gap: 1,
 };
 
-
-const AddPhotoModal = ({ open, handleClose, handleFileUpload , handleFileDrop}) => {
+const AddPhotoModal = ({
+  open,
+  handleClose,
+  handleFileUpload,
+  handleFileDrop,
+}) => {
   const handleDrop = (event) => {
     event.preventDefault();
     event.stopPropagation();
@@ -47,9 +51,9 @@ const AddPhotoModal = ({ open, handleClose, handleFileUpload , handleFileDrop}) 
         <Box sx={style} onDrop={handleDrop} onDragOver={handleDragOver}>
           <Box sx={styleSecondBox}>
             <SvgIcon>
-              <UploadFileIcon color="primary" />
+              <UploadFileIcon color="blue" />
             </SvgIcon>
-            <Typography variant="body1">
+            <Typography variant="bmdr">
               <Link
                 sx={{ color: "blue.main", cursor: "pointer" }}
                 onClick={handleFileUpload}
@@ -58,7 +62,7 @@ const AddPhotoModal = ({ open, handleClose, handleFileUpload , handleFileDrop}) 
               </Link>{" "}
               or Drag and Drop
             </Typography>
-            <Typography variant="body2" gutterBottom>
+            <Typography variant="bmdr" gutterBottom>
               SVG, PNG, JPG or GIF (max. 3MB)
             </Typography>
           </Box>
