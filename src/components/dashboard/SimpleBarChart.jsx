@@ -11,21 +11,16 @@ const xLabels = [
   "15-01-2024",
   "16-01-2024"
 ];
-
 export default function SimpleBarChart() {
   return (
     <BarChart
-      //   width='{100%}',
       height={350}
+      borderRadius={4}
       series={[
           { data: pData, label: "Course", id: "pvId" },
           { data: uData, label: "Product", id: "uvId" },
         ]}
         xAxis={[{ data: xLabels, scaleType: "band" }]}
-        sx={{
-          // maxWidth: 800,
-          width: "100%",
-        }}
     />
   );
 }
