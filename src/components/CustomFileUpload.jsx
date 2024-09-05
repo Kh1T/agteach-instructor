@@ -7,8 +7,6 @@ import {
   styled,
 } from "@mui/material";
 
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
   clipPath: "inset(50%)",
@@ -56,7 +54,7 @@ function CustomFileUpload({ open, handleClose }) {
           sx={{ border: "none" }}
           tabIndex={-1}
         >
-          <Typography variant="subtitle1" color="blue.main" underline>
+          <Typography variant="bmdr" color="blue.main" underline>
             Click to upload
           </Typography>
           <VisuallyHiddenInput
@@ -71,7 +69,7 @@ function CustomFileUpload({ open, handleClose }) {
             multiple
           />
         </Button>
-        <Typography variant="subtitle1" color="dark.300">
+        <Typography variant="bsr" color="dark.300">
           SVG, PNG, JPG or GIF (max. 3MB)
         </Typography>
       </Grid>
