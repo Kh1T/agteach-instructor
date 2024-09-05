@@ -35,6 +35,9 @@ export default function AboutProduct() {
         description={"Help explain what does the product do and key feature"}
       />
       <TextField
+        slotProps={{
+          input: { sx: { alignItems: "flex-start", height: "156px" } },
+        }}
         sx={{ my: 2 }}
         fullWidth
         id="outlined-controlled"

@@ -4,6 +4,7 @@ import instructPhoto2 from "../../assets/product-page/product-photo-instruct2.pn
 import instructPhoto3 from "../../assets/product-page/product-photo-instruct3.png";
 import instructPhoto4 from "../../assets/product-page/product-photo-instruct4.png";
 
+import InsertPhoto from "@mui/icons-material/InsertPhoto";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 
 import { Box, Divider, Stack, Typography } from "@mui/material";
@@ -11,6 +12,7 @@ import React from "react";
 import AddPhotoModal from "./AddPhotoModal";
 import IconWithTitle from "../CourseProductComponents/IconWithTitle";
 import TextSection from "../CourseProductComponents/TextSection";
+import PhotoPreview from "../CourseProductComponents/PhotoPreview";
 
 export default function AdditionalPhoto() {
   const [open, setOpen] = React.useState(false);
@@ -37,16 +39,32 @@ export default function AdditionalPhoto() {
         direction={"row"}
         gap={1}
         display={"flex"}
-        height={"223px"}
+        height={"224px"}
         paddingY={4}
       >
         <Box component="img" src={instructPhoto1} />
         <Box component="img" src={instructPhoto2} />
         <Box component="img" src={instructPhoto3} />
         <Box component="img" src={instructPhoto4} />
-        <Box component="img" onClick={handleOpen} src={photoFileInput} />
+        {/* <Box component="img" onClick={handleOpen} src={photoFileInput} /> */}
         <AddPhotoModal open={open} handleClose={handleClose} />
       </Stack>
+      <PhotoPreview
+        sx={{
+          maxWidth: "190px",
+          paddingY: "64px",
+          paddingX: "12px",
+          justifyItems: "center",
+        }}
+        icon={<InsertPhoto />}
+      >
+        <Typography variant="btr" color="gray">
+          Upload Product image, png, jpg, webp
+        </Typography>
+        <Typography variant="btr" color="gray">
+          580 x 580 (Limit size: 1 MB)
+        </Typography>
+      </PhotoPreview>
       <Divider
         sx={{
           my: 2,

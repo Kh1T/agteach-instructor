@@ -6,6 +6,7 @@ import { useRef, useState } from "react";
 
 import UploadFileOutlinedIcon from "@mui/icons-material/UploadFileOutlined";
 import DeleteConfirmModal from "./DeleteConfirmModal";
+import PhotoPreview from "./PhotoPreview";
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
   clipPath: "inset(50%)",
@@ -28,7 +29,7 @@ const style = {
   my: 0,
 };
 
-export default function LectureComponent({ id, onDelete, number , type }) {
+export default function LectureComponent({ id, onDelete, number, type }) {
   const [modalOpen, setModalOpen] = useState(false);
   const lectureInputRef = useRef(null);
 
@@ -68,16 +69,9 @@ export default function LectureComponent({ id, onDelete, number , type }) {
         sx={{ my: 2 }}
         variant="outlined"
       />
-      <Stack sx={style} onClick={handleClick}>
-        <UploadFileOutlinedIcon color="grey" />
-        <Typography color="grey">Upload Lecture Video</Typography>
-        <VisuallyHiddenInput
-          ref={lectureInputRef}
-          type="file"
-          multiple
-          sx={{ display: "none" }}
-        />
-      </Stack>
+      <PhotoPreview icon={<UploadFileOutlinedIcon color="grey" />}>
+        <Typography color="gray">Upload Lecture Video </Typography>
+      </PhotoPreview>
       <DeleteConfirmModal
         open={modalOpen}
         onClose={handleCloseModal}
