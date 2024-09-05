@@ -1,18 +1,16 @@
-import photoFileInput from "../../assets/product-page/Photos File Input.png";
 import instructPhoto1 from "../../assets/product-page/product-photo-instruct1.png";
 import instructPhoto2 from "../../assets/product-page/product-photo-instruct2.png";
 import instructPhoto3 from "../../assets/product-page/product-photo-instruct3.png";
 import instructPhoto4 from "../../assets/product-page/product-photo-instruct4.png";
 
-import InsertPhoto from "@mui/icons-material/InsertPhoto";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 
 import { Box, Divider, Stack, Typography } from "@mui/material";
 import React from "react";
-import AddPhotoModal from "./AddPhotoModal";
+import AddPhotoModal from "../CourseProductComponents/AddPhotoModal";
 import IconWithTitle from "../CourseProductComponents/IconWithTitle";
 import TextSection from "../CourseProductComponents/TextSection";
-import PhotoPreview from "../CourseProductComponents/PhotoPreview";
+import AddManyPhoto from "../CourseProductComponents/AddManyPhoto";
 
 export default function AdditionalPhoto() {
   const [open, setOpen] = React.useState(false);
@@ -49,22 +47,7 @@ export default function AdditionalPhoto() {
         {/* <Box component="img" onClick={handleOpen} src={photoFileInput} /> */}
         <AddPhotoModal open={open} handleClose={handleClose} />
       </Stack>
-      <PhotoPreview
-        sx={{
-          maxWidth: "190px",
-          paddingY: "64px",
-          paddingX: "12px",
-          justifyItems: "center",
-        }}
-        icon={<InsertPhoto />}
-      >
-        <Typography variant="btr" color="gray">
-          Upload Product image, png, jpg, webp
-        </Typography>
-        <Typography variant="btr" color="gray">
-          580 x 580 (Limit size: 1 MB)
-        </Typography>
-      </PhotoPreview>
+      <AddManyPhoto />
       <Divider
         sx={{
           my: 2,

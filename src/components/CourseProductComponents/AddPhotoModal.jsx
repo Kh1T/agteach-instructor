@@ -2,7 +2,6 @@ import { Box, Modal, Typography, Fade, Link, SvgIcon } from "@mui/material";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 
 import React from "react";
-
 const style = {
   position: "absolute",
   top: "45%",
@@ -26,20 +25,40 @@ const styleSecondBox = {
   gap: 1,
 };
 
-export default function AddPhotoModal({ open, handleClose, children }) {
+
+const AddPhotoModal = ({ open, handleClose, handleFileUpload , handleFileDrop}) => {
+  const handleDrop = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    const files = event.dataTransfer.files;
+    if (files.length) {
+      handleFileDrop(files);
+    }
+  };
+
+  const handleDragOver = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+  };
+
   return (
     <Modal open={open} onClose={handleClose}>
       <Fade in={open}>
-        <Box sx={style}>
+        <Box sx={style} onDrop={handleDrop} onDragOver={handleDragOver}>
           <Box sx={styleSecondBox}>
             <SvgIcon>
-              <UploadFileIcon color="blue" />
+              <UploadFileIcon color="primary" />
             </SvgIcon>
-            <Typography variant="p" >
-              <Link sx={{ color: "blue.main" }}>Click to Upload</Link> or Drag
-              and Drop
+            <Typography variant="body1">
+              <Link
+                sx={{ color: "blue.main", cursor: "pointer" }}
+                onClick={handleFileUpload}
+              >
+                Click to Upload
+              </Link>{" "}
+              or Drag and Drop
             </Typography>
-            <Typography variant="p" gutterBottom>
+            <Typography variant="body2" gutterBottom>
               SVG, PNG, JPG or GIF (max. 3MB)
             </Typography>
           </Box>
@@ -47,4 +66,6 @@ export default function AddPhotoModal({ open, handleClose, children }) {
       </Fade>
     </Modal>
   );
-}
+};
+
+export default AddPhotoModal;
