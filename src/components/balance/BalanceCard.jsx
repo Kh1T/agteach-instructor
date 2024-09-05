@@ -13,7 +13,6 @@ function BalanceCard() {
           // "&:hover": {
           //   bgcolor: "primary.dark",
           // },
-          boxShadow: 1,
         }}
       >
         <Stack direction="column" spacing={2} sx={{ mx: "30px", mt: "30px" }}>
@@ -49,7 +48,7 @@ function BalanceCard() {
           </Stack>
 
           <Typography variant="blgsm" color="dark.400">
-            $435.70
+            $635.70
           </Typography>
         </Stack>
       </Box>

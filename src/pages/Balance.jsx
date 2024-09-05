@@ -6,23 +6,13 @@ import BalanceCard from "../components/balance/BalanceCard";
 import TotalCard from "../components/balance/TotalCard";
 import QueryHeader from "../components/QueryHeader";
 import { useState } from "react";
-import CustomTableMui from "../components/CustomTableMui";
 import CustomPanel from "../components/balance/CustomPanel";
+import CustomTable from "../components/CustomTable";
+import { products } from "../data/productsDummy";
 function BalancePage() {
   const [selectState, setSelectState] = useState("");
   const [value, setValue] = useState(0);
 
-  const headers = ["No", "Name", "Date", "Amount"];
-  function createData(...rest) {
-    return { ...rest };
-  }
-  const rows = [
-    createData(1, "Sok", "1-1-2024", "10$"),
-    createData(2, "Sok", "1-1-2024", "10$"),
-    createData(3, "Sok", "1-1-2024", "10$"),
-    createData(4, "Sok", "1-1-2024", "10$"),
-    createData(5, "Sok", "1-1-2024", "10$"),
-  ];  
   return (
     <Stack spacing={5} sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
@@ -31,9 +21,9 @@ function BalancePage() {
             pt="30px"
             sx={{
               width: "100%",
-              height: "410px",
-              boxShadow: 2,
-              borderRadius: 1,
+              height: "440px",
+              borderRadius: 4,
+              boxShadow: "0px 10px 33px 0px rgba(5,27,58,0.1)",
             }}
           >
             <Stack direction="row" spacing={2} mx="30px">
@@ -42,7 +32,6 @@ function BalancePage() {
                 sx={{
                   width: "100%",
                   backgroundColor: "grey.100",
-                  boxShadow: 1,
                   borderRadius: 1,
                 }}
               >
@@ -56,9 +45,7 @@ function BalancePage() {
           </Box>
         </Grid>
         <Grid size={4}>
-          <Paper>
             <RecentTransaction />
-          </Paper>
         </Grid>
       </Grid>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -69,23 +56,21 @@ function BalancePage() {
       </Box>
       <CustomPanel value={value} index={0}>
         <Box>
-          Course
           <QueryHeader
             useSelectState={[selectState, setSelectState]}
             selectData={["Newest", "Oldest"]}
           />
-          <CustomTableMui data={{ headers, rows}} />
+          <CustomTable data={products} isPagination={true} />
         </Box>
       </CustomPanel>
 
       <CustomPanel value={value} index={1}>
         <Box>
-          Product
           <QueryHeader
             useSelectState={[selectState, setSelectState]}
             selectData={["Newest", "Oldest"]}
           />
-          <CustomTableMui data={{ headers, rows }} />
+          <CustomTable data={products} isPagination={true} />
         </Box>
       </CustomPanel>
     </Stack>

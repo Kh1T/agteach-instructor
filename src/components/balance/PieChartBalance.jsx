@@ -3,7 +3,7 @@ import { useDrawingArea } from "@mui/x-charts/hooks";
 import { styled } from "@mui/material/styles";
 
 const data = [
-  { value: 10, label: "Course" },
+  { value: 4, label: "Course" },
   { value: 10, label: "Product" },
 ];
 
