@@ -11,7 +11,7 @@ import { useLocation, Link as RouterLink, useParams } from "react-router-dom";
 import logoIcon from "../assets/logo.svg";
 import avtarChip from "../assets/avatar-chip.png";
 import logoutIcon from "../assets/logout-sidebar-icon.svg";
-import { Avatar, Chip, Link, Stack } from "@mui/material";
+import { Avatar, Chip, Container, Link, Stack } from "@mui/material";
 
 import sidebarList from "../data/sideBarData";
 
@@ -20,12 +20,17 @@ export default function Sidebar({ children }) {
   const drawerWidth = 250;
   const param = useParams();
   console.log(param);
-  const headerTitle = sidebarList.find((element) => {
+
+  const des = sidebarList.find((element) => element.route === pathname);
+  const head = sidebarList.find((element) => {
     if (param.productId) element.route = `/product/${param.productId}/edit`;
     if (param.courseId) element.route = `/course/${param.courseId}/edit`;
+    if (element.route !== pathname) return false;
     return element.route === pathname;
-  }).title;
+  });
 
+  const description = des && des.description;
+  const headerTitle = head && head.title;
 
   const drawerContent = (
     <Drawer
@@ -62,7 +67,7 @@ export default function Sidebar({ children }) {
           />
           <Toolbar />
           {sidebarList.map(
-            ({ title, icon, route }, index) =>
+            ({ title = "Title", icon, route }, index) =>
               icon && (
                 <Link
                   component={RouterLink}
@@ -151,7 +156,6 @@ export default function Sidebar({ children }) {
             flexDirection: "row",
             justifyContent: "center",
             maxWidth: 1300,
-            // borderStyle: "dashed",
             borderBottom: 1,
             borderBottomStyle: "dashed",
             borderColor: "grey.300",
@@ -169,10 +173,7 @@ export default function Sidebar({ children }) {
             <Stack direction="column" spacing="2">
               <Typography variant="h3">{headerTitle && headerTitle}</Typography>
               <Typography variant="bsr" sx={{ color: "dark.300" }}>
-                {
-                  sidebarList.find((element) => element.route === pathname)
-                    .description
-                }
+                {description}
               </Typography>
             </Stack>
             <Chip
@@ -181,7 +182,6 @@ export default function Sidebar({ children }) {
               sx={{
                 height: "40px",
                 borderRadius: "63px",
-                // mb: "30px",
                 backgroundColor: "common.black",
                 "& .MuiChip-label": {
                   color: "common.white",
@@ -195,29 +195,19 @@ export default function Sidebar({ children }) {
     </AppBar>
   );
   const childContent = (
-    <Box
-      component="main"
+    <Container
+      maxWidth="1300px"
       sx={{
-        display: "flex",
-        flexDirection: "row",
-        width: "100%",
-        justifyContent: "center",
         mt: 20,
+        maxWidth: "1300px",
+        "@media (min-width: 0px)": { paddingRight: 0, paddingLeft: 0 },
+        "&.MuiContainer-root": {
+          px: 0,
+        },
       }}
     >
-      <Box
-        sx={{
-          width: "100%",
-          maxWidth: 1300,
-          display: "flex",
-          flexDirection: "row",
-
-          justifyContent: "center",
-        }}
-      >
-        {children}
-      </Box>
-    </Box>
+      {children}
+    </Container>
   );
   const sideBarContent = (
     <Box sx={{ display: "flex" }}>

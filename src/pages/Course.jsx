@@ -1,9 +1,23 @@
+import { useState } from "react";
+import CustomSelect from "../components/CustomSelect";
+import QueryHeader from "../components/QueryHeader";
+
 function CoursePage() {
-    return (
-        <>
-            <h1>Course page</h1>
-        </>
-    )
+  const [selectState, setSelectState] = useState();
+  const label = "Sort";
+  function handleCreateNew() {}
+  function handleSearch() {}
+  return (
+    <>
+      <QueryHeader
+        label={label}
+        useSelectState={[selectState, setSelectState]}
+        selectData={["Newest", "Oldest", "World"]}
+        handleCreateNew={handleCreateNew}
+        handleSearch={handleSearch}
+      />
+    </>
+  );
 }
 
-export default CoursePage
+export default CoursePage;
