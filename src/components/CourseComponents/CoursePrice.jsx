@@ -18,7 +18,7 @@ export default function CoursePrice() {
       />
       <Divider sx={{ my: 2 }} />
       <TextSection
-        title="Tell us about your Course price"
+        title="Tell us about your Course price (USD)"
         description="Choosing a correct price strategy will help engage more customer"
       />
       <TextField

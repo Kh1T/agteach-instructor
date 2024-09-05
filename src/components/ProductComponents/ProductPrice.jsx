@@ -13,7 +13,7 @@ export default function ProductPrice() {
       />
       <Divider sx={{ my: 2 }} />
       <TextSection
-        title={"Tell us about your product price"}
+        title={"Tell us about your product price (USD)"}
         description={
           "Choosing a correct price strategy will help engage more customers"
         }
