@@ -17,6 +17,7 @@ import ForgotPassword from "../pages/ForgotPassword";
 import Signup from "../pages/Signup";
 import AdditionalInformation from "../pages/AdditionalInformation";
 import ResetPassword from "../pages/ResetPassword";
+import EnrollmentItem from "../pages/EnrollmentItem";
 
 export const router = createBrowserRouter([
   {
@@ -45,6 +46,7 @@ export const router = createBrowserRouter([
       { path: "/enrollment", element: <EnromentPage /> },
       { path: "/balance", element: <BalancePage /> },
       { path: "/setting", element: <SettingPage /> },
+      { path: "/enrollment-item", element: <EnrollmentItem /> },
     ],
   },
 
