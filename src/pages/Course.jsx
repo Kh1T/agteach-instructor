@@ -1,7 +1,5 @@
 import { useState } from "react";
-import CustomSelect from "../components/CustomSelect";
 import QueryHeader from "../components/QueryHeader";
-
 function CoursePage() {
   const [selectState, setSelectState] = useState();
   const label = "Sort";

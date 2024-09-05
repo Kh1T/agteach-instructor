@@ -7,14 +7,24 @@ import Typography from "@mui/material/Typography";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import { useLocation, Link as RouterLink, useParams } from "react-router-dom";
+import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 
 import logoIcon from "../assets/logo.svg";
 import avtarChip from "../assets/avatar-chip.png";
-import logoutIcon from "../assets/logout-sidebar-icon.svg";
 import { Avatar, Chip, Container, Link, Stack } from "@mui/material";
 
 import sidebarList from "../data/sideBarData";
 
+/**
+ * Sidebar component that renders a drawer and app bar with content.
+ *
+ * This component accepts a children prop which is rendered between the app bar and drawer.
+ * The app bar will render a title and description based on the route that is currently active.
+ * The drawer will render a list of links based on the sidebarList data.
+ *
+ * @prop {React.ReactNode} children - The content to be rendered between the app bar and drawer.
+ * @returns {React.ReactNode} A React component that renders a drawer and app bar with content.
+ */
 export default function Sidebar({ children }) {
   const { pathname } = useLocation();
   const drawerWidth = 250;
@@ -39,7 +49,9 @@ export default function Sidebar({ children }) {
         flexShrink: 0,
         "& .MuiDrawer-paper": {
           width: drawerWidth,
-          boxSizing: "border-box",
+          boxSizing: "border-box",          
+          borderRight: "0.5px dashed ",
+          borderColor: 'grey.400',
           px: "20px",
           py: 5,
         },
@@ -67,8 +79,8 @@ export default function Sidebar({ children }) {
           />
           <Toolbar />
           {sidebarList.map(
-            ({ title = "Title", icon, route }, index) =>
-              icon && (
+            ({ title = "Title", Icon, route }, index) =>
+              Icon && (
                 <Link
                   component={RouterLink}
                   to={route}
@@ -87,15 +99,12 @@ export default function Sidebar({ children }) {
                 >
                   <ListItem key={title} disablePadding>
                     <ListItemButton>
-                      <Box
-                        component="img"
+                      <Icon
                         sx={{
-                          height: 25,
-                          width: 25,
-                          pr: "15px",
+                          color:
+                            route === pathname ? "common.white" : "dark.300",
+                          mr: "20px",
                         }}
-                        alt={title}
-                        src={icon}
                       />
                       <Typography variant="bmdr" sx={{ color: "dark.300" }}>
                         {title}
@@ -110,15 +119,7 @@ export default function Sidebar({ children }) {
 
       <Box>
         <ListItemButton>
-          <Box
-            component="img"
-            src={logoutIcon}
-            sx={{
-              height: 25,
-              width: 25,
-              pr: "15px",
-            }}
-          />
+          <LogoutOutlinedIcon sx={{ color: "dark.300", mr: "20px" }} />
           <Typography variant="bmdr" sx={{ color: "dark.300" }}>
             Logout
           </Typography>
@@ -131,7 +132,6 @@ export default function Sidebar({ children }) {
       position="fixed"
       sx={{
         width: `calc(100% - ${drawerWidth}px)`,
-        // pl: 15,
         pt: 5,
         ml: `${drawerWidth}px`,
         backgroundColor: "common.white",
@@ -144,8 +144,6 @@ export default function Sidebar({ children }) {
           display: "flex",
           justifyContent: "center",
           flexDirection: "row",
-          px: 0,
-          "@media (min-width: 0px)": { paddingRight: 0, paddingLeft: 0 },
           width: "100%",
         }}
       >
@@ -200,10 +198,6 @@ export default function Sidebar({ children }) {
       sx={{
         mt: 20,
         maxWidth: "1300px",
-        "@media (min-width: 0px)": { paddingRight: 0, paddingLeft: 0 },
-        "&.MuiContainer-root": {
-          px: 0,
-        },
       }}
     >
       {children}
