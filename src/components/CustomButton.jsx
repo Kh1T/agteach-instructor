@@ -6,7 +6,6 @@ function CustomButton({ children, ...props }) {
       sx={{
         height: 50,
         borderRadius: 2,
-        width: "100%",
       }}
       {...props}
     >

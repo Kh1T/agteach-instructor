@@ -9,7 +9,8 @@ import {
 
 import { useForm } from "react-hook-form";
 
-import InputField from "../components/InputField";
+import CustomInputField from "../components/CustomInputField";
+
 import SideBarImg from "../components/SideBarImg";
 import { Link } from "react-router-dom";
 import CustomButton from "../components/CustomButton";
@@ -58,12 +59,12 @@ function LoginPage() {
               onSubmit={handleSubmit(onSubmit)}
               style={{ display: "flex", flexDirection: "column", gap: "20px" }}
             >
-              <InputField
+              <CustomInputField
                 fieldName="Email"
                 register={register}
                 errors={errors}
               />
-              <InputField
+              <CustomInputField
                 fieldName="Password"
                 fieldType="password"
                 register={register}

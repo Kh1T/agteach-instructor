@@ -4,7 +4,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { useForm } from "react-hook-form";
 
-import InputField from "../components/InputField";
+import CustomInputField from "../components/CustomInputField";
 import SideBarImg from "../components/SideBarImg";
 import CustomButton from "../components/CustomButton";
 import { Link } from "react-router-dom";
@@ -50,7 +50,7 @@ function Signup() {
           onSubmit={handleSubmit(onSubmit)}
           style={{ display: "flex", flexDirection: "column", gap: "20px" }}
         >
-          <InputField
+          <CustomInputField
             fieldName="Username"
             register={register}
             errors={errors}
@@ -58,8 +58,12 @@ function Signup() {
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker label="Date of Birth" />
           </LocalizationProvider>
-          <InputField fieldName="Email" register={register} errors={errors} />
-          <InputField
+          <CustomInputField
+            fieldName="Email"
+            register={register}
+            errors={errors}
+          />
+          <CustomInputField
             fieldName="Password"
             fieldType="password"
             register={register}

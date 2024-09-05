@@ -7,7 +7,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import InputField from "../components/InputField"; // custom component
+import CustomInputField from "../components/CustomInputField"; // custom component
 import CustomButton from "../components/CustomButton"; // custom component
 import logo from "./../assets/logo.svg";
 import { useForm } from "react-hook-form";
@@ -59,13 +59,13 @@ function AdditionalInformation() {
             <Typography variant="blgsm">Name & Address</Typography>
             <Stack flexDirection="row" gap={2}>
               {/* Stack for the name fields */}
-              <InputField
+              <CustomInputField
                 fieldName="First name"
                 errors={errors}
                 register={register}
                 // Add props for validation and error handling (if applicable)
               />
-              <InputField
+              <CustomInputField
                 fieldName="Last name"
                 errors={errors}
                 register={register}
@@ -79,7 +79,7 @@ function AdditionalInformation() {
               <MenuItem value="Phnom Penh">Phnom Penh</MenuItem>
             </TextField>
 
-            <InputField
+            <CustomInputField
               fieldName="Address 1"
               errors={errors}
               register={register}
@@ -91,13 +91,13 @@ function AdditionalInformation() {
             <Typography variant="blgsm">Email & Phone</Typography>
             <Stack flexDirection="row" gap={2}>
               {/* Stack for the email and phone fields */}
-              <InputField
+              <CustomInputField
                 fieldName="Email"
                 errors={errors}
                 register={register}
                 // Add props for validation (e.g., email format)
               />
-              <InputField
+              <CustomInputField
                 fieldName="Phone Number"
                 errors={errors}
                 register={register}

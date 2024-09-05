@@ -1,6 +1,7 @@
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import agtechDark from "./../assets/login/logo-dark.svg";
-import InputField from "../components/InputField";
+import CustomInputField from "../components/CustomInputField";
+
 import CustomButton from "../components/CustomButton";
 
 function ResetPassword() {
@@ -14,8 +15,8 @@ function ResetPassword() {
           <Typography variant="bmdr">
             Strong passwords include numbers, letters, and punctuation marks.
           </Typography>
-          <InputField fieldName="New" fieldType="password" />
-          <InputField fieldName="Confirm" fieldType="password" />
+          <CustomInputField fieldName="New" fieldType="password" />
+          <CustomInputField fieldName="Confirm" fieldType="password" />
         </Stack>
         <Divider />
         <CustomButton color="primary" variant="contained">
