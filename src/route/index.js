@@ -16,6 +16,7 @@ import EditCoursePage from "../pages/EditCourse";
 import ForgotPassword from "../pages/ForgotPassword";
 import Signup from "../pages/Signup";
 import AdditionalInformation from "../pages/AdditionalInformation";
+import ResetPassword from "../pages/ResetPassword";
 
 export const router = createBrowserRouter([
   {
@@ -61,4 +62,6 @@ export const router = createBrowserRouter([
       { path: "additional", element: <AdditionalInformation /> },
     ],
   },
+
+  { path: "/reset-password", element: <ResetPassword /> },
 ]);
