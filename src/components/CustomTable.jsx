@@ -4,8 +4,9 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { TablePagination, Typography } from "@mui/material";
+import { Box, Link, TablePagination, Typography } from "@mui/material";
 import { useState } from "react";
+import { Link as RouterLink } from "react-router-dom";
 
 /**
  * A table component that displays the given data.
@@ -19,6 +20,7 @@ export default function CustomTable({
   data,
   rowLimit = 5,
   isPagination = false,
+  isLink = false,
 }) {
   // const tableHead = data.
   let headers = Object.keys(data[0]).map(
@@ -66,18 +68,33 @@ export default function CustomTable({
           </TableHead>
           <TableBody>
             {displayedRows.map((row, id) => (
-              <TableRow key={id}>
+              <TableRow
+                key={id}
+                sx={{
+                  ":hover": { backgroundColor: "grey.200" },
+                }}
+              >
+                {/* <Link
+                  to={"id"}
+                  component={RouterLink}
+                  sx={{ textDecoration: "none" }}
+                > */}
                 {Object.values(row).map((cell, cellIndex) => (
                   <TableCell
                     key={cellIndex}
+                    component= {isLink ? RouterLink : "div"}
+                    to={`${id}`}
                     sx={{
                       borderBottom: "1px dashed",
                       borderColor: "grey.300",
+                      cursor: isLink ? "pointer" : "default",
+                      textDecoration: "none",
                     }}
                   >
                     {cell}
                   </TableCell>
                 ))}
+                {/* </Link> */}
               </TableRow>
             ))}
           </TableBody>

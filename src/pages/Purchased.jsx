@@ -25,11 +25,11 @@ function PurchasedPage() {
         label={label}
         useSelectState={[selectState, setSelectState]}
         selectData={["All", "Delivered", "Not Delivered"]}
-        handleCreateNew={handleCreateNew}
+        handleCreateNew={handleCreateNew} 
         handleSearch={handleSearch}
         isCreateNew={false}
       />
-      <CustomTable data={purchasedList} rowLimit={10} isPagination={true} />
+      <CustomTable data={purchasedList} rowLimit={10} isPagination={true} isLink={false} />
     </Box>
   );
 }
