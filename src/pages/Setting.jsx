@@ -5,12 +5,20 @@ import {
   Stack,
   MenuItem,
   Divider,
+  Modal,
+  Box,
 } from "@mui/material";
+import { useState } from "react";
 import profileImg from "../assets/dashboard-setting/profile-img.png";
 import CustomButton from "../components/CustomButton";
 import CustomInputField from "../components/CustomInputField";
+import CustomFileUpload from "../components/CustomFileUpload";
 
 function SettingPage() {
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   return (
     <Grid container direction="column" gap={5}>
       {/* Profile Section */}
@@ -26,9 +34,11 @@ function SettingPage() {
         <CustomButton
           sx={{ borderColor: "blue.main", color: "blue.main" }}
           variant="outlined"
+          onClick={handleOpen}
         >
           CHANGE
         </CustomButton>
+        <CustomFileUpload open={open} handleClose={handleClose} />
       </Grid>
 
       {/* Information Section */}
