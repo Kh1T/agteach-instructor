@@ -20,12 +20,13 @@ export default function Sidebar({ children }) {
   const drawerWidth = 250;
   const param = useParams();
   console.log(param);
-  const headerTitle = sidebarList.find((element) => {
-    if (param.productId) element.route = `/product/${param.productId}/edit`;
-    if (param.courseId) element.route = `/course/${param.courseId}/edit`;
-    if (element.route !== pathname) return false;
-    return element.route === pathname;
-  }).title ;
+  const headerTitle = "Title";
+  // sidebarList.find((element) => {
+  //   if (param.productId) element.route = `/product/${param.productId}/edit`;
+  //   if (param.courseId) element.route = `/course/${param.courseId}/edit`;
+  //   if (element.route !== pathname) return false;
+  //   return element.route === pathname;
+  // }).title || "title";
 
   const drawerContent = (
     <Drawer
@@ -62,7 +63,7 @@ export default function Sidebar({ children }) {
           />
           <Toolbar />
           {sidebarList.map(
-            ({ title, icon, route }, index) =>
+            ({ title = "Title", icon, route }, index) =>
               icon && (
                 <Link
                   component={RouterLink}
@@ -169,10 +170,9 @@ export default function Sidebar({ children }) {
             <Stack direction="column" spacing="2">
               <Typography variant="h3">{headerTitle && headerTitle}</Typography>
               <Typography variant="bsr" sx={{ color: "dark.300" }}>
-                {
-                  sidebarList.find((element) => element.route === pathname)
-                    .description
-                }
+                "Descr"
+                {/* {sidebarList.find((element) => element.route === pathname)
+                  .description || "description"} */}
               </Typography>
             </Stack>
             <Chip
@@ -208,7 +208,6 @@ export default function Sidebar({ children }) {
     >
       {children}
     </Container>
-    
   );
   const sideBarContent = (
     <Box sx={{ display: "flex" }}>
