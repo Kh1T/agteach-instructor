@@ -36,8 +36,12 @@ function EnrollmentItem() {
             Indoor Gardening and Hydroponics
           </Typography>
           <Stack>
-            <Typography variant="bxsmd">Created at: 23/03/2024</Typography>
-            <Typography variant="bxsmd">Price: $74.99</Typography>
+            <Typography variant="bxsmd">
+              <Box component="strong">Created at</Box>: 23/03/2024
+            </Typography>
+            <Typography variant="bxsmd">
+              <Box component="strong">Price</Box>: $74.99
+            </Typography>
           </Stack>
         </Stack>
       </Grid>
