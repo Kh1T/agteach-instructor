@@ -8,8 +8,11 @@
     "@mui/icons-material": "^6.0.1",
     "@mui/lab": "^6.0.0-beta.8",
     "@mui/material": "^6.0.1",
-    "@mui/x-date-pickers": "^7.15.0",
+<<<<<<< HEAD
     "@mui/x-charts": "^7.15.0",
+=======
+    "@mui/x-date-pickers": "^7.15.0",
+>>>>>>> develop
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
