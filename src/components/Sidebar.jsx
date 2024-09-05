@@ -20,13 +20,17 @@ export default function Sidebar({ children }) {
   const drawerWidth = 250;
   const param = useParams();
   console.log(param);
-  const headerTitle = "Title";
-  // sidebarList.find((element) => {
-  //   if (param.productId) element.route = `/product/${param.productId}/edit`;
-  //   if (param.courseId) element.route = `/course/${param.courseId}/edit`;
-  //   if (element.route !== pathname) return false;
-  //   return element.route === pathname;
-  // }).title || "title";
+
+  const des = sidebarList.find((element) => element.route === pathname);
+  const head = sidebarList.find((element) => {
+    if (param.productId) element.route = `/product/${param.productId}/edit`;
+    if (param.courseId) element.route = `/course/${param.courseId}/edit`;
+    if (element.route !== pathname) return false;
+    return element.route === pathname;
+  });
+
+  const description = des && des.description;
+  const headerTitle = head && head.title;
 
   const drawerContent = (
     <Drawer
@@ -152,7 +156,6 @@ export default function Sidebar({ children }) {
             flexDirection: "row",
             justifyContent: "center",
             maxWidth: 1300,
-            // borderStyle: "dashed",
             borderBottom: 1,
             borderBottomStyle: "dashed",
             borderColor: "grey.300",
@@ -170,9 +173,7 @@ export default function Sidebar({ children }) {
             <Stack direction="column" spacing="2">
               <Typography variant="h3">{headerTitle && headerTitle}</Typography>
               <Typography variant="bsr" sx={{ color: "dark.300" }}>
-                "Descr"
-                {/* {sidebarList.find((element) => element.route === pathname)
-                  .description || "description"} */}
+                {description}
               </Typography>
             </Stack>
             <Chip
@@ -181,7 +182,6 @@ export default function Sidebar({ children }) {
               sx={{
                 height: "40px",
                 borderRadius: "63px",
-                // mb: "30px",
                 backgroundColor: "common.black",
                 "& .MuiChip-label": {
                   color: "common.white",

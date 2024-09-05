@@ -17,7 +17,7 @@ import ForgotPassword from "../pages/ForgotPassword";
 import Signup from "../pages/Signup";
 import AdditionalInformation from "../pages/AdditionalInformation";
 import ResetPassword from "../pages/ResetPassword";
-import EnrollmentItem from "../pages/EnrollmentItem";
+import EnrollmentDetailPage from "../pages/EnrollmentDetail";
 
 export const router = createBrowserRouter([
   {
@@ -25,45 +25,23 @@ export const router = createBrowserRouter([
     element: <RootLayout />,
     children: [
       { index: true, element: <DashboardPage /> },
-      {
-        path: "/course",
-        children: [
-          { index: true, element: <CoursePage /> },
-          { path: "new", element: <NewCoursePage /> },
-          { path: ":courseId/edit", element: <EditCoursePage /> },
-        ],
-      },
-      {
-        path: "/product",
-        children: [
-          { index: true, element: <ProductPage /> },
-          { path: "new", element: <NewProductPage /> },
-          { path: ":productId/edit", element: <EditProductPage /> },
-        ],
-      },
-
-      { path: "/purchased", element: <PurchasedPage /> },
-      { path: "/enrollment", element: <EnromentPage /> },
-      { path: "/balance", element: <BalancePage /> },
-      { path: "/setting", element: <SettingPage /> },
-      { path: "/enrollment-item", element: <EnrollmentItem /> },
+      { path: "course", element: <CoursePage /> },
+      { path: "course/new", element: <NewCoursePage /> },
+      { path: "course/:courseId/edit", element: <EditCoursePage /> },
+      { path: "product", element: <ProductPage /> },
+      { path: "product/new", element: <NewProductPage /> },
+      { path: "product/:productId/edit", element: <EditProductPage /> },
+      { path: "purchased", element: <PurchasedPage /> },
+      { path: "enrollment", element: <EnromentPage /> },
+      { path: "enrollment/:enrollmentId", element: <EnrollmentDetailPage /> },
+      { path: "balance", element: <BalancePage /> },
+      { path: "setting", element: <SettingPage /> },
     ],
   },
 
-  {
-    path: "/login",
-    children: [
-      { index: true, element: <LoginPage /> },
-      { path: "forgot", element: <ForgotPassword /> },
-    ],
-  },
-  {
-    path: "/signup",
-    children: [
-      { index: true, element: <Signup /> },
-      { path: "additional", element: <AdditionalInformation /> },
-    ],
-  },
-
+  { path: "/login", element: <LoginPage /> },
+  { path: "/forgot", element: <ForgotPassword /> },
+  { path: "/signup", element: <Signup /> },
+  { path: "/signup/additional", element: <AdditionalInformation /> },
   { path: "/reset-password", element: <ResetPassword /> },
 ]);

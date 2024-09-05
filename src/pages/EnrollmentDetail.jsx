@@ -3,7 +3,7 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { Box, Grid2 as Grid, Typography, Stack, Divider } from "@mui/material";
 import courseCover from "./../assets/dashboard-enrollment/course-cover.png";
 import tableImg from "./../assets/dashboard-enrollment//student-img.png";
-import CustomTable from "./../components/CustomTable";
+import CustomTable from "../components/CustomTable";
 
 const itemData = [
   {
@@ -15,7 +15,7 @@ const itemData = [
   },
 ];
 
-function EnrollmentItem() {
+function EnrollmentDetailPage() {
   return (
     <Grid container direction="column" gap={6}>
       {/* Go Back */}
@@ -58,4 +58,4 @@ function EnrollmentItem() {
   );
 }
 
-export default EnrollmentItem;
+export default EnrollmentDetailPage;
