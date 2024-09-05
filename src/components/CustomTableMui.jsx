@@ -8,15 +8,15 @@ import Paper from "@mui/material/Paper";
 import { TablePagination } from "@mui/material";
 import { useState } from "react";
 
-  /**
-   * CustomTableMui
-   * @description A simple table component with MUI that accepts a data object with headers and rows.
-   * @param {object} data - Data object with headers, rows, and isPagination (optional)
-   * @param {array} data.headers - Array of header titles
-   * @param {array} data.rows - Array of row data
-   * @param {boolean} [data.isPagination=false] - Whether or not to show pagination
-   * @returns A JSX element representing a table component
-   */
+/**
+ * CustomTableMui
+ * @description A simple table component with MUI that accepts a data object with headers and rows.
+ * @param {object} data - Data object with headers, rows, and isPagination (optional)
+ * @param {array} data.headers - Array of header titles
+ * @param {array} data.rows - Array of row data
+ * @param {boolean} [data.isPagination=false] - Whether or not to show pagination
+ * @returns A JSX element representing a table component
+ */
 export default function CustomTableMui({ data }) {
   const { headers, rows, isPagination = false } = data;
 

@@ -3,48 +3,49 @@ import {
   InputLabel,
   OutlinedInput,
   IconButton,
-  FormControl,
 } from "@mui/material";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 import { useState } from "react";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
-function PasswordInput({ fieldName = "Password" }) {
+function CustomPasswordField({ register, fieldName = "Password", errors }) {
   const [showPassword, setShowPassword] = useState(false);
-
+  const nameLowerCase = fieldName.toLowerCase();
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-
-  const handleMouseDownPassword = (event) => {
+  const preventDefault = (event) => {
     event.preventDefault();
   };
 
-  const handleMouseUpPassword = (event) => {
-    event.preventDefault();
-  };
+  const registerField = register
+    ? register(nameLowerCase, { required: `${fieldName} is required` })
+    : {};
+  const errorState = errors ? !!errors[nameLowerCase] : false;
 
   return (
-    <FormControl variant="outlined">
-      <InputLabel htmlFor="outlined-adornment-password">{fieldName}</InputLabel>
+    <>
+      <InputLabel error={errorState}>{fieldName}</InputLabel>
       <OutlinedInput
+        {...registerField}
+        error={errorState} // Error state
         id="outlined-adornment-password"
         type={showPassword ? "text" : "password"}
+        label={fieldName}
         endAdornment={
           <InputAdornment position="end">
             <IconButton
               aria-label="toggle password visibility"
               onClick={handleClickShowPassword}
-              onMouseDown={handleMouseDownPassword}
-              onMouseUp={handleMouseUpPassword}
+              onMouseDown={preventDefault}
+              onMouseUp={preventDefault}
               edge="end"
             >
               {showPassword ? <VisibilityOff /> : <Visibility />}
             </IconButton>
           </InputAdornment>
         }
-        label={fieldName}
       />
-    </FormControl>
+    </>
   );
 }
 
-export default PasswordInput;
+export default CustomPasswordField;
