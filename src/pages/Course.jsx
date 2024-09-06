@@ -2,8 +2,8 @@ import { useRef, useState } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import QueryHeader from "../components/QueryHeader";
-import TableComponent from "../components/TableComponent";
 import { courses } from "../data/coursesData";
+import CustomTable from "../components/CustomTable";
 
 function CoursePage() {
   const [selectState, setSelectState] = useState(0);
@@ -39,7 +39,7 @@ function CoursePage() {
         pathCreated="/course/new"
         labelCreate="Create Course"
       />
-      <TableComponent data={courseList} rowLimit={10} isPagination={true} />
+      <CustomTable data={courseList} rowLimit={10} isPagination={true} />
     </>
   );
 }

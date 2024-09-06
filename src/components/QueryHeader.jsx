@@ -25,7 +25,7 @@ export default function QueryHeader({
   pathCreated = "/",
   labelCreate = "Create New",
   placeholder = "Search",
-  isCreateNew = true,
+  isCreateNew = false,
 }) {
   // const selectComponent =
   const content = (
