@@ -2,6 +2,17 @@ import { TextField, Box, Divider, Typography } from "@mui/material";
 import IconWithTitle from "../CourseProductComponents/IconWithTitle";
 import NewspaperOutlinedIcon from "@mui/icons-material/NewspaperOutlined";
 import TextSection from "../CourseProductComponents/TextSection";
+
+
+/**
+ * AboutCourse component renders a page for instructors to input course title,
+ * course description, and learning objective of the course.
+ *
+ * It uses the TextSection component to render each section.
+ *
+ * @returns a JSX element containing the AboutCourse component.
+ */
+
 export default function AboutCourse() {
   return (
     <Box className="container">
@@ -20,7 +31,7 @@ export default function AboutCourse() {
         id="outlined-controlled"
         label="Enter your course title"
       />
-      <Typography variant="bsr" sx={{ mt: 2 }}>
+      <Typography variant="bsr" color="dark.300" sx={{ mt: 2 }}>
         eg: How to plant an indoor tomatoes 100% edible
       </Typography>
 
