@@ -4,6 +4,19 @@ import InsertPhotoIcon from "@mui/icons-material/InsertPhoto";
 import ClearIcon from "@mui/icons-material/Clear";
 import AddPhotoModal from "./AddPhotoModal";
 
+  /**
+   * AddManyPhotos component renders an upload area for multiple photos
+   * 
+   * It renders a button with a label "Add Photos" and a count of the number of photos uploaded
+   * When the button is clicked, it opens a modal with a drag and drop area and a file input
+   * 
+   * When a file is selected, it is added to the uploadedPhotos array and the file input is reset
+   * If the number of photos exceeds 5, an error message is displayed
+   * 
+   * When a photo is removed, it is removed from the uploadedPhotos array
+   * 
+   * @returns A JSX element containing the AddManyPhotos component
+   */
 export default function AddManyPhotos() {
   const [uploadedPhotos, setUploadedPhotos] = useState([]);
   const [uploadError, setUploadError] = useState("");

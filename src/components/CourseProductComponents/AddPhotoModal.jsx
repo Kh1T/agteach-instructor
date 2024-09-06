@@ -2,29 +2,31 @@ import { Box, Modal, Typography, Fade, Link, SvgIcon } from "@mui/material";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 
 import React from "react";
-const style = {
-  position: "absolute",
-  top: "45%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  boxShadow: 24,
-  p: 4,
-  outline: "none",
-};
 
-const styleSecondBox = {
-  border: "2px dashed",
-  p: 4,
-  display: "flex",
-  itemAlign: "center",
-  alignItems: "center", // Vertically center items
-  justifyContent: "center", // Horizontally center items
-  flexDirection: "column",
-  gap: 1,
-};
+import {
+  modalStyleFirstBox,
+  modalStyleSecondBox,
+} from "./CourseProductStyle";
 
+/**
+ * AddPhotoModal component renders a modal with a drag and drop area and a file input
+ *
+ * It takes four props:
+ *   - `open`: a boolean indicating whether the modal is open or not
+ *   - `handleClose`: a function to call when the modal is closed
+ *   - `handleFileUpload`: a function to call when a file is selected
+ *   - `handleFileDrop`: a function to call when a file is dropped
+ *
+ * When a file is dropped, it calls `handleFileDrop` with the array of files
+ * When the user clicks on the "Click to Upload" link, it calls `handleFileUpload`
+ *
+ * @param {Object} props - props object
+ * @param {boolean} props.open - whether the modal is open or not
+ * @param {Function} props.handleClose - a function to call when the modal is closed
+ * @param {Function} props.handleFileUpload - a function to call when a file is selected
+ * @param {Function} props.handleFileDrop - a function to call when a file is dropped
+ * @returns {React.ReactElement} the AddPhotoModal component
+ */
 const AddPhotoModal = ({
   open,
   handleClose,
@@ -48,8 +50,12 @@ const AddPhotoModal = ({
   return (
     <Modal open={open} onClose={handleClose}>
       <Fade in={open}>
-        <Box sx={style} onDrop={handleDrop} onDragOver={handleDragOver}>
-          <Box sx={styleSecondBox}>
+        <Box
+          sx={modalStyleFirstBox}
+          onDrop={handleDrop}
+          onDragOver={handleDragOver}
+        >
+          <Box sx={modalStyleSecondBox}>
             <SvgIcon>
               <UploadFileIcon color="blue" />
             </SvgIcon>

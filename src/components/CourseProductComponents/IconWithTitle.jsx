@@ -1,15 +1,14 @@
 import { Box, Stack, Typography } from "@mui/material";
-const iconContainerStyle = {
-  display: "inline-flex",
-  alignItems: "center",
-  justifyContent: "center",
-  width: "36px",
-  height: "36px",
-  borderRadius: "50%",
-  backgroundColor: "purple.main",
-  padding: "4px",
-};
-
+import { iconContainerStyle } from "./CourseProductStyle";
+  /**
+   * IconWithTitle component renders an icon and a title.
+   *
+   * @param {{title: string, icon: JSX.Element, highlight: string}} props
+   *   - title: title of the component
+   *   - icon: icon of the component
+   *   - highlight: additional text to be displayed with the title
+   * @returns {JSX.Element} a JSX element containing the icon and title
+   */
 export default function IconWithTitle({title, icon, highlight}) {
   return (
     <Stack direction="row" gap={1} alignItems="center" marginY={4}>

@@ -1,43 +1,31 @@
 import { Delete } from "@mui/icons-material";
 import { Box, Typography, TextField, Stack } from "@mui/material";
 
-import { styled } from "@mui/material/styles";
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 import UploadFileOutlinedIcon from "@mui/icons-material/UploadFileOutlined";
 import DeleteConfirmModal from "./DeleteConfirmModal";
 import PhotoPreview from "./PhotoPreview";
-const VisuallyHiddenInput = styled("input")({
-  clip: "rect(0 0 0 0)",
-  clipPath: "inset(50%)",
-  height: 1,
-  overflow: "hidden",
-  position: "absolute",
-  bottom: 0,
-  left: 0,
-  whiteSpace: "nowrap",
-  width: 1,
-});
 
-const style = {
-  backgroundColor: "grey.300",
-  display: "flex",
-  alignItems: "center",
-  padding: "36px",
-  border: "2px dashed grey",
-  cursor: "pointer",
-  my: 0,
-};
-
+  /**
+   * LectureComponent component renders a page for instructors to input lecture title and video.
+   *
+   * It renders the page with the following components:
+   *   - Stack component with children:
+   *     - Typography component with title and lecture number
+   *     - Delete component with color red
+   *   - TextField component for inputting lecture title
+   *   - PhotoPreview component for previewing and uploading lecture video
+   *   - DeleteConfirmModal component for confirming deletion of a lecture
+   *
+   * @prop {string} id The id of the lecture
+   * @prop {function} onDelete The function to call when the lecture is deleted
+   * @prop {number} number The number of the lecture
+   * @prop {string} type The type of the lecture
+   * @returns {React.ReactElement} The LectureComponent component
+   */
 export default function LectureComponent({ id, onDelete, number, type }) {
   const [modalOpen, setModalOpen] = useState(false);
-  const lectureInputRef = useRef(null);
-
-  const handleClick = () => {
-    if (lectureInputRef.current) {
-      lectureInputRef.current.click();
-    }
-  };
 
   const handleOpenModal = () => {
     setModalOpen(true);

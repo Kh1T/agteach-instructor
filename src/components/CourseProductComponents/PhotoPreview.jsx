@@ -1,5 +1,21 @@
 import { useState } from "react";
 import { Stack, Box, Typography, Button } from "@mui/material";
+  /**
+   * PhotoPreview component renders a box with a dashed border and a "Choose File"
+   * button. When a file is selected, it renders a preview of the file with its name
+   * and size.
+   *
+   * It takes three props:
+   *   - `sx`: style object for the preview box
+   *   - `icon`: icon to be displayed in the preview box
+   *   - `children`: children elements to be displayed in the preview box
+   *
+   * @param {Object} props - props object
+   * @param {Object} props.sx - style object for the preview box
+   * @param {React.ReactElement} props.icon - icon to be displayed in the preview box
+   * @param {React.ReactElement} props.children - children elements to be displayed in the preview box
+   * @returns {React.ReactElement} the PhotoPreview component
+   */
 export default function PhotoPreview({ sx, icon, children }) {
   const [selectedImage, setSelectedImage] = useState(null);
   const [fileInfo, setFileInfo] = useState({ name: "", size: "" });
