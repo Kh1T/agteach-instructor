@@ -28,6 +28,12 @@ function PieCenterLabel({ children }) {
   );
 }
 
+/**
+ * A component that renders a PieChart with a single series,
+ * displaying data on a summary of courses and products.
+ *
+ * @returns {JSX.Element} A JSX element representing a PieChart with a single series.
+ */
 export default function PieChartBalance() {
   return (
     <PieChart

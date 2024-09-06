@@ -7,14 +7,17 @@ import RelatedProduct from "../components/new-course/RelatedProduct";
 import ButtonComponent from "../components/course-product/ButtonInBox";
 
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import { useNavigate } from "react-router";
 
 function NewCoursePage() {
+  const navigate = useNavigate();
   return (
     <Box sx={{ width: "100%", paddingBottom: "200px" }}>
       <Button
-        variant="text"
+        variant="Text"
         startIcon={<ArrowBackIosIcon fontSize="small" color="dark.300" />}
         sx={{ textDecoration: "underline", color: "dark.300" }}
+        onClick={() => navigate(-1)}
       >
         <Typography variant="bsr">Go Back</Typography>
       </Button>

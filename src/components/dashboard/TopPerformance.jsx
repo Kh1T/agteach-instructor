@@ -10,6 +10,11 @@ import CustomTableHeader from "../CustomTableHeader";
 import { useState } from "react";
 import CustomTable from "../CustomTable";
 
+/**
+ * TopPerformance component renders a table of top 5 performing products or courses, with a select dropdown to filter by course or product.
+ *
+ * @returns {JSX.Element} A JSX element representing the TopPerformance component
+ */
 function TopPerformance() {
   const data = [{
     no: 1,

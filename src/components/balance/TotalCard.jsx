@@ -1,5 +1,13 @@
 import { Box,  Stack, Typography } from "@mui/material";
 
+/**
+ * TotalCard component renders a box with sale by and total value.
+ *
+ * @param {{ total: string }} props
+ * @prop {string} [total="$1071.40"] total value to display
+ *
+ * @returns {React.ReactElement} Box component with children
+ */
 function TotalCard({ total = "$1071.40" }) {
   return (
     <>

@@ -36,6 +36,7 @@ function CoursePage() {
         searchRef={searchRef}
         useSelectState={[selectState, setSelectState]}
         selectData={["Newest", "Oldest"]}
+        isCreateNew={true}
         handleSearch={handleSearch}
         pathCreated="/course/new"
         labelCreate="Create Course"
