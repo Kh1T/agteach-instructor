@@ -1,6 +1,7 @@
 import { ChevronLeft } from "@mui/icons-material";
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { Link } from "@mui/material";
 import CustomChip from "../components/CustomChip";
 import CustomTable from "../components/CustomTable";
 
@@ -32,18 +33,22 @@ function PurchasedDetailPage() {
         src="https://img.freepik.com/free-photo/organic-cosmetic-product-with-dreamy-aesthetic-fresh-background_23-2151382816.jpg"
         component={"img"}
         width={70}
-            height={70}
+        height={70}
       />
     ),
     ...item,
   }));
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   return (
     <Stack alignItems="start" gap={5}>
-      <Link to={navigate(-1)}>
-        <Button variant="Text" sx={{color: "common.black"}} startIcon={<ChevronLeft />}>
-          <Typography variant="bsr" sx={{  textDecoration: "underline" }}>
+      <Link component={RouterLink} to={navigate(-1)}>
+        <Button
+          variant="Text"
+          sx={{ color: "dark.300" }}
+          startIcon={<ChevronLeft />}
+        >
+          <Typography variant="bsr" sx={{ textDecoration: "underline" }}>
             Go Back
           </Typography>
         </Button>
