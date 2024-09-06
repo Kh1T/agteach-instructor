@@ -27,10 +27,10 @@ export default function AdditionalPhotos() {
       <AddManyPhoto />
       <Divider sx={{ my: 2 }} />
       <Typography component="ul">
-        <Typography component="li">
+        <Typography variant="bsr" color="dark.300" paddingY={1} component="li">
           Please verify your course information before submitting.
         </Typography>
-        <Typography component="li">
+        <Typography variant="bsr" color="dark.300" component="li">
           By clicking <strong>CREATE PRODUCT</strong>, you ensure that all the
           provided course information above is following AgTeach Terms and
           Policy.

@@ -43,10 +43,10 @@ export default function ProductPrice() {
         onChange={(event) => setPrice(event.target.value)}
       />
       <Typography component="ul">
-        <Typography component="li">
+        <Typography variant="bsr" color="dark.300" paddingY={1} component="li">
           NOTE: AgTeach will deduct 20% from your total sale
         </Typography>
-        <Typography component="li">
+        <Typography variant="bsr" color="dark.300" component="li">
           Example, if the product is $100 we will deduct $20 from your sale
         </Typography>
       </Typography>

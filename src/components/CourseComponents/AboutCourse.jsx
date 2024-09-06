@@ -31,7 +31,7 @@ export default function AboutCourse() {
         id="outlined-controlled"
         label="Enter your course title"
       />
-      <Typography variant="bsr" sx={{ mt: 2 }}>
+      <Typography variant="bsr" color="dark.300" sx={{ mt: 2 }}>
         eg: How to plant an indoor tomatoes 100% edible
       </Typography>
 

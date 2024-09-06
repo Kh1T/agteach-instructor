@@ -44,7 +44,7 @@ export default function AboutProduct() {
         value={productName}
         onChange={(event) => setProductName(event.target.value)}
       />
-      <Typography variant="bmdr" sx={{ mt: 2 }}>
+      <Typography  variant="bsr" color="dark.300" sx={{ mt: 2 }}>
         eg: Grow Lights - LED or fluorescent grow lights
       </Typography>
 
