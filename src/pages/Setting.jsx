@@ -117,9 +117,12 @@ function SettingPage() {
 
       <Grid container gap={2}>
         <Typography variant="h5">Account Security</Typography>
-        <CustomInputField fieldName="Current Password" />
-        <CustomInputField fieldName="New Password" />
-        <CustomInputField fieldName="Confirm New Password" />
+        <CustomInputField fieldName="Current Password" fieldType="password" />
+        <CustomInputField fieldName="New Password" fieldType="password" />
+        <CustomInputField
+          fieldName="Confirm New Password"
+          fieldType="password"
+        />
         <Grid
           container
           width="100%"
