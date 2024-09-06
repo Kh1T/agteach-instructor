@@ -5,19 +5,24 @@ import ProductPhoto from "../components/ProductComponents/ProductPhoto";
 import AdditionalPhoto from "../components/ProductComponents/AdditionalPhoto";
 import ButtonComponent from "../components/CourseProductComponents/ButtonInBox";
 
-import { Box  } from "@mui/material";
+import { Box , Button, Typography  } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ProductPrice from "../components/ProductComponents/ProductPrice";
 
+import {useNavigate , Link} from "react-router-dom";
+
 function NewProductPage() {
+  const navigate = useNavigate();
+
   return (
-    <Box sx={{ width: "100%", paddingBottom:30 }}>
-      <ButtonComponent
-        text="Go Back"
+    <Box sx={{ width: "100%", pb: 30 }}>
+      <Button
         variant="text"
-        color="black"
-        startIcon={<ArrowBackIosIcon fontSize="small" color="gray" />}
-      />
+        startIcon={<ArrowBackIosIcon fontSize="small" color="dark.300" />}
+        sx={{ textDecoration: "underline" , color:"dark.300" }}
+      >
+        <Typography variant="bsr">Go Back</Typography>
+      </Button>
 
       <ProductCategory />
       <AboutProduct />
@@ -26,9 +31,9 @@ function NewProductPage() {
       <ProductPrice />
       <AdditionalPhoto />
       <ButtonComponent
-        text={"CREATE PRODUCT"}
-        variant={"contained"}
-        bgcolor={"purple.main"}
+        text="CREATE PRODUCT"
+        variant="contained"
+        bgcolor="purple.main"
       />
     </Box>
   );
