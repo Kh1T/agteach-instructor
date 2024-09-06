@@ -20,7 +20,7 @@ function SettingPage() {
   const handleClose = () => setOpen(false);
 
   return (
-    <Grid container direction="column" gap={5}>
+    <Grid container direction="column" gap={5} pb={4}>
       {/* Profile Section */}
 
       <Grid container direction="column" gap={2} alignContent="start">
@@ -45,16 +45,15 @@ function SettingPage() {
       <Grid container direction="column" gap={5}>
         <Box gap={2}>
           <Typography variant="h5">Personal Information</Typography>
-          <Grid container gap={2}>
-            <Grid container gap={2}>
+          <Stack direction="row" gap={2}>
+            <Grid item container size={4} gap={2}>
               <CustomInputField fieldName="First Name" />
               <CustomInputField fieldName="Last Name" />
             </Grid>
-
-            <Grid size={8}>
+            <Grid item size={7} width="100%">
               <CustomInputField fieldName="Bio" multiline rows={4} fullWidth />
             </Grid>
-          </Grid>
+          </Stack>
         </Box>
 
         {/* Address Information Section */}
