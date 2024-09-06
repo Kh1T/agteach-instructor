@@ -60,3 +60,29 @@ export const iconContainerStyle = {
   backgroundColor: "purple.main",
   padding: "4px",
 };
+
+export const UploadedPhotoStyle = {
+  width: "220px",
+  height: "220px",
+  overflow: "hidden",
+  position: "relative",
+  marginX: 0.5,
+  marginY: 1,
+  "& img": {
+    width: "100%",
+    height: "100%",
+    objectFit: "fit",
+  },
+};
+
+export const NotYetUploadedPhotoStyle = {
+  maxWidth: "190px",
+  backgroundColor: "grey.300",
+  padding: "64px",
+  paddingX: "12px",
+  border: "2px dashed grey",
+  cursor: "pointer",
+  alignItems: "center",
+  justifyItems: "center",
+  mb: 2,
+};
