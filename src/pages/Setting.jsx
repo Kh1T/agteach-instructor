@@ -5,7 +5,6 @@ import {
   Stack,
   MenuItem,
   Divider,
-  Modal,
   Box,
 } from "@mui/material";
 import { useState } from "react";
@@ -102,7 +101,7 @@ function SettingPage() {
 
       {/* Acount Security */}
 
-      <Grid container gap={2}>
+      <Grid container gap={2} sx={{ mb: "80px"}}>
         <Typography variant="h5">Account Security</Typography>
         <CustomInputField fieldName="Current Password" />
         <CustomInputField fieldName="New Password" />

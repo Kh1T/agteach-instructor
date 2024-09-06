@@ -2,6 +2,7 @@ import { useState } from "react";
 import data from "../data/enrollmentData";
 import CustomTable from "../components/CustomTable";
 import QueryHeader from "../components/QueryHeader";
+import { Stack } from "@mui/material";
 
 function EnromentPage() {
   const [selectState, setSelectState] = useState();
@@ -9,7 +10,7 @@ function EnromentPage() {
   function handleCreateNew() {}
   function handleSearch() {}
   return (
-    <>
+    <Stack gap="30px">
       <QueryHeader
         label={label}
         useSelectState={[selectState, setSelectState]}
@@ -18,7 +19,7 @@ function EnromentPage() {
         handleSearch={handleSearch}
       />
       <CustomTable data={data} />
-    </>
+    </Stack>
   );
 }
 
