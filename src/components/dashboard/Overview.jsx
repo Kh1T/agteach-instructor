@@ -3,7 +3,6 @@ import SimpleBarChart from "./SimpleBarChart";
 
 function Overview() {
   return (
-    <>
       <Box
         sx={{
           width: "100%",
@@ -17,7 +16,6 @@ function Overview() {
           <SimpleBarChart />
         </Box>
       </Box>
-    </>
   );
 }
 

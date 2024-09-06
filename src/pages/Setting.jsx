@@ -115,7 +115,7 @@ function SettingPage() {
 
       {/* Acount Security */}
 
-      <Grid container gap={2}>
+      <Grid container gap={2} sx={{ mb: "80px"}}>
         <Typography variant="h5">Account Security</Typography>
         <CustomInputField fieldName="Current Password" fieldType="password" />
         <CustomInputField fieldName="New Password" fieldType="password" />

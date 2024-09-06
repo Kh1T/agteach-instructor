@@ -25,7 +25,7 @@ export default function QueryHeader({
   pathCreated = "/",
   labelCreate = "Create New",
   placeholder = "Search",
-  isCreateNew = true,
+  isCreateNew = false,
 }) {
   // const selectComponent =
   const content = (
@@ -59,7 +59,7 @@ export default function QueryHeader({
       {isCreateNew && (
         <ButtonComponent
           variant="contained"
-          sx={{ backgroundColor: "purple.main", textTransform: "uppercase" }}
+          sx={{ backgroundColor: "purple.main", textTransform: "uppercase" ,height: "100%"}}
           // handleCreateNew={handleCreateNew}
           path={pathCreated}
         >

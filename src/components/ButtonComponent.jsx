@@ -1,4 +1,4 @@
-import { Button, Link, Box } from "@mui/material";
+import { Button, Link } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 
 /**
@@ -13,13 +13,11 @@ import { Link as RouterLink } from "react-router-dom";
  */
 export default function ButtonComponent({ path, color, children, ...props }) {
   return (
-    
-    <Box width='100%'>
+     
       <Link component={RouterLink} to={path}>
         <Button variant="contained" color={color} {...props}>
           {children}
         </Button>
-      </Link>
-    </Box>
+      </Link> 
   );
 }
