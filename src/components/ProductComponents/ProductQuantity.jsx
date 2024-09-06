@@ -1,17 +1,22 @@
 import React, { useState } from "react";
-import {
-  Box,
-  Divider,
-  Stack,
-  TextField,
-  Button,
-  Typography,
-} from "@mui/material";
+import { Box, Divider, Stack, TextField, Button } from "@mui/material";
 import { Remove, Add } from "@mui/icons-material";
 import ProductionQuantityLimitsIcon from "@mui/icons-material/ProductionQuantityLimits";
 import IconWithTitle from "../CourseProductComponents/IconWithTitle";
 import TextSection from "../CourseProductComponents/TextSection";
 
+/**
+ * ProductQuantity component renders a page for instructors to input the quantity of a product.
+ *
+ * It renders the page with the following components:
+ *   - IconWithTitle component with title and icon
+ *   - Divider component
+ *   - TextSection component with title and description
+ *   - TextField component for inputting quantity
+ *   - Two Button components for increasing and decreasing the quantity
+ *
+ * @returns {JSX.Element} Box component with children
+ */
 export default function ProductQuantity() {
   const [quantity, setQuantity] = useState(0); // Initialize quantity state
 

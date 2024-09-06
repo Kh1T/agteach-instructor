@@ -1,11 +1,17 @@
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 
-import { Box, Divider, Stack, Typography } from "@mui/material";
+import { Box, Divider, Typography } from "@mui/material";
 import React from "react";
 import IconWithTitle from "../CourseProductComponents/IconWithTitle";
 import TextSection from "../CourseProductComponents/TextSection";
 import AddManyPhoto from "../CourseProductComponents/AddManyPhoto";
 
+/**
+ * AdditionalPhotos component renders a box with a title, icon, description, and AddManyPhoto component.
+ * It is used to add additional photos to a product.
+ *
+ * @returns {React.ReactElement} A JSX element containing the AdditionalPhotos component
+ */
 export default function AdditionalPhotos() {
   return (
     <Box>

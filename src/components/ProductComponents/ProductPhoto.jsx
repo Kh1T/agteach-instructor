@@ -1,12 +1,20 @@
-import { Divider, Stack, Typography, Box } from "@mui/material";
+import { Divider, Typography, Box } from "@mui/material";
 import InsertPhotoIcon from "@mui/icons-material/InsertPhoto";
-import * as React from "react";
 import IconWithTitle from "../CourseProductComponents/IconWithTitle";
 import TextSection from "../CourseProductComponents/TextSection";
 import PhotoPreview from "../CourseProductComponents/PhotoPreview";
 
-
-
+/**
+ * ProductPhoto component renders a page for instructors to input product photo.
+ *
+ * It renders the page with the following components:
+ *   - IconWithTitle component with title and icon
+ *   - Divider component
+ *   - TextSection component with title and description
+ *   - PhotoPreview component with icon
+ *
+ * @returns {JSX.Element} a JSX element containing the icon and title
+ */
 export default function ProductPhoto() {
 
   return (

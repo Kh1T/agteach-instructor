@@ -4,17 +4,32 @@ import {
   Select,
   MenuItem,
   Divider,
-  Typography,
   Stack,
   Box,
 } from "@mui/material";
 
-import CategoryIcon from "@mui/icons-material/Category";
 import React from "react";
 import BurstModeIcon from "@mui/icons-material/BurstMode";
 import IconWithTitle from "../CourseProductComponents/IconWithTitle";
 import TextSection from "../CourseProductComponents/TextSection";
 
+/**
+ * ProductCategoryForm component renders a form to select the category of a product.
+ *
+ * It consists of an IconWithTitle component with a BurstModeIcon,
+ * a Divider component,
+ * a TextSection component with title "Product Category" and description "Please choose an appropriate category for this product",
+ * a FormControl component with a Select component with the categories.
+ *
+ * The categories are:
+ *   - Plant
+ *   - Fertilizer
+ *   - Tool
+ *
+ * The value of the selected category is stored in the state variable `selectedCategory`.
+ *
+ * When the category is changed, the `handleCategoryChange` function is called with the new value as argument.
+ */
 export default function ProductCategoryForm() {
   const [selectedCategory, setSelectedCategory] = React.useState(0);
 
