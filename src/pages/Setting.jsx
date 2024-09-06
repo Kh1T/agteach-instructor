@@ -5,12 +5,10 @@ import {
   Stack,
   MenuItem,
   Divider,
-  Modal,
-  Button,
   Box,
 } from "@mui/material";
 import { useState } from "react";
-import profileImg from "../assets/dashboard-setting/profile-img.png";
+import AvatarImg from "../assets/dashboard-setting/profile-img.png";
 import CustomButton from "../components/CustomButton";
 import CustomInputField from "../components/CustomInputField";
 import CustomFileUpload from "../components/CustomFileUpload";
@@ -21,7 +19,7 @@ function SettingPage() {
   const handleClose = () => setOpen(false);
 
   // State to hold the uploaded image URL
-  const [profileImg, setProfileImg] = useState("");
+  const [profileImg, setProfileImg] = useState(AvatarImg);
 
   // Function to handle image upload
   const handleImageUpload = (event) => {

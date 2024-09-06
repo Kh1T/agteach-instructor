@@ -59,7 +59,7 @@ function ForgotPassword() {
           <CustomButton color="primary" variant="contained">
             Send reset link
           </CustomButton>
-          <Link to="..">
+          <Link to="/login">
             <CustomButton color="primary" variant="outlined" fullWidth>
               <ArrowBackIosIcon sx={{ fontSize: "medium" }} />
               Back to login
