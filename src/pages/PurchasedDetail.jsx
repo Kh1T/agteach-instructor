@@ -2,8 +2,9 @@ import { ChevronLeft } from "@mui/icons-material";
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { Link } from "@mui/material";
-import CustomChip from "../components/CustomChip";
+// import CustomChip from "../components/CustomChip";
 import CustomTable from "../components/CustomTable";
+import CustomChip from "../components/CustomChip";
 
 function PurchasedDetailPage() {
   const purchasedDetail = [
@@ -80,7 +81,7 @@ function PurchasedDetailPage() {
             </Typography>
           </Stack>
         </Stack>
-        <CustomChip label="Not Yet Delivered" danger sx={{ py: "20px" }} />
+        <CustomChip label="Not Yet Delivered" danger sx={{ py: "15px" }} />
       </Stack>
       <Divider />
       <Typography variant="h3">Purchased Detail</Typography>
