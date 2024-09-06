@@ -7,32 +7,48 @@ import {
   Stack,
 } from "@mui/material";
 import CustomTableHeader from "../CustomTableHeader";
-import CustomTableMui from "../CustomTableMui";
 import { useState } from "react";
+import CustomTable from "../CustomTable";
 
 function TopPerformance() {
-  function createData(...rest) {
-    return { ...rest };
-  }
-  const headers = ["No", "Product", "Category", "Earning"];
-  const rows = [
-    createData(1, "Advanced Vegetable Farming", "Course", "$150"),
-    createData(2, "Advanced Vegetable Farming", "Course", "$150"),
-    createData(3, "Advanced Vegetable Farming", "Course", "$150"),
-    createData(4, "Advanced Vegetable Farming", "Course", "$150"),
-    createData(5, "Advanced Vegetable Farming", "Course", "$150"),
-  ];
+  const data = [{
+    no: 1,
+    product: "Advanced Vegetable Farming",
+    category: "Course",
+    earning: "$150"
+  },
+  {
+    no: 2,
+    product: "Advanced Vegetable Farming",
+    category: "Course",
+    earning: "$150"},
+  {
+    no: 3,
+    product: "Advanced Vegetable Farming",
+    category: "Course",
+    earning: "$150"},
+    {
+    no: 4,
+    product: "Advanced Vegetable Farming",
+    category: "Course",
+    earning: "$150"},
+    {
+    no: 5,
+    product: "Advanced Vegetable Farming",
+    category: "Course",
+    earning: "$150"},
+]
 
   const [transaction, setTransaction] = useState();
-  const data = { headers, rows };
   return (
     <Box
       sx={{
-        boxShadow: 2,
         p: 4,
+        boxShadow: "0px 10px 33px 0px rgba(5,27,58,0.1)",
+        borderRadius: 4
       }}
     >
-      <Stack spacing={0.5}>
+      <Stack spacing={2}>
         <Stack
           direction="row"
           sx={{
@@ -60,7 +76,7 @@ function TopPerformance() {
             </FormControl>
           </Box>
         </Stack>
-        <CustomTableMui data={data} />
+        <CustomTable data={data} />
       </Stack>
     </Box>
   );
