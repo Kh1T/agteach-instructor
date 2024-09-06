@@ -9,6 +9,20 @@ import {
 import AttachMoneyOutlinedIcon from "@mui/icons-material/AttachMoneyOutlined";
 import IconWithTitle from "../CourseProductComponents/IconWithTitle";
 import TextSection from "../CourseProductComponents/TextSection";
+/**
+ * CoursePrice component renders a page for instructors to input course price.
+ *
+ * It renders the page with the following components:
+ *   - IconWithTitle component with title and icon
+ *   - Divider component
+ *   - TextSection component with title and description
+ *   - TextField component for inputting price
+ *   - Typography component with two notes:
+ *     - AgTeach will deduct 20% from the total sale
+ *     - Example, if the product is $100 we will deduct $20 from your sale
+ *
+ * @returns {JSX.Element} Box component with children
+ */
 export default function CoursePrice() {
   return (
     <Box className="container">

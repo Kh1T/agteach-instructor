@@ -10,6 +10,20 @@ import {
 } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
 import ButtonComponent from "../CourseProductComponents/ButtonInBox";
+
+/**
+ * @function ProductCard
+ * @description A component to display a product
+ * @prop {string} src The source of the product image
+ * @prop {string} title The title of the product
+ * @prop {string} price The price of the product
+ * @prop {function} onAdd The function to add the product to cart
+ * @prop {function} onRemove The function to remove the product from cart
+ * @prop {boolean} canAdd Whether the product can be added to cart
+ * @prop {boolean} canRemove Whether the product can be removed from cart
+ * @returns {React.ReactElement} The ProductCard component
+ */
+
 export default function ProductCard({
   src,
   title,

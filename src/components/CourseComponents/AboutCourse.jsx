@@ -2,6 +2,17 @@ import { TextField, Box, Divider, Typography } from "@mui/material";
 import IconWithTitle from "../CourseProductComponents/IconWithTitle";
 import NewspaperOutlinedIcon from "@mui/icons-material/NewspaperOutlined";
 import TextSection from "../CourseProductComponents/TextSection";
+
+
+/**
+ * AboutCourse component renders a page for instructors to input course title,
+ * course description, and learning objective of the course.
+ *
+ * It uses the TextSection component to render each section.
+ *
+ * @returns a JSX element containing the AboutCourse component.
+ */
+
 export default function AboutCourse() {
   return (
     <Box className="container">

@@ -1,4 +1,4 @@
-import { Box, Typography, TextField, Divider, Stack } from "@mui/material";
+import { Box, Typography, Divider } from "@mui/material";
 import ButtonComponent from "../CourseProductComponents/ButtonInBox";
 import IconWithTitle from "../CourseProductComponents/IconWithTitle";
 import BurstModeOutlinedIcon from "@mui/icons-material/BurstModeOutlined";
@@ -19,6 +19,7 @@ import { useState } from "react";
    *
    * @returns a JSX element containing the CourseContents component.
    */
+
 export default function CourseContents() {
   const [sections, setSections] = useState([{ id: uuidv4(), number: 1, type: "section" }]);
 
