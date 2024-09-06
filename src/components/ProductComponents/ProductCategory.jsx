@@ -4,17 +4,32 @@ import {
   Select,
   MenuItem,
   Divider,
-  Button,
-  Typography,
   Stack,
   Box,
 } from "@mui/material";
 
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import CategoryIcon from "@mui/icons-material/Category";
 import React from "react";
-import { iconContainerStyle } from "../../theme/IconBg";
+import BurstModeIcon from "@mui/icons-material/BurstMode";
+import IconWithTitle from "../CourseProductComponents/IconWithTitle";
+import TextSection from "../CourseProductComponents/TextSection";
 
+/**
+ * ProductCategoryForm component renders a form to select the category of a product.
+ *
+ * It consists of an IconWithTitle component with a BurstModeIcon,
+ * a Divider component,
+ * a TextSection component with title "Product Category" and description "Please choose an appropriate category for this product",
+ * a FormControl component with a Select component with the categories.
+ *
+ * The categories are:
+ *   - Plant
+ *   - Fertilizer
+ *   - Tool
+ *
+ * The value of the selected category is stored in the state variable `selectedCategory`.
+ *
+ * When the category is changed, the `handleCategoryChange` function is called with the new value as argument.
+ */
 export default function ProductCategoryForm() {
   const [selectedCategory, setSelectedCategory] = React.useState(0);
 
@@ -24,36 +39,20 @@ export default function ProductCategoryForm() {
 
   return (
     <Stack className="container" gap={1} alignItems="flex-start">
-      <Button
-        variant="text"
-        color="black"
-        startIcon={<ArrowBackIosIcon fontSize="small" color="gray" />}
-        sx={{ gap: 0, paddingLeft: 0 }}
-      >
-        Go Back
-      </Button>
-      
-
       <Box sx={{ width: "100%" }}>
-        <Stack direction="row" gap={1} alignItems="center">
-          <Box sx={iconContainerStyle}>
-            <CategoryIcon sx={{ color: "common.white" }} />
-          </Box>
-          <Typography variant="h3">Category</Typography>
-        </Stack>
+        <IconWithTitle
+          title={"Category"}
+          icon={<BurstModeIcon sx={{ color: "common.white" }} />}
+        />
 
         <Divider variant="fullWidth" sx={{ my: 2 }} />
-
-        <Typography variant="h6" fontWeight="bold" marginY={1}>
-          Product Category
-        </Typography>
-
-        <Typography variant="subtitle2">
-          Please choose an appropriate category for this product
-        </Typography>
+        <TextSection
+          title={"Product Category"}
+          description={"Please choose an appropriate category for this product"}
+        />
       </Box>
 
-      <FormControl fullWidth sx={{ my: 4 }}>
+      <FormControl fullWidth sx={{ my: 2 }}>
         <InputLabel id="category-select-label">Category</InputLabel>
         <Select
           labelId="category-select-label"

@@ -5,9 +5,27 @@ import ButtonComponent from "./ButtonInBox";
 import { v4 as uuidv4 } from "uuid";
 import { Delete } from "@mui/icons-material";
 import { MoreVertRounded } from "@mui/icons-material";
-import { type } from "@testing-library/user-event/dist/type";
 import DeleteConfirmModal from "./DeleteConfirmModal";
 
+
+  /**
+   * SectionComponent renders a section of a course.
+   * It renders the title of the section, a text field for the user to input the title of the section,
+   * and a list of lectures in the section.
+   * It also renders a button to add a new lecture to the section.
+   * When the user clicks on the button to add a new lecture, it increments the number of all existing lectures by 1,
+   * and then appends the new lecture to the end of the list, with the next number.
+   * When the user clicks on a lecture, it renders the lecture component.
+   * When the user clicks on the "X" button on a lecture, it deletes the lecture from the list.
+   * When the user clicks on the "Delete" button on the section, it renders a modal to confirm if the user wants to delete the section.
+   * When the user clicks on the "Confirm" button on the modal, it deletes the section.
+   * @param {{id: string, onDelete: function, number: number, type: string}} props
+   *   - id: the id of the section
+   *   - onDelete: a function that deletes the section when called
+   *   - number: the number of the section
+   *   - type: the type of the section, either "section" or "lecture"
+   * @returns {JSX.Element} a JSX element containing the section component
+   */
 export default function SectionComponent({ id, onDelete, number , type }) {
   const [lectures, setLectures] = useState([
     { id: uuidv4(), number: 1, type: "lecture" },
