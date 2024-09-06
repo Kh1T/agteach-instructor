@@ -15,11 +15,7 @@ import { useState } from "react";
  * @param {boolean} [isPagination=false] - If true, a pagination component is displayed.
  * @returns {ReactElement} A table component with optional pagination.
  */
-export default function CustomTable({
-  data,
-  rowLimit = 5,
-  isPagination = false,
-}) {
+export default function TableComponent({ data, rowLimit = 5, isPagination = false }) {
   // const tableHead = data.
   let headers = Object.keys(data[0]).map(
     (key) => key.charAt(0).toUpperCase() + key.slice(1)
@@ -48,7 +44,7 @@ export default function CustomTable({
       <TableContainer>
         <Table
           sx={{
-            minWidth: 200,
+            minWidth: 650,
             borderTop: "1px dashed",
             borderBottom: "1px dashed",
             borderColor: "grey.300",
