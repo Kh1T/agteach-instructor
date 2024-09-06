@@ -10,8 +10,8 @@ import {
 
 import React from "react";
 import BurstModeIcon from "@mui/icons-material/BurstMode";
-import IconWithTitle from "../CourseProductComponents/IconWithTitle";
-import TextSection from "../CourseProductComponents/TextSection";
+import IconWithTitle from "../course-product/IconWithTitle";
+import TextSection from "../course-product/TextSection";
 
 /**
  * ProductCategoryForm component renders a form to select the category of a product.

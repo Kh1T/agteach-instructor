@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Typography, Stack, Divider } from "@mui/material";
-import ProductCard from "../CourseComponents/ProductCard";
+import ProductCard from "../new-course/ProductCard";
 /**
  * AddedProduct component renders a list of products that have been added to the course.
  *

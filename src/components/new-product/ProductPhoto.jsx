@@ -1,8 +1,8 @@
 import { Divider, Typography, Box } from "@mui/material";
 import InsertPhotoIcon from "@mui/icons-material/InsertPhoto";
-import IconWithTitle from "../CourseProductComponents/IconWithTitle";
-import TextSection from "../CourseProductComponents/TextSection";
-import PhotoPreview from "../CourseProductComponents/PhotoPreview";
+import IconWithTitle from "../course-product/IconWithTitle";
+import TextSection from "../course-product/TextSection";
+import PhotoPreview from "../course-product/PhotoPreview";
 
 /**
  * ProductPhoto component renders a page for instructors to input product photo.
@@ -16,7 +16,6 @@ import PhotoPreview from "../CourseProductComponents/PhotoPreview";
  * @returns {JSX.Element} a JSX element containing the icon and title
  */
 export default function ProductPhoto() {
-
   return (
     <Box>
       <IconWithTitle
@@ -39,4 +38,3 @@ export default function ProductPhoto() {
     </Box>
   );
 }
-

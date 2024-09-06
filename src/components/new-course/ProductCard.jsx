@@ -9,7 +9,7 @@ import {
   IconButton,
 } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
-import ButtonComponent from "../CourseProductComponents/ButtonInBox";
+import ButtonComponent from "../course-product/ButtonInBox";
 
 /**
  * @function ProductCard

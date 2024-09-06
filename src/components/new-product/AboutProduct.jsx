@@ -1,7 +1,7 @@
 import { TextField, Box, Divider, Typography } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
-import IconWithTitle from "../CourseProductComponents/IconWithTitle";
-import TextSection from "../CourseProductComponents/TextSection";
+import IconWithTitle from "../course-product/IconWithTitle";
+import TextSection from "../course-product/TextSection";
 import { useState } from "react";
 /**
  * AboutProduct component renders a page for instructors to input product name and description.
@@ -44,7 +44,7 @@ export default function AboutProduct() {
         value={productName}
         onChange={(event) => setProductName(event.target.value)}
       />
-      <Typography  variant="bsr" color="dark.300" sx={{ mt: 2 }}>
+      <Typography variant="bsr" color="dark.300" sx={{ mt: 2 }}>
         eg: Grow Lights - LED or fluorescent grow lights
       </Typography>
 
