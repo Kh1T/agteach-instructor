@@ -19,7 +19,7 @@ const VisuallyHiddenInput = styled("input")({
   width: 1,
 });
 
-function CustomFileUpload({ open, handleClose }) {
+function CustomFileUpload({ open, handleClose, ...props }) {
   return (
     <Modal
       open={open}
@@ -59,13 +59,8 @@ function CustomFileUpload({ open, handleClose }) {
           </Typography>
           <VisuallyHiddenInput
             type="file"
-            onChange={(event) => {
-              if (event.target.files.length) {
-                console.log("Files selected:", event.target.files);
-              } else {
-                console.log("No file selected.");
-              }
-            }}
+            accept="image/*"
+            {...props}
             multiple
           />
         </Button>
@@ -78,3 +73,7 @@ function CustomFileUpload({ open, handleClose }) {
 }
 
 export default CustomFileUpload;
+
+{
+  /* <input type="file" hidden accept="image/*" onChange={handleImageUpload} />; */
+}

@@ -6,6 +6,7 @@ import {
   MenuItem,
   Divider,
   Modal,
+  Button,
   Box,
 } from "@mui/material";
 import { useState } from "react";
@@ -19,13 +20,24 @@ function SettingPage() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  // State to hold the uploaded image URL
+  const [profileImg, setProfileImg] = useState("");
+
+  // Function to handle image upload
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      setProfileImg(imageUrl); // Update state with the new image URL
+    }
+  };
+
   return (
     <Grid container direction="column" gap={5} pb={4}>
       {/* Profile Section */}
 
       <Grid container direction="column" gap={2} alignContent="start">
         <Typography variant="h5">Profile</Typography>
-
         <Avatar
           sx={{ width: "140px", height: "140px" }}
           src={profileImg}
@@ -38,7 +50,11 @@ function SettingPage() {
         >
           CHANGE
         </CustomButton>
-        <CustomFileUpload open={open} handleClose={handleClose} />
+        <CustomFileUpload
+          open={open}
+          handleClose={handleClose}
+          onChange={handleImageUpload}
+        />
       </Grid>
 
       {/* Information Section */}
