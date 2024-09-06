@@ -1,9 +1,9 @@
 import { Divider, Typography, Box } from "@mui/material";
 import InsertPhotoIcon from "@mui/icons-material/InsertPhoto";
 import WallpaperOutlinedIcon from "@mui/icons-material/WallpaperOutlined";
-import IconWithTitle from "../CourseProductComponents/IconWithTitle";
-import TextSection from "../CourseProductComponents/TextSection";
-import PhotoPreview from "../CourseProductComponents/PhotoPreview";
+import IconWithTitle from "../course-product/IconWithTitle";
+import TextSection from "../course-product/TextSection";
+import PhotoPreview from "../course-product/PhotoPreview";
 
 /**
  * AddThumbnail component for adding thumbnail image of course

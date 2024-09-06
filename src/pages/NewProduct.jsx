@@ -1,13 +1,13 @@
-import ProductCategory from "../components/ProductComponents/ProductCategory";
-import AboutProduct from "../components/ProductComponents/AboutProduct";
-import ProductQuantity from "../components/ProductComponents/ProductQuantity";
-import ProductPhoto from "../components/ProductComponents/ProductPhoto";
-import AdditionalPhoto from "../components/ProductComponents/AdditionalPhoto";
-import ButtonComponent from "../components/CourseProductComponents/ButtonInBox";
+import ProductCategory from "../components/new-product/ProductCategory";
+import AboutProduct from "../components/new-product/AboutProduct";
+import ProductQuantity from "../components/new-product/ProductQuantity";
+import ProductPhoto from "../components/new-product/ProductPhoto";
+import AdditionalPhoto from "../components/new-product/AdditionalPhoto";
+import ButtonComponent from "../components/course-product/ButtonInBox";
 
 import { Box, Button, Typography } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import ProductPrice from "../components/ProductComponents/ProductPrice";
+import ProductPrice from "../components/new-product/ProductPrice";
 
 import { useNavigate } from "react-router-dom";
 

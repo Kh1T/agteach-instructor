@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Box, Divider, Stack, TextField, Button } from "@mui/material";
 import { Remove, Add } from "@mui/icons-material";
 import ProductionQuantityLimitsIcon from "@mui/icons-material/ProductionQuantityLimits";
-import IconWithTitle from "../CourseProductComponents/IconWithTitle";
-import TextSection from "../CourseProductComponents/TextSection";
+import IconWithTitle from "../course-product/IconWithTitle";
+import TextSection from "../course-product/TextSection";
 
 /**
  * ProductQuantity component renders a page for instructors to input the quantity of a product.

@@ -1,8 +1,7 @@
 import { TextField, Box, Divider, Typography } from "@mui/material";
-import IconWithTitle from "../CourseProductComponents/IconWithTitle";
+import IconWithTitle from "../course-product/IconWithTitle";
 import NewspaperOutlinedIcon from "@mui/icons-material/NewspaperOutlined";
-import TextSection from "../CourseProductComponents/TextSection";
-
+import TextSection from "../course-product/TextSection";
 
 /**
  * AboutCourse component renders a page for instructors to input course title,

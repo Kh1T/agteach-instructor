@@ -8,15 +8,15 @@ import {
   Alert,
 } from "@mui/material";
 import ProductCard from "./ProductCard";
-import ButtonComponent from "../CourseProductComponents/ButtonInBox";
+import ButtonComponent from "../course-product/ButtonInBox";
 import Inventory2OutlinedIcon from "@mui/icons-material/Inventory2Outlined";
-import IconWithTitle from "../CourseProductComponents/IconWithTitle";
-import TextSection from "../CourseProductComponents/TextSection";
+import IconWithTitle from "../course-product/IconWithTitle";
+import TextSection from "../course-product/TextSection";
 
 import { useState, useEffect } from "react";
 
 import { fakeProductData } from "../../data/searchBarData";
-import AddedProduct from "../CourseProductComponents/AddedProduct";
+import AddedProduct from "../course-product/AddedProduct";
 
 const allProduct = fakeProductData;
 /**
@@ -53,21 +53,21 @@ export default function RelatedProduct() {
 
   const handleRemoveProduct = (productId) => {
     setAddedProducts((prevProducts) =>
-      prevProducts.filter((product) => product.id !== productId)
+      prevProducts.filter((product) => product.id !== productId),
     );
   };
 
   const handleSearchInputChange = (event) => {
     setSearchTerm(event.target.value);
     const filteredResults = fakeProductData.filter((product) =>
-      product.title.toLowerCase().includes(event.target.value.toLowerCase())
+      product.title.toLowerCase().includes(event.target.value.toLowerCase()),
     );
     setSearchResults(filteredResults);
   };
 
   const handleSearch = () => {
     const filteredResults = fakeProductData.filter((product) =>
-      product.title.toLowerCase().includes(searchTerm.toLowerCase())
+      product.title.toLowerCase().includes(searchTerm.toLowerCase()),
     );
     setSearchResults(filteredResults);
   };

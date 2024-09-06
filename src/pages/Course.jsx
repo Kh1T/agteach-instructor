@@ -4,6 +4,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import QueryHeader from "../components/QueryHeader";
 import { courses } from "../data/coursesData";
 import CustomTable from "../components/CustomTable";
+import { Stack } from "@mui/material";
 
 function CoursePage() {
   const [selectState, setSelectState] = useState(0);
@@ -29,18 +30,19 @@ function CoursePage() {
 
   function handleSearch() {}
   return (
-    <>
+    <Stack gap="30px">
       <QueryHeader
         label={label}
         searchRef={searchRef}
         useSelectState={[selectState, setSelectState]}
         selectData={["Newest", "Oldest"]}
+        isCreateNew={true}
         handleSearch={handleSearch}
         pathCreated="/course/new"
         labelCreate="Create Course"
       />
       <CustomTable data={courseList} rowLimit={10} isPagination={true} />
-    </>
+    </Stack>
   );
 }
 

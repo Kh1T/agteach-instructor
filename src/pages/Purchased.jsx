@@ -1,9 +1,9 @@
-import { Box } from "@mui/material";
 import QueryHeader from "../components/QueryHeader";
 import { useState } from "react";
 import CustomTable from "../components/CustomTable";
 import { purchased } from "../data/purchasedData";
 import CustomChip from "../components/CustomChip";
+import { Stack } from "@mui/material";
 function PurchasedPage() {
   const [selectState, setSelectState] = useState(0);
   const label = "Filter";
@@ -22,7 +22,7 @@ function PurchasedPage() {
     return newItem;
   });
   return (
-    <Box>
+    <Stack gap="30px">
       <QueryHeader
         label={label}
         useSelectState={[selectState, setSelectState]}
@@ -37,7 +37,7 @@ function PurchasedPage() {
         isPagination={true}
         isLink={false}
       />
-    </Box>
+    </Stack>
   );
 }
 

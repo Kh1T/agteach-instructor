@@ -2,9 +2,9 @@ import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 
 import { Box, Divider, Typography } from "@mui/material";
 import React from "react";
-import IconWithTitle from "../CourseProductComponents/IconWithTitle";
-import TextSection from "../CourseProductComponents/TextSection";
-import AddManyPhoto from "../CourseProductComponents/AddManyPhoto";
+import IconWithTitle from "../course-product/IconWithTitle";
+import TextSection from "../course-product/TextSection";
+import AddManyPhoto from "../course-product/AddManyPhoto";
 
 /**
  * AdditionalPhotos component renders a box with a title, icon, description, and AddManyPhoto component.
