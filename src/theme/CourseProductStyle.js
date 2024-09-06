@@ -76,7 +76,7 @@ export const UploadedPhotoStyle = {
 };
 
 export const NotYetUploadedPhotoStyle = {
-  maxWidth: "190px",
+  maxWidth: "200px",
   backgroundColor: "grey.300",
   padding: "64px",
   paddingX: "12px",
@@ -85,4 +85,5 @@ export const NotYetUploadedPhotoStyle = {
   alignItems: "center",
   justifyItems: "center",
   mb: 2,
+ 
 };
