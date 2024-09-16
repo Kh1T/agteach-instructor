@@ -19,7 +19,6 @@ build_app:
   image: node:20
   script:
     - echo "Building Instructor Application"
-    - unset CI
     - node -v
     - npm -v
     - npm i  # Use 'npm ci' instead of 'npm install' for CI environments
