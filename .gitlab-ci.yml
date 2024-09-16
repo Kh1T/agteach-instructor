@@ -45,3 +45,5 @@ deploy_to_aws:
     - rsync -avz -e "ssh -i ~/.ssh/agtech.pem" build/* $AWS_SSH_USER@$AWS_SSH_IP:/home/ubuntu/app/instructor
   dependencies:
     - install_dependencies    
+
+    
