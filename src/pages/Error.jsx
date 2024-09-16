@@ -7,7 +7,6 @@ import Error from "../assets/authentication/error.svg";
  *
  * @return {JSX.Element} The JSX element representing the error page.
  */
-
 export default function ErrorPage() {
   return (
     <Container
@@ -27,6 +26,7 @@ export default function ErrorPage() {
           gap: 3,
         }}
       >
+
         <Box
           component="img"
           src={Error}
@@ -50,7 +50,7 @@ export default function ErrorPage() {
                 borderColor: "primary.main",
               }}
             >
-              Back to home
+            Back to Home
             </Button>
             <Button
               variant="contained"
