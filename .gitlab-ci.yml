@@ -11,9 +11,6 @@ install_dependencies:
     - echo "Installing dependencies"
     - npm install
   cache:
-    key:
-      files:
-        - package-lock.json
     paths:
       - node_modules/
 
@@ -24,6 +21,8 @@ build_app:
     - echo "Building Instructor Application"
     - unset CI
     - node -v
+    - npm -v
+    - npm ci  # Use 'npm ci' instead of 'npm install' for CI environments
     - npm run build
   artifacts:
     paths:
@@ -35,7 +34,7 @@ build_app:
       files:
         - package-lock.json
     paths:
-      - node_modules/
+      - node_modules
 
 deploy_to_aws:
   stage: deploy
