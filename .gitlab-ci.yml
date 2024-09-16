@@ -28,12 +28,6 @@ build_app:
       - build
   dependencies:
     - install_dependencies
-  cache:
-    key:
-      files:
-        - package-lock.json
-    paths:
-      - node_modules/
 
 deploy_to_aws:
   stage: deploy
