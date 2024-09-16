@@ -11,6 +11,9 @@ install_dependencies:
     - echo "Installing dependencies"
     - npm install
   cache:
+    key:
+      files:
+        - package-lock.json
     paths:
       - node_modules/
 
@@ -32,7 +35,7 @@ build_app:
       files:
         - package-lock.json
     paths:
-      - node_modules
+      - node_modules/
 
 deploy_to_aws:
   stage: deploy
