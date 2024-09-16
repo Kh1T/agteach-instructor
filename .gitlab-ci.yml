@@ -22,7 +22,7 @@ build_app:
     - node -v
     - npm -v
     - npm i  # Use 'npm ci' instead of 'npm install' for CI environments
-    - npm run build --verbose
+    - CI=false npm run build --verbose
   artifacts:
     paths:
       - build
