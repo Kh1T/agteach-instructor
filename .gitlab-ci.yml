@@ -20,6 +20,7 @@ build_app:
   script:
     - echo "Building Instructor Application"
     - unset CI
+    - node -v
     - npm run build
   artifacts:
     paths:
