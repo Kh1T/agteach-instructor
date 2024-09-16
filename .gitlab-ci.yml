@@ -6,8 +6,6 @@ stages:
 install_dependencies:
   stage: install
   image: node:20
-  only:
-    - feat-cicd-yml
   script:
     - node -v
     - echo "Installing dependencies"
@@ -19,8 +17,6 @@ install_dependencies:
 build_app:
   stage: build
   image: node:20
-  only:
-    - feat-cicd-yml
   script:
     - echo "Building Instructor Application"
     - unset CI
@@ -34,8 +30,6 @@ build_app:
 deploy_to_aws:
   stage: deploy
   image: node:20
-  only:
-    - feat-cicd-yml 
   script:
     - echo "Deploying to AWS EC2"
     - mkdir -p ~/.ssh
@@ -46,4 +40,3 @@ deploy_to_aws:
   dependencies:
     - install_dependencies    
 
-    
