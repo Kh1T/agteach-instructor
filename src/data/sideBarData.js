@@ -77,7 +77,7 @@ const sidebarList = [
   {
     title: "Login",
     Icon: null,
-    route: "/login",
+    route: "/auth/login",
     description: "Login to your account",
   },
 ];

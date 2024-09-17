@@ -1,18 +1,12 @@
 import { Stack, Box, Typography, Grid2, Button } from "@mui/material";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { Controller, useForm } from "react-hook-form";
 
-import CustomInputField from "../components/CustomInputField";
 import SideBarImg from "../components/SideBarImg";
-import CustomButton from "../components/CustomButton";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import FormInput from "../components/login-signup/FormInput";
 import dayjs from "dayjs";
-import { useDispatch } from "react-redux";
-import { useSignupMutation } from "../services/api/authApi";
+import { useSignupMutation } from "../store/api/authApi";
 import { CustomAlert } from "../components/CustomAlert";
 
 function Signup() {
@@ -175,7 +169,7 @@ function Signup() {
         </form>
         <Typography textAlign="center">
           Already have an account?
-          <Link to="/login">Go Back</Link>
+          <Link to="/auth/login">Go Back</Link>
         </Typography>
       </Stack>
     </Grid2>

@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { Link as RouterLink } from 'react-router-dom';
 import { CustomAlert } from '../components/CustomAlert';
-import { useForgotPasswordMutation } from '../services/api/authApi';
+import { useForgotPasswordMutation } from '../store/api/authApi';
 import forgetPasswordImg from '../assets/forgotpassword.png';
 
 
