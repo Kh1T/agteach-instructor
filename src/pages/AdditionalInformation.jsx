@@ -13,7 +13,7 @@ import CustomInputField from "../components/CustomInputField"; // custom compone
 import CustomButton from "../components/CustomButton"; // custom component
 import logo from "./../assets/logo.svg";
 import { useForm } from "react-hook-form";
-import { useAdditionalInfoMutation } from "../services/api/authApi";
+import { useAdditionalInfoMutation } from "../store/api/authApi";
 
 function AdditionalInformation() {
   const {
