@@ -49,9 +49,9 @@ export default function Sidebar({ children }) {
         flexShrink: 0,
         "& .MuiDrawer-paper": {
           width: drawerWidth,
-          boxSizing: "border-box",          
+          boxSizing: "border-box",
           borderRight: "0.5px dashed ",
-          borderColor: 'grey.400',
+          borderColor: "grey.400",
           px: "20px",
           py: 5,
         },
@@ -67,16 +67,18 @@ export default function Sidebar({ children }) {
         }}
       >
         <List>
-          <Box
-            component="img"
-            sx={{
-              ml: 2,
-              height: 48,
-              width: 38,
-            }}
-            alt="logo"
-            src={logoIcon}
-          />
+          <Link component={RouterLink} to="/">
+            <Box
+              component="img"
+              sx={{
+                ml: 2,
+                height: 48,
+                width: 38,
+              }}
+              alt="logo"
+              src={logoIcon}
+            />
+          </Link>
           <Toolbar />
           {sidebarList.map(
             ({ title = "Title", Icon, route }, index) =>
