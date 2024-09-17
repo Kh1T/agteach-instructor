@@ -24,10 +24,19 @@ export const authApi = createApi({
       }),
     }),
 
+    additionalInfo: builder.mutation({
+      query: (additionalInfoData) => ({
+        url: "/api/users/signup/additionalInfo",
+        method: "POST",
+        body: additionalInfoData,
+      })
+    })
+
   }),
 });
 
 export const {
   useForgotPasswordMutation,
   useResetPasswordMutation,
+  useAdditionalInfoMutation
 } = authApi;

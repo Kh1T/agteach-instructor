@@ -1,33 +1,54 @@
 import {
   Box,
   Divider,
-  Grid2 as Grid,
+  Grid,
   MenuItem,
   Stack,
   TextField,
   Typography,
 } from "@mui/material";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import CustomInputField from "../components/CustomInputField"; // custom component
 import CustomButton from "../components/CustomButton"; // custom component
 import logo from "./../assets/logo.svg";
 import { useForm } from "react-hook-form";
+import { useAdditionalInfoMutation } from "../services/api/authApi";
 
-/**
- * Renders a form to collect additional user information.
- *
- * @returns {JSX.Element} The AdditionalInformation component
- */
 function AdditionalInformation() {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      phone: "",
+      city: "",
+      address: "",
+    },
+  });
+  const navigate = useNavigate();
+  const [addPerosnalInfo] = useAdditionalInfoMutation();
+
+  const onSubmit = async (data) => {
+    console.log(data);
+    try {
+      const response = await addPerosnalInfo({
+        ...data,
+      }).unwrap();
+      console.log("Success:", response);
+      navigate("/auth/signup/verification");
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
   return (
     <Grid container justifyContent="center" direction="column" mt={12} gap={15}>
       {/* Container for the entire form */}
-      <Box component="img" src={logo} alt="Logo" />{" "}
+      <Box component="img" src={logo} alt="Logo" />
       {/* Add alt text for accessibility */}
       <Grid container justifyContent="center" alignItems="center" gap={12}>
         {/* Container for the main content area */}
@@ -38,12 +59,10 @@ function AdditionalInformation() {
             height={500}
             border="none"
             component="iframe"
-            src="https://lottie.host/embed/288044aa-d34d-480e-a0a5-90f2169ad2a9/3QIerLarqo.json"
-            alt="Interactive animation" // Add alt text for accessibility
+            src="https://lottie.host/embed/7e3e9b9a-bfc5-43b9-83b8-f9865bff7bf6/OkwRtcwUA1.json"
+            alt="Interactive animation"
           />
-
           <Typography variant="h3">Almost There</Typography>
-
           <Typography
             color="dark.200"
             sx={{ width: "300px", margin: "0 auto" }}
@@ -53,55 +72,82 @@ function AdditionalInformation() {
             continue
           </Typography>
         </Stack>
-        <form onSubmit={handleSubmit((data) => console.log(data))}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <Stack flexDirection="column" gap={2}>
-            {/* Stack for the form fields */}
             <Typography variant="blgsm">Name & Address</Typography>
             <Stack flexDirection="row" gap={2}>
               {/* Stack for the name fields */}
               <CustomInputField
-                fieldName="First name"
+                fieldName="First Name"
+                placeholder="e.g. Jane"
                 errors={errors}
                 register={register}
-                // Add props for validation and error handling (if applicable)
+                validation={{
+                  required: "First name is required",
+                  pattern: {
+                    value: /^\d+$/i,
+                    message: "First name can only contain letters",
+                  },
+                }}
               />
               <CustomInputField
-                fieldName="Last name"
+                fieldName="Last Name"
+                placeholder="e.g. Smith"
                 errors={errors}
                 register={register}
-                // Add props for validation and error handling (if applicable)
+                validation={{
+                  required: "Last name is required",
+                  pattern: {
+                    value: /^[A-Za-z]+$/i,
+                    message: "Last name can only contain letters",
+                  },
+                }}
               />
             </Stack>
 
             {/* Address Field */}
-
-            <TextField label="Address" noValidate autoComplete="off" select>
+            <TextField
+              label="City"
+              autoComplete="off"
+              select
+              placeholder="Select a city"
+              {...register("city", { required: "City is required" })}
+              error={!!errors.city}
+              helperText={errors?.city?.message}
+            >
               <MenuItem value="Phnom Penh">Phnom Penh</MenuItem>
+              <MenuItem value="Siem Reap">Siem Reap</MenuItem>
+              <MenuItem value="Battambang">Battambang</MenuItem>
+              <MenuItem value="Sihanoukville">Sihanoukville</MenuItem>
+              <MenuItem value="Kampot">Kampot</MenuItem>
+              <MenuItem value="Koh Kong">Koh Kong</MenuItem>
+              <MenuItem value="Pursat">Pursat</MenuItem>
             </TextField>
 
             <CustomInputField
-              fieldName="Address 1"
+              fieldName="Address"
               errors={errors}
               register={register}
-              // Add props for validation and error handling (if applicable)
+              validation={{
+                required: "Address is required",
+              }}
             />
 
             <Divider />
 
-            <Typography variant="blgsm">Email & Phone</Typography>
+            <Typography variant="blgsm">Contact Information</Typography>
             <Stack flexDirection="row" gap={2}>
-              {/* Stack for the email and phone fields */}
-              <CustomInputField
-                fieldName="Email"
-                errors={errors}
-                register={register}
-                // Add props for validation (e.g., email format)
-              />
               <CustomInputField
                 fieldName="Phone Number"
                 errors={errors}
                 register={register}
-                // Add props for validation (e.g., phone number format)
+                validation={{
+                  required: "Phone number is required",
+                  pattern: {
+                    value: /^\d+$/i,
+                    message: "Enter a valid phone number",
+                  },
+                }}
               />
             </Stack>
             <CustomButton color="primary" variant="contained">
