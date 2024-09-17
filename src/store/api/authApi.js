@@ -8,6 +8,22 @@ export const authApi = createApi({
   }),
   endpoints: (builder) => ({
 
+    signup: builder.mutation({
+      query: (signupData) => ({
+        url: "/api/users/signup",
+        method: "POST",
+        body: signupData,
+      }),
+    }),
+    
+    login: builder.mutation({
+      query: (loginData) => ({
+        url: "/api/users/login",
+        method: "POST",
+        body: loginData,
+      }),
+    }),
+    
     forgotPassword: builder.mutation({
       query: (email) => ({
         url: "api/users/forgotPassword",
@@ -24,13 +40,6 @@ export const authApi = createApi({
       }),
     }),
 
-    signup: builder.mutation({
-      query: (signupData) => ({
-        url: "/api/users/signup",
-        method: "POST",
-        body: signupData,
-      }),
-    }),
 
   }),
 });
@@ -39,4 +48,5 @@ export const {
   useForgotPasswordMutation,
   useResetPasswordMutation,
   useSignupMutation,
+  useLoginMutation,
 } = authApi;
