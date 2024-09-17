@@ -42,24 +42,18 @@ export const router = createBrowserRouter([
       { path: "setting", element: <SettingPage /> },
     ],
   },
-  
-  { path: "/login", element: <LoginPage /> },
-  { path: "/forgot", element: <ForgotPassword /> },
-  { path: "/signup", element: <Signup /> },
-  { path: "/signup/additional", element: <AdditionalInformation /> },
-  { path: "/reset-password", element: <ResetPassword /> },
-  
+
   { path: "*", element: <ErrorPage /> },
 
   {
     path: "/auth",
     Element: <AuthRootLayout />,
     children: [
-      {index: true, path: "login", element: <LoginPage /> },
+      { index: true, path: "login", element: <LoginPage /> },
       { path: "forgot-password", element: <ForgotPassword /> },
       { path: "signup", element: <Signup /> },
       { path: "signup/additional", element: <AdditionalInformation /> },
       { path: "reset-password/:resetToken", element: <ResetPassword /> },
-    ]
-  }
+    ],
+  },
 ]);

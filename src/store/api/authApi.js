@@ -24,10 +24,19 @@ export const authApi = createApi({
       }),
     }),
 
+    signup: builder.mutation({
+      query: (signupData) => ({
+        url: "/api/users/signup",
+        method: "POST",
+        body: signupData,
+      }),
+    }),
+
   }),
 });
 
 export const {
   useForgotPasswordMutation,
   useResetPasswordMutation,
+  useSignupMutation,
 } = authApi;

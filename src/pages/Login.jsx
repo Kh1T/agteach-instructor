@@ -75,12 +75,12 @@ function LoginPage() {
                 control={<Checkbox value="remember" />}
                 label="Keep me logged in"
               />
-              <Link to="/forgot">Forgot Password ?</Link>
+              <Link to="/auth/forgot-password">Forgot Password ?</Link>
               <CustomButton color="primary" variant="contained">
                 Login
               </CustomButton>
               <Typography>
-                Need an account ? <Link to="/signup">Create one</Link>
+                Need an account ? <Link to="/auth/signup">Create one</Link>
               </Typography>
             </form>
           </Box>
