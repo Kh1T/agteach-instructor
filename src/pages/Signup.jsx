@@ -1,26 +1,53 @@
-import { Stack, Box, Typography, Grid2 } from "@mui/material";
+import { Stack, Box, Typography, Grid2, Button } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 
 import CustomInputField from "../components/CustomInputField";
 import SideBarImg from "../components/SideBarImg";
 import CustomButton from "../components/CustomButton";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import FormInput from "../components/login-signup/FormInput";
+import dayjs from "dayjs";
+import { useDispatch } from "react-redux";
+import { useSignupMutation } from "../services/api/authApi";
+import { CustomAlert } from "../components/CustomAlert";
 
 function Signup() {
+  const navigate = useNavigate();
+  const [signup, { isLoading, isError }] = useSignupMutation();
+  const [open, setOpen] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const {
-    register,
+    control,
     handleSubmit,
+    register,
+    watch,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      username: "",
+      email: "",
+      password: "",
+      passwordConfirm: "",
+      role: "instructor",
+    },
+  });
 
-  const [linkActive, setLinkActive] = useState(false);
+  const handleShowPassword = () => setShowPassword((prev) => !prev);
 
-  const onSubmit = (data = false) => {
-    if (data) setLinkActive(true);
+  const submitHandler = async (data) => {
+    try {
+      console.log(data);
+      data.dateOfBirth = dayjs(data.dateOfBirth).format("YYYY/MM/DD");
+      const response = await signup(data).unwrap();
+      navigate("info");
+    } catch (error) {
+      setOpen(true);
+      console.error("Signup failed:", error);
+    }
   };
 
   return (
@@ -31,6 +58,16 @@ function Signup() {
       spacing={{ xs: 5, md: 15, lg: 20 }}
       alignItems={"center"}
     >
+      <CustomAlert
+        label={
+          isError
+            ? "Email already exists. Please try another email."
+            : "Signup Successful!"
+        }
+        severity={isError ? "error" : "success"}
+        open={open}
+        onClose={() => setOpen(false)}
+      />
       <Grid2 sx={{ display: { xs: "none", md: "none", lg: "block" } }}>
         <SideBarImg />
       </Grid2>
@@ -47,39 +84,94 @@ function Signup() {
           </Typography>
         </Box>
         <form
-          onSubmit={handleSubmit(onSubmit)}
+          onSubmit={handleSubmit(submitHandler)}
           style={{ display: "flex", flexDirection: "column", gap: "20px" }}
         >
-          <CustomInputField
-            fieldName="Username"
-            register={register}
-            errors={errors}
+          <FormInput
+            label="Name"
+            {...register("username", {
+              required: "Please enter your name",
+            })}
+            error={!!errors.name}
+            helperText={errors.name?.message}
           />
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DatePicker label="Date of Birth" />
-          </LocalizationProvider>
-          <CustomInputField
-            fieldName="Email"
-            register={register}
-            errors={errors}
+          <Controller
+            name="dateOfBirth"
+            control={control}
+            rules={{ required: "Please select your date of birth" }} 
+            render={({ field }) => (
+              <FormInput
+                label="Date of Birth"
+                isDate={true}
+                dateValue={field.value ? dayjs(field.value) : null}
+                onDateChange={(newDate) => field.onChange(newDate)}
+                error={!!errors.dateOfBirth} 
+                helperText={errors.dateOfBirth?.message} 
+                />
+              )}
           />
-          <CustomInputField
-            fieldName="Password"
-            fieldType="password"
-            register={register}
-            errors={errors}
+
+          <FormInput
+            label="Email"
+            {...register("email", {
+              required: "Please enter your email",
+              pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                message: "Invalid email address",
+              },
+            })}
+            error={!!errors.email}
+            helperText={errors.email?.message}
           />
-          {linkActive ? (
-            <Link to="additional">
-              <CustomButton color="primary" variant="contained">
-                Create Account
-              </CustomButton>
-            </Link>
-          ) : (
-            <CustomButton color="primary" variant="contained">
-              Create Account
-            </CustomButton>
-          )}
+          <FormInput
+            label="Password"
+            type="password"
+            showPassword={showPassword}
+            handleClickShowPassword={handleShowPassword}
+            {...register("password", {
+              required: "Please enter your password",
+              minLength: {
+                value: 8,
+                message: "Password must be at least 8 characters",
+              },
+              maxLength: {
+                value: 20,
+                message: "Password must be at most 20 characters",
+              },
+              pattern: {
+                value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}$/,
+                message:
+                  "Password must contain at least one letter and one number",
+              },
+            })}
+            error={!!errors.password}
+            helperText={errors.password?.message}
+          />
+          <FormInput
+            label="Confirm Password"
+            type="password"
+            showPassword={showPassword}
+            handleClickShowPassword={handleShowPassword}
+            {...register("passwordConfirm", {
+              required: "Please confirm your password",
+              validate: (value) => {
+                if (value !== watch("password")) {
+                  return "Passwords do not match";
+                }
+              },
+            })}
+            error={!!errors.passwordConfirm}
+            helperText={errors.passwordConfirm?.message}
+          />
+          <Button
+            type="submit"
+            variant="contained"
+            fullWidth
+            sx={{ padding: "12px" }}
+            disabled={isLoading}
+          >
+            {isLoading ? "Signing Up..." : "Sign Up"}
+          </Button>
         </form>
         <Typography textAlign="center">
           Already have an account?
