@@ -37,7 +37,7 @@ function Signup() {
       console.log(data);
       data.dateOfBirth = dayjs(data.dateOfBirth).format("YYYY/MM/DD");
       const response = await signup(data).unwrap();
-      navigate("info");
+      navigate("additional");
     } catch (error) {
       setOpen(true);
       console.error("Signup failed:", error);
