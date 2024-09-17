@@ -19,6 +19,7 @@ import AdditionalInformation from "../pages/AdditionalInformation";
 import ResetPassword from "../pages/ResetPassword";
 import EnrollmentDetailPage from "../pages/EnrollmentDetail";
 import PurchasedDetailPage from "../pages/PurchasedDetail";
+import AuthRootLayout from "./AuthRoot";
 
 export const router = createBrowserRouter([
   {
@@ -41,9 +42,15 @@ export const router = createBrowserRouter([
     ],
   },
 
-  { path: "/login", element: <LoginPage /> },
-  { path: "/forgot", element: <ForgotPassword /> },
-  { path: "/signup", element: <Signup /> },
-  { path: "/signup/additional", element: <AdditionalInformation /> },
-  { path: "/reset-password", element: <ResetPassword /> },
+  {
+    path: "/auth",
+    Element: <AuthRootLayout />,
+    children: [
+      {index: true, path: "login", element: <LoginPage /> },
+      { path: "forgot-password", element: <ForgotPassword /> },
+      { path: "signup", element: <Signup /> },
+      { path: "signup/additional", element: <AdditionalInformation /> },
+      { path: "reset-password/:resetToken", element: <ResetPassword /> },
+    ]
+  }
 ]);
