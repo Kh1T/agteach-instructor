@@ -19,6 +19,7 @@ import AdditionalInformation from "../pages/AdditionalInformation";
 import ResetPassword from "../pages/ResetPassword";
 import EnrollmentDetailPage from "../pages/EnrollmentDetail";
 import PurchasedDetailPage from "../pages/PurchasedDetail";
+import ErrorPage from "../pages/Error";
 import AuthRootLayout from "./AuthRoot";
 
 export const router = createBrowserRouter([
@@ -41,6 +42,14 @@ export const router = createBrowserRouter([
       { path: "setting", element: <SettingPage /> },
     ],
   },
+  
+  { path: "/login", element: <LoginPage /> },
+  { path: "/forgot", element: <ForgotPassword /> },
+  { path: "/signup", element: <Signup /> },
+  { path: "/signup/additional", element: <AdditionalInformation /> },
+  { path: "/reset-password", element: <ResetPassword /> },
+  
+  { path: "*", element: <ErrorPage /> },
 
   {
     path: "/auth",
