@@ -6,11 +6,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import FormInput from "../components/login-signup/FormInput";
 import dayjs from "dayjs";
+import { setEmail, setDob } from "../store/slice/userSlice";
 import { useSignupMutation } from "../store/api/authApi";
 import { CustomAlert } from "../components/CustomAlert";
+import { useDispatch } from "react-redux";
 
 function Signup() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [signup, { isLoading, isError }] = useSignupMutation();
   const [open, setOpen] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -26,6 +29,7 @@ function Signup() {
       email: "",
       password: "",
       passwordConfirm: "",
+      dateOfBirth: "",
       role: "instructor",
     },
   });
@@ -37,6 +41,8 @@ function Signup() {
       console.log(data);
       data.dateOfBirth = dayjs(data.dateOfBirth).format("YYYY/MM/DD");
       const response = await signup(data).unwrap();
+      dispatch(setDob(data.dateOfBirth));
+      dispatch(setEmail(data.email));
       navigate("additional");
     } catch (error) {
       setOpen(true);
