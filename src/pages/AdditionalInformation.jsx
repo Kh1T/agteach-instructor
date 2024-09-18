@@ -1,8 +1,8 @@
 import {
+  Autocomplete,
   Box,
   Divider,
   Grid,
-  MenuItem,
   Stack,
   TextField,
   Typography,
@@ -106,23 +106,26 @@ function AdditionalInformation() {
             </Stack>
 
             {/* Address Field */}
-            <TextField
-              label="City"
-              autoComplete="off"
-              select
-              placeholder="Select a city"
-              {...register("city", { required: "City is required" })}
-              error={!!errors.city}
-              helperText={errors?.city?.message}
-            >
-              <MenuItem value="Phnom Penh">Phnom Penh</MenuItem>
-              <MenuItem value="Siem Reap">Siem Reap</MenuItem>
-              <MenuItem value="Battambang">Battambang</MenuItem>
-              <MenuItem value="Sihanoukville">Sihanoukville</MenuItem>
-              <MenuItem value="Kampot">Kampot</MenuItem>
-              <MenuItem value="Koh Kong">Koh Kong</MenuItem>
-              <MenuItem value="Pursat">Pursat</MenuItem>
-            </TextField>
+            <Autocomplete
+              id="country-select-demo"
+              fullWidth
+              options={city}
+              getOptionLabel={(option) => option.label}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="City"
+                  slotProps={{
+                    htmlInput: {
+                      ...params.inputProps,
+                    },
+                  }}
+                  {...register("city", { required: "City is required" })}
+                  error={!!errors.city}
+                  helperText={errors?.city?.message}
+                />
+              )}
+            />
 
             <CustomInputField
               fieldName="Address"
@@ -161,3 +164,14 @@ function AdditionalInformation() {
 }
 
 export default AdditionalInformation;
+
+const city = [
+  { label: "Phnom Penh" },
+  { label: "Siem Reap" },
+  { label: "Battambang" },
+  { label: "Sihanoukville" },
+  { label: "Kampot" },
+  { label: "Kratie" },
+  { label: "Pursat" },
+  { label: "Koh Kong" },
+];
