@@ -2,7 +2,7 @@ import {
   Autocomplete,
   Box,
   Divider,
-  Grid,
+  Grid2,
   Stack,
   TextField,
   Typography,
@@ -46,11 +46,11 @@ function AdditionalInformation() {
   };
 
   return (
-    <Grid container justifyContent="center" direction="column" mt={12} gap={15}>
+    <Grid2 container justifyContent="center" direction="column" mt={12} gap={15}>
       {/* Container for the entire form */}
       <Box component="img" src={logo} alt="Logo" />
       {/* Add alt text for accessibility */}
-      <Grid container justifyContent="center" alignItems="center" gap={12}>
+      <Grid2 container justifyContent="center" alignItems="center" gap={12}>
         {/* Container for the main content area */}
         <Stack textAlign="center" gap={2}>
           {/* Stack for the header and description */}
@@ -158,8 +158,8 @@ function AdditionalInformation() {
             </CustomButton>
           </Stack>
         </form>
-      </Grid>
-    </Grid>
+      </Grid2>
+    </Grid2>
   );
 }
 
