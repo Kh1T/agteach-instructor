@@ -85,7 +85,7 @@ function AdditionalInformation() {
                 validation={{
                   required: "First name is required",
                   pattern: {
-                    value: /^\d+$/i,
+                    value: /^[A-Za-z]+$/i,
                     message: "First name can only contain letters",
                   },
                 }}
