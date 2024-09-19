@@ -6,18 +6,20 @@ import {
   MenuItem,
   Divider,
   Box,
+  TextField,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AvatarImg from "../assets/dashboard-setting/profile-img.png";
 import CustomButton from "../components/CustomButton";
-import CustomInputField from "../components/CustomInputField";
 import CustomFileUpload from "../components/CustomFileUpload";
 import { useGetInstructorInfoQuery } from "../store/api/authApi";
+import { useForm } from "react-hook-form";
 
 function SettingPage() {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const { register, handleSubmit, formState: { errors }, watch, reset } = useForm();
 
   // State to hold the uploaded image URL
   const [profileImg, setProfileImg] = useState(AvatarImg);
@@ -31,10 +33,65 @@ function SettingPage() {
     }
   };
 
-  const { data , isLoading } = useGetInstructorInfoQuery();
-  console.log(data)
+  const { data, isLoading: isAccountInformationLoading } = useGetInstructorInfoQuery();
+  console.log(data);
+  const instructorInfo = data?.data.instructors[0];
 
-  return (
+  // Cancel handler
+  const handleCancelEdit = (instructorInfo, infoBlock) => {
+    const firstInforBlock = {
+      firstName: instructorInfo.firstName ,
+      lastName: instructorInfo.lastName ,
+      bio: instructorInfo.bio || '',
+      phone: instructorInfo.phone || '',
+      address: instructorInfo.address || '123 Main St',
+      city: instructorInfo.city || '',
+    }
+
+    const secondInforBlock = {
+      email: instructorInfo.email,
+      currentPassword: '',
+      newPassword: '',
+      confirmNewPassword: ''
+    }
+
+    let finallyBlock = null;
+
+    if(!infoBlock) {
+      finallyBlock = {
+        ...firstInforBlock,
+        ...secondInforBlock
+      }
+    } else if (infoBlock === 1) { 
+      finallyBlock = firstInforBlock;
+    }
+    else if (infoBlock === 2) {
+      finallyBlock = secondInforBlock;
+    }
+    else {
+      return
+    }
+
+    reset({
+      ...finallyBlock
+    });
+  };
+
+  useEffect(() => {
+    if (data) {
+      handleCancelEdit(instructorInfo);
+    }
+  }, [data])
+
+
+  const handleUserSubmit = (data) => {
+    console.log(data)
+  }
+
+  let content = <Stack sx={{width: "100%", height: "calc(100vh - 160px)", display: "flex", justifyContent: "center", alignItems: "center"}}>Loading...</Stack>;
+
+  if (!isAccountInformationLoading) {
+    content = 
     <Grid container direction="column" gap={5} pb={4}>
       {/* Profile Section */}
 
@@ -65,11 +122,30 @@ function SettingPage() {
           <Typography variant="h5">Personal Information</Typography>
           <Stack direction="row" gap={2}>
             <Grid item container size={4} gap={2}>
-              <CustomInputField fieldName="First Name" />
-              <CustomInputField fieldName="Last Name" />
+              <TextField label="First Name"
+                {...register("firstName", {
+                  required: "Firstname is required",
+                  })
+                }
+              />
+
+              <TextField label="Last Name"
+                {...register("lastName", {
+                  required: "Lastname is required",
+                  })
+                }
+              />
             </Grid>
+
             <Grid item size={7} width="100%">
-              <CustomInputField fieldName="Bio" multiline rows={4} fullWidth />
+              <TextField 
+              multiline 
+              rows={4} 
+              fullWidth
+              label="Bio"
+                {...register("bio", {})
+                }
+              />
             </Grid>
           </Stack>
         </Box>
@@ -78,21 +154,35 @@ function SettingPage() {
 
         <Stack gap={2}>
           <Typography variant="h5">Address Information</Typography>
-          <CustomInputField fieldName="Address 1" />
-          <CustomInputField
-            fieldName="Location"
+          <TextField 
+            label="Address"
+            {...register("address", {})
+            }
+          />
+          
+          <TextField
+            label="Location"
             noValidate
             autoComplete="off"
             select
           >
             <MenuItem value="Phnom Penh">Phnom Penh</MenuItem>
-          </CustomInputField>
+          </TextField>
         </Stack>
 
         {/* Contact Information Section */}
         <Stack gap={2}>
           <Typography variant="h5">Contact Information</Typography>
-          <CustomInputField fieldName="Phone Number" />
+          <TextField 
+            label="Phone Number"
+            disabled
+            {...register("phone", {
+              required: "phone is required",
+              maxLength: 13,
+              minLength: 11
+              })
+            }
+          />
         </Stack>
 
         {/* Button */}
@@ -109,6 +199,7 @@ function SettingPage() {
             sx={{ borderColor: "blue.main", color: "blue.main" }}
             variant="outlined"
             size="large"
+            onClick={() => handleCancelEdit(instructorInfo, 1)}
           >
             CANCEL
           </CustomButton>
@@ -119,14 +210,44 @@ function SettingPage() {
 
       {/* Acount Security */}
 
-      <Grid container gap={2} sx={{ mb: "80px"}}>
+      <Stack container gap={2} sx={{ mb: "80px"}}>
         <Typography variant="h5">Account Security</Typography>
-        <CustomInputField fieldName="Current Password" fieldType="password" />
-        <CustomInputField fieldName="New Password" fieldType="password" />
-        <CustomInputField
-          fieldName="Confirm New Password"
-          fieldType="password"
-        />
+
+        <Stack gap={2} width={"full"}>
+          <TextField 
+            disabled
+            label="Email"
+            {...register("email", {
+              required: "Email is required",
+              })
+            } 
+          />
+
+          <TextField 
+            label="Current Password"
+            {...register("currentPassword", {
+              required: "Current is required",
+              })
+            } 
+          />
+
+          <TextField 
+            label="New Password"
+            {...register("newPassword", {
+              required: "New is required",
+              })
+            } 
+          />
+
+          <TextField 
+            label="Confirm New Password"
+            {...register("confirmNewPassword", {
+              required: "New password confirmation is required",
+              })
+            } 
+          />
+
+        </Stack>
         <Grid
           container
           width="100%"
@@ -145,12 +266,19 @@ function SettingPage() {
             sx={{ borderColor: "blue.main", color: "blue.main" }}
             variant="outlined"
             size="large"
+            onClick={() => handleCancelEdit(instructorInfo, 2)}
           >
             CANCEL
           </CustomButton>
         </Grid>
-      </Grid>
+      </Stack>
     </Grid>
+  }
+
+  return (
+    <div>
+      {content}
+    </div>
   );
 }
 
