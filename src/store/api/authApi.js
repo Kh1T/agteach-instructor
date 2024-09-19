@@ -23,6 +23,13 @@ export const authApi = createApi({
       }),
     }),
 
+    logout: builder.mutation({
+      query: () => ({
+        url: "/api/users/logout",
+        method: "POST",
+      }),
+    }),
+
     forgotPassword: builder.mutation({
       query: (email) => ({
         url: "api/users/forgotPassword",
@@ -62,6 +69,16 @@ export const authApi = createApi({
         body: additionalInfoData,
       }),
     }),
+
+    isLogin: builder.query({
+      query: () => ({
+        url: "/api/users/isLoginedIn",
+        method: "GET",
+      }),
+    }),
+
+    
+
   }),
 });
 
@@ -70,7 +87,9 @@ export const {
   useResetPasswordMutation,
   useSignupMutation,
   useLoginMutation,
+  useLogoutMutation,
   useVerifyEmailMutation,
   useResendVerifyCodeMutation,
   useAdditionalInfoMutation,
+  useIsLoginQuery,
 } = authApi;
