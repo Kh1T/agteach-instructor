@@ -8,12 +8,42 @@ import ButtonComponent from "../components/course-product/ButtonInBox";
 import { Box, Button, Typography } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ProductPrice from "../components/new-product/ProductPrice";
+import { useAddProductMutation } from "../store/api/productApi";
 
 import { useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 function NewProductPage() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { isLoading, error, success } = useSelector((state) => state.products);
+
+  // State for form inputs
+  const [category, setCategory] = useState("");
+  const [about, setAbout] = useState("");
+  const [quantity, setQuantity] = useState(0);
+  const [photo, setPhoto] = useState(null);
+  const [price, setPrice] = useState(0);
+  const [additionalPhoto, setAdditionalPhoto] = useState(null);
+  const HandleSubmit = () => {
+    const productData = {
+      category,
+      about,
+      quantity,
+      price,
+      photo,
+      additionalPhoto,
+    };
+
+    // Dispatch the useAddProductMutation action
+    dispatch(useAddProductMutation(productData));
+  };
+
+  // Navigate back after successful creation
+  if (success) {
+    navigate(-1);
+  }
 
   const {
     register,
