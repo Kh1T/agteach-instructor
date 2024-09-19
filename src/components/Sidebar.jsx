@@ -31,7 +31,6 @@ export default function Sidebar({ children }) {
   const { pathname } = useLocation();
   const drawerWidth = 250;
   const param = useParams();
-  console.log(param);
 
   const des = sidebarList.find((element) => element.route === pathname);
   const head = sidebarList.find((element) => {
