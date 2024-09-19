@@ -62,6 +62,13 @@ export const authApi = createApi({
         body: additionalInfoData,
       }),
     }),
+
+    isLogin: builder.query({
+      query: () => ({
+        url: "/api/users/getMe",
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -73,4 +80,5 @@ export const {
   useVerifyEmailMutation,
   useResendVerifyCodeMutation,
   useAdditionalInfoMutation,
+  useIsLoginQuery,
 } = authApi;
