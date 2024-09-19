@@ -57,7 +57,7 @@ export const authApi = createApi({
 
     additionalInfo: builder.mutation({
       query: (additionalInfoData) => ({
-        url: "/api/users/signup/additionalInfo",
+        url: "/api/instructor/addAdditionalInfo",
         method: "POST",
         body: additionalInfoData,
       }),

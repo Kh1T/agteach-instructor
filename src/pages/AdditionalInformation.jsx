@@ -20,27 +20,22 @@ import { useSelector } from "react-redux";
 function AdditionalInformation() {
   const navigate = useNavigate();
   const { dob } = useSelector((state) => state.user);
+  const { email } = useSelector((state) => state.user);
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
-    defaultValues: {
-      firstName: "",
-      lastName: "",
-      phone: "",
-      city: "",
-      address: "",
-    },
-  });
-  const [addPerosnalInfo] = useAdditionalInfoMutation();
+  } = useForm();
+  const [addPerosnalInfo, { isLoading, isError, isSuccess, error }] = useAdditionalInfoMutation();
 
   const onSubmit = async (data) => {
     console.log(data);
     try {
+      const { firstName, lastName, phone, address, city } = data
       const response = await addPerosnalInfo({
-        ...data,
+        firstName, lastName, phone, address, city,
         dateOfBirth: dob,
+        // email: email
       }).unwrap();
       console.log("Success:", response);
       navigate("/auth/signup/verification");
@@ -159,8 +154,8 @@ function AdditionalInformation() {
                 helperText={errors?.phone?.message}
               />
             </Stack>
-            <CustomButton color="primary" variant="contained">
-              Continue
+            <CustomButton color="primary" disabled={isLoading} variant="contained">
+              {isLoading ? "Submitting..." : "Continue"}
             </CustomButton>
           </Stack>
         </form>
