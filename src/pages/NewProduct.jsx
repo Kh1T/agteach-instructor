@@ -8,11 +8,14 @@ import ButtonComponent from "../components/course-product/ButtonInBox";
 import { Box, Button, Typography } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ProductPrice from "../components/new-product/ProductPrice";
+import { useAddProductMutation } from "../store/api/productApi";
 
 import { useNavigate, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 import { useEffect, React } from "react";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 function NewProductPage() {
   const navigate = useNavigate();
