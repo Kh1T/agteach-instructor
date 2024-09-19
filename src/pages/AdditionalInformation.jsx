@@ -14,8 +14,12 @@ import CustomButton from "../components/CustomButton"; // custom component
 import logo from "./../assets/logo.svg";
 import { useForm } from "react-hook-form";
 import { useAdditionalInfoMutation } from "../store/api/authApi";
+import FormInput from "../components/login-signup/FormInput";
+import { useSelector } from "react-redux";
 
 function AdditionalInformation() {
+  const navigate = useNavigate();
+  const { dob } = useSelector((state) => state.user);
   const {
     register,
     handleSubmit,
@@ -29,7 +33,6 @@ function AdditionalInformation() {
       address: "",
     },
   });
-  const navigate = useNavigate();
   const [addPerosnalInfo] = useAdditionalInfoMutation();
 
   const onSubmit = async (data) => {
@@ -37,6 +40,7 @@ function AdditionalInformation() {
     try {
       const response = await addPerosnalInfo({
         ...data,
+        dateOfBirth: dob,
       }).unwrap();
       console.log("Success:", response);
       navigate("/auth/signup/verification");
@@ -77,31 +81,31 @@ function AdditionalInformation() {
             <Typography variant="blgsm">Name & Address</Typography>
             <Stack flexDirection="row" gap={2}>
               {/* Stack for the name fields */}
-              <CustomInputField
-                fieldName="First Name"
+              <FormInput
+                label="First Name"
                 placeholder="e.g. Jane"
-                errors={errors}
-                register={register}
-                validation={{
+                {...register("firstName", {
                   required: "First name is required",
                   pattern: {
                     value: /^[A-Za-z]+$/i,
                     message: "First name can only contain letters",
                   },
-                }}
+                })}
+                error={!!errors.firstName}
+                helperText={errors?.firstName?.message}
               />
-              <CustomInputField
-                fieldName="Last Name"
+              <FormInput
+                label="Last Name"
                 placeholder="e.g. Smith"
-                errors={errors}
-                register={register}
-                validation={{
+                {...register("lastName", {
                   required: "Last name is required",
                   pattern: {
                     value: /^[A-Za-z]+$/i,
                     message: "Last name can only contain letters",
                   },
-                }}
+                })}
+                error={!!errors.lastName}
+                helperText={errors?.lastName?.message}
               />
             </Stack>
 
@@ -127,30 +131,32 @@ function AdditionalInformation() {
               )}
             />
 
-            <CustomInputField
-              fieldName="Address"
-              errors={errors}
-              register={register}
-              validation={{
+            <FormInput
+              label="Address"
+              placeholder="e.g. 1234 Main St"
+              {...register("address", {
                 required: "Address is required",
-              }}
+              })}
+              error={!!errors.address}
+              helperText={errors?.address?.message}
             />
 
             <Divider />
 
             <Typography variant="blgsm">Contact Information</Typography>
             <Stack flexDirection="row" gap={2}>
-              <CustomInputField
-                fieldName="Phone Number"
-                errors={errors}
-                register={register}
-                validation={{
+              <FormInput
+                label="Phone number"
+                placeholder="e.g. +855 123456789"
+                {...register("phone", {
                   required: "Phone number is required",
                   pattern: {
-                    value: /^\d+$/i,
-                    message: "Enter a valid phone number",
+                    value: /^\+\d{1,3}\s*\d{1,4}(\s*\d{1,4}){1,4}$/,
+                    message: "Please enter a valid phone number",
                   },
-                }}
+                })}
+                error={!!errors.phone}
+                helperText={errors?.phone?.message}
               />
             </Stack>
             <CustomButton color="primary" variant="contained">
