@@ -5,6 +5,7 @@ import { productApi } from "../services/api/productApi";
 import userReducer from "../features/user/userSlice";
 import productReducer from "./productStore";
 
+
 export const store = createStore({
   reducer: {
     [authApi.reducerPath]: authApi.reducer,
