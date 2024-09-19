@@ -12,6 +12,7 @@ import AvatarImg from "../assets/dashboard-setting/profile-img.png";
 import CustomButton from "../components/CustomButton";
 import CustomInputField from "../components/CustomInputField";
 import CustomFileUpload from "../components/CustomFileUpload";
+import { useGetInstructorInfoQuery } from "../store/api/authApi";
 
 function SettingPage() {
   const [open, setOpen] = useState(false);
@@ -29,6 +30,9 @@ function SettingPage() {
       setProfileImg(imageUrl); // Update state with the new image URL
     }
   };
+
+  const { data , isLoading } = useGetInstructorInfoQuery();
+  console.log(data)
 
   return (
     <Grid container direction="column" gap={5} pb={4}>

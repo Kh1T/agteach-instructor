@@ -62,6 +62,13 @@ export const authApi = createApi({
         body: additionalInfoData,
       }),
     }),
+
+    getInstructorInfo: builder.query({
+      query: () => ({
+        url: "/api/instructor/getInstructor/additionalInfo",
+        method: "GET",
+      }),
+    })
   }),
 });
 
@@ -73,4 +80,5 @@ export const {
   useVerifyEmailMutation,
   useResendVerifyCodeMutation,
   useAdditionalInfoMutation,
+  useGetInstructorInfoQuery,
 } = authApi;
