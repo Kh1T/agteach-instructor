@@ -8,6 +8,7 @@ import ButtonComponent from "../components/course-product/ButtonInBox";
 import { Box, Button, Typography, FormHelperText } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ProductPrice from "../components/new-product/ProductPrice";
+import { useAddProductMutation } from "../store/api/productApi";
 
 import { useAddProductMutation } from "../store/api/productApi";
 
@@ -32,14 +33,6 @@ function NewProductPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const product = location.state?.product; // Get the product from the state
-
-  const {
-    register,
-    handleSubmit,
-    watch,
-    setValue,
-    formState: { errors },
-  } = useForm();
 
   // Pre-fill form fields if product data exists
   React.useEffect(() => {
