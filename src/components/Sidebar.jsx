@@ -6,7 +6,7 @@ import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
-import { useLocation, Link as RouterLink, useParams } from "react-router-dom";
+import { useLocation, Link as RouterLink, useParams, useNavigate } from "react-router-dom";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 
 import logoIcon from "../assets/logo.svg";
@@ -14,6 +14,8 @@ import avtarChip from "../assets/avatar-chip.png";
 import { Avatar, Chip, Container, Link, Stack } from "@mui/material";
 
 import sidebarList from "../data/sideBarData";
+
+import { useLogoutMutation } from "../store/api/authApi";
 
 /**
  * Sidebar component that renders a drawer and app bar with content.
@@ -38,6 +40,14 @@ export default function Sidebar({ children }) {
     if (element.route !== pathname) return false;
     return element.route === pathname;
   });
+
+  const [logout] = useLogoutMutation();
+  const nagivate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    nagivate("/auth/login");
+  }
 
   const description = des && des.description;
   const headerTitle = head && head.title;
@@ -120,7 +130,7 @@ export default function Sidebar({ children }) {
       </Stack>
 
       <Box>
-        <ListItemButton>
+        <ListItemButton onClick={handleLogout}>
           <LogoutOutlinedIcon sx={{ color: "dark.300", mr: "20px" }} />
           <Typography variant="bmdr" sx={{ color: "dark.300" }}>
             Logout
