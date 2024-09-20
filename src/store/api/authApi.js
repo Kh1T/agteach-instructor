@@ -84,6 +84,14 @@ export const authApi = createApi({
       }),
     }),
 
+    updateInstructorPassword: builder.mutation({
+      query: (passwordInfo) => ({
+        url: "/api/users/updatePassword",
+        method: "PATCH",
+        body: passwordInfo,
+      })
+    }),
+
     
 
   }),
@@ -100,4 +108,5 @@ export const {
   useAdditionalInfoMutation,
   useGetInstructorInfoQuery,
   useIsLoginQuery,
+  useUpdateInstructorPasswordMutation
 } = authApi;

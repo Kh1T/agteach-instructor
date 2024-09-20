@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 import AvatarImg from "../assets/dashboard-setting/profile-img.png";
 import CustomButton from "../components/CustomButton";
 import CustomFileUpload from "../components/CustomFileUpload";
-import { useGetInstructorInfoQuery } from "../store/api/authApi";
+import { useGetInstructorInfoQuery, useUpdateInstructorPasswordMutation } from "../store/api/authApi";
 import { useForm } from "react-hook-form";
 import FormInput from "../components/login-signup/FormInput";
 import { CustomAlert } from "../components/CustomAlert";
@@ -23,14 +23,17 @@ function SettingPage() {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const { register, handleSubmit, formState: { errors }, watch, reset } = useForm();
+  const { register: basicInfoRegister, handleSubmit: handleBasicInfoSubmit, formState: { errors: basicInfoErrors }, reset: basicInfoReset } = useForm();
+  const { register: securityRegister, handleSubmit: handleSecuritySubmit, formState: { errors: securityErrors }, watch, reset: securityReset } = useForm();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [snackbarSeverity, setSnackbarSeverity] = useState('success');
 
+  const [updateInstructorPassword] = useUpdateInstructorPasswordMutation();
+
   // Function to close snackbar
   const handleCloseSnackbar = () => {
-      setSnackbarOpen(false);
+    setSnackbarOpen(false);
   };
 
   // State to hold the uploaded image URL
@@ -60,61 +63,64 @@ function SettingPage() {
     
   }
 
-  const handleSubmitUpdatePassword = (data) => {
+  const handleSubmitUpdatePassword = async (data) => {
     const { currentPassword, newPassword, confirmNewPassword } = data;
 
-    
+    try {
+      const response = await updateInstructorPassword({ passwordCurrent: currentPassword, password: newPassword, passwordConfirm: confirmNewPassword }).unwrap();
+      console.log(response)
+      if (response?.status ==='success') {
+        setSnackbarSeverity('success');
+        setSnackbarMessage("Password was updaed successfully");
+        securityReset();
+      }
+      else {
+        setSnackbarSeverity('error');
+        setSnackbarMessage("Something went wrong");
+      }
+    } catch (err) {
+      setSnackbarSeverity('error');
+      setSnackbarMessage(err.data?.message);
+      console.log("Err: ", err)
+    } finally {
+      setSnackbarOpen(true)
+    }
   }
 
+
   // Cancel update handler
-  const handleCancelEdit = (instructorInfo, infoBlock) => {
-    const firstInforBlock = {
+  const handleBasicInfoReset = (instructorInfo) => {
+
+    basicInfoReset({
       firstName: instructorInfo.firstName ,
       lastName: instructorInfo.lastName ,
       bio: instructorInfo.bio || '',
       phone: instructorInfo.phone || '',
       address: instructorInfo.address || '123 Main St',
+      location: instructorInfo.location_id || '',
       city: instructorInfo.city || '',
-    }
+    });
+  };
 
-    const secondInforBlock = {
+  const handleSecurityReset = (instructorInfo) => {
+
+    securityReset({
       email: instructorInfo.email,
       currentPassword: '',
       newPassword: '',
       confirmNewPassword: ''
-    }
-
-    let finalBlock = null;
-
-    if(!infoBlock) {
-      finalBlock = {
-        ...firstInforBlock,
-        ...secondInforBlock
-      }
-    } else if (infoBlock === 1) { 
-      finalBlock = firstInforBlock;
-    }
-    else if (infoBlock === 2) {
-      finalBlock = secondInforBlock;
-    }
-    else {
-      return
-    }
-
-    reset({
-      ...finalBlock
     });
   };
 
   // fetch data
   const { data, isLoading: isAccountInformationLoading } = useGetInstructorInfoQuery();
-  console.log(data);
   const instructorInfo = data?.data.instructors[0];
 
   useEffect(() => {
     if (data) {
       // set all the fileds with fetched data
-      handleCancelEdit(instructorInfo);
+      handleBasicInfoReset(instructorInfo);
+      handleSecurityReset(instructorInfo);
     }
   }, [data])
 
@@ -153,17 +159,21 @@ function SettingPage() {
           <Stack direction="row" gap={2}>
             <Grid item container size={4} gap={2}>
               <TextField label="First Name"
-                {...register("firstName", {
+                {...basicInfoRegister("firstName", {
                   required: "Firstname is required",
                   })
                 }
+                helperText={basicInfoErrors.firstName?.message}
+                error={basicInfoErrors.firstName}
               />
 
               <TextField label="Last Name"
-                {...register("lastName", {
+                {...basicInfoRegister("lastName", {
                   required: "Lastname is required",
                   })
                 }
+                helperText={basicInfoErrors.lastName?.message}
+                error={basicInfoErrors.lastName}
               />
             </Grid>
 
@@ -173,7 +183,7 @@ function SettingPage() {
               rows={4} 
               fullWidth
               label="Bio"
-                {...register("bio", {})
+                {...basicInfoRegister("bio", {})
                 }
               />
             </Grid>
@@ -186,8 +196,12 @@ function SettingPage() {
           <Typography variant="h5">Address Information</Typography>
           <TextField 
             label="Address"
-            {...register("address", {})
+            {...basicInfoRegister("address", {
+              required: "address is required",
+            })
             }
+            helperText={basicInfoErrors.address?.message}
+            error={basicInfoErrors.address}
           />
           
           <TextField
@@ -206,7 +220,7 @@ function SettingPage() {
           <TextField 
             label="Phone Number"
             disabled
-            {...register("phone", {
+            {...basicInfoRegister("phone", {
               required: "phone is required",
               maxLength: 13,
               minLength: 11
@@ -229,7 +243,7 @@ function SettingPage() {
             sx={{ borderColor: "blue.main", color: "blue.main" }}
             variant="outlined"
             size="large"
-            onClick={() => handleCancelEdit(instructorInfo, 1)}
+            onClick={() => handleSecurityReset(instructorInfo)}
           >
             CANCEL
           </CustomButton>
@@ -239,7 +253,7 @@ function SettingPage() {
       <Divider />
 
       {/* Acount Security */}
-      <form onSubmit={handleSubmit(handleSubmitUpdatePassword)}>
+      <form onSubmit={handleSecuritySubmit(handleSubmitUpdatePassword)}>
         <Stack container gap={2} sx={{ mb: "80px"}}>
           <Typography variant="h5">Account Security</Typography>
 
@@ -247,7 +261,7 @@ function SettingPage() {
             <TextField 
               disabled
               label="Email"
-              {...register("email", {
+              {...securityRegister("email", {
                 required: "Email is required",
                 })
               } 
@@ -257,12 +271,12 @@ function SettingPage() {
                   label="Current Password"
                   type="password"
                   handleClickShowPassword={() => handleShowCurrentPassword(isShowCurrentPassword)}
-                  {...register("currentPassword", {
+                  {...securityRegister("currentPassword", {
                     required: "Current password is required",
                     })
                   }
-                  helperText={errors.currentPassword?.message}
-                  error={errors.currentPassword}
+                  helperText={securityErrors.currentPassword?.message}
+                  error={securityErrors.currentPassword}
                   showPassword={isShowCurrentPassword}
                 />
 
@@ -270,7 +284,7 @@ function SettingPage() {
                   label="New Password"
                   type="password"
                   handleClickShowPassword={() => handleShowNewPasswords(isShowNewPasswords)}
-                  {...register("newPassword", {
+                  {...securityRegister("newPassword", {
                     required: "New password is required",
                     minLength: {
                       value: 8,
@@ -278,8 +292,8 @@ function SettingPage() {
                     }
                     })
                   } 
-                  helperText={errors.newPassword?.message}
-                  error={errors.newPassword}
+                  helperText={securityErrors.newPassword?.message}
+                  error={securityErrors.newPassword}
                   showPassword={isShowNewPasswords}
                 />
 
@@ -287,14 +301,14 @@ function SettingPage() {
                   label="Confirm New Password"
                   type="password"
                   handleClickShowPassword={() => handleShowNewPasswords(isShowNewPasswords)}
-                  {...register("confirmNewPassword", {
+                  {...securityRegister("confirmNewPassword", {
                     required: "New password confirmation is required",
                     validate: (value) =>
                       value === watch('newPassword') || "Passwords don't match"
                     })
                   } 
-                  helperText={errors.confirmNewPassword?.message}
-                  error={errors.confirmNewPassword}
+                  helperText={securityErrors.confirmNewPassword?.message}
+                  error={securityErrors.confirmNewPassword}
                   showPassword={isShowNewPasswords}
                 />
               </Stack>
@@ -319,7 +333,7 @@ function SettingPage() {
               sx={{ borderColor: "blue.main", color: "blue.main" }}
               variant="outlined"
               size="large"
-              onClick={() => handleCancelEdit(instructorInfo, 2)}
+              onClick={() => handleSecurityReset(instructorInfo)}
             >
               CANCEL
             </CustomButton>
@@ -329,7 +343,8 @@ function SettingPage() {
       </form>
       
 
-      {/* Alert element */}
+      {/* Snackbar for displaying messages */}
+      <CustomAlert label={snackbarMessage} open={snackbarOpen} onClose={handleCloseSnackbar} severity={snackbarSeverity} />
     </Grid>
   }
 
