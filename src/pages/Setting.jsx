@@ -14,15 +14,37 @@ import CustomButton from "../components/CustomButton";
 import CustomFileUpload from "../components/CustomFileUpload";
 import { useGetInstructorInfoQuery } from "../store/api/authApi";
 import { useForm } from "react-hook-form";
+import FormInput from "../components/login-signup/FormInput";
+import { CustomAlert } from "../components/CustomAlert";
 
 function SettingPage() {
+  const [isShowCurrentPassword, setIsShowCurrentPassword] = useState(false);
+  const [isShowNewPasswords, setIsShowNewPasswords] = useState(false);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const { register, handleSubmit, formState: { errors }, watch, reset } = useForm();
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [snackbarSeverity, setSnackbarSeverity] = useState('success');
+
+  // Function to close snackbar
+  const handleCloseSnackbar = () => {
+      setSnackbarOpen(false);
+  };
 
   // State to hold the uploaded image URL
   const [profileImg, setProfileImg] = useState(AvatarImg);
+
+  //functions to handle show current password
+  const handleShowCurrentPassword = (current) => {
+    setIsShowCurrentPassword(!current);
+  }
+
+  //functions to handle show new passworda
+  const handleShowNewPasswords = (current) => {
+    setIsShowNewPasswords(!current);
+  }
 
   // Function to handle image upload
   const handleImageUpload = (event) => {
@@ -33,11 +55,18 @@ function SettingPage() {
     }
   };
 
-  const { data, isLoading: isAccountInformationLoading } = useGetInstructorInfoQuery();
-  console.log(data);
-  const instructorInfo = data?.data.instructors[0];
+  // Form submit handlers
+  const handleSubmitUpdateBasicInfo = (data) => {
+    
+  }
 
-  // Cancel handler
+  const handleSubmitUpdatePassword = (data) => {
+    const { currentPassword, newPassword, confirmNewPassword } = data;
+
+    
+  }
+
+  // Cancel update handler
   const handleCancelEdit = (instructorInfo, infoBlock) => {
     const firstInforBlock = {
       firstName: instructorInfo.firstName ,
@@ -55,38 +84,39 @@ function SettingPage() {
       confirmNewPassword: ''
     }
 
-    let finallyBlock = null;
+    let finalBlock = null;
 
     if(!infoBlock) {
-      finallyBlock = {
+      finalBlock = {
         ...firstInforBlock,
         ...secondInforBlock
       }
     } else if (infoBlock === 1) { 
-      finallyBlock = firstInforBlock;
+      finalBlock = firstInforBlock;
     }
     else if (infoBlock === 2) {
-      finallyBlock = secondInforBlock;
+      finalBlock = secondInforBlock;
     }
     else {
       return
     }
 
     reset({
-      ...finallyBlock
+      ...finalBlock
     });
   };
 
+  // fetch data
+  const { data, isLoading: isAccountInformationLoading } = useGetInstructorInfoQuery();
+  console.log(data);
+  const instructorInfo = data?.data.instructors[0];
+
   useEffect(() => {
     if (data) {
+      // set all the fileds with fetched data
       handleCancelEdit(instructorInfo);
     }
   }, [data])
-
-
-  const handleUserSubmit = (data) => {
-    console.log(data)
-  }
 
   let content = <Stack sx={{width: "100%", height: "calc(100vh - 160px)", display: "flex", justifyContent: "center", alignItems: "center"}}>Loading...</Stack>;
 
@@ -209,69 +239,97 @@ function SettingPage() {
       <Divider />
 
       {/* Acount Security */}
+      <form onSubmit={handleSubmit(handleSubmitUpdatePassword)}>
+        <Stack container gap={2} sx={{ mb: "80px"}}>
+          <Typography variant="h5">Account Security</Typography>
 
-      <Stack container gap={2} sx={{ mb: "80px"}}>
-        <Typography variant="h5">Account Security</Typography>
+          <Stack gap={2} width={"full"}>
+            <TextField 
+              disabled
+              label="Email"
+              {...register("email", {
+                required: "Email is required",
+                })
+              } 
+            />
+              <Stack gap={2} width={"full"}>
+                <FormInput 
+                  label="Current Password"
+                  type="password"
+                  handleClickShowPassword={() => handleShowCurrentPassword(isShowCurrentPassword)}
+                  {...register("currentPassword", {
+                    required: "Current password is required",
+                    })
+                  }
+                  helperText={errors.currentPassword?.message}
+                  error={errors.currentPassword}
+                  showPassword={isShowCurrentPassword}
+                />
 
-        <Stack gap={2} width={"full"}>
-          <TextField 
-            disabled
-            label="Email"
-            {...register("email", {
-              required: "Email is required",
-              })
-            } 
-          />
+                <FormInput 
+                  label="New Password"
+                  type="password"
+                  handleClickShowPassword={() => handleShowNewPasswords(isShowNewPasswords)}
+                  {...register("newPassword", {
+                    required: "New password is required",
+                    minLength: {
+                      value: 8,
+                      message: "New password must be at least 8 characters long",
+                    }
+                    })
+                  } 
+                  helperText={errors.newPassword?.message}
+                  error={errors.newPassword}
+                  showPassword={isShowNewPasswords}
+                />
 
-          <TextField 
-            label="Current Password"
-            {...register("currentPassword", {
-              required: "Current is required",
-              })
-            } 
-          />
+                <FormInput 
+                  label="Confirm New Password"
+                  type="password"
+                  handleClickShowPassword={() => handleShowNewPasswords(isShowNewPasswords)}
+                  {...register("confirmNewPassword", {
+                    required: "New password confirmation is required",
+                    validate: (value) =>
+                      value === watch('newPassword') || "Passwords don't match"
+                    })
+                  } 
+                  helperText={errors.confirmNewPassword?.message}
+                  error={errors.confirmNewPassword}
+                  showPassword={isShowNewPasswords}
+                />
+              </Stack>
 
-          <TextField 
-            label="New Password"
-            {...register("newPassword", {
-              required: "New is required",
-              })
-            } 
-          />
-
-          <TextField 
-            label="Confirm New Password"
-            {...register("confirmNewPassword", {
-              required: "New password confirmation is required",
-              })
-            } 
-          />
-
+          </Stack>
+          <Grid
+            container
+            width="100%"
+            gap={2}
+            direction="row"
+            justifyContent="end"
+          >
+            <CustomButton
+              type="submit"
+              sx={{ backgroundColor: "blue.main" }}
+              variant="contained"
+              size="large"
+            >
+              SAVE CHANGES
+            </CustomButton>
+            <CustomButton
+              sx={{ borderColor: "blue.main", color: "blue.main" }}
+              variant="outlined"
+              size="large"
+              onClick={() => handleCancelEdit(instructorInfo, 2)}
+            >
+              CANCEL
+            </CustomButton>
+          </Grid>
+          
         </Stack>
-        <Grid
-          container
-          width="100%"
-          gap={2}
-          direction="row"
-          justifyContent="end"
-        >
-          <CustomButton
-            sx={{ backgroundColor: "blue.main" }}
-            variant="contained"
-            size="large"
-          >
-            SAVE CHANGES
-          </CustomButton>
-          <CustomButton
-            sx={{ borderColor: "blue.main", color: "blue.main" }}
-            variant="outlined"
-            size="large"
-            onClick={() => handleCancelEdit(instructorInfo, 2)}
-          >
-            CANCEL
-          </CustomButton>
-        </Grid>
-      </Stack>
+      </form>
+      
+
+      {/* Alert element */}
     </Grid>
   }
 
