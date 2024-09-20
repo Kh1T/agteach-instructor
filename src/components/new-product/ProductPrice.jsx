@@ -4,6 +4,8 @@ import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import TextSection from "../course-product/TextSection";
 import { useState } from "react";
 
+import { Money } from "@mui/icons-material";
+
 /**
  * ProductPrice component renders a page for instructors to input product price.
  *
@@ -20,8 +22,12 @@ import { useState } from "react";
  *
  * The component returns a Box component with children.
  */
-
-export default function ProductPrice({register, errors}) {
+export default function ProductPrice({ setPrice }) {
+  const [price, setProductPrice] = useState("");
+  const handleOnChange = (e) => {
+    setProductPrice(e.target.value);
+    setPrice(e.target.value);
+  }
   return (
     <Box className="container">
       <IconWithTitle
@@ -39,9 +45,10 @@ export default function ProductPrice({register, errors}) {
         sx={{ my: 2 }}
         id="price"
         label="Price"
-        {...register("price", { required: "Price is required" })}
-        error={!!errors.price}
-        helperText={errors.price?.message}
+        value={price}
+        type="number"
+        onChange={handleOnChange}
+        fullWidth
       />
       <Typography component="ul">
         <Typography variant="bsr" color="dark.300" paddingY={1} component="li">

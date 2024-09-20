@@ -13,6 +13,9 @@ import BurstModeIcon from "@mui/icons-material/BurstMode";
 import IconWithTitle from "../course-product/IconWithTitle";
 import TextSection from "../course-product/TextSection";
 
+import { useState, useEffect } from "react";
+import { cateData } from "../../data/categoryDummy";
+
 /**
  * ProductCategoryForm component renders a form to select the category of a product.
  *
@@ -30,12 +33,29 @@ import TextSection from "../course-product/TextSection";
  *
  * When the category is changed, the `handleCategoryChange` function is called with the new value as argument.
  */
-export default function ProductCategoryForm() {
-  const [selectedCategory, setSelectedCategory] = React.useState(0);
+export default function ProductCategoryForm({ setCategory , error }) {
+  const [selectedCategory, setSelectedCategory] = useState(0);
+  const [categories, setCategories] = useState([]);
 
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch("YOUR_API_ENDPOINT");
+        const data = await response.json();
+        setCategories(data);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+        setCategories(cateData);
+      }
+    };
+
+    fetchCategories();
+  }, []);
   const handleCategoryChange = (event) => {
     setSelectedCategory(event.target.value);
+    setCategory(event.target.value); 
   };
+
 
   return (
     <Stack className="container" gap={1} alignItems="flex-start">
@@ -53,17 +73,23 @@ export default function ProductCategoryForm() {
       </Box>
 
       <FormControl fullWidth sx={{ my: 2 }}>
-        <InputLabel id="category-select-label">Category</InputLabel>
+        <InputLabel id="category-select-label" error={error}>
+          Category
+        </InputLabel>
         <Select
+          error={error}
           labelId="category-select-label"
           id="category-select"
           value={selectedCategory}
           label="Category"
           onChange={handleCategoryChange}
         >
-          <MenuItem value={10}>Plant</MenuItem>
-          <MenuItem value={20}>Fertilizer</MenuItem>
-          <MenuItem value={30}>Tool</MenuItem>
+          {/* Map over categories to create MenuItem for each */}
+          {categories.map((category) => (
+            <MenuItem key={category.category_id} value={category.category_id}>
+              {category.name}
+            </MenuItem>
+          ))}
         </Select>
       </FormControl>
 

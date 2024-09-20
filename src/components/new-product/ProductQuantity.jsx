@@ -4,6 +4,7 @@ import { Remove, Add } from "@mui/icons-material";
 import ProductionQuantityLimitsIcon from "@mui/icons-material/ProductionQuantityLimits";
 import IconWithTitle from "../course-product/IconWithTitle";
 import TextSection from "../course-product/TextSection";
+import { set } from "react-hook-form";
 
 /**
  * ProductQuantity component renders a page for instructors to input the quantity of a product.
@@ -17,15 +18,28 @@ import TextSection from "../course-product/TextSection";
  *
  * @returns {JSX.Element} Box component with children
  */
-export default function ProductQuantity() {
+export default function ProductQuantity({ setProductQuantity }) {
   const [quantity, setQuantity] = useState(0); // Initialize quantity state
 
   const handleIncrease = () => {
-    setQuantity((prevQuantity) => prevQuantity + 1);
+    setQuantity((prevQuantity) => {
+      const newQuantity = prevQuantity + 1;
+      setProductQuantity(newQuantity);
+      return newQuantity;
+    });
   };
 
   const handleDecrease = () => {
-    setQuantity((prevQuantity) => (prevQuantity > 0 ? prevQuantity - 1 : 0));
+    setQuantity((prevQuantity) => {
+      const newQuantity = prevQuantity > 0 ? prevQuantity - 1 : 0;
+      setProductQuantity(newQuantity);
+      return newQuantity;
+    });
+  };
+
+  const handleOnChange = (e) => {
+    setQuantity(e.target.value);
+    setProductQuantity(e.target.value);
   };
 
   return (
@@ -40,11 +54,7 @@ export default function ProductQuantity() {
         description={"Help the customer know the Specific amounts available"}
       />
       <Stack direction={"row"} spacing={2} my={4}>
-        <TextField
-          type="number"
-          value={quantity}
-          onChange={(e) => setQuantity(parseInt(e.target.value) || 0)}
-        />
+        <TextField type="number" value={quantity} onChange={handleOnChange} />
         <Button
           sx={{ color: "white", backgroundColor: "gray" }}
           onClick={handleDecrease}

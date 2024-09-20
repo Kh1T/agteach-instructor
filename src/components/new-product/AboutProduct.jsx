@@ -20,9 +20,18 @@ import { useState } from "react";
  *
  * The component returns a Box component with children.
  */
-export default function AboutProduct() {
+export default function AboutProduct({ setName, setDescription , error }) {
   const [productName, setProductName] = useState("");
   const [productDescription, setProductDescription] = useState("");
+
+  const handleNameChange = (event) => {
+    setProductName(event.target.value);
+    setName(event.target.value);
+  };
+  const handleDescriptionChange = (event) => {
+    setDescription(event.target.value);
+    setProductDescription(event.target.value);
+  };
 
   return (
     <Box className="container">
@@ -37,12 +46,13 @@ export default function AboutProduct() {
         description="Your product name should be short and meaningful."
       />
       <TextField
+        error={error}
         sx={{ my: 2 }}
         fullWidth
         id="outlined-controlled"
         label="Title"
         value={productName}
-        onChange={(event) => setProductName(event.target.value)}
+        onChange={handleNameChange}
       />
       <Typography variant="bsr" color="dark.300" sx={{ mt: 2 }}>
         eg: Grow Lights - LED or fluorescent grow lights
@@ -53,15 +63,19 @@ export default function AboutProduct() {
         description="Help explain what does the product do and key feature"
       />
       <TextField
+        error={error}
         slotProps={{
-          input: { sx: { alignItems: "flex-start", height: "156px" } },
+          input: { sx: { alignItems: "flex-start" } },
         }}
         sx={{ my: 2 }}
         fullWidth
         id="outlined-controlled"
         label="Description"
+        multiline
+        minRows={4}
+        maxRows={10}
         value={productDescription}
-        onChange={(event) => setProductDescription(event.target.value)}
+        onChange={handleDescriptionChange}
       />
     </Box>
   );
