@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const authApi = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:3001",
+    baseUrl: "https://api.agteach.site",
     credentials: "include", // Move this line here
   }),
   endpoints: (builder) => ({
@@ -64,17 +64,32 @@ export const authApi = createApi({
 
     additionalInfo: builder.mutation({
       query: (additionalInfoData) => ({
-        url: "/api/users/signup/additionalInfo",
+        url: "/api/instructor/addAdditionalInfo",
         method: "POST",
         body: additionalInfoData,
       }),
     }),
 
+    getInstructorInfo: builder.query({
+      query: () => ({
+        url: "/api/instructor/getInstructor/additionalInfo",
+        method: "GET",
+      }),
+    }),
+    
     isLogin: builder.query({
       query: () => ({
         url: "/api/users/isLoginedIn",
         method: "GET",
       }),
+    }),
+
+    updateInstructorPassword: builder.mutation({
+      query: (passwordInfo) => ({
+        url: "/api/users/updatePassword",
+        method: "PATCH",
+        body: passwordInfo,
+      })
     }),
 
     
@@ -91,5 +106,7 @@ export const {
   useVerifyEmailMutation,
   useResendVerifyCodeMutation,
   useAdditionalInfoMutation,
+  useGetInstructorInfoQuery,
   useIsLoginQuery,
+  useUpdateInstructorPasswordMutation
 } = authApi;
