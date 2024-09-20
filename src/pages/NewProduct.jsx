@@ -5,36 +5,57 @@ import ProductPhoto from "../components/new-product/ProductPhoto";
 import AdditionalPhoto from "../components/new-product/AdditionalPhoto";
 import ButtonComponent from "../components/course-product/ButtonInBox";
 
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Typography, FormHelperText } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ProductPrice from "../components/new-product/ProductPrice";
-import { useAddProductMutation } from "../store/api/productApi";
 
+import { useAddProductMutation } from "../store/api/productApi";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Controller, useForm } from "react-hook-form";
 
 function NewProductPage() {
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm();
+  const [addProduct, { isLoading: isSubmitting }] = useAddProductMutation();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { isLoading, error, success } = useSelector((state) => state.products);
-
+  const {
+    isLoading = false,
+    error = null,
+    success = false,
+  } = useSelector((state) => state.products || {});
   // State for form inputs
   const [category, setCategory] = useState("");
-  const [about, setAbout] = useState("");
-  const [quantity, setQuantity] = useState(0);
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [quantity, setProductQuantity] = useState(0);
   const [photo, setPhoto] = useState(null);
   const [price, setPrice] = useState(0);
   const [additionalPhoto, setAdditionalPhoto] = useState(null);
-  const HandleSubmit = () => {
+
+  const onSubmit = async (data) => {
     const productData = {
       category,
-      about,
+      name,
+      description,
       quantity,
       price,
       photo,
       additionalPhoto,
     };
+    try {
+      await addProduct(productData).unwrap();
+    } catch (err) {
+      console.error("Failed to create product: ", err);
+    }
+  };
+
+  console.log(category);
 
     // Dispatch the useAddProductMutation action
     dispatch(useAddProductMutation(productData));
