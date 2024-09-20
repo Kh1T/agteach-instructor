@@ -5,9 +5,10 @@ import ProductPhoto from "../components/new-product/ProductPhoto";
 import AdditionalPhoto from "../components/new-product/AdditionalPhoto";
 import ButtonComponent from "../components/course-product/ButtonInBox";
 
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Typography, FormHelperText } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ProductPrice from "../components/new-product/ProductPrice";
+
 import { useAddProductMutation } from "../store/api/productApi";
 
 import { useNavigate, useLocation } from "react-router-dom";
@@ -16,8 +17,16 @@ import { useForm } from "react-hook-form";
 import { useEffect, React } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Controller, useForm } from "react-hook-form";
 
 function NewProductPage() {
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm();
+  const [addProduct, { isLoading: isSubmitting }] = useAddProductMutation();
   const navigate = useNavigate();
   const location = useLocation();
   const product = location.state?.product; // Get the product from the state

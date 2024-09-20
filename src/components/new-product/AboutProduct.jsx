@@ -34,6 +34,7 @@ export default function AboutProduct({ register, errors }) {
         description="Your product name should be short and meaningful."
       />
       <TextField
+        error={error}
         sx={{ my: 2 }}
         fullWidth
         id="outlined-controlled"
@@ -52,8 +53,9 @@ export default function AboutProduct({ register, errors }) {
         description="Help explain what does the product do and key feature"
       />
       <TextField
+        error={error}
         slotProps={{
-          input: { sx: { alignItems: "flex-start", height: "156px" } },
+          input: { sx: { alignItems: "flex-start" } },
         }}
         sx={{ my: 2 }}
         fullWidth
