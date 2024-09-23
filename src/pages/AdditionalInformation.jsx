@@ -2,7 +2,7 @@ import {
   Autocomplete,
   Box,
   Divider,
-  Grid,
+  Grid2,
   Stack,
   TextField,
   Typography,
@@ -20,27 +20,22 @@ import { useSelector } from "react-redux";
 function AdditionalInformation() {
   const navigate = useNavigate();
   const { dob } = useSelector((state) => state.user);
+  const { email } = useSelector((state) => state.user);
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
-    defaultValues: {
-      firstName: "",
-      lastName: "",
-      phone: "",
-      city: "",
-      address: "",
-    },
-  });
-  const [addPerosnalInfo] = useAdditionalInfoMutation();
+  } = useForm();
+  const [addPerosnalInfo, { isLoading, isError, isSuccess, error }] = useAdditionalInfoMutation();
 
   const onSubmit = async (data) => {
     console.log(data);
     try {
+      const { firstName, lastName, phone, address, city } = data
       const response = await addPerosnalInfo({
-        ...data,
+        firstName, lastName, phone, address, city,
         dateOfBirth: dob,
+        // email: email
       }).unwrap();
       console.log("Success:", response);
       navigate("/auth/signup/verification");
@@ -50,11 +45,11 @@ function AdditionalInformation() {
   };
 
   return (
-    <Grid container justifyContent="center" direction="column" mt={12} gap={15}>
+    <Grid2 container justifyContent="center" direction="column" mt={12} gap={15}>
       {/* Container for the entire form */}
       <Box component="img" src={logo} alt="Logo" />
       {/* Add alt text for accessibility */}
-      <Grid container justifyContent="center" alignItems="center" gap={12}>
+      <Grid2 container justifyContent="center" alignItems="center" gap={12}>
         {/* Container for the main content area */}
         <Stack textAlign="center" gap={2}>
           {/* Stack for the header and description */}
@@ -159,13 +154,13 @@ function AdditionalInformation() {
                 helperText={errors?.phone?.message}
               />
             </Stack>
-            <CustomButton color="primary" variant="contained">
-              Continue
+            <CustomButton color="primary" disabled={isLoading} variant="contained">
+              {isLoading ? "Submitting..." : "Continue"}
             </CustomButton>
           </Stack>
         </form>
-      </Grid>
-    </Grid>
+      </Grid2>
+    </Grid2>
   );
 }
 
