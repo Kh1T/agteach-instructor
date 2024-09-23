@@ -37,12 +37,12 @@ function NewProductPage() {
         <Typography variant="bsr">Go Back</Typography>
       </Button>
       <form onSubmit={handleSubmit(handleCreateProduct)}>
-        <ProductCategory />
+        {/* <ProductCategory />
         <AboutProduct register={register} errors={errors}/>
         <ProductQuantity />
         <ProductPhoto register={register} errors={errors} setValue={setValue}/>
-        <ProductPrice register={register} errors={errors} />
-        <AdditionalPhoto />
+        <ProductPrice register={register} errors={errors} /> */}
+        <AdditionalPhoto register={register} errors={errors} setValue={setValue}/>
         <ButtonComponent
           text="CREATE PRODUCT"
           variant="contained"
