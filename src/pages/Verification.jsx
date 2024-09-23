@@ -1,7 +1,7 @@
 import { Box, Typography, Button, Stack, Grid2 } from "@mui/material";
 import FormInput from "../components/login-signup/FormInput";
 import { useForm } from "react-hook-form";
-import { useVerifyEmailMutation } from "../store/api/authApi";
+import { useVerifyEmailMutation } from "../services/api/authApi";
 import LogoLink from "../components/login-signup/LogoLink";
 import { ArrowBack } from "@mui/icons-material";
 import { CustomAlert } from "../components/CustomAlert";
