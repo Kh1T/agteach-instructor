@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 import AvatarImg from "../assets/dashboard-setting/profile-img.png";
 import CustomButton from "../components/CustomButton";
 import CustomFileUpload from "../components/CustomFileUpload";
-import { useGetInstructorInfoQuery, useUpdateInstructorPasswordMutation } from "../store/api/authApi";
+import { useGetInstructorInfoQuery, useUpdateInstructorPasswordMutation } from "../services/api/authApi";
 import { useForm } from "react-hook-form";
 import FormInput from "../components/login-signup/FormInput";
 import { CustomAlert } from "../components/CustomAlert";

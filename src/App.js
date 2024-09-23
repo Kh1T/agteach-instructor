@@ -6,8 +6,8 @@ import { router } from "./route/index";
 import theme from "./theme/theme";
 import { CssBaseline } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { useIsLoginQuery } from "./store/api/authApi";
-import { checkLoginStatus } from "./store/slice/authSlice";
+import { useIsLoginQuery } from "./services/api/authApi";
+import { checkLoginStatus } from "./features/user/authSlice";
 import { useEffect } from "react";
 
 function App() {

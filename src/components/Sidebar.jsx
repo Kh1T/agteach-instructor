@@ -15,7 +15,7 @@ import { Avatar, Chip, Container, Link, Stack } from "@mui/material";
 
 import sidebarList from "../data/sideBarData";
 
-import { useLogoutMutation } from "../store/api/authApi";
+import { useLogoutMutation } from "../services/api/authApi";
 
 /**
  * Sidebar component that renders a drawer and app bar with content.
