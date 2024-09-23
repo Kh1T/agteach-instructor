@@ -19,6 +19,7 @@ function NewProductPage() {
     register,
     handleSubmit,
     formState: { errors },
+    setValue
   } = useForm();
 
   const handleCreateProduct = (data) => {
@@ -39,7 +40,7 @@ function NewProductPage() {
         <ProductCategory />
         <AboutProduct register={register} errors={errors}/>
         <ProductQuantity />
-        <ProductPhoto />
+        <ProductPhoto register={register} errors={errors} setValue={setValue}/>
         <ProductPrice register={register} errors={errors} />
         <AdditionalPhoto />
         <ButtonComponent

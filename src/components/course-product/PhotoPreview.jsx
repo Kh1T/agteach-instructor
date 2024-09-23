@@ -1,36 +1,42 @@
 import { useState } from "react";
 import { Stack, Box, Typography, Button } from "@mui/material";
-  /**
-   * PhotoPreview component renders a box with a dashed border and a "Choose File"
-   * button. When a file is selected, it renders a preview of the file with its name
-   * and size.
-   *
-   * It takes three props:
-   *   - `sx`: style object for the preview box
-   *   - `icon`: icon to be displayed in the preview box
-   *   - `children`: children elements to be displayed in the preview box
-   *
-   * @param {Object} props - props object
-   * @param {Object} props.sx - style object for the preview box
-   * @param {React.ReactElement} props.icon - icon to be displayed in the preview box
-   * @param {React.ReactElement} props.children - children elements to be displayed in the preview box
-   * @returns {React.ReactElement} the PhotoPreview component
-   */
-export default function PhotoPreview({ sx, icon, children }) {
+
+/**
+ * PhotoPreview component renders a box with a dashed border and a "Choose File"
+ * button. When a file is selected, it renders a preview of the file with its name
+ * and size.
+ *
+ * It takes three props:
+ *   - `sx`: style object for the preview box
+ *   - `icon`: icon to be displayed in the preview box
+ *   - `children`: children elements to be displayed in the preview box
+ *
+ * @param {Object} props - props object
+ * @param {Object} props.sx - style object for the preview box
+ * @param {React.ReactElement} props.icon - icon to be displayed in the preview box
+ * @param {React.ReactElement} props.children - children elements to be displayed in the preview box
+ * @returns {React.ReactElement} the PhotoPreview component
+ */
+export default function PhotoPreview({ sx, icon, children, register, errors, name, setValue }) {
   const [selectedImage, setSelectedImage] = useState(null);
   const [fileInfo, setFileInfo] = useState({ name: "", size: "" });
   const [fileInputKey, setFileInputKey] = useState(0);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
-    if (file) {
+    if (file && file.type.startsWith("image/")) {
       const imageUrl = URL.createObjectURL(file);
       setSelectedImage(imageUrl);
       setFileInfo({
         name: file.name,
         size: (file.size / 1024).toFixed(2) + " KB",
       });
+
+      // Update the file in react-hook-form's form state
+      setValue(name, event.target.files);
       resetFileInput();
+    } else {
+      alert("Please select a valid image file.");
     }
   };
 
@@ -91,14 +97,19 @@ export default function PhotoPreview({ sx, icon, children }) {
           {children}
         </Stack>
       )}
+
       <input
         id={`file-input-${fileInputKey}`} // Unique ID for each file input
         key={fileInputKey}
         type="file"
         style={{ display: "none" }}
-        onChange={handleFileChange}
-        multiple
+        onChange={handleFileChange} // Use custom handleFileChange for file input
       />
+      {errors[name] && (
+        <Typography color="error">
+          {errors[name]?.message || "This field is required"}
+        </Typography>
+      )}
     </>
   );
 }

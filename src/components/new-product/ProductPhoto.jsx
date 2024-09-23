@@ -15,7 +15,7 @@ import PhotoPreview from "../course-product/PhotoPreview";
  *
  * @returns {JSX.Element} a JSX element containing the icon and title
  */
-export default function ProductPhoto() {
+export default function ProductPhoto({ register, errors, setValue }) {
   return (
     <Box>
       <IconWithTitle
@@ -29,7 +29,7 @@ export default function ProductPhoto() {
           "Most customers will decide to buy a product based on an image"
         }
       />
-      <PhotoPreview icon={<InsertPhotoIcon />}>
+      <PhotoPreview icon={<InsertPhotoIcon />} register={register} errors={errors} setValue={setValue} name={"image"} >
         <Typography color="gray">
           Upload Product image, png, jpg, webp
         </Typography>
