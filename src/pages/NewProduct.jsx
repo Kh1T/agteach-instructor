@@ -10,9 +10,20 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ProductPrice from "../components/new-product/ProductPrice";
 
 import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 function NewProductPage() {
   const navigate = useNavigate();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const handleCreateProduct = (data) => {
+    console.log(data);
+  };
 
   return (
     <Box sx={{ width: "100%", pb: 30 }}>
@@ -24,17 +35,19 @@ function NewProductPage() {
       >
         <Typography variant="bsr">Go Back</Typography>
       </Button>
-      <ProductCategory />
-      <AboutProduct />
-      <ProductQuantity />
-      <ProductPhoto />
-      <ProductPrice />
-      <AdditionalPhoto />
-      <ButtonComponent
-        text="CREATE PRODUCT"
-        variant="contained"
-        bgcolor="purple.main"
-      />
+      <form onSubmit={handleSubmit(handleCreateProduct)}>
+        <ProductCategory />
+        <AboutProduct />
+        <ProductQuantity />
+        <ProductPhoto />
+        <ProductPrice register={register} errors={errors} />
+        <AdditionalPhoto />
+        <ButtonComponent
+          text="CREATE PRODUCT"
+          variant="contained"
+          bgcolor="purple.main"
+        />
+      </form>
     </Box>
   );
 }

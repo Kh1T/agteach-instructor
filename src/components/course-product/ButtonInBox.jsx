@@ -27,6 +27,7 @@ export default function ButtonComponent({ text, variant, bgcolor, flexEnd, heigh
     >
       <Button
         variant={variant}
+        type="submit"
         sx={{ bgcolor: bgcolor, height: height }}
         startIcon={startIcon}
         onClick={onClick}

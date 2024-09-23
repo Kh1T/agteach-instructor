@@ -20,8 +20,8 @@ import { useState } from "react";
  *
  * The component returns a Box component with children.
  */
-export default function ProductPrice() {
-  const [price, setPrice] = useState("");
+
+export default function ProductPrice({register, errors}) {
   return (
     <Box className="container">
       <IconWithTitle
@@ -39,8 +39,9 @@ export default function ProductPrice() {
         sx={{ my: 2 }}
         id="price"
         label="Price"
-        value={price}
-        onChange={(event) => setPrice(event.target.value)}
+        {...register("price", { required: "Price is required" })}
+        error={!!errors.price}
+        helperText={errors.price?.message}
       />
       <Typography component="ul">
         <Typography variant="bsr" color="dark.300" paddingY={1} component="li">
