@@ -18,6 +18,8 @@ function NewProductPage() {
   const {
     register,
     handleSubmit,
+    watch,
+    setValue,
     formState: { errors },
   } = useForm();
 
@@ -36,9 +38,9 @@ function NewProductPage() {
         <Typography variant="bsr">Go Back</Typography>
       </Button>
       <form onSubmit={handleSubmit(handleCreateProduct)}>
-        <ProductCategory />
+        <ProductCategory register={register} errors={errors} />
         <AboutProduct />
-        <ProductQuantity />
+        <ProductQuantity register={register} errors={errors} watch={watch} setValue={setValue} />
         <ProductPhoto />
         <ProductPrice register={register} errors={errors} />
         <AdditionalPhoto />

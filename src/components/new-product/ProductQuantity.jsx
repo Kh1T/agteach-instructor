@@ -17,15 +17,15 @@ import TextSection from "../course-product/TextSection";
  *
  * @returns {JSX.Element} Box component with children
  */
-export default function ProductQuantity() {
-  const [quantity, setQuantity] = useState(0); // Initialize quantity state
+export default function ProductQuantity({ register, errors, watch, setValue }) {
+  const quantity = watch("quantity", 0);
 
   const handleIncrease = () => {
-    setQuantity((prevQuantity) => prevQuantity + 1);
+    setValue("quantity", parseInt(quantity) + 1);
   };
 
   const handleDecrease = () => {
-    setQuantity((prevQuantity) => (prevQuantity > 0 ? prevQuantity - 1 : 0));
+    setValue("quantity", Math.max(0, parseInt(quantity) - 1));
   };
 
   return (
@@ -43,7 +43,15 @@ export default function ProductQuantity() {
         <TextField
           type="number"
           value={quantity}
-          onChange={(e) => setQuantity(parseInt(e.target.value) || 0)}
+          {...register("quantity", {
+            required: "Quantity is required",
+            min: {
+              value: 0,
+              message: "Quantity must be greater than or equal to 0",
+            },
+          })}
+          error={!!errors.quantity}
+          helperText={errors.quantity?.message}
         />
         <Button
           sx={{ color: "white", backgroundColor: "gray" }}

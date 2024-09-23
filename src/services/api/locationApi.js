@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const locationApi = createApi({
-  reducerPath: "LocationApi",
+  reducerPath: "locationApi",
   baseQuery: fetchBaseQuery({
     baseUrl: "https://api.agteach.site",
     credentials: "include", // Move this line here
