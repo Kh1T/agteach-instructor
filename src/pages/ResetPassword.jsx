@@ -5,7 +5,7 @@ import LogoLink from '../components/login-signup/LogoLink';
 import FormInput from '../components/login-signup/FormInput';
 import { CustomAlert } from '../components/CustomAlert';
 import { useNavigate } from 'react-router-dom';
-import { useResetPasswordMutation } from '../store/api/authApi';
+import { useResetPasswordMutation } from '../services/api/authApi';
 import { useParams } from 'react-router-dom';
 
 const ResetPasswordPage = () => {

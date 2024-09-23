@@ -16,7 +16,7 @@ import { Link } from "react-router-dom";
 import CustomButton from "../components/CustomButton";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { useLoginMutation } from "../store/api/authApi";
+import { useLoginMutation } from "../services/api/authApi";
 import { CustomAlert } from "../components/CustomAlert";
 
 function LoginPage() {

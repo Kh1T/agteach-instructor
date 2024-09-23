@@ -6,8 +6,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import FormInput from "../components/login-signup/FormInput";
 import dayjs from "dayjs";
-import { setEmail, setDob } from "../store/slice/userSlice";
-import { useSignupMutation } from "../store/api/authApi";
+import { setEmail, setDob } from "../features/user/userSlice";
+import { useSignupMutation } from "../services/api/authApi";
 import { CustomAlert } from "../components/CustomAlert";
 import { useDispatch } from "react-redux";
 
