@@ -2,7 +2,6 @@ import { TextField, Box, Divider, Typography } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
 import IconWithTitle from "../course-product/IconWithTitle";
 import TextSection from "../course-product/TextSection";
-import { useState } from "react";
 /**
  * AboutProduct component renders a page for instructors to input product name and description.
  *
@@ -20,9 +19,7 @@ import { useState } from "react";
  *
  * The component returns a Box component with children.
  */
-export default function AboutProduct() {
-  const [productName, setProductName] = useState("");
-  const [productDescription, setProductDescription] = useState("");
+export default function AboutProduct({ register, errors }) {
 
   return (
     <Box className="container">
@@ -40,9 +37,11 @@ export default function AboutProduct() {
         sx={{ my: 2 }}
         fullWidth
         id="outlined-controlled"
-        label="Title"
-        value={productName}
-        onChange={(event) => setProductName(event.target.value)}
+        label="Product Name"
+        // onChange={(event) => setProductName(event.target.value)}
+        {...register("productName", { required: "Product name is required" })}
+        error={!!errors.productName}
+        helperText={errors.productName?.message}
       />
       <Typography variant="bsr" color="dark.300" sx={{ mt: 2 }}>
         eg: Grow Lights - LED or fluorescent grow lights
@@ -60,8 +59,10 @@ export default function AboutProduct() {
         fullWidth
         id="outlined-controlled"
         label="Description"
-        value={productDescription}
-        onChange={(event) => setProductDescription(event.target.value)}
+        // onChange={(event) => setProductDescription(event.target.value)}
+        {...register("productDescription", { required: "Product description is required" })}
+        error={!!errors.productDescription}
+        helperText={errors.productDescription?.message}
       />
     </Box>
   );

@@ -22,7 +22,7 @@ import {
  *
  * @returns A JSX element containing the AddManyPhotos component
  */
-export default function AddManyPhotos() {
+export default function AddManyPhotos({ setValue, name}) {
   const [uploadedPhotos, setUploadedPhotos] = useState([]);
   const [uploadError, setUploadError] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
@@ -30,12 +30,16 @@ export default function AddManyPhotos() {
 
   const handleFileChange = (event) => {
     const newPhotos = Array.from(event.target.files);
-    if (newPhotos.length + uploadedPhotos.length > 5) {
+    if (newPhotos.length + uploadedPhotos.length > 4) {
       setUploadError("Max 5 photos can be uploaded");
       return;
     }
     setUploadError("");
-    setUploadedPhotos((prevPhotos) => [...prevPhotos, ...newPhotos]);
+    setUploadedPhotos((prevPhotos) => {
+      const updatedPhotos = [...prevPhotos, ...newPhotos];
+      setValue(name, updatedPhotos);  // Use the updated photos here
+      return updatedPhotos;
+    });
     setFileInputKey(Date.now()); // Reset file input key
   };
 
@@ -100,8 +104,8 @@ export default function AddManyPhotos() {
       )}
       {uploadError && <Typography color="red">{uploadError}</Typography>}
       <Button
-        variant={uploadedPhotos.length !== 5 ? "outlined" : "contained"}
-        color={uploadedPhotos.length !== 5 ? "error" : "success"}
+        variant={uploadedPhotos.length !== 4 ? "outlined" : "contained"}
+        color={uploadedPhotos.length !== 4 ? "error" : "success"}
         sx={{
           px: 4,
           py: 1.5,
@@ -111,7 +115,7 @@ export default function AddManyPhotos() {
         onClick={handleButtonClick}
       >
         <Typography variant="bssm">
-          Add Photos {uploadedPhotos.length}/5
+          Add Photos {uploadedPhotos.length}/4
         </Typography>
       </Button>
       <AddPhotoModal
