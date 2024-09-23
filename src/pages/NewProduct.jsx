@@ -37,7 +37,7 @@ function NewProductPage() {
       </Button>
       <form onSubmit={handleSubmit(handleCreateProduct)}>
         <ProductCategory />
-        <AboutProduct />
+        <AboutProduct register={register} errors={errors}/>
         <ProductQuantity />
         <ProductPhoto />
         <ProductPrice register={register} errors={errors} />
