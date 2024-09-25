@@ -6,12 +6,14 @@ import {
   Divider,
   Stack,
   Box,
+  FormHelperText,
 } from "@mui/material";
 
 import React from "react";
 import BurstModeIcon from "@mui/icons-material/BurstMode";
 import IconWithTitle from "../course-product/IconWithTitle";
 import TextSection from "../course-product/TextSection";
+import { cateData } from "../../data/categoryDummy";
 
 /**
  * ProductCategoryForm component renders a form to select the category of a product.
@@ -30,13 +32,7 @@ import TextSection from "../course-product/TextSection";
  *
  * When the category is changed, the `handleCategoryChange` function is called with the new value as argument.
  */
-export default function ProductCategoryForm() {
-  const [selectedCategory, setSelectedCategory] = React.useState(0);
-
-  const handleCategoryChange = (event) => {
-    setSelectedCategory(event.target.value);
-  };
-
+export default function ProductCategoryForm({ register, errors }) {
   return (
     <Stack className="container" gap={1} alignItems="flex-start">
       <Box sx={{ width: "100%" }}>
@@ -53,20 +49,24 @@ export default function ProductCategoryForm() {
       </Box>
 
       <FormControl fullWidth sx={{ my: 2 }}>
-        <InputLabel id="category-select-label">Category</InputLabel>
+        <InputLabel error={!!errors.categoryId}>Category</InputLabel>
         <Select
-          labelId="category-select-label"
-          id="category-select"
-          value={selectedCategory}
           label="Category"
-          onChange={handleCategoryChange}
+          {...register("categoryId", {
+            required: "Category is required",
+          })}
+          error={!!errors.categoryId}
         >
-          <MenuItem value={10}>Plant</MenuItem>
-          <MenuItem value={20}>Fertilizer</MenuItem>
-          <MenuItem value={30}>Tool</MenuItem>
+          {cateData.map((option) => (
+            <MenuItem key={option.category_id} value={option.category_id}>
+              {option.label}
+            </MenuItem>
+          ))}
         </Select>
+        <FormHelperText error={!!errors.categoryId}>
+          {errors.categoryId?.message}
+        </FormHelperText>
       </FormControl>
-
       <Divider />
     </Stack>
   );

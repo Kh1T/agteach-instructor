@@ -39,6 +39,8 @@ export default function ProductPrice({register, errors}) {
         sx={{ my: 2 }}
         id="price"
         label="Price"
+        type="number"
+        fullWidth
         {...register("price", { required: "Price is required" })}
         error={!!errors.price}
         helperText={errors.price?.message}

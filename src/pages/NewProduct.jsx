@@ -18,6 +18,8 @@ function NewProductPage() {
   const {
     register,
     handleSubmit,
+    watch,
+    setValue,
     formState: { errors },
   } = useForm();
 
@@ -33,15 +35,24 @@ function NewProductPage() {
         sx={{ textDecoration: "underline", color: "dark.300" }}
         onClick={() => navigate(-1)}
       >
-        <Typography variant="bsr">Go Back</Typography>
+        <Typography variant="bmdr">Go Back</Typography>
       </Button>
       <form onSubmit={handleSubmit(handleCreateProduct)}>
-        <ProductCategory />
-        <AboutProduct />
-        <ProductQuantity />
-        <ProductPhoto />
+        <ProductCategory register={register} errors={errors} />
+        <AboutProduct register={register} errors={errors} />
+        <ProductQuantity
+          register={register}
+          errors={errors}
+          watch={watch}
+          setValue={setValue}
+        />
+        <ProductPhoto register={register} errors={errors} setValue={setValue} />
         <ProductPrice register={register} errors={errors} />
-        <AdditionalPhoto />
+        <AdditionalPhoto
+          register={register}
+          errors={errors}
+          setValue={setValue}
+        />
         <ButtonComponent
           text="CREATE PRODUCT"
           variant="contained"
