@@ -20,7 +20,26 @@ export const productApi = createApi({
         method: "GET",
       }),
     }),
+
+    searchBar: builder.query({
+      query: () => ({
+        url: "/api/product/searchData",
+        method: "GET",
+      }),
+    }),
+
+    confirmDelete: builder.mutation({
+      query: () => ({
+        url: "/api/product/deleteOneProduct/",
+        method: "DELETE",
+      }),
+    }),
   }),
 });
 
-export const { useAddProductMutation, useGetAllProductsQuery } = productApi;
+export const {
+  useAddProductMutation,
+  useGetAllProductsQuery,
+  useSearchBarQuery,
+  useConfirmDeleteMutation,
+} = productApi;

@@ -92,8 +92,6 @@ export const authApi = createApi({
       })
     }),
 
-    
-
   }),
 });
 
@@ -108,5 +106,5 @@ export const {
   useAdditionalInfoMutation,
   useGetInstructorInfoQuery,
   useIsLoginQuery,
-  useUpdateInstructorPasswordMutation
+  useUpdateInstructorPasswordMutation,
 } = authApi;
