@@ -14,13 +14,13 @@ export const productApi = createApi({
         body: productData,
       }),
     }),
-    getProducts: builder.query({
+    getAllProducts: builder.query({
       query: () => ({
-        url: "/api/products",
+        url: "/api/product/getAllProduct",
         method: "GET",
       }),
     }),
   }),
 });
 
-export const { useAddProductMutation, useGetProductsQuery } = productApi;
+export const { useAddProductMutation, useGetAllProductsQuery } = productApi;
