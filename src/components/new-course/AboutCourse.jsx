@@ -12,11 +12,7 @@ import TextSection from "../course-product/TextSection";
  * @returns a JSX element containing the AboutCourse component.
  */
 
-export default function AboutCourse({ register, errors, setValue }) {
-   const handleChange = () => {
-    setValue("description", setValue("description"));
-   }
-
+export default function AboutCourse({ register, errors }) {
   return (
     <Box className="container">
       <IconWithTitle
@@ -36,7 +32,6 @@ export default function AboutCourse({ register, errors, setValue }) {
         {...register("title", { required: "Title is required" })}
         error={!!errors.title}
         helperText={errors.title?.message}
-        defaultValue={setValue}
       />
       <Typography variant="bsr" color="dark.300" sx={{ mt: 2 }}>
         eg: How to plant an indoor tomatoes 100% edible
@@ -58,7 +53,6 @@ export default function AboutCourse({ register, errors, setValue }) {
           {...register("description", { required: "Description is required" })}
           error={!!errors.description}
           helperText={errors.description?.message}
-          defaultValue={setValue("description")}
         />
       </Box>
       <TextSection

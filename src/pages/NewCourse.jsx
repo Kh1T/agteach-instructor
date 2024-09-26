@@ -34,10 +34,10 @@ function NewCoursePage() {
         >
           <Typography variant="bsr">Go Back</Typography>
         </Button>
-        <AboutCourse register={register} errors={errors} setValue={setValue} />
-        {/* <CourseContents /> */}
-        <CoursePrice />
-        {/* <AddThumbnail /> */}
+        <AboutCourse register={register} errors={errors} />
+        <CourseContents />
+        <CoursePrice register={register} errors={errors} />
+        <AddThumbnail />
         <RelatedProduct />
         <ButtonComponent
           text={"CREATE COURSE"}

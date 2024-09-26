@@ -17,7 +17,7 @@ import TextSection from "../course-product/TextSection";
  *
  * @returns {JSX.Element} Box component with children
  */
-export default function CoursePrice() {
+export default function CoursePrice({register, errors}) {
   return (
     <Box className="container">
       <IconWithTitle
@@ -34,6 +34,13 @@ export default function CoursePrice() {
         sx={{ my: 2 }}
         id="outlined-controlled"
         label="Price"
+        type="number"
+        inputProps={{ min: 1 }}
+        {...register("price", { required: "Price is required", 
+          min: { value: 1, message: "Price must be greater than 0" },
+         })}
+        error={!!errors.price}
+        helperText={errors.price?.message}
       />
       <Typography component={"ul"}>
         <Typography
