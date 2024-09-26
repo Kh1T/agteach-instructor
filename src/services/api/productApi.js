@@ -25,15 +25,15 @@ export const productApi = createApi({
       query: () => ({
         url: "/api/product/searchData",
         method: "GET",
-      }),
-    }),
+      })    }),
 
     confirmDelete: builder.mutation({
-      query: () => ({
-        url: "/api/product/deleteOneProduct/",
+      query: (id) => ({
+        url:`/api/product/deleteOneProduct/${id}`,
         method: "DELETE",
       }),
     }),
+    
   }),
 });
 

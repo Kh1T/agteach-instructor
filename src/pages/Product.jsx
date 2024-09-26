@@ -12,20 +12,19 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CustomTable from "../components/CustomTable";
 import QueryHeader from "../components/QueryHeader";
-import { useGetAllProductsQuery } from "../services/api/productApi";
-import { useConfirmDeleteMutation } from "../services/api/productApi";
+import { useGetAllProductsQuery, useConfirmDeleteMutation, useSearchBarQuery } from "../services/api/productApi"; // Import here
 import { useNavigate } from "react-router";
 import deletBin from "../assets/Go Green Grey Hanger Bag.png";
 
 function ProductPage() {
   const navigate = useNavigate();
+  const [searchTerm, setSearchTerm] = useState("");
   const [selectState, setSelectState] = useState(0);
   const { data: allProduct, isFetching } = useGetAllProductsQuery();
+  const [confirmDelete] = useConfirmDeleteMutation(); // Initialize the mutation
 
   const searchRef = useRef();
   const label = "Sort";
-
-  console.log(allProduct);
 
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -40,7 +39,17 @@ function ProductPage() {
     setSelectedProduct(null);
   };
 
-  const handleConfirmDelete = () => {
+  const handleConfirmDelete = async () => {
+    if (selectedProduct) {
+      console.log(selectedProduct.id)
+      try {
+        await confirmDelete(selectedProduct.id).unwrap(); // Use the mutation here
+        // Optionally refresh the product list or show a success message
+      } catch (error) {
+        console.error("Failed to delete the product: ", error);
+        // Optionally show an error message to the user
+      }
+    }
     handleCloseDialog();
   };
 
@@ -55,7 +64,6 @@ function ProductPage() {
           <EditIcon
             sx={{ cursor: "pointer" }}
             onClick={() => {
-              console.log(item.name);
               navigate("/product/new");
             }}
           />
@@ -64,12 +72,16 @@ function ProductPage() {
           <DeleteIcon
             color="red"
             sx={{ cursor: "pointer" }}
-            onClick={() => handleDeleteClick(item.name)}
+            onClick={() => handleDeleteClick(item)}
           />
         ),
       }));
 
-  function handleSearch() {}
+  const handleSearch = (event) => {
+    console.log(searchRef.current.value, selectState);
+    setSearchTerm(event.target.value);
+  };
+
   return (
     <Stack gap="30px" sx={{ width: "100%" }}>
       <QueryHeader
@@ -105,7 +117,7 @@ function ProductPage() {
             />
             <Typography variant="blgsm" padding={"10px"}>Delete Confirmation</Typography>
             <Typography variant="bxsr">
-              Are you sure you want to delete this product? <br /> You wont be able to
+              Are you sure you want to delete this product? <br /> You won't be able to
               retrieve it back.
             </Typography>
           </Box>
