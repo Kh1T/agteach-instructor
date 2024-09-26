@@ -8,9 +8,9 @@ export const productApi = createApi({
   }),
   tagTypes: ["Product"],
   endpoints: (builder) => ({
-    addProduct: builder.mutation({
+    createProduct: builder.mutation({
       query: (productData) => ({
-        url: "/api/products",
+        url: "/api/product/createProduct",
         method: "POST",
         body: productData,
       }),

@@ -29,9 +29,9 @@ export default function ProductPhoto({ register, errors, setValue }) {
           "Most customers will decide to buy a product based on an image"
         }
       />
-      <PhotoPreview icon={<InsertPhotoIcon />} register={register} errors={errors} setValue={setValue} name={"image"} >
+      <PhotoPreview icon={<InsertPhotoIcon />} register={register} errors={errors} setValue={setValue} name={"productCover"} >
         <Typography color="gray">
-          Upload Product image, png, jpg, webp
+          Upload Product image, png, jpg
         </Typography>
         <Typography color="gray">580 x 580 (Limit size: 1 MB)</Typography>
       </PhotoPreview>
