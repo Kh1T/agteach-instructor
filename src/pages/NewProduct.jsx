@@ -54,7 +54,10 @@ function NewProductPage() {
     formData.append("quantity", data.quantity);
     formData.append("price", data.price);
     formData.append("productCover", data.productCover[0]);
-    formData.append("productImages", data.productImages);
+
+    for (let i = 0; i < data.productImages.length; i++) {
+      formData.append("productImages", data.productImages[i]);
+    }
 
     console.log(formData);
     try {
@@ -103,12 +106,12 @@ function NewProductPage() {
         />
         <Button
           type="submit"
-          variant="contained"
+          variant= "contained"
           sx={{ mt: 4, bgcolor: "purple.main" }}
           disabled={isSubmitting}
         >
           {isSubmitting ? <CircularProgress size={24} /> : "CREATE PRODUCT"}
-          {isSubmitSuccessful && navigate("/product")}
+          {isSubmitSuccessful  && navigate("/product")}
         </Button>
       </form>
     </Box>
