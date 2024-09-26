@@ -113,6 +113,7 @@ function ProductPage() {
           flexDirection="column"
           alignItems="center"
           justifyContent="center"
+          height= {"60vh"}
           sx={{ textAlign: "center" }}
         >
           <img
