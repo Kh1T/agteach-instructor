@@ -25,10 +25,17 @@ export const productApi = createApi({
     }),
 
     searchProducts: builder.query({
-      query: (name) => ({
-        url: `/api/product/searchData?name=`,
-        method: "GET",
-      }),
+      query: ({ name, order }) => {
+        let url = "/api/product/searchData?name=";
+
+        if (name) url += name;
+        if (order) url += `&order=${order}`;
+        console.log(order);
+        return {
+          url,
+          method: "GET",
+        };
+      },
     }),
 
     confirmDelete: builder.mutation({

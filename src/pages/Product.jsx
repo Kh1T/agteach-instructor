@@ -7,7 +7,7 @@ import {
   Typography,
   Box,
 } from "@mui/material";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CustomTable from "../components/CustomTable";
@@ -27,7 +27,7 @@ function ProductPage() {
   const [selectState, setSelectState] = useState(0);
 
   const { data: searchedProducts, isFetching: isSearching } =
-    useSearchProductsQuery();
+    useSearchProductsQuery({ name: searchTerm, order: selectState });
   const [confirmDelete] = useConfirmDeleteMutation(); // Initialize the mutation
 
   const searchRef = useRef();
@@ -85,10 +85,8 @@ function ProductPage() {
         ),
       }));
 
-  console.log(searchedProducts);
-  const handleSearch = (event) => {
-    console.log(searchRef.current.value, selectState);
-    setSearchTerm(event.target.value);
+  const handleSearch = () => {
+    setSearchTerm(searchRef.current.value);
   };
 
   return (
