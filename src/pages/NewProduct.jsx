@@ -4,6 +4,7 @@ import ProductQuantity from "../components/new-product/ProductQuantity";
 import ProductPhoto from "../components/new-product/ProductPhoto";
 import AdditionalPhoto from "../components/new-product/AdditionalPhoto";
 import ButtonComponent from "../components/course-product/ButtonInBox";
+import { CircularProgress } from "@mui/material";
 
 import { Box, Button, Typography } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
@@ -14,19 +15,36 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 function NewProductPage() {
-  const [createProduct, { isLoading }] = useCreateProductMutation();
+  const [createProduct] = useCreateProductMutation();
   const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     watch,
     setValue,
-    formState: { errors },
+    formState: { errors, isSubmitting , isSubmitSuccessful},
   } = useForm();
 
-  const handleCreateProduct = (data) => {
-    createProduct(data);
+  const handleCreateProduct = async (data) => {
     console.log(data);
+
+    const formData = new FormData();
+
+    formData.append("categoryId", data.categoryId);
+    formData.append("name", data.name);
+    formData.append("description", data.description);
+    formData.append("quantity", data.quantity);
+    formData.append("price", data.price);
+    formData.append("productCover", data.productCover[0]);
+    formData.append("productImages", data.productImages);
+
+    console.log(formData);
+    try {
+      await createProduct(formData).unwrap();
+      console.log("Product created successfully");
+    } catch (error) {
+      console.error("Failed to create product:", error);
+    }
   };
 
   return (
@@ -55,11 +73,10 @@ function NewProductPage() {
           errors={errors}
           setValue={setValue}
         />
-        <ButtonComponent
-          text="CREATE PRODUCT"
-          variant="contained"
-          bgcolor="purple.main"
-        />
+        <Button type="submit" variant="contained" sx={{ mt:4, bgcolor: "purple.main" }} disabled={isSubmitting}>
+          {isSubmitting ? <CircularProgress size={24} /> : "CREATE PRODUCT"}
+          {isSubmitSuccessful && navigate("/product")}
+        </Button>
       </form>
     </Box>
   );

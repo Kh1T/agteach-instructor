@@ -21,7 +21,6 @@ import TextSection from "../course-product/TextSection";
  */
 
 export default function ProductPrice({ errors, register }) {
-
   return (
     <Box className="container">
       <IconWithTitle
@@ -41,7 +40,10 @@ export default function ProductPrice({ errors, register }) {
         label="Price"
         type="number"
         fullWidth
-        {...register("price", { required: "Price is required" })}
+        {...register("price", {
+          min: 0,
+          required: "Price is required and Cannot be less than 0.",
+        })}
         error={!!errors.price}
         helperText={errors.price?.message}
       />

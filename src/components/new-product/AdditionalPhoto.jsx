@@ -13,6 +13,7 @@ import AddManyPhoto from "../course-product/AddManyPhoto";
  * @returns {React.ReactElement} A JSX element containing the AdditionalPhotos component
  */
 export default function AdditionalPhotos({ register, errors, setValue }) {
+ 
   return (
     <Box>
       <IconWithTitle
@@ -24,7 +25,7 @@ export default function AdditionalPhotos({ register, errors, setValue }) {
         title="Help customers see the product better"
         description="Adding more images can help customers have a better overview of your product."
       />
-      <AddManyPhoto  register={register} errors={errors} setValue={setValue} name={"additionalImages"} />
+      <AddManyPhoto  register={register} errors={errors} setValue={setValue} name={"productImages"} />
       <Divider sx={{ my: 2 }} />
       <Typography component="ul">
         <Typography variant="bsr" color="dark.300" paddingY={1} component="li">
