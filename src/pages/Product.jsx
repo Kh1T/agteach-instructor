@@ -12,7 +12,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CustomTable from "../components/CustomTable";
 import QueryHeader from "../components/QueryHeader";
-import { useGetAllProductsQuery, useConfirmDeleteMutation, useSearchBarQuery } from "../services/api/productApi"; // Import here
+import { useGetAllProductsQuery, useConfirmDeleteMutation, useSearchProductsQuery } from "../services/api/productApi"; // Import here
 import { useNavigate } from "react-router";
 import deletBin from "../assets/Go Green Grey Hanger Bag.png";
 
@@ -21,6 +21,7 @@ function ProductPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectState, setSelectState] = useState(0);
   const { data: allProduct, isFetching } = useGetAllProductsQuery();
+  const { data: searchedProducts, isFetching: isSearching } = useSearchProductsQuery(searchTerm);
   const [confirmDelete] = useConfirmDeleteMutation(); // Initialize the mutation
 
   const searchRef = useRef();
@@ -31,6 +32,7 @@ function ProductPage() {
 
   const handleDeleteClick = (product) => {
     setSelectedProduct(product);
+    console.log(product);
     setOpenDialog(true);
   };
 
@@ -41,9 +43,10 @@ function ProductPage() {
 
   const handleConfirmDelete = async () => {
     if (selectedProduct) {
-      console.log(selectedProduct.id)
+      console.log(selectedProduct.productId)
       try {
-        await confirmDelete(selectedProduct.id).unwrap(); // Use the mutation here
+        await confirmDelete(selectedProduct.productId).unwrap(); // Use the mutation here
+
         // Optionally refresh the product list or show a success message
       } catch (error) {
         console.error("Failed to delete the product: ", error);
@@ -53,9 +56,9 @@ function ProductPage() {
     handleCloseDialog();
   };
 
-  const productList = isFetching
+  const productList = isFetching || isSearching
     ? []
-    : allProduct?.data?.map((item) => ({
+    : (searchTerm ? searchedProducts : allProduct)?.data?.map((item) => ({
         Name: item.name,
         Category: item.categoryId,
         quantity: item.quantity,
@@ -80,6 +83,7 @@ function ProductPage() {
   const handleSearch = (event) => {
     console.log(searchRef.current.value, selectState);
     setSearchTerm(event.target.value);
+    console.log(searchedProducts);
   };
 
   return (
@@ -94,7 +98,7 @@ function ProductPage() {
         pathCreated="/product/new"
         labelCreate="Create Product"
       />
-      {isFetching ? (
+      {isFetching || isSearching ? (
         <p>Loading products...</p>
       ) : (
         <CustomTable data={productList} rowLimit={10} isPagination={true} />
