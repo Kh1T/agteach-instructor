@@ -1,11 +1,12 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const productApi = createApi({
-  reducerPath: "api",
+  reducerPath: "productApi",
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:3001",
     credentials: "include",
   }),
+
   tagTypes: ["Product"],
   endpoints: (builder) => ({
     createProduct: builder.mutation({
@@ -14,6 +15,7 @@ export const productApi = createApi({
         method: "POST",
         body: productData,
       }),
+      // invalidatesTags: ["Product"],
     }),
 
     getAllProducts: builder.query({
@@ -55,14 +57,21 @@ export const productApi = createApi({
         method: "GET",
       }),
     }),
+
+    getInstructorData: builder.query({
+      query: () => ({
+        url: "/api/instructor/getInstructor/data",
+        method: "GET",
+      }),
+    }),
   }),
 });
 
 export const {
-  useAddProductMutation,
+  useCreateProductMutation,
   useGetAllProductsQuery,
   useSearchProductsQuery,
   useConfirmDeleteMutation,
- useGetProductsQuery } = productApi;
-
-
+  useGetProductsQuery,
+  useGetInstructorDataQuery,
+} = productApi;

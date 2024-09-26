@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const authApi = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://api.agteach.site",
+    baseUrl: "http://localhost:3001",
     credentials: "include", // Move this line here
   }),
   endpoints: (builder) => ({
@@ -76,7 +76,7 @@ export const authApi = createApi({
         method: "GET",
       }),
     }),
-    
+
     isLogin: builder.query({
       query: () => ({
         url: "/api/users/isLoginedIn",
@@ -89,9 +89,8 @@ export const authApi = createApi({
         url: "/api/users/updatePassword",
         method: "PATCH",
         body: passwordInfo,
-      })
+      }),
     }),
-
   }),
 });
 

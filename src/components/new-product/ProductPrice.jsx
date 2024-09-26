@@ -22,12 +22,8 @@ import { Money } from "@mui/icons-material";
  *
  * The component returns a Box component with children.
  */
-export default function ProductPrice({ setPrice }) {
-  const [price, setProductPrice] = useState("");
-  const handleOnChange = (e) => {
-    setProductPrice(e.target.value);
-    setPrice(e.target.value);
-  }
+
+export default function ProductPrice({ errors, register }) {
   return (
     <Box className="container">
       <IconWithTitle
@@ -47,7 +43,10 @@ export default function ProductPrice({ setPrice }) {
         label="Price"
         type="number"
         fullWidth
-        {...register("price", { required: "Price is required" })}
+        {...register("price", {
+          min: 0,
+          required: "Price is required and Cannot be less than 0.",
+        })}
         error={!!errors.price}
         helperText={errors.price?.message}
       />
