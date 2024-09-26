@@ -19,6 +19,7 @@ import {
 } from "../services/api/productApi"; // Import here
 import { useNavigate } from "react-router";
 import deletBin from "../assets/Go Green Grey Hanger Bag.png";
+import emptyProduct from "../assets/Spooky Stickers Sweet Franky.png";
 
 function ProductPage() {
   const navigate = useNavigate();
@@ -50,7 +51,6 @@ function ProductPage() {
       console.log(selectedProduct.productId);
       try {
         await confirmDelete(selectedProduct.productId).unwrap(); // Use the mutation here
-
         // Optionally refresh the product list or show a success message
       } catch (error) {
         console.error("Failed to delete the product: ", error);
@@ -103,7 +103,22 @@ function ProductPage() {
         labelCreate="Create Product"
       />
       {isSearching ? (
-        <p>Loading products...</p>
+        <Typography>Loading products...</Typography>
+      ) : productList && productList.length === 0 ? (
+        <Box
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+          justifyContent="center"
+          sx={{ textAlign: "center" }}
+        >
+          <img
+            src={emptyProduct}
+            alt="emptyProduct"
+            style={{ width: "136px", height: "136px", marginBottom: "10px" }} // Adjust size as needed
+          />
+          <Typography>No products found</Typography>
+        </Box>
       ) : (
         <CustomTable data={productList} rowLimit={10} isPagination={true} />
       )}
