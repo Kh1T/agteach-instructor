@@ -65,6 +65,13 @@ export const productApi = createApi({
         method: "GET",
       }),
     }),
+
+    getInstructorData: builder.query({
+      query: () => ({
+        url: "/api/instructor/getInstructor/data",
+        method: "GET",
+      }),
+    }),
   }),
 });
 

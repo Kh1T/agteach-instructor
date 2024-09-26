@@ -1,11 +1,9 @@
 import { configureStore as createStore } from "@reduxjs/toolkit";
 import { authApi } from "../services/api/authApi";
 import { locationApi } from "../services/api/locationApi";
-import { productApi } from "../services/api/productApi";
 import userReducer from "../features/user/userSlice";
 // import productReducer from "./productStore";
 import { productApi } from "../services/api/productApi";
-
 
 export const store = createStore({
   reducer: {
