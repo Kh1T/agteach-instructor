@@ -26,8 +26,11 @@ function ProductPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectState, setSelectState] = useState(0);
 
-  const { data: searchedProducts, isFetching: isSearching } =
-    useSearchProductsQuery({ name: searchTerm, order: selectState });
+  const {
+    data: searchedProducts,
+    isFetching: isSearching,
+    refetch,
+  } = useSearchProductsQuery({ name: searchTerm, order: selectState });
   const [confirmDelete] = useConfirmDeleteMutation(); // Initialize the mutation
 
   const searchRef = useRef();
@@ -52,7 +55,7 @@ function ProductPage() {
       console.log(selectedProduct.productId);
       try {
         await confirmDelete(selectedProduct.productId).unwrap(); // Use the mutation here
-
+        refetch();
         // Optionally refresh the product list or show a success message
       } catch (error) {
         console.error("Failed to delete the product: ", error);
