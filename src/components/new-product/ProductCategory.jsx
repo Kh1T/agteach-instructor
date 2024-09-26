@@ -32,7 +32,7 @@ import { cateData } from "../../data/categoryDummy";
  *
  * When the category is changed, the `handleCategoryChange` function is called with the new value as argument.
  */
-export default function ProductCategoryForm({ register, errors }) {
+export default function ProductCategoryForm({ register, errors , defaultValue }) {
   return (
     <Stack className="container" gap={1} alignItems="flex-start">
       <Box sx={{ width: "100%" }}>
@@ -52,6 +52,7 @@ export default function ProductCategoryForm({ register, errors }) {
         <InputLabel error={!!errors.categoryId}>Category</InputLabel>
         <Select
           label="Category"
+          defaultValue={defaultValue}
           {...register("categoryId", {
             required: "Category is required",
           })}

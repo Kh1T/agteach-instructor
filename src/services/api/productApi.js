@@ -4,13 +4,13 @@ export const productApi = createApi({
   reducerPath: "productApi",
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:3001",
+    // baseUrl: "https://api.agteach.site",
     credentials: "include",
   }),
 
   tagTypes: ["Product"],
   endpoints: (builder) => ({
     createProduct: builder.mutation({
-
       query: (productData) => ({
         url: "/api/product/createProduct",
         method: "POST",
@@ -66,11 +66,8 @@ export const productApi = createApi({
       }),
     }),
 
-    getInstructorData: builder.query({
-      query: () => ({
-        url: "/api/instructor/getInstructor/data",
-        method: "GET",
-      }),
+    getProductsImages: builder.query({
+      query: (productId) => `/api/product/getProductImages/${productId}`,
     }),
   }),
 });
@@ -82,4 +79,5 @@ export const {
   useConfirmDeleteMutation,
   useGetProductsQuery,
   useGetInstructorDataQuery,
+  useGetProductsImagesQuery,
 } = productApi;

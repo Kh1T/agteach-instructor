@@ -11,14 +11,11 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ProductPrice from "../components/new-product/ProductPrice";
 
 import { useCreateProductMutation } from "../services/api/productApi";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+
 import { useForm } from "react-hook-form";
 
-import { useEffect, React } from "react";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Controller } from "react-hook-form";
-
+import { useEffect } from "react";
 function NewProductPage() {
   const [createProduct] = useCreateProductMutation();
   const navigate = useNavigate();
@@ -27,8 +24,24 @@ function NewProductPage() {
     handleSubmit,
     watch,
     setValue,
-    formState: { errors, isSubmitting , isSubmitSuccessful},
+    formState: { errors, isSubmitting, isSubmitSuccessful },
   } = useForm();
+
+  const location = useLocation();
+  const product = location.state?.product; // Get the product from the state
+
+  useEffect(() => {
+    if (product) {
+      setValue("category", product.categoryId);
+      setValue("name", product.name);
+      setValue("quantity", product.quantity);
+      setValue("price", product.price);
+      setValue("description", product.description);
+      setValue("categoryId", product.categoryId);
+      setValue("productCover", product.imageUrl);
+      // setValue("productImages", product.productImages);
+    }
+  }, [product, setValue]);
 
   const handleCreateProduct = async (data) => {
     console.log(data);
@@ -63,7 +76,11 @@ function NewProductPage() {
         <Typography variant="bmdr">Go Back</Typography>
       </Button>
       <form onSubmit={handleSubmit(handleCreateProduct)}>
-        <ProductCategory register={register} errors={errors} />
+        <ProductCategory
+          register={register}
+          errors={errors}
+          defaultValue={product?.categoryId}
+        />
         <AboutProduct register={register} errors={errors} />
         <ProductQuantity
           register={register}
@@ -71,14 +88,25 @@ function NewProductPage() {
           watch={watch}
           setValue={setValue}
         />
-        <ProductPhoto register={register} errors={errors} setValue={setValue} />
+        <ProductPhoto
+          register={register}
+          errors={errors}
+          setValue={setValue}
+          defaultValue={product?.imageUrl}
+        />
         <ProductPrice register={register} errors={errors} />
         <AdditionalPhoto
           register={register}
           errors={errors}
           setValue={setValue}
+          productId={product?.productId}
         />
-        <Button type="submit" variant="contained" sx={{ mt:4, bgcolor: "purple.main" }} disabled={isSubmitting}>
+        <Button
+          type="submit"
+          variant="contained"
+          sx={{ mt: 4, bgcolor: "purple.main" }}
+          disabled={isSubmitting}
+        >
           {isSubmitting ? <CircularProgress size={24} /> : "CREATE PRODUCT"}
           {isSubmitSuccessful && navigate("/product")}
         </Button>

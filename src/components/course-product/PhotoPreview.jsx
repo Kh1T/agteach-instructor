@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Stack, Box, Typography, Button } from "@mui/material";
-
+import { useEffect } from "react";
 /**
  * PhotoPreview component renders a box with a dashed border and a "Choose File"
  * button. When a file is selected, it renders a preview of the file with its name
@@ -17,14 +17,31 @@ import { Stack, Box, Typography, Button } from "@mui/material";
  * @param {React.ReactElement} props.children - children elements to be displayed in the preview box
  * @returns {React.ReactElement} the PhotoPreview component
  */
-export default function PhotoPreview({ sx, icon, children, register, errors, name, setValue }) {
+export default function PhotoPreview({
+  sx,
+  icon,
+  children,
+  register,
+  errors,
+  name,
+  setValue,
+  defaultValue,
+}) {
   const [selectedImage, setSelectedImage] = useState(null);
   const [fileInfo, setFileInfo] = useState({ name: "", size: "" });
   const [fileInputKey, setFileInputKey] = useState(0);
 
+    useEffect(() => {
+      if (defaultValue) {
+        setSelectedImage(defaultValue);
+        setFileInfo({ name: "Name of Image", size: "N/A" }); // Adjust as needed
+      }
+    }, [defaultValue]);
+
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file && file.type.startsWith("image/")) {
+     
       const imageUrl = URL.createObjectURL(file);
       setSelectedImage(imageUrl);
       setFileInfo({
@@ -58,6 +75,7 @@ export default function PhotoPreview({ sx, icon, children, register, errors, nam
           <Box
             component="img"
             src={selectedImage}
+            // src={defaultValue}
             alt="Selected Product"
             sx={{ maxWidth: "150px", maxHeight: "150px", objectFit: "cover" }}
           />
@@ -87,7 +105,8 @@ export default function PhotoPreview({ sx, icon, children, register, errors, nam
             border: "2px dashed grey",
             cursor: "pointer",
             alignItems: "center",
-            justifyItems: "center",height:"100%",
+            justifyItems: "center",
+            height: "100%",
             ...sx,
           }}
           onClick={handleClick}

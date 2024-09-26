@@ -5,6 +5,7 @@ import React from "react";
 import IconWithTitle from "../course-product/IconWithTitle";
 import TextSection from "../course-product/TextSection";
 import AddManyPhoto from "../course-product/AddManyPhoto";
+import { useGetProductsImagesQuery } from "../../services/api/productApi";
 
 /**
  * AdditionalPhotos component renders a box with a title, icon, description, and AddManyPhoto component.
@@ -12,8 +13,9 @@ import AddManyPhoto from "../course-product/AddManyPhoto";
  *
  * @returns {React.ReactElement} A JSX element containing the AdditionalPhotos component
  */
-export default function AdditionalPhotos({ register, errors, setValue }) {
+export default function AdditionalPhotos({ register, errors, setValue , productId }) {
  
+  const { data } = useGetProductsImagesQuery(productId);
   return (
     <Box>
       <IconWithTitle

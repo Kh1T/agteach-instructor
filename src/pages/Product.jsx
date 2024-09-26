@@ -76,6 +76,7 @@ function ProductPage() {
           <EditIcon
             sx={{ cursor: "pointer" }}
             onClick={() => {
+              console.log(item);
               navigate("/product/new", {
                 state: {
                   product: item, // Pass the entire product object
