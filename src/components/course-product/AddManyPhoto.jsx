@@ -75,7 +75,7 @@ export default function AddManyPhotos({ setValue, name}) {
         <Stack onClick={handleButtonClick} sx={NotYetUploadedPhotoStyle}>
           <InsertPhotoIcon />
           <Typography variant="btr" color="gray">
-            Upload up to 5 photos (png, jpg, webp)
+            Upload up to 4 photos (png, jpg, webp)
           </Typography>
           <Typography variant="btr" color="gray">
             580 x 580 (Limit size: 1 MB)

@@ -13,9 +13,9 @@ import TextSection from "../course-product/TextSection";
  *   - Typography component with example
  *   - TextField component for inputting product description
  *
- * The component is given two props: `productName` and `productDescription`.
+ * The component is given two props: `productName` and `description`.
  * `productName` is a string representing the product name.
- * `productDescription` is a string representing the product description.
+ * `description` is a string representing the product description.
  *
  * The component returns a Box component with children.
  */
@@ -34,15 +34,15 @@ export default function AboutProduct({ register, errors }) {
         description="Your product name should be short and meaningful."
       />
       <TextField
-        error={error}
+        // error={errors}
         sx={{ my: 2 }}
         fullWidth
         id="outlined-controlled"
         label="Product Name"
         // onChange={(event) => setProductName(event.target.value)}
-        {...register("productName", { required: "Product name is required" })}
-        error={!!errors.productName}
-        helperText={errors.productName?.message}
+        {...register("name", { required: "Product name is required" })}
+        error={!!errors.name}
+        helperText={errors.name?.message}
       />
       <Typography variant="bsr" color="dark.300" sx={{ mt: 2 }}>
         eg: Grow Lights - LED or fluorescent grow lights
@@ -53,7 +53,7 @@ export default function AboutProduct({ register, errors }) {
         description="Help explain what does the product do and key feature"
       />
       <TextField
-        error={error}
+        // error={error}
         slotProps={{
           input: { sx: { alignItems: "flex-start" } },
         }}
@@ -61,10 +61,12 @@ export default function AboutProduct({ register, errors }) {
         fullWidth
         id="outlined-controlled"
         label="Description"
-        // onChange={(event) => setProductDescription(event.target.value)}
-        {...register("productDescription", { required: "Product description is required" })}
-        error={!!errors.productDescription}
-        helperText={errors.productDescription?.message}
+        // onChange={(event) => setdescription(event.target.value)}
+        {...register("description", {
+          required: "Product description is required",
+        })}
+        error={!!errors.description}
+        helperText={errors.description?.message}
       />
     </Box>
   );

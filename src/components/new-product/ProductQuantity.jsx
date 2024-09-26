@@ -1,11 +1,8 @@
-import React, { useState } from "react";
 import { Box, Divider, Stack, TextField, Button } from "@mui/material";
 import { Remove, Add } from "@mui/icons-material";
 import ProductionQuantityLimitsIcon from "@mui/icons-material/ProductionQuantityLimits";
 import IconWithTitle from "../course-product/IconWithTitle";
 import TextSection from "../course-product/TextSection";
-import { set } from "react-hook-form";
-import { set } from "react-hook-form";
 
 /**
  * ProductQuantity component renders a page for instructors to input the quantity of a product.
@@ -48,8 +45,8 @@ export default function ProductQuantity({ register, errors, watch, setValue }) {
           {...register("quantity", {
             required: "Quantity is required",
             min: {
-              value: 0,
-              message: "Quantity must be greater than or equal to 0",
+              value: 1,
+              message: "Quantity must be greater than 0",
             },
           })}
           error={!!errors.quantity}

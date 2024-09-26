@@ -5,67 +5,17 @@ import ProductPhoto from "../components/new-product/ProductPhoto";
 import AdditionalPhoto from "../components/new-product/AdditionalPhoto";
 import ButtonComponent from "../components/course-product/ButtonInBox";
 
-import { Box, Button, Typography, FormHelperText } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ProductPrice from "../components/new-product/ProductPrice";
 
-import { useAddProductMutation } from "../store/api/productApi";
+import { useCreateProductMutation } from "../services/api/productApi";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 function NewProductPage() {
-  const {
-    control,
-    handleSubmit,
-    setValue,
-    formState: { errors },
-  } = useForm();
-  const [addProduct, { isLoading: isSubmitting }] = useAddProductMutation();
+  const [createProduct, { isLoading }] = useCreateProductMutation();
   const navigate = useNavigate();
-  const {
-    isLoading = false,
-    error = null,
-    success = false,
-  } = useSelector((state) => state.products || {});
-  // State for form inputs
-  const [category, setCategory] = useState("");
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [quantity, setProductQuantity] = useState(0);
-  const [photo, setPhoto] = useState(null);
-  const [price, setPrice] = useState(0);
-  const [additionalPhoto, setAdditionalPhoto] = useState(null);
-
-  const onSubmit = async (data) => {
-    const productData = {
-      category,
-      name,
-      description,
-      quantity,
-      price,
-      photo,
-      additionalPhoto,
-    };
-    try {
-      await addProduct(productData).unwrap();
-    } catch (err) {
-      console.error("Failed to create product: ", err);
-    }
-  };
-
-  console.log(category);
-
-    // Dispatch the useAddProductMutation action
-    dispatch(useAddProductMutation(productData));
-  };
-
-  // Navigate back after successful creation
-  if (success) {
-    navigate(-1);
-  }
-
   const {
     register,
     handleSubmit,
@@ -75,6 +25,7 @@ function NewProductPage() {
   } = useForm();
 
   const handleCreateProduct = (data) => {
+    createProduct(data);
     console.log(data);
   };
 

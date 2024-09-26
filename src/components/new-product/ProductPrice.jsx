@@ -2,11 +2,6 @@ import { Divider, Box, TextField, Typography } from "@mui/material";
 import IconWithTitle from "../course-product/IconWithTitle";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import TextSection from "../course-product/TextSection";
-import { useState } from "react";
-
-import { Money } from "@mui/icons-material";
-
-import { Money } from "@mui/icons-material";
 
 /**
  * ProductPrice component renders a page for instructors to input product price.
@@ -24,18 +19,9 @@ import { Money } from "@mui/icons-material";
  *
  * The component returns a Box component with children.
  */
-export default function ProductPrice({ setPrice }) {
-  const [price, setProductPrice] = useState("");
-  const handleOnChange = (e) => {
-    setProductPrice(e.target.value);
-    setPrice(e.target.value);
-  }
-export default function ProductPrice({ setPrice }) {
-  const [price, setProductPrice] = useState("");
-  const handleOnChange = (e) => {
-    setProductPrice(e.target.value);
-    setPrice(e.target.value);
-  }
+
+export default function ProductPrice({ errors, register }) {
+
   return (
     <Box className="container">
       <IconWithTitle

@@ -104,6 +104,7 @@ export default function PhotoPreview({ sx, icon, children, register, errors, nam
         type="file"
         style={{ display: "none" }}
         onChange={handleFileChange} // Use custom handleFileChange for file input
+        // {...register("photoCover", {required: "Photo Cover is required"})}
       />
       {errors[name] && (
         <Typography color="error">

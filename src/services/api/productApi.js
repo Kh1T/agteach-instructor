@@ -7,9 +7,9 @@ export const productApi = createApi({
     credentials: "include",
   }),
   endpoints: (builder) => ({
-    addProduct: builder.mutation({
+    createProduct: builder.mutation({
       query: (productData) => ({
-        url: "/api/products",
+        url: "/api/product/createProduct",
         method: "POST",
         body: productData,
       }),
@@ -23,4 +23,4 @@ export const productApi = createApi({
   }),
 });
 
-export const { useAddProductMutation, useGetProductsQuery } = productApi;
+export const { useCreateProductMutation, useGetProductsQuery } = productApi;
