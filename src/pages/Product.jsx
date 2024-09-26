@@ -76,7 +76,11 @@ function ProductPage() {
           <EditIcon
             sx={{ cursor: "pointer" }}
             onClick={() => {
-              navigate("/product/new");
+              navigate("/product/new", {
+                state: {
+                  product: item, // Pass the entire product object
+                },
+              });
             }}
           />
         ),
@@ -113,7 +117,7 @@ function ProductPage() {
           flexDirection="column"
           alignItems="center"
           justifyContent="center"
-          height= {"60vh"}
+          height={"60vh"}
           sx={{ textAlign: "center" }}
         >
           <img
