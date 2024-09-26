@@ -29,8 +29,11 @@ export const productApi = createApi({
         let url = "/api/product/searchData?name=";
 
         if (name) url += name;
-        if (order) url += `&order=${order}`;
-        console.log(order);
+        if (order) {
+          const dataOrder = order === 10 ? "desc" : "asc";
+          url += `&order=${dataOrder}`;
+        }
+
         return {
           url,
           method: "GET",
