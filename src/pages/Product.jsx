@@ -12,7 +12,11 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CustomTable from "../components/CustomTable";
 import QueryHeader from "../components/QueryHeader";
-import { useGetAllProductsQuery, useConfirmDeleteMutation, useSearchProductsQuery } from "../services/api/productApi"; // Import here
+import {
+  useGetAllProductsQuery,
+  useConfirmDeleteMutation,
+  useSearchProductsQuery,
+} from "../services/api/productApi"; // Import here
 import { useNavigate } from "react-router";
 import deletBin from "../assets/Go Green Grey Hanger Bag.png";
 
@@ -20,8 +24,8 @@ function ProductPage() {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectState, setSelectState] = useState(0);
-  const { data: allProduct, isFetching } = useGetAllProductsQuery();
-  const { data: searchedProducts, isFetching: isSearching } = useSearchProductsQuery(searchTerm);
+  const { data: searchedProducts, isFetching: isSearching } =
+    useSearchProductsQuery(searchTerm);
   const [confirmDelete] = useConfirmDeleteMutation(); // Initialize the mutation
 
   const searchRef = useRef();
@@ -43,7 +47,7 @@ function ProductPage() {
 
   const handleConfirmDelete = async () => {
     if (selectedProduct) {
-      console.log(selectedProduct.productId)
+      console.log(selectedProduct.productId);
       try {
         await confirmDelete(selectedProduct.productId).unwrap(); // Use the mutation here
 
@@ -56,9 +60,9 @@ function ProductPage() {
     handleCloseDialog();
   };
 
-  const productList = isFetching || isSearching
+  const productList = isSearching
     ? []
-    : (searchTerm ? searchedProducts : allProduct)?.data?.map((item) => ({
+    : searchedProducts?.data?.map((item) => ({
         Name: item.name,
         Category: item.categoryId,
         quantity: item.quantity,
@@ -80,10 +84,10 @@ function ProductPage() {
         ),
       }));
 
+  console.log(searchedProducts);
   const handleSearch = (event) => {
     console.log(searchRef.current.value, selectState);
     setSearchTerm(event.target.value);
-    console.log(searchedProducts);
   };
 
   return (
@@ -98,7 +102,7 @@ function ProductPage() {
         pathCreated="/product/new"
         labelCreate="Create Product"
       />
-      {isFetching || isSearching ? (
+      {isSearching ? (
         <p>Loading products...</p>
       ) : (
         <CustomTable data={productList} rowLimit={10} isPagination={true} />
@@ -119,10 +123,12 @@ function ProductPage() {
               alt="Confirmation"
               style={{ width: "136px", height: "136px", marginBottom: "10px" }} // Adjust size as needed
             />
-            <Typography variant="blgsm" padding={"10px"}>Delete Confirmation</Typography>
+            <Typography variant="blgsm" padding={"10px"}>
+              Delete Confirmation
+            </Typography>
             <Typography variant="bxsr">
-              Are you sure you want to delete this product? <br /> You won't be able to
-              retrieve it back.
+              Are you sure you want to delete this product? <br /> You won't be
+              able to retrieve it back.
             </Typography>
           </Box>
         </DialogContent>

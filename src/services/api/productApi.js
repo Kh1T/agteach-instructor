@@ -6,7 +6,7 @@ export const productApi = createApi({
     baseUrl: "http://localhost:3001",
     credentials: "include",
   }),
-  tagTypes: ['Product'],
+  tagTypes: ["Product"],
   endpoints: (builder) => ({
     addProduct: builder.mutation({
       query: (productData) => ({
@@ -17,7 +17,7 @@ export const productApi = createApi({
     }),
 
     getAllProducts: builder.query({
-      providesTags: ['Product'],
+      providesTags: ["Product"],
       query: () => ({
         url: "/api/product/getAllProduct",
         method: "GET",
@@ -26,13 +26,13 @@ export const productApi = createApi({
 
     searchProducts: builder.query({
       query: (name) => ({
-        url: `/product/searchData?name=${encodeURIComponent(name)}`,
+        url: `/api/product/searchData?name=${name}&order=${"asc"}`,
         method: "GET",
       }),
     }),
 
     confirmDelete: builder.mutation({
-      invalidatesTags: ['Product'],
+      invalidatesTags: ["Product"],
       query: (id) => ({
         url: `/api/product/deleteOneProduct/${id}`,
         method: "DELETE",
