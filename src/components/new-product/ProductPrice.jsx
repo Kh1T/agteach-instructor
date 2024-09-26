@@ -2,7 +2,6 @@ import { Divider, Box, TextField, Typography } from "@mui/material";
 import IconWithTitle from "../course-product/IconWithTitle";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import TextSection from "../course-product/TextSection";
-import { useState } from "react";
 
 import { Money } from "@mui/icons-material";
 
