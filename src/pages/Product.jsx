@@ -26,8 +26,33 @@ function ProductPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectState, setSelectState] = useState(0);
 
-  const { data: searchedProducts, isFetching: isSearching } =
+  const { data: searchedProducts, isFetching: isSearching, refetch } =
     useSearchProductsQuery();
+
+  // const isSearching = false
+
+  //   const searchedProducts = {
+  //     data: [
+  //       // {
+  //       //   name: "Product 1",
+  //       //   categoryId: "Category 1",
+  //       //   price: 10.0,
+  //       //   quantity: 5,
+  //       // },
+  //       // {
+  //       //   name: "Product 2",
+  //       //   categoryId: "Category 2",
+  //       //   price: 20.0,
+  //       //   quantity: 10,
+  //       // },
+  //       // {
+  //       //   name: "Product 3",
+  //       //   categoryId: "Category 3",
+  //       //   price: 30.0,
+  //       //   quantity: 15,
+  //       // },
+  //     ]}
+
   const [confirmDelete] = useConfirmDeleteMutation(); // Initialize the mutation
 
   const searchRef = useRef();
@@ -52,6 +77,7 @@ function ProductPage() {
       console.log(selectedProduct.productId);
       try {
         await confirmDelete(selectedProduct.productId).unwrap(); // Use the mutation here
+        refetch();
         // Optionally refresh the product list or show a success message
       } catch (error) {
         console.error("Failed to delete the product: ", error);
@@ -111,14 +137,15 @@ function ProductPage() {
           flexDirection="column"
           alignItems="center"
           justifyContent="center"
+          height= {"60vh"}
           sx={{ textAlign: "center" }}
         >
           <img
             src={emptyProduct}
             alt="emptyProduct"
-            style={{ width: "136px", height: "136px", marginBottom: "10px" }} // Adjust size as needed
+            style={{ width: "200px", height: "200px", marginBottom: "10px" }} // Adjust size as needed
           />
-          <Typography>No products found</Typography>
+          <Typography variant="bmdr">No products found</Typography>
         </Box>
       ) : (
         <CustomTable data={productList} rowLimit={10} isPagination={true} />
