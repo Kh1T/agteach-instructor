@@ -10,7 +10,7 @@ export const createProduct = createAsyncThunk(
       formData.append("photo", productData.photo);
       formData.append("additionalPhoto", productData.additionalPhoto);
 
-      const response = await fetch("/api/products", {
+      const response = await fetch("/api/product/createProduct", {
         method: "POST",
         body: formData,
       });
@@ -18,7 +18,6 @@ export const createProduct = createAsyncThunk(
       if (!response.ok) {
         throw new Error("Failed to create product");
       }
-
       return await response.json(); // The newly created product data
     } catch (error) {
       return rejectWithValue(error.message); // Pass the error to the reducer

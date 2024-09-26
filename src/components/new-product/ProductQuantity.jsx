@@ -3,7 +3,6 @@ import { Remove, Add } from "@mui/icons-material";
 import ProductionQuantityLimitsIcon from "@mui/icons-material/ProductionQuantityLimits";
 import IconWithTitle from "../course-product/IconWithTitle";
 import TextSection from "../course-product/TextSection";
-import { set } from "react-hook-form";
 
 /**
  * ProductQuantity component renders a page for instructors to input the quantity of a product.
