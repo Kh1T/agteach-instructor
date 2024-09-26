@@ -52,6 +52,7 @@ function ProductPage() {
       console.log(selectedProduct.productId);
       try {
         await confirmDelete(selectedProduct.productId).unwrap(); // Use the mutation here
+
         // Optionally refresh the product list or show a success message
       } catch (error) {
         console.error("Failed to delete the product: ", error);
@@ -114,9 +115,9 @@ function ProductPage() {
           <img
             src={emptyProduct}
             alt="emptyProduct"
-            style={{ width: "136px", height: "136px", marginBottom: "10px" }} // Adjust size as needed
+            style={{ width: "200px", height: "200px", marginBottom: "10px" }} // Adjust size as needed
           />
-          <Typography>No products found</Typography>
+          <Typography variant="bmdr">No products found</Typography>
         </Box>
       ) : (
         <CustomTable data={productList} rowLimit={10} isPagination={true} />
