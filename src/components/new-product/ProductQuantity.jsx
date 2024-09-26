@@ -5,6 +5,7 @@ import ProductionQuantityLimitsIcon from "@mui/icons-material/ProductionQuantity
 import IconWithTitle from "../course-product/IconWithTitle";
 import TextSection from "../course-product/TextSection";
 import { set } from "react-hook-form";
+import { set } from "react-hook-form";
 
 /**
  * ProductQuantity component renders a page for instructors to input the quantity of a product.

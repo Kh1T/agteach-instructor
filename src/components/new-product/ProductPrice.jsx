@@ -6,6 +6,8 @@ import { useState } from "react";
 
 import { Money } from "@mui/icons-material";
 
+import { Money } from "@mui/icons-material";
+
 /**
  * ProductPrice component renders a page for instructors to input product price.
  *
@@ -22,6 +24,12 @@ import { Money } from "@mui/icons-material";
  *
  * The component returns a Box component with children.
  */
+export default function ProductPrice({ setPrice }) {
+  const [price, setProductPrice] = useState("");
+  const handleOnChange = (e) => {
+    setProductPrice(e.target.value);
+    setPrice(e.target.value);
+  }
 export default function ProductPrice({ setPrice }) {
   const [price, setProductPrice] = useState("");
   const handleOnChange = (e) => {
