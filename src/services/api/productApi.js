@@ -26,7 +26,7 @@ export const productApi = createApi({
 
     searchProducts: builder.query({
       query: (name) => ({
-        url: `/api/product/searchData?name=${name}&order=${"asc"}`,
+        url: `/api/product/searchData?name=`,
         method: "GET",
       }),
     }),

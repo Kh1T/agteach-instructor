@@ -25,8 +25,9 @@ function ProductPage() {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectState, setSelectState] = useState(0);
+
   const { data: searchedProducts, isFetching: isSearching } =
-    useSearchProductsQuery(searchTerm);
+    useSearchProductsQuery();
   const [confirmDelete] = useConfirmDeleteMutation(); // Initialize the mutation
 
   const searchRef = useRef();
