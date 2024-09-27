@@ -11,13 +11,12 @@ import ProductPrice from "../components/new-product/ProductPrice";
 
 import { useNavigate, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
-
-import { useEffect, React } from "react";
+import { useEffect } from "react";
 
 function NewProductPage() {
   const navigate = useNavigate();
   const location = useLocation();
-  const product = location.state?.product; // Get the product from the state
+  const product = location.state?.product; // Highlighted: Get the product from the state
 
   const {
     register,
@@ -27,8 +26,8 @@ function NewProductPage() {
     formState: { errors },
   } = useForm();
 
-  // Pre-fill form fields if product data exists
-  React.useEffect(() => {
+  //  Pre-fill form fields if product data exists
+  useEffect(() => {
     if (product) {
       setValue("category", product.categoryId);
       setValue("name", product.name);
@@ -79,3 +78,4 @@ function NewProductPage() {
 }
 
 export default NewProductPage;
+
