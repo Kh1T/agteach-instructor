@@ -13,9 +13,15 @@ import { useGetProductsImagesQuery } from "../../services/api/productApi";
  *
  * @returns {React.ReactElement} A JSX element containing the AdditionalPhotos component
  */
-export default function AdditionalPhotos({ register, errors, setValue , productId }) {
- 
-  const { data } = useGetProductsImagesQuery(productId);
+export default function AdditionalPhotos({
+  register,
+  errors,
+  setValue,
+  productId,
+}) {
+
+  const { data , isLoading } = useGetProductsImagesQuery(productId);
+  
   return (
     <Box>
       <IconWithTitle
@@ -27,7 +33,13 @@ export default function AdditionalPhotos({ register, errors, setValue , productI
         title="Help customers see the product better"
         description="Adding more images can help customers have a better overview of your product."
       />
-      <AddManyPhoto  register={register} errors={errors} setValue={setValue} name={"productImages"} />
+      <AddManyPhoto
+        register={register}
+        errors={errors}
+        setValue={setValue}
+        name={"productImages"}
+        defaultValue={data}
+      />
       <Divider sx={{ my: 2 }} />
       <Typography component="ul">
         <Typography variant="bsr" color="dark.300" paddingY={1} component="li">
