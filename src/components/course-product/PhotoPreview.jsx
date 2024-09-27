@@ -34,10 +34,11 @@ export default function PhotoPreview({
     useEffect(() => {
       if (defaultValue) {
         setSelectedImage(defaultValue);
-        setFileInfo({ name: "Name of Image", size: "N/A" }); // Adjust as needed
+        const splittedImageUrl = defaultValue.split("/");
+        const imageName = splittedImageUrl[splittedImageUrl.length - 1];
+        setFileInfo({ name: imageName}); 
       }
     }, [defaultValue]);
-
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file && file.type.startsWith("image/")) {
@@ -81,7 +82,7 @@ export default function PhotoPreview({
           />
           <Stack gap={1}>
             <Typography variant="bmdsm">{fileInfo.name}</Typography>
-            <Typography variant="bmdr">Size: {fileInfo.size}</Typography>
+            {fileInfo.size && <Typography variant="bmdr">Size: {fileInfo.size}</Typography>}
             <Button
               variant="outlined"
               sx={{

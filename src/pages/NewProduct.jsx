@@ -9,8 +9,12 @@ import { CircularProgress } from "@mui/material";
 import { Box, Button, Typography } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ProductPrice from "../components/new-product/ProductPrice";
+import { CustomAlert } from "../components/CustomAlert";
 
-import { useCreateProductMutation } from "../services/api/productApi";
+import {
+  useCreateProductMutation,
+  useUpdateProductMutation,
+} from "../services/api/productApi";
 import { useNavigate, useLocation } from "react-router-dom";
 
 import { useForm } from "react-hook-form";
@@ -18,6 +22,7 @@ import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 function NewProductPage() {
   const [createProduct] = useCreateProductMutation();
+  const [updateProduct] = useUpdateProductMutation();
   const navigate = useNavigate();
   const {
     register,
@@ -30,9 +35,12 @@ function NewProductPage() {
   const location = useLocation();
   const product = location.state?.product;
   const editMode = location.state?.editMode;
+  const productId = location.state?.productId;
+
+  const ButtonText = editMode ? "UPDATE PRODUCT" : "CREATE PRODUCT";
 
   useEffect(() => {
-    if (product  && editMode) {
+    if (product && editMode) {
       setValue("category", product.categoryId);
       setValue("name", product.name);
       setValue("quantity", product.quantity);
@@ -41,10 +49,10 @@ function NewProductPage() {
       setValue("categoryId", product.categoryId);
       setValue("productCover", product.imageUrl);
     }
-  }, [product, setValue]);
+  }, [product, setValue, editMode]);
 
-  const handleCreateProduct = async (data) => {
-    console.log(data);
+  const handleUploadProduct = async (data) => {
+    console.log(productId);
 
     const formData = new FormData();
 
@@ -53,19 +61,42 @@ function NewProductPage() {
     formData.append("description", data.description);
     formData.append("quantity", data.quantity);
     formData.append("price", data.price);
-    formData.append("productCover", data.productCover[0]);
 
-    for (let i = 0; i < data.productImages.length; i++) {
-      formData.append("productImages", data.productImages[i]);
+    // Check if productCover exists and append it
+    if (data.productCover && data.productCover.length > 0) {
+      formData.append("productCover", data.productCover[0]);
     }
 
+    // Append additional product images
+    if (data.productImages && data.productImages.length > 0) {
+      for (let i = 0; i < data.productImages.length; i++) {
+        formData.append("productImages", data.productImages[i]);
+      }
+    }
+
+   console.log([...formData])
     try {
-      await createProduct(formData).unwrap();
-      console.log("Product created successfully");
+      if (editMode) {
+        await updateProduct({ productId, productData: formData }).unwrap();
+        console.log("Product updated successfully");
+      } else {
+        await createProduct(formData).unwrap();
+        console.log("Product created successfully");
+      }
     } catch (error) {
-      console.error("Failed to create product:", error);
+      // Differentiate error messages for better debugging
+      if (editMode) {
+        console.error("Failed to update product:", error);
+      } else {
+        console.error("Failed to create product:", error);
+      }
     }
   };
+
+  if (isSubmitSuccessful) {
+    navigate("/product"); 
+    window.location.reload(); 
+  }
 
   return (
     <Box sx={{ width: "100%", pb: 30 }}>
@@ -77,7 +108,7 @@ function NewProductPage() {
       >
         <Typography variant="bmdr">Go Back</Typography>
       </Button>
-      <form onSubmit={handleSubmit(handleCreateProduct)}>
+      <form onSubmit={handleSubmit(handleUploadProduct)}>
         <ProductCategory
           register={register}
           errors={errors}
@@ -106,12 +137,11 @@ function NewProductPage() {
         />
         <Button
           type="submit"
-          variant= "contained"
+          variant="contained"
           sx={{ mt: 4, bgcolor: "purple.main" }}
           disabled={isSubmitting}
         >
-          {isSubmitting ? <CircularProgress size={24} /> : "CREATE PRODUCT"}
-          {isSubmitSuccessful  && navigate("/product")}
+          {isSubmitting ? <CircularProgress size={24} /> : ButtonText}
         </Button>
       </form>
     </Box>

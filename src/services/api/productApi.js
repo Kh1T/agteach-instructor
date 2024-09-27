@@ -69,6 +69,14 @@ export const productApi = createApi({
     getProductsImages: builder.query({
       query: (productId) => `/api/product/getProductImages/${productId}`,
     }),
+
+    updateProduct: builder.mutation({
+      query: ({ productId, productData }) => ({
+        url: `/api/product/updateProduct/${productId}`,
+        method: "PATCH",
+        body: productData,
+      }),
+    }),
   }),
 });
 
@@ -80,4 +88,5 @@ export const {
   useGetProductsQuery,
   useGetInstructorDataQuery,
   useGetProductsImagesQuery,
+  useUpdateProductMutation,
 } = productApi;

@@ -20,7 +20,6 @@ import TextSection from "../course-product/TextSection";
  * The component returns a Box component with children.
  */
 export default function AboutProduct({ register, errors }) {
-
   return (
     <Box className="container">
       <IconWithTitle
@@ -54,6 +53,9 @@ export default function AboutProduct({ register, errors }) {
       />
       <TextField
         // error={error}
+        multiline
+        minRows={4}
+        maxRows={10}
         slotProps={{
           input: { sx: { alignItems: "flex-start" } },
         }}
