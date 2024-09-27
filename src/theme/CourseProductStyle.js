@@ -71,7 +71,7 @@ export const UploadedPhotoStyle = {
   "& img": {
     width: "100%",
     height: "100%",
-    objectFit: "fit",
+    objectFit: "cover",
   },
 };
 
