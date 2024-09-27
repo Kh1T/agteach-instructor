@@ -23,20 +23,19 @@ import {
  * @returns A JSX element containing the AddManyPhotos component
  */
 export default function AddManyPhotos({ setValue, name, defaultValue }) {
-  const [uploadedPhotos, setUploadedPhotos] = useState([]); 
+  const [uploadedPhotos, setUploadedPhotos] = useState([]);
 
-useEffect(() => {
-  if (defaultValue && defaultValue.images.length > 0) {
-    const imageUrls = defaultValue.images.map((image) => image.imageUrl);
-    setUploadedPhotos(imageUrls); // Set the image URLs
-    setValue(name, imageUrls); // Set the value in the form
-  }
-}, [defaultValue, name, setValue]);
-  
+  useEffect(() => {
+    if (defaultValue && defaultValue.images.length > 0) {
+      const imageUrls = defaultValue.images.map((image) => image.imageUrl);
+      setUploadedPhotos(imageUrls);
+      setValue(name, imageUrls);
+    }
+  }, [defaultValue, name, setValue]);
+
   const [uploadError, setUploadError] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
   const [fileInputKey, setFileInputKey] = useState(Date.now()); // to trigger input reset
-
 
   const handleFileChange = (event) => {
     const newPhotos = Array.from(event.target.files);

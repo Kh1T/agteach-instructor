@@ -18,6 +18,7 @@ export default function AdditionalPhotos({
   errors,
   setValue,
   productId,
+  editMode 
 }) {
 
   const { data , isLoading } = useGetProductsImagesQuery(productId);

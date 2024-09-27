@@ -28,10 +28,11 @@ function NewProductPage() {
   } = useForm();
 
   const location = useLocation();
-  const product = location.state?.product; // Get the product from the state
+  const product = location.state?.product;
+  const editMode = location.state?.editMode;
 
   useEffect(() => {
-    if (product) {
+    if (product  && editMode) {
       setValue("category", product.categoryId);
       setValue("name", product.name);
       setValue("quantity", product.quantity);
@@ -39,7 +40,6 @@ function NewProductPage() {
       setValue("description", product.description);
       setValue("categoryId", product.categoryId);
       setValue("productCover", product.imageUrl);
-      // setValue("productImages", product.productImages);
     }
   }, [product, setValue]);
 
@@ -59,7 +59,6 @@ function NewProductPage() {
       formData.append("productImages", data.productImages[i]);
     }
 
-    console.log(formData);
     try {
       await createProduct(formData).unwrap();
       console.log("Product created successfully");
@@ -103,6 +102,7 @@ function NewProductPage() {
           errors={errors}
           setValue={setValue}
           productId={product?.productId}
+          editMode={editMode}
         />
         <Button
           type="submit"
