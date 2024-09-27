@@ -47,12 +47,16 @@ export default function CourseContents() {
         .map((section, index) => ({ ...section, number: index + 1 })),
     );
 
+    console.log(sections);
+    
+
   return (
     <Box my={2}>
       <Typography variant="h3"> </Typography>
       <IconWithTitle
         title="Course Contents"
         icon={<BurstModeOutlinedIcon sx={{ color: "common.white" }} />}
+        highlight="Sections"
       />
       <Divider sx={{ my: 2 }} />
       {sections.map((section) => (

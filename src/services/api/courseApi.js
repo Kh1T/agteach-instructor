@@ -9,13 +9,20 @@ export const courseApi = createApi({
     tagTypes: ["Course"],
   
     endpoints: (builder) => ({
-      // addProduct: builder.mutation({
-      //   query: (productData) => ({
-      //     url: "/api/products",
-      //     method: "POST",
-      //     body: productData,
-      //   }),
-      // }),
+      addCourse: builder.mutation({
+        query: (productData) => ({
+          url: "/api/Course/uploadCourse",
+          method: "POST",
+          body: productData,
+        }),
+      }),
+
+      getCourse: builder.query({
+        query: () => ({
+          url: "/api/products",
+          method: "GET",
+        }),
+      }),
   
       getAllCourses: builder.query({
         providesTags: ["Course"],
@@ -55,5 +62,7 @@ export const courseApi = createApi({
     useGetAllCoursesQuery,
     useConfirmDeleteMutation,
     useSearchCoursesQuery,
+    useAddCourseMutation,
+    useGetCourseQuery,
   } = courseApi;
   

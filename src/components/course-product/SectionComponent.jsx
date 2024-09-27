@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from "uuid";
 import { Delete } from "@mui/icons-material";
 import { MoreVertRounded } from "@mui/icons-material";
 import DeleteConfirmModal from "./DeleteConfirmModal";
+import { useFormContext } from "react-hook-form";
 
 
   /**
@@ -27,6 +28,7 @@ import DeleteConfirmModal from "./DeleteConfirmModal";
    * @returns {JSX.Element} a JSX element containing the section component
    */
 export default function SectionComponent({ id, onDelete, number , type }) {
+  const { register, formState: { errors } } = useFormContext();
   const [lectures, setLectures] = useState([
     { id: uuidv4(), number: 1, type: "lecture" },
   ]);
@@ -110,7 +112,11 @@ export default function SectionComponent({ id, onDelete, number , type }) {
         fullWidth
         id="outlined-controlled"
         label="eg: Introduction to indoor gardening"
-      />
+        {...register(`section.${number}.title`, { required: "Title is required" })}
+        error={!!errors.section?.[number]?.title}
+        helperText={errors.section?.[number]?.title?.message}
+        />
+        {console.log('section title', errors.section?.[number]?.title)}
       <Box bgcolor="grey.300" padding={4} paddingTop={0}>
         {lectures.map((lecture) => (
           <LectureComponent

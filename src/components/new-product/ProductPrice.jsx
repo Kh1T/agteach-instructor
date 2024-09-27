@@ -41,9 +41,9 @@ export default function ProductPrice({register, errors}) {
         label="Price"
         type="number"
         fullWidth
-        {...register("price", { required: "Price is required" })}
-        error={!!errors.price}
-        helperText={errors.price?.message}
+        {...register("productPrice", { required: "Price is required" })}
+        error={!!errors.productPrice}
+        helperText={errors.productPrice?.message}
       />
       <Typography component="ul">
         <Typography variant="bsr" color="dark.300" paddingY={1} component="li">

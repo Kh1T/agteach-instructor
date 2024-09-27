@@ -3,6 +3,8 @@ import IconWithTitle from "../course-product/IconWithTitle";
 import NewspaperOutlinedIcon from "@mui/icons-material/NewspaperOutlined";
 import TextSection from "../course-product/TextSection";
 
+import { useFormContext } from "react-hook-form";
+
 /**
  * AboutCourse component renders a page for instructors to input course title,
  * course description, and learning objective of the course.
@@ -12,7 +14,11 @@ import TextSection from "../course-product/TextSection";
  * @returns a JSX element containing the AboutCourse component.
  */
 
-export default function AboutCourse({ register, errors }) {
+export default function AboutCourse() {
+  const { register, formState: { errors }, watch } = useFormContext();
+  const courseTitle = watch("courseTitle", "");
+  const courseDescription = watch("courseDescription", "");
+  console.log(courseTitle, courseDescription);
   return (
     <Box className="container">
       <IconWithTitle
@@ -29,9 +35,9 @@ export default function AboutCourse({ register, errors }) {
         fullWidth
         id="outlined-controlled"
         label="Enter your course title"
-        {...register("title", { required: "Title is required" })}
-        error={!!errors.title}
-        helperText={errors.title?.message}
+        {...register("courseTitle", { required: "Title is required" })}
+        error={!!errors.courseTitle}
+        helperText={errors.courseTitle?.message}
       />
       <Typography variant="bsr" color="dark.300" sx={{ mt: 2 }}>
         eg: How to plant an indoor tomatoes 100% edible
@@ -50,9 +56,9 @@ export default function AboutCourse({ register, errors }) {
           fullWidth
           multiline
           label="Enter your course description"
-          {...register("description", { required: "Description is required" })}
-          error={!!errors.description}
-          helperText={errors.description?.message}
+          {...register("courseDescription", { required: "Description is required" })}
+          error={!!errors.courseDescription}
+          helperText={errors.courseDescription?.message}
         />
       </Box>
       <TextSection

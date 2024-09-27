@@ -3,6 +3,7 @@ import { Divider, Box, TextField, Typography } from "@mui/material";
 import AttachMoneyOutlinedIcon from "@mui/icons-material/AttachMoneyOutlined";
 import IconWithTitle from "../course-product/IconWithTitle";
 import TextSection from "../course-product/TextSection";
+import { useFormContext } from "react-hook-form";
 /**
  * CoursePrice component renders a page for instructors to input course price.
  *
@@ -17,7 +18,11 @@ import TextSection from "../course-product/TextSection";
  *
  * @returns {JSX.Element} Box component with children
  */
-export default function CoursePrice({register, errors}) {
+export default function CoursePrice() {
+  const { register, formState: { errors }, watch } = useFormContext();
+  const coursePrice = watch("coursePrice", 0);
+  console.log(coursePrice);
+  
   return (
     <Box className="container">
       <IconWithTitle
@@ -36,11 +41,11 @@ export default function CoursePrice({register, errors}) {
         label="Price"
         type="number"
         inputProps={{ min: 1 }}
-        {...register("price", { required: "Price is required", 
+        {...register("coursePrice", { required: "Price is required", 
           min: { value: 1, message: "Price must be greater than 0" },
          })}
-        error={!!errors.price}
-        helperText={errors.price?.message}
+        error={!!errors.coursePrice}
+        helperText={errors.coursePrice?.message}
       />
       <Typography component={"ul"}>
         <Typography
