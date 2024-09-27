@@ -6,25 +6,31 @@ import { useState } from "react";
 import UploadFileOutlinedIcon from "@mui/icons-material/UploadFileOutlined";
 import DeleteConfirmModal from "./DeleteConfirmModal";
 import PhotoPreview from "./PhotoPreview";
+import { useFormContext } from "react-hook-form";
+import VideoUpload from "../new-course/VideoUpload";
 
-  /**
-   * LectureComponent component renders a page for instructors to input lecture title and video.
-   *
-   * It renders the page with the following components:
-   *   - Stack component with children:
-   *     - Typography component with title and lecture number
-   *     - Delete component with color red
-   *   - TextField component for inputting lecture title
-   *   - PhotoPreview component for previewing and uploading lecture video
-   *   - DeleteConfirmModal component for confirming deletion of a lecture
-   *
-   * @prop {string} id The id of the lecture
-   * @prop {function} onDelete The function to call when the lecture is deleted
-   * @prop {number} number The number of the lecture
-   * @prop {string} type The type of the lecture
-   * @returns {React.ReactElement} The LectureComponent component
-   */
+/**
+ * LectureComponent component renders a page for instructors to input lecture title and video.
+ *
+ * It renders the page with the following components:
+ *   - Stack component with children:
+ *     - Typography component with title and lecture number
+ *     - Delete component with color red
+ *   - TextField component for inputting lecture title
+ *   - PhotoPreview component for previewing and uploading lecture video
+ *   - DeleteConfirmModal component for confirming deletion of a lecture
+ *
+ * @prop {string} id The id of the lecture
+ * @prop {function} onDelete The function to call when the lecture is deleted
+ * @prop {number} number The number of the lecture
+ * @prop {string} type The type of the lecture
+ * @returns {React.ReactElement} The LectureComponent component
+ */
 export default function LectureComponent({ id, onDelete, number, type }) {
+  const { register, formState: { errors }, watch } = useFormContext();
+  const lectureTitle = watch(`lectures.${number}.title`);
+  console.log(lectureTitle);
+  
   const [modalOpen, setModalOpen] = useState(false);
 
   const handleOpenModal = () => {
@@ -56,10 +62,14 @@ export default function LectureComponent({ id, onDelete, number, type }) {
         label="Title of Lecture"
         sx={{ my: 2 }}
         variant="outlined"
+        {...register(`lectures.${number}.title`, { required: "Title is required" })}
+        error={!!errors.lectures?.[number]?.title}
+        helperText={errors.lectures?.[number]?.title?.message}
       />
-      <PhotoPreview icon={<UploadFileOutlinedIcon color="grey" />}>
+      {/* <PhotoPreview icon={<UploadFileOutlinedIcon />} color="grey" name={`lectures.${number}.video`} >
         <Typography color="gray">Upload Lecture Video </Typography>
-      </PhotoPreview>
+      </PhotoPreview> */}
+      <VideoUpload />
       <DeleteConfirmModal
         open={modalOpen}
         onClose={handleCloseModal}

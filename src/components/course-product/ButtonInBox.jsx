@@ -30,7 +30,7 @@ export default function ButtonComponent({ text, variant, bgcolor, flexEnd, heigh
         type="submit"
         sx={{ bgcolor: bgcolor, height: height }}
         startIcon={startIcon}
-        onClick={onClick}
+        // onClick={onClick}
       >
         {text}
       </Button>

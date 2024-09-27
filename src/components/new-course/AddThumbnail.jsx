@@ -26,7 +26,10 @@ export default function AddThumbnail() {
         title="Choose a feature image for your course"
         description="Most of customer will decided to buy a course based on an image"
       />
-      <PhotoPreview icon={<InsertPhotoIcon />}>
+      <PhotoPreview
+        icon={<InsertPhotoIcon />}
+        name={"courseThumbnail"}
+      >
         <Typography color="gray">
           Upload Course thumbnail image, png, jpg, webp
         </Typography>
