@@ -19,7 +19,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 import { useForm } from "react-hook-form";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 function NewProductPage() {
   const [createProduct] = useCreateProductMutation();
   const [updateProduct] = useUpdateProductMutation();
@@ -52,8 +52,6 @@ function NewProductPage() {
   }, [product, setValue, editMode]);
 
   const handleUploadProduct = async (data) => {
-    console.log(productId);
-
     const formData = new FormData();
 
     formData.append("categoryId", data.categoryId);
@@ -74,7 +72,7 @@ function NewProductPage() {
       }
     }
 
-   console.log([...formData])
+    console.log([...formData]);
     try {
       if (editMode) {
         await updateProduct({ productId, productData: formData }).unwrap();
@@ -92,11 +90,6 @@ function NewProductPage() {
       }
     }
   };
-
-  if (isSubmitSuccessful) {
-    navigate("/product"); 
-    window.location.reload(); 
-  }
 
   return (
     <Box sx={{ width: "100%", pb: 30 }}>
@@ -143,6 +136,16 @@ function NewProductPage() {
         >
           {isSubmitting ? <CircularProgress size={24} /> : ButtonText}
         </Button>
+        <CustomAlert
+          autoHideDuration={2000}
+          label={
+            editMode
+              ? "Product updated successfully Close here to navigate to product page."
+              : "Product created successfully Close here to navigate to product page."
+          }
+          open={isSubmitSuccessful}
+          onClose={() => navigate("/product")}
+        />
       </form>
     </Box>
   );

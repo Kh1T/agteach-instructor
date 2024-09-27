@@ -75,7 +75,7 @@ export default function AddManyPhotos({ setValue, name, defaultValue }) {
   const handleFileDrop = (files) => {
     const newPhotos = Array.from(files);
     if (newPhotos.length + uploadedPhotos.length > 4) {
-      setUploadError("Max 4 photos can be uploaded");
+      setUploadError("Only 4 photos can be uploaded");
       return;
     }
     setUploadError("");
