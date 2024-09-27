@@ -9,11 +9,14 @@ import { Box, Button, Typography } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ProductPrice from "../components/new-product/ProductPrice";
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useEffect } from "react";
 
 function NewProductPage() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const product = location.state?.product; // Highlighted: Get the product from the state
 
   const {
     register,
@@ -22,6 +25,17 @@ function NewProductPage() {
     setValue,
     formState: { errors },
   } = useForm();
+
+  //  Pre-fill form fields if product data exists
+  useEffect(() => {
+    if (product) {
+      setValue("category", product.categoryId);
+      setValue("name", product.name);
+      setValue("quantity", product.quantity);
+      setValue("price", product.price);
+      // Set other fields as needed...
+    }
+  }, [product, setValue]);
 
   const handleCreateProduct = (data) => {
     console.log(data);
@@ -64,3 +78,4 @@ function NewProductPage() {
 }
 
 export default NewProductPage;
+
