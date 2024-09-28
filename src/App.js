@@ -12,13 +12,13 @@ import { useEffect } from "react";
 
 function App() {
   const dispatch = useDispatch();
-  const { data } = useIsLoginQuery();
+  const { data, isLoading } = useIsLoginQuery();
 
   useEffect(() => {
-    if (data) {
+    if (data && !isLoading) {
       dispatch(checkLoginStatus(data.IsAuthenticated));
     }
-  }, [data, dispatch]);
+  }, [data, isLoading, dispatch]);
 
   return (
     <ThemeProvider theme={theme}>
