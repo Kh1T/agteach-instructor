@@ -1,0 +1,13 @@
+<svg width="150" height="150" viewBox="0 0 150 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="150" height="150" fill="#082214"/>
+<path d="M46 58.0875C46 51.964 50.964 47 57.0875 47H71.6371V110.966C71.6371 117.089 66.673 122.053 60.5496 122.053H46V58.0875Z" fill="white"/>
+<path d="M73.4678 80.9531H82.4235C94.6704 80.9531 104.598 90.8812 104.598 103.128V122.054H84.5552C78.4318 122.054 73.4678 117.09 73.4678 110.966V80.9531Z" fill="white"/>
+<ellipse cx="88.6454" cy="63.1493" rx="15.5654" ry="16.0829" fill="white"/>
+<path d="M94 33.2721L107.194 28L120.389 33.2721L107.194 38.5442L94 33.2721Z" fill="white" stroke="white" stroke-width="1.44843" stroke-linejoin="round"/>
+<path d="M120.388 33.3418V39.1306V33.3418Z" fill="white"/>
+<path d="M120.388 33.3418V39.1306" stroke="white" stroke-width="1.44843" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M99.9971 36.0508V43.8594C99.9971 43.8594 103.016 46.8301 107.194 46.8301C111.372 46.8301 114.391 43.8594 114.391 43.8594V36.0508" fill="white"/>
+<path d="M99.9971 36.0508V43.8594C99.9971 43.8594 103.016 46.8301 107.194 46.8301C111.372 46.8301 114.391 43.8594 114.391 43.8594V36.0508" stroke="white" stroke-width="1.44843" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="98.4612" y1="36.344" x2="107.152" y2="39.2409" stroke="#082214" stroke-width="0.724217"/>
+<line y1="-0.362109" x2="9.16078" y2="-0.362109" transform="matrix(0.948685 -0.316222 0.316234 0.948681 107.036 39.5859)" stroke="#082214" stroke-width="0.724217"/>
+</svg>
