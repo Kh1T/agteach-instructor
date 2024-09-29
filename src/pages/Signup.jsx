@@ -54,7 +54,7 @@ function Signup() {
     <Grid2
       container
       sx={{ justifyContent: { xs: "center", md: "center", lg: "start" } }}
-      mt={{ xs: 50, md: 50, lg: 0 }}
+      my={{ xs: 20, lg: 0 }}
       spacing={{ xs: 5, md: 15, lg: 20 }}
       alignItems={"center"}
     >
@@ -85,32 +85,33 @@ function Signup() {
         </Box>
         <form
           onSubmit={handleSubmit(submitHandler)}
-          style={{ display: "flex", flexDirection: "column", gap: "20px" }}
+          style={{ display: "flex", flexDirection: "column" }}
         >
           <FormInput
             label="Name"
             {...register("username", {
               required: "Please enter your name",
             })}
-            error={!!errors.name}
-            helperText={errors.name?.message}
+            error={!!errors.username}
+            helperText={errors.username?.message}
           />
+          <br />
           <Controller
             name="dateOfBirth"
             control={control}
-            rules={{ required: "Please select your date of birth" }} 
+            rules={{ required: "Please select your date of birth" }}
             render={({ field }) => (
               <FormInput
                 label="Date of Birth"
                 isDate={true}
-                dateValue={field.value ? dayjs(field.value) : null}
+                dateValue={field.value}
                 onDateChange={(newDate) => field.onChange(newDate)}
-                error={!!errors.dateOfBirth} 
-                helperText={errors.dateOfBirth?.message} 
-                />
-              )}
+                error={!!errors.dateOfBirth}
+                helperText={errors.dateOfBirth?.message}
+              />
+            )}
           />
-
+          <br />
           <FormInput
             label="Email"
             {...register("email", {
@@ -123,6 +124,7 @@ function Signup() {
             error={!!errors.email}
             helperText={errors.email?.message}
           />
+          <br />
           <FormInput
             label="Password"
             type="password"
@@ -147,6 +149,7 @@ function Signup() {
             error={!!errors.password}
             helperText={errors.password?.message}
           />
+          <br />
           <FormInput
             label="Confirm Password"
             type="password"
@@ -163,6 +166,7 @@ function Signup() {
             error={!!errors.passwordConfirm}
             helperText={errors.passwordConfirm?.message}
           />
+          <br />
           <Button
             type="submit"
             variant="contained"

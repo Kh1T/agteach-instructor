@@ -1,8 +1,9 @@
 // src/components/common/LogoLink.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Logo from '../../assets/agteach.png'
 
-const LogoLink = ({ linkTo = "/", imgSrc = "/icon/agteach.png", altText = "Logo", imgHeight = "120px" }) => {
+const LogoLink = ({ linkTo = "/", imgSrc = Logo, altText = "Logo", imgHeight = "120px" }) => {
   return (
     <Link to={linkTo}>
       <img
