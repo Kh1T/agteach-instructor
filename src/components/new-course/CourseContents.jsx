@@ -31,24 +31,35 @@ export default function CourseContents() {
    * When adding a new section, it increments the number of all existing sections by 1,
    * and then appends the new section to the end of the list, with the next number.
    */
-  const handleAddSection = () =>
+  // const handleAddSection = () =>
+  //   setSections((prevSections) => [
+  //     ...prevSections.map((section, index) => ({
+  //       ...section,
+  //       number: index + 1,
+  //     })),
+  //     { id: uuidv4(), number: prevSections.length + 1, type: "section" },
+  //   ]);
+
+  const handleAddSection = () => {
     setSections((prevSections) => [
-      ...prevSections.map((section, index) => ({
-        ...section,
-        number: index + 1,
-      })),
+      ...prevSections,
       { id: uuidv4(), number: prevSections.length + 1, type: "section" },
     ]);
+  };
+
+  // const handleDeleteSection = (id) =>
+  //   setSections((prevSections) =>
+  //     prevSections
+  //       .filter((section) => section.id !== id)
+  //       .map((section, index) => ({ ...section, number: index + 1 })),
+  //   );
+
+  //   console.log(sections);
 
   const handleDeleteSection = (id) =>
-    setSections((prevSections) =>
-      prevSections
-        .filter((section) => section.id !== id)
-        .map((section, index) => ({ ...section, number: index + 1 })),
+    setSections(
+      (prevSections) => prevSections.filter((section) => section.id !== id) // Remove the section
     );
-
-    console.log(sections);
-    
 
   return (
     <Box my={2}>
