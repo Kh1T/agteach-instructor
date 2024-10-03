@@ -4,6 +4,7 @@ import AttachMoneyOutlinedIcon from "@mui/icons-material/AttachMoneyOutlined";
 import IconWithTitle from "../course-product/IconWithTitle";
 import TextSection from "../course-product/TextSection";
 import { useFormContext } from "react-hook-form";
+import PhotoPreview from "../course-product/PhotoPreview";
 /**
  * CoursePrice component renders a page for instructors to input course price.
  *
@@ -19,9 +20,7 @@ import { useFormContext } from "react-hook-form";
  * @returns {JSX.Element} Box component with children
  */
 export default function CoursePrice() {
-  const { register, formState: { errors }, watch } = useFormContext();
-  const coursePrice = watch("coursePrice", 0);
-  console.log(coursePrice);
+  const { register, formState: { errors } } = useFormContext();
   
   return (
     <Box className="container">
@@ -60,6 +59,7 @@ export default function CoursePrice() {
           Example, if the product is $100 we will deduct $20 from your sale
         </Typography>
       </Typography>
+      {/* <PhotoPreview icon={<AttachMoneyOutlinedIcon/>} name={"courseThumbnail"} type="image" /> */}
     </Box>
   );
 }

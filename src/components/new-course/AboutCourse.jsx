@@ -15,10 +15,7 @@ import { useFormContext } from "react-hook-form";
  */
 
 export default function AboutCourse() {
-  const { register, formState: { errors }, watch } = useFormContext();
-  const courseTitle = watch("courseTitle", "");
-  const courseDescription = watch("courseDescription", "");
-  console.log(courseTitle, courseDescription);
+  const { register, formState: { errors } } = useFormContext();
   return (
     <Box className="container">
       <IconWithTitle

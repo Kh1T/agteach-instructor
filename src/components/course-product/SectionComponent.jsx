@@ -33,26 +33,39 @@ export default function SectionComponent({ id, onDelete, number , type }) {
     { id: uuidv4(), number: 1, type: "lecture" },
   ]);
 
+  // const handleAddLecture = () => {
+  //   setLectures((prevLectures) => [
+  //     ...prevLectures.map((lecture, index) => ({
+  //       ...lecture,
+  //       number: index + 1,
+  //     })),
+  //     { id: uuidv4(), number: prevLectures.length + 1, type: "lecture" }, // Add a new lecture with the next number
+  //   ]);
+  // };
+
+  // const handleDeleteLecture = (id) => {
+  //   setLectures((prevLectures) =>
+  //     prevLectures
+  //       .filter((lecture) => lecture.id !== id)
+  //       .map((lecture, index) => ({
+  //         ...lecture,
+  //         number: index + 1,
+  //       }))
+  //   );
+  // };
+
   const handleAddLecture = () => {
     setLectures((prevLectures) => [
-      ...prevLectures.map((lecture, index) => ({
-        ...lecture,
-        number: index + 1,
-      })),
-      { id: uuidv4(), number: prevLectures.length + 1, type: "lecture" }, // Add a new lecture with the next number
+      ...prevLectures,  // keep existing lectures unchanged
+      { id: uuidv4(), number: prevLectures.length + 1, type: "lecture" },  // Add a new lecture
     ]);
   };
 
   const handleDeleteLecture = (id) => {
-    setLectures((prevLectures) =>
-      prevLectures
-        .filter((lecture) => lecture.id !== id)
-        .map((lecture, index) => ({
-          ...lecture,
-          number: index + 1,
-        }))
-    );
+    setLectures((prevLectures) => prevLectures.filter((lecture) => lecture.id !== id));
   };
+  
+  
 
   const [showDelete, setShowDelete] = useState(false);
 
@@ -116,7 +129,6 @@ export default function SectionComponent({ id, onDelete, number , type }) {
         error={!!errors.section?.[number]?.title}
         helperText={errors.section?.[number]?.title?.message}
         />
-        {console.log('section title', errors.section?.[number]?.title)}
       <Box bgcolor="grey.300" padding={4} paddingTop={0}>
         {lectures.map((lecture) => (
           <LectureComponent
