@@ -6,7 +6,7 @@ import LogoLink from "../components/login-signup/LogoLink";
 import { ArrowBack } from "@mui/icons-material";
 import { CustomAlert } from "../components/CustomAlert";
 import ResendCodeButton from "../components/login-signup/ResendCodeButton.jsx";
-
+import Logo from "../assets/agteach.png";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useState } from "react";
@@ -56,7 +56,7 @@ export default function VerificationPage() {
           margin: "0 auto",
         }}
       >
-        <LogoLink />
+        <img src={Logo} alt="logo" />
         <Grid2 container sx={{ width: "100%" }} direction={"row"} alignItems={"center"} gap={2}>
           <Grid2 item="true" sx={{ width: { xs: "100%", sm: "55%" } }}>
             <Stack>

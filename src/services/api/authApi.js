@@ -20,6 +20,7 @@ export const authApi = createApi({
         url: "/api/users/login",
         method: "POST",
         body: loginData,
+        headers: { "X-Frontend-URL": window.location },
       }),
     }),
 
@@ -76,7 +77,7 @@ export const authApi = createApi({
         method: "GET",
       }),
     }),
-    
+
     isLogin: builder.query({
       query: () => ({
         url: "/api/users/isLoginedIn",
@@ -89,11 +90,8 @@ export const authApi = createApi({
         url: "/api/users/updatePassword",
         method: "PATCH",
         body: passwordInfo,
-      })
+      }),
     }),
-
-    
-
   }),
 });
 
@@ -108,5 +106,5 @@ export const {
   useAdditionalInfoMutation,
   useGetInstructorInfoQuery,
   useIsLoginQuery,
-  useUpdateInstructorPasswordMutation
+  useUpdateInstructorPasswordMutation,
 } = authApi;
