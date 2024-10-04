@@ -22,11 +22,16 @@ import PurchasedDetailPage from "../pages/PurchasedDetail";
 import ErrorPage from "../pages/Error";
 import AuthRootLayout from "./AuthRoot";
 import VerificationPage from "../pages/Verification";
+import ProtectedRoute from "./ProtectedRoute";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <RootLayout />,
+    element: (
+      <ProtectedRoute>
+        <RootLayout />
+      </ProtectedRoute>
+    ),
     children: [
       { index: true, element: <DashboardPage /> },
       { path: "course", element: <CoursePage /> },
