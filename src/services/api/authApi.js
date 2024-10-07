@@ -4,6 +4,7 @@ export const authApi = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:3001",
+    // baseUrl: "https://api.agteach.site",
     credentials: "include", // Move this line here
   }),
   endpoints: (builder) => ({

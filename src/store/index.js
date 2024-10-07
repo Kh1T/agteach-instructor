@@ -1,9 +1,11 @@
 import { configureStore as createStore } from "@reduxjs/toolkit";
 import { authApi } from "../services/api/authApi";
 import { locationApi } from "../services/api/locationApi";
-import userReducer from "../features/user/userSlice";
-// import productReducer from "./productStore";
 import { productApi } from "../services/api/productApi";
+import userReducer from "../features/user/userSlice";
+import authSlice from "../features/user/authSlice";
+import productReducer from "./productStore";
+
 
 export const store = createStore({
   reducer: {
@@ -11,7 +13,8 @@ export const store = createStore({
     [locationApi.reducerPath]: locationApi.reducer,
     [productApi.reducerPath]: productApi.reducer,
     user: userReducer,
-    // products: productReducer,
+    auth: authSlice,
+    products: productReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(

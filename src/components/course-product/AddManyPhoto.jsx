@@ -22,7 +22,12 @@ import {
  *
  * @returns A JSX element containing the AddManyPhotos component
  */
-export default function AddManyPhotos({ setValue, name, defaultValue }) {
+export default function AddManyPhotos({
+  setValue,
+  name,
+  defaultValue,
+  setRemovedImages,
+}) {
   const [uploadedPhotos, setUploadedPhotos] = useState([]);
 
   useEffect(() => {
@@ -37,6 +42,7 @@ export default function AddManyPhotos({ setValue, name, defaultValue }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [fileInputKey, setFileInputKey] = useState(Date.now()); // to trigger input reset
 
+  console.log(uploadedPhotos);
   const handleFileChange = (event) => {
     const newPhotos = Array.from(event.target.files);
     if (newPhotos.length + uploadedPhotos.length > 4) {
@@ -52,12 +58,14 @@ export default function AddManyPhotos({ setValue, name, defaultValue }) {
     setFileInputKey(Date.now()); // Reset file input key
   };
 
-  const handleRemovePhoto = (index) => {
+  const handleRemovePhoto = (index, file) => {
     setUploadedPhotos((prevPhotos) => {
       const updatedPhotos = prevPhotos.filter((_, i) => i !== index);
       setValue(name, updatedPhotos); // Correctly update form with filtered photos
       return updatedPhotos;
     });
+    console.log(file);
+    setRemovedImages((prev) => [...prev, file]);
   };
 
   const handleButtonClick = () => {
@@ -110,7 +118,7 @@ export default function AddManyPhotos({ setValue, name, defaultValue }) {
                 alt={`Uploaded ${index}`}
               />
               <Box
-                onClick={() => handleRemovePhoto(index)}
+                onClick={() => handleRemovePhoto(index, file)}
                 sx={{ position: "absolute", top: 1, right: 1, zIndex: 1 }}
               >
                 <IconButton sx={{ backgroundColor: "common.white" }}>

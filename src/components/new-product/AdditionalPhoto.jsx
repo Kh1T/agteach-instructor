@@ -18,7 +18,8 @@ export default function AdditionalPhotos({
   errors,
   setValue,
   productId,
-  editMode 
+  editMode, 
+  setRemovedImages
 }) {
 
   const { data , isLoading } = useGetProductsImagesQuery(productId);
@@ -40,6 +41,7 @@ export default function AdditionalPhotos({
         setValue={setValue}
         name={"productImages"}
         defaultValue={data}
+        setRemovedImages={setRemovedImages}
       />
       <Divider sx={{ my: 2 }} />
       <Typography component="ul">

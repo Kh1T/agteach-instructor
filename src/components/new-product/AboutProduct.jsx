@@ -37,9 +37,15 @@ export default function AboutProduct({ register, errors }) {
         sx={{ my: 2 }}
         fullWidth
         id="outlined-controlled"
+        type="text"
         label="Product Name"
-        // onChange={(event) => setProductName(event.target.value)}
-        {...register("name", { required: "Product name is required" })}
+        {...register("name", {
+          required: "Product name is required",
+          maxLength: {
+            value: 25,
+            message: "Product name should be less than 25 characters",
+          },
+        })}
         error={!!errors.name}
         helperText={errors.name?.message}
       />
@@ -66,6 +72,10 @@ export default function AboutProduct({ register, errors }) {
         // onChange={(event) => setdescription(event.target.value)}
         {...register("description", {
           required: "Product description is required",
+          maxLength: {
+            value: 400,
+            message: "Product description should be less than 400 characters",
+          },
         })}
         error={!!errors.description}
         helperText={errors.description?.message}

@@ -48,6 +48,7 @@ export default function ProductQuantity({ register, errors, watch, setValue }) {
               value: 1,
               message: "Quantity must be greater than 0",
             },
+            max: { value: 10000, message: "Quantity must be less than 10000" },
             pattern: {
               value: /^(0|[1-9][0-9]*)/,
             },

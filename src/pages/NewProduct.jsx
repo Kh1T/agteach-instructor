@@ -51,6 +51,7 @@ function NewProductPage() {
     }
   }, [product, setValue, editMode]);
 
+  const [removedImages, setRemovedImages] = useState([]);
   const handleUploadProduct = async (data) => {
     const formData = new FormData();
 
@@ -59,6 +60,7 @@ function NewProductPage() {
     formData.append("description", data.description);
     formData.append("quantity", data.quantity);
     formData.append("price", data.price);
+    formData.append("removedImages", JSON.stringify(removedImages));
 
     // Check if productCover exists and append it
     if (data.productCover && data.productCover.length > 0) {
@@ -67,14 +69,19 @@ function NewProductPage() {
 
     // Append additional product images
     if (data.productImages && data.productImages.length > 0) {
-      for (let i = 0; i < data.productImages.length; i++) {
-        formData.append("productImages", data.productImages[i]);
-      }
+      // Ensure unique images by using a Set
+      const uniqueImages = new Set(data.productImages);
+
+      // Append all unique images at once
+      uniqueImages.forEach((image) => {
+        formData.append("productImages", image);
+      });
     }
 
     console.log([...formData]);
     try {
       if (editMode) {
+        console.log(formData);
         await updateProduct({ productId, productData: formData }).unwrap();
         console.log("Product updated successfully");
       } else {
@@ -127,6 +134,7 @@ function NewProductPage() {
           setValue={setValue}
           productId={product?.productId}
           editMode={editMode}
+          setRemovedImages={setRemovedImages}
         />
         <Button
           type="submit"
