@@ -59,7 +59,6 @@ export default function CoursePrice() {
           Example, if the product is $100 we will deduct $20 from your sale
         </Typography>
       </Typography>
-      {/* <PhotoPreview icon={<AttachMoneyOutlinedIcon/>} name={"courseThumbnail"} type="image" /> */}
     </Box>
   );
 }
