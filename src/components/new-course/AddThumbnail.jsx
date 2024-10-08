@@ -28,7 +28,7 @@ export default function AddThumbnail() {
       />
       <PhotoPreview
         icon={<InsertPhotoIcon />}
-        name={"courseThumbnail"}
+        name="thumbnail"
         type="image"
       >
         <Typography color="gray">
