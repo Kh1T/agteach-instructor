@@ -124,6 +124,7 @@ export default function PhotoPreview({
         type="file"
         style={{ display: "none" }}
         onChange={handleFileChange} // Use custom handleFileChange for file input
+        accept="image/*"
         // {...register("photoCover", {required: "Photo Cover is required"})}
       />
       {errors[name] && (

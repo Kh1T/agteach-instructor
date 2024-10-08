@@ -27,6 +27,8 @@ export default function AddManyPhotos({
   name,
   defaultValue,
   setRemovedImages,
+  register,
+  errors,
 }) {
   const [uploadedPhotos, setUploadedPhotos] = useState([]);
 
@@ -42,7 +44,15 @@ export default function AddManyPhotos({
   const [modalOpen, setModalOpen] = useState(false);
   const [fileInputKey, setFileInputKey] = useState(Date.now()); // to trigger input reset
 
-  console.log(uploadedPhotos);
+  // console.log(uploadedPhotos);
+  /**
+   * Handle file change event by adding new photos to the uploadedPhotos array
+   * and updating the form value. If the total number of photos exceeds 4, an error
+   * message is displayed.
+   *
+   * @param {Event} event event object
+   */
+  /******  9d71ff02-79f8-4573-8ca3-8b3244685b3e  *******/
   const handleFileChange = (event) => {
     const newPhotos = Array.from(event.target.files);
     if (newPhotos.length + uploadedPhotos.length > 4) {
@@ -55,7 +65,8 @@ export default function AddManyPhotos({
       setValue(name, updatedPhotos); // Update the form with new files
       return updatedPhotos;
     });
-    setFileInputKey(Date.now()); // Reset file input key
+    setFileInputKey(Date.now());
+    handleCloseModal();
   };
 
   const handleRemovePhoto = (index, file) => {
@@ -121,7 +132,13 @@ export default function AddManyPhotos({
                 onClick={() => handleRemovePhoto(index, file)}
                 sx={{ position: "absolute", top: 1, right: 1, zIndex: 1 }}
               >
-                <IconButton sx={{ backgroundColor: "common.white" }}>
+                <IconButton
+                  sx={{
+                    height: "24px",
+                    width: "24px",
+                    backgroundColor: "common.white",
+                  }}
+                >
                   <ClearIcon color="error" />
                 </IconButton>
               </Box>
@@ -157,7 +174,8 @@ export default function AddManyPhotos({
         multiple
         onChange={handleFileChange}
         style={{ display: "none" }}
-        key={fileInputKey} // To reset the input after each file selection
+        key={fileInputKey}
+        accept="image/*"
       />
     </Stack>
   );
