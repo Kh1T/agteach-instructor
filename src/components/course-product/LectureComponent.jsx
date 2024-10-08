@@ -22,13 +22,7 @@ export default function LectureComponent({
     unregister,
     formState: { errors },
     setValue,
-    watch,
   } = useFormContext();
-
-  console.log(
-    "file",
-    watch(`allSection[${sectionNumber - 1}].allLecture[${lectureNumber - 1}]`)
-  );
 
   const [isPreviewVisible, setIsPreviewVisible] = useState(false);
   const [file, setFile] = useState(null);
