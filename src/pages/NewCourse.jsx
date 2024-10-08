@@ -44,7 +44,13 @@ function NewCoursePage() {
 
   const submitHandler = async (data) => {
     console.log("formData", data);
-    const { courseTitle, courseDescription, coursePrice, objective, allSection } = data;
+    const {
+      courseTitle,
+      courseDescription,
+      coursePrice,
+      objective,
+      allSection,
+    } = data;
 
     const submitData = {
       courseName: courseTitle,
@@ -56,15 +62,33 @@ function NewCoursePage() {
         allLecture: section.allLecture.map((lecture) => ({
           lectureName: lecture.lectureName,
           video: lecture.video ? lecture.video : null,
-        }))
-      }))
+        })),
+      })),
     };
+    const formData = new FormData();
+
+
+    // console.log(submitData.allSection,'allsection')
+    // Append course details
+    formData.append("courseName", courseTitle);
+    formData.append("description", courseDescription);
+    formData.append("price", coursePrice);
+    formData.append("courseObjective", objective);
+    formData.append("allSection", JSON.stringify(allSection));
+
+    allSection.forEach((section) => {
+      section.allLecture.forEach((lecture) => {
+        formData.append("videos", lecture.video);
+      });
+    });
+
+    console.log([...formData]);
 
     console.log("submitData", submitData);
     console.log("allSection", submitData.allSection);
 
     try {
-      const response = await addCourse(submitData).unwrap();
+      const response = await addCourse(formData).unwrap();
       console.log("response", response);
     } catch (error) {
       console.log("error", error);
