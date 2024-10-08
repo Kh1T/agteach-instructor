@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import AboutCourse from "../components/new-course/AboutCourse";
 import CourseContents from "../components/new-course/CourseContents";
 import CoursePrice from "../components/new-course/CoursePrice";
@@ -9,9 +9,31 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { useNavigate } from "react-router";
 import { useForm, FormProvider } from "react-hook-form";
 import { useAddCourseMutation } from "../services/api/courseApi";
-import VideoUpload from "../components/new-course/VideoUpload";
-import PhotoPreview from "../components/course-product/PhotoPreview";
-import InsertPhotoIcon from "@mui/icons-material/InsertPhoto";
+
+// {
+//   "courseName": "testing",
+//   "description": "testing bulkCreate course",
+//   "price": "12",
+//   "courseObjective": "make sure it work",
+//   "allSection": [
+//     {
+//       "sectionName": "testing",
+//       "allLecture": [
+//         { "lectureName": "lectureName" },
+//         { "lectureName": "lectureName" },
+//         { "lectureName": "lectureName" }
+//       ]
+//     },
+//     {
+//       "sectionName": "testing",
+//       "allLecture": [{ "lectureName": "lectureName", "video": "123123123123" }]
+//     },
+//     {
+//       "sectionName": "testing",
+//       "allLecture": [{ "lectureName": "lectureName" }]
+//     }
+//   ]
+// }
 
 function NewCoursePage() {
   const navigate = useNavigate();
@@ -21,16 +43,32 @@ function NewCoursePage() {
   const [addCourse] = useAddCourseMutation();
 
   const submitHandler = async (data) => {
-    const { courseTitle, courseDescription, coursePrice, objective } = data;
-    console.log("data", data);
-    await addCourse({
+    console.log("formData", data);
+    const { courseTitle, courseDescription, coursePrice, objective, allSection } = data;
+
+    const submitData = {
       courseName: courseTitle,
       description: courseDescription,
       price: coursePrice,
       courseObjective: objective,
-      sectionName: "testing",
-      lectureName: "testing",
-    }).unwrap();
+      allSection: allSection.map((section) => ({
+        sectionName: section.sectionName || "untitled section",
+        allLecture: section.allLecture.map((lecture) => ({
+          lectureName: lecture.lectureName,
+          video: lecture.video ? lecture.video : null,
+        }))
+      }))
+    };
+
+    console.log("submitData", submitData);
+    console.log("allSection", submitData.allSection);
+
+    try {
+      const response = await addCourse(submitData).unwrap();
+      console.log("response", response);
+    } catch (error) {
+      console.log("error", error);
+    }
   };
 
   return (
@@ -56,6 +94,7 @@ function NewCoursePage() {
           {/* <AddThumbnail /> */}
           <RelatedProduct />
           <ButtonComponent
+            type={"submit"}
             text={"CREATE COURSE"}
             variant={"contained"}
             bgcolor={"purple.main"}
