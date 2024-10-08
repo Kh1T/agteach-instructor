@@ -34,7 +34,7 @@ function SettingPage() {
 
   const [profileImg, setProfileImg] = useState(AvatarImg);
 
-  const [updateInstructorPassword] = useUpdateInstructorPasswordMutation();
+  const [updateInstructorPassword, { isLoading, isError, isSuccess, error }] = useUpdateInstructorPasswordMutation();
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
@@ -87,6 +87,7 @@ function SettingPage() {
   useEffect(() => {
     if (data) {
       instructorInfo = data.data.instructor;
+      console.log(instructorInfo);
       handleBasicInfoReset(instructorInfo);
       handleSecurityReset(instructorInfo);
     }
@@ -151,7 +152,7 @@ function SettingPage() {
             variant="outlined"
             onClick={() => setOpen(true)}
           >
-            CHANGE
+             {isLoading ? "CHANGING..." : "CHANGE"}
           </CustomButton>
           <CustomFileUpload
             open={open}
