@@ -53,7 +53,8 @@ function SettingPage() {
       await updateInfo(formData).unwrap();
       setIsImageUploaded(true);
 
-      // refetch();
+      // await refetch();
+      refetch();
       window.location.reload();
     } catch (error) {
       console.error("Error:", error);

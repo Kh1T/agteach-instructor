@@ -6,6 +6,7 @@ export const authApi = createApi({
     baseUrl: "https://api.agteach.site",
     credentials: "include", // Move this line here
   }),
+  tagTypes: ["Instructor"],
   endpoints: (builder) => ({
     signup: builder.mutation({
       query: (signupData) => ({
@@ -13,6 +14,7 @@ export const authApi = createApi({
         method: "POST",
         body: signupData,
       }),
+      invalidatesTags: ["Instructor"],
     }),
 
     login: builder.mutation({
@@ -84,6 +86,7 @@ export const authApi = createApi({
         method: "PATCH",
         body: additionalInfoData,
       }),
+      providesTags: ["Instructor"],
     }),
 
     isLogin: builder.query({
