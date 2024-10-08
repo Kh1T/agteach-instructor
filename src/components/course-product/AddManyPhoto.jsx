@@ -175,7 +175,7 @@ export default function AddManyPhotos({
         onChange={handleFileChange}
         style={{ display: "none" }}
         key={fileInputKey}
-        accept="image/*"
+        accept="image/png, image/jpeg, image/jpg"
       />
     </Stack>
   );

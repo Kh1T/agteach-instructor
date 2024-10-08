@@ -42,6 +42,7 @@ export default function ProductPhoto({
         setValue={setValue}
         name={"productCover"}
         defaultValue={defaultValue}
+        // {...register("productCover", { required: true })} 
       >
         <Typography color="gray">Upload Product image, png, jpg</Typography>
         <Typography color="gray">580 x 580 (Limit size: 1 MB)</Typography>
