@@ -95,8 +95,12 @@ function NewCoursePage() {
     
 
     try {
+      console.log('before api call');
+      
       const response = await addCourse(formData).unwrap();
       console.log("response", response);
+      console.log('success', isSuccess);
+      
       // setAlertMessage("Course created successfully");
     } catch (error) {
       console.log("error", error);
@@ -133,7 +137,7 @@ function NewCoursePage() {
           <RelatedProduct />
           <ButtonComponent
             type={"submit"}
-            text={"CREATE COURSE"}
+            text={isLoading ? "CREATING..." : "CREATE COURSE"}
             variant={"contained"}
             bgcolor={"purple.main"}
           />
