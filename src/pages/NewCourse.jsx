@@ -91,39 +91,16 @@ function NewCoursePage() {
 
     console.log([...formData]);
 
-    // const formData = new FormData();
-    // // formData.append('fasd',{...submitData})
-    // formData.append("courseName",' data.courseTitle');
-    // formData.append("description", data.courseDescription);
-    // formData.append("price", data.coursePrice);
-    // formData.append("courseObjective", data.objective);
-    // formData.append("allSection", JSON.stringify(data.allSection));
-  
-    // Handle sections and lectures (normal data)
-    // allSection.forEach((section, sectionIndex) => {
-    //   formData.append(`allSection[${sectionIndex}][sectionName]`, section.sectionName || "untitled section");
-      
-    //   section.allLecture.forEach((lecture, lectureIndex) => {
-    //     formData.append(`allSection[${sectionIndex}][allLecture][${lectureIndex}][lectureName]`, lecture.lectureName);
-    //     if (lecture.video) {
-    //       formData.append(`allSection[${sectionIndex}][allLecture][${lectureIndex}][video]`, lecture.video);
-    //     }
-    //   });
-    // });
-    // formData.append("allSection", JSON.stringify(data.allSection));
-  
-    // Handle the thumbnail (file upload)
-    // if (thumbnail && thumbnail[0]) {
-    //   formData.append("thumbnail", thumbnail[0]); // Append the file here
-    // }
-
-    // console.log("submitData", submitData);
     console.log("formData", [...formData]);
     
 
     try {
+      console.log('before api call');
+      
       const response = await addCourse(formData).unwrap();
       console.log("response", response);
+      console.log('success', isSuccess);
+      
       // setAlertMessage("Course created successfully");
     } catch (error) {
       console.log("error", error);
@@ -160,7 +137,7 @@ function NewCoursePage() {
           <RelatedProduct />
           <ButtonComponent
             type={"submit"}
-            text={"CREATE COURSE"}
+            text={isLoading ? "CREATING..." : "CREATE COURSE"}
             variant={"contained"}
             bgcolor={"purple.main"}
           />
