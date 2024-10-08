@@ -46,6 +46,7 @@ function NewCoursePage() {
   // const { alertMessage, setAlertMessage } = useState();
 
   const submitHandler = async (data) => {
+    console.log("formData", data);
     const {
       courseTitle,
       courseDescription,
@@ -65,20 +66,38 @@ function NewCoursePage() {
         allLecture: section.allLecture.map((lecture) => ({
           lectureName: lecture.lectureName,
           video: lecture.video ? lecture.video : null,
-        }))
-      }))
+        })),
+      })),
     };
     console.log('courseTitle', {...submitData});
     console.log('courseDescription', courseDescription);
     
-
     const formData = new FormData();
-    // formData.append('fasd',{...submitData})
-    formData.append("courseName",' data.courseTitle');
-    formData.append("description", data.courseDescription);
-    formData.append("price", data.coursePrice);
-    formData.append("courseObjective", data.objective);
-    formData.append("allSection", JSON.stringify(data.allSection));
+
+
+    // console.log(submitData.allSection,'allsection')
+    // Append course details
+    formData.append("courseName", courseTitle);
+    formData.append("description", courseDescription);
+    formData.append("price", coursePrice);
+    formData.append("courseObjective", objective);
+    formData.append("allSection", JSON.stringify(allSection));
+
+    allSection.forEach((section) => {
+      section.allLecture.forEach((lecture) => {
+        formData.append("videos", lecture.video);
+      });
+    });
+
+    console.log([...formData]);
+
+    // const formData = new FormData();
+    // // formData.append('fasd',{...submitData})
+    // formData.append("courseName",' data.courseTitle');
+    // formData.append("description", data.courseDescription);
+    // formData.append("price", data.coursePrice);
+    // formData.append("courseObjective", data.objective);
+    // formData.append("allSection", JSON.stringify(data.allSection));
   
     // Handle sections and lectures (normal data)
     // allSection.forEach((section, sectionIndex) => {
