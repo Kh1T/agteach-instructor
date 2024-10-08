@@ -26,6 +26,7 @@ function NewProductPage() {
   const navigate = useNavigate();
   const {
     register,
+    unregister,
     handleSubmit,
     watch,
     setValue,
@@ -54,6 +55,7 @@ function NewProductPage() {
   const [removedImages, setRemovedImages] = useState([]);
   const handleUploadProduct = async (data) => {
     const formData = new FormData();
+    console.log(data)
 
     formData.append("categoryId", data.categoryId);
     formData.append("name", data.name);
@@ -63,9 +65,9 @@ function NewProductPage() {
     formData.append("removedImages", JSON.stringify(removedImages));
 
     // Check if productCover exists and append it
-    if (data.productCover && data.productCover.length > 0) {
-      formData.append("productCover", data.productCover[0]);
-    }
+    // if (data.productCover && data.productCover.length > 0) {
+      formData.append("productCover", data.productCover);
+    // }
 
     // Append additional product images
     if (data.productImages && data.productImages.length > 0) {
@@ -123,8 +125,10 @@ function NewProductPage() {
         />
         <ProductPhoto
           register={register}
+          unregister={unregister}
           errors={errors}
           setValue={setValue}
+          watch={watch}
           defaultValue={product?.imageUrl}
         />
         <ProductPrice register={register} errors={errors} />
@@ -132,6 +136,7 @@ function NewProductPage() {
           register={register}
           errors={errors}
           setValue={setValue}
+          fileInfo={watch("productImages")}
           productId={product?.productId}
           editMode={editMode}
           setRemovedImages={setRemovedImages}
@@ -141,6 +146,7 @@ function NewProductPage() {
           variant="contained"
           sx={{ mt: 4, bgcolor: "purple.main" }}
           disabled={isSubmitting}
+          onClick={console.log(watch())}
         >
           {isSubmitting ? <CircularProgress size={24} /> : ButtonText}
         </Button>

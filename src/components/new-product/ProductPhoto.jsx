@@ -17,9 +17,11 @@ import PhotoPreview from "../course-product/PhotoPreview";
  */
 export default function ProductPhoto({
   register,
+  unregister,
   errors,
   defaultValue,
   setValue,
+  watch
 }) {
 
   return (
@@ -38,10 +40,13 @@ export default function ProductPhoto({
       <PhotoPreview
         icon={<InsertPhotoIcon />}
         register={register}
+        unregister={unregister}
         errors={errors}
+        watch={watch}
         setValue={setValue}
         name={"productCover"}
         defaultValue={defaultValue}
+
         // {...register("productCover", { required: true })} 
       >
         <Typography color="gray">Upload Product image, png, jpg</Typography>
