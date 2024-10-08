@@ -5,15 +5,14 @@ import {
   Stack,
   MenuItem,
   Divider,
-  Box,
   TextField,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import AvatarImg from "../assets/dashboard-setting/profile-img.png";
 import CustomButton from "../components/CustomButton";
 import CustomFileUpload from "../components/CustomFileUpload";
 import {
   useGetInstructorInfoQuery,
+  useUpdateInstructorInfoMutation,
   useUpdateInstructorPasswordMutation,
 } from "../services/api/authApi";
 import { useForm } from "react-hook-form";
@@ -27,20 +26,37 @@ function SettingPage() {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState("success");
+  const [isImageUploaded, setIsImageUploaded] = useState(false);
 
   const handleCloseSnackbar = () => {
     setSnackbarOpen(false);
   };
 
-  const [profileImg, setProfileImg] = useState(AvatarImg);
+  const [profileImg, setProfileImg] = useState("");
 
-  const [updateInstructorPassword, { isLoading, isError, isSuccess, error }] = useUpdateInstructorPasswordMutation();
+  const [updateInstructorPassword] =
+    useUpdateInstructorPasswordMutation();
 
-  const handleImageUpload = (event) => {
+    const [updateInfo, { isLoading, isError, isSuccess, error }] = useUpdateInstructorInfoMutation();
+
+  const handleImageUpload = async (event) => {
     const file = event.target.files[0];
+    setProfileImg(URL.createObjectURL(file));
+
     if (file) {
       const imageUrl = URL.createObjectURL(file);
-      setProfileImg(imageUrl); // Update state with the new image URL
+      setIsImageUploaded(true); 
+    }
+    const formData = new FormData();
+    formData.append("photo", file);
+    try {
+      await updateInfo(formData).unwrap();
+      setIsImageUploaded(true);
+
+      // refetch();
+      window.location.reload();
+    } catch (error) {
+      console.error("Error:", error);
     }
   };
 
@@ -80,9 +96,11 @@ function SettingPage() {
     });
   };
 
-  const { data, isLoading: isAccountInformationLoading } =
+  const { data, isLoading: isAccountInformationLoading, refetch} =
     useGetInstructorInfoQuery();
   let instructorInfo = {};
+
+  console.log("instructorInfo00000", instructorInfo.imageUrl);
 
   useEffect(() => {
     if (data) {
@@ -90,12 +108,10 @@ function SettingPage() {
       console.log(instructorInfo);
       handleBasicInfoReset(instructorInfo);
       handleSecurityReset(instructorInfo);
+
+      setProfileImg(instructorInfo.imageUrl);
     }
   }, [data]);
-
-  const handleSubmitUpdateBasicInfo = (data) => {
-    console.log(data);
-  };
 
   const handleSubmitUpdatePassword = async (data) => {
     const { currentPassword, newPassword, confirmNewPassword } = data;
@@ -150,15 +166,20 @@ function SettingPage() {
           <CustomButton
             sx={{ borderColor: "blue.main", color: "blue.main" }}
             variant="outlined"
-            onClick={() => setOpen(true)}
+            onClick={() => {
+              setOpen(true);
+              setIsImageUploaded(false); // Reset state to allow changing the image
+            }}
           >
-             {isLoading ? "CHANGING..." : "CHANGE"}
+            {isLoading ? 'CHANGING...' : 'CHANGE'}
           </CustomButton>
-          <CustomFileUpload
-            open={open}
-            handleClose={() => setOpen(false)}
-            onChange={handleImageUpload}
-          />
+          {!isImageUploaded && (
+            <CustomFileUpload
+              open={open}
+              handleClose={() => setOpen(false)}
+              onChange={handleImageUpload}
+            />
+          )}
         </Grid>
 
         {/* Information Section */}
