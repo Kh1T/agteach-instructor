@@ -88,7 +88,7 @@ function CoursePage() {
         ),
       })) || [];
 
-  console.log(courseList, "courseList");
+  // console.log(courseList, "courseList");
 
   const handleSearch = () => {
     setSearchTerm(searchRef.current.value);
