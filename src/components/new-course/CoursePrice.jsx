@@ -5,6 +5,8 @@ import IconWithTitle from "../course-product/IconWithTitle";
 import TextSection from "../course-product/TextSection";
 import { useFormContext } from "react-hook-form";
 import PhotoPreview from "../course-product/PhotoPreview";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
 /**
  * CoursePrice component renders a page for instructors to input course price.
  *
@@ -20,7 +22,17 @@ import PhotoPreview from "../course-product/PhotoPreview";
  * @returns {JSX.Element} Box component with children
  */
 export default function CoursePrice() {
-  const { register, formState: { errors } } = useFormContext();
+  const { register, setValue, formState: { errors } } = useFormContext();
+  const course = useSelector((state) => state.course.courseData);
+
+  useEffect(() => {
+    if (course.length > 0) {
+      const { price } = course[0].course;
+      console.log(price);
+      
+      setValue("coursePrice", price);
+    }
+  }, [course]);
   
   return (
     <Box className="container">

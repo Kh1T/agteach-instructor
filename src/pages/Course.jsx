@@ -19,6 +19,8 @@ import {
 import { useNavigate } from "react-router";
 import deletBin from "../assets/Go Green Grey Hanger Bag.png";
 import emptyProduct from "../assets/Spooky Stickers Sweet Franky.png";
+import { useDispatch } from "react-redux";
+import { setId } from "../features/course/courseSlice";
 
 function CoursePage() {
   const navigate = useNavigate();
@@ -29,13 +31,14 @@ function CoursePage() {
     isFetching: isSearching,
     refetch,
   } = useSearchCoursesQuery({ name: searchTerm, order: selectState });
+  if (searchedCourse) console.log("searchedCourse", searchedCourse);
   const [confirmDelete] = useConfirmDeleteMutation();
   const searchRef = useRef();
   const label = "Sort";
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState(null);
+  const dispatch = useDispatch();
 
-  console.log(searchedCourse);
   const handleDeleteClick = (course) => {
     setSelectedCourse(course);
     setOpenDialog(true);
@@ -60,6 +63,15 @@ function CoursePage() {
     handleCloseDialog();
   };
 
+  const handleEditClick = (course) => {
+    dispatch(setId(course?.courseId));
+    navigate("/course/new", {
+      state: {
+        course: course,
+      },
+    });
+  };
+
   const courseList = isSearching
     ? []
     : searchedCourse?.data?.map((item) => ({
@@ -70,13 +82,7 @@ function CoursePage() {
         edit: (
           <EditIcon
             sx={{ cursor: "pointer" }}
-            onClick={() => {
-              navigate("/course/new", {
-                state: {
-                  course: item, // Pass the entire course object
-                },
-              });
-            }}
+            onClick={() => handleEditClick(item)}
           />
         ),
         delete: (

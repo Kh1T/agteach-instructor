@@ -6,12 +6,14 @@ import { v4 as uuidv4 } from "uuid";
 import { Delete, MoreVertRounded } from "@mui/icons-material";
 import DeleteConfirmModal from "./DeleteConfirmModal";
 import { useFormContext } from "react-hook-form";
+import { useSelector } from "react-redux";
 
-export default function SectionComponent({ id, onDelete, number, type, sectionNumber, lectureIndex }) {
+export default function SectionComponent({ id, onDelete, number, type, sectionNumber, lectureIndex, allLecture, sectionName }) {
   const { register, unregister, formState: { errors } } = useFormContext();
-  const [lectures, setLectures] = useState([{ id: uuidv4(), number: 1, type: "lecture" }]);
+  const [lectures, setLectures] = useState(allLecture || [{ id: uuidv4(), number: 1, type: "lecture" }]);
   const [modalOpen, setModalOpen] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
+  const course = useSelector((state) => state.course.courseData);
 
   // Add a new lecture
   const handleAddLecture = () => {
@@ -63,7 +65,7 @@ export default function SectionComponent({ id, onDelete, number, type, sectionNu
   };
 
   return (
-    <Box bgcolor="grey.100" padding={2} mb={2}>
+    <Box bgcolor="grey.200" padding={2} mb={2}>
       <Stack position="relative" direction="row" pt={2} justifyContent="space-between">
         <Typography variant="blgr">
           <strong>Section {number}:</strong> Write your section title below

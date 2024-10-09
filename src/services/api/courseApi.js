@@ -17,8 +17,8 @@ export const courseApi = createApi({
     }),
 
     getCourse: builder.query({
-      query: () => ({
-        url: "/api/products",
+      query: (id) => ({
+        url: `/api/course/getOneCourse/${id}`,
         method: "GET",
       }),
     }),
@@ -55,50 +55,6 @@ export const courseApi = createApi({
       }),
     }),
 
-  }),
-  query: (id) => ({
-    url: `/api/product/deleteOneProduct/${id}`,
-    method: "DELETE",
-    reducerPath: "courseApi",
-    baseQuery: fetchBaseQuery({
-      baseUrl: "http://localhost:3001",
-      credentials: "include",
-    }),
-    tagTypes: ["Course"],
-
-    endpoints: (builder) => ({
-      getAllCourses: builder.query({
-        providesTags: ["Course"],
-        query: () => ({
-          url: "/api/course/getAllCourse",
-          method: "GET",
-        }),
-      }),
-
-      searchCourses: builder.query({
-        query: ({ name, order }) => {
-          let url = "/api/course/searchData?name=";
-
-          if (name) url += name;
-          if (order) {
-            const dataOrder = order === 10 ? "desc" : "asc";
-            url += `&order=${dataOrder}`;
-          }
-
-          return {
-            url,
-            method: "GET",
-          };
-        },
-      }),
-
-      confirmDelete: builder.mutation({
-        query: (id) => ({
-          url: `/api/course/deleteOneCourse/${id}`,
-          method: "DELETE",
-        }),
-      }),
-    }),
   }),
 });
 

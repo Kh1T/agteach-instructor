@@ -4,6 +4,8 @@ import NewspaperOutlinedIcon from "@mui/icons-material/NewspaperOutlined";
 import TextSection from "../course-product/TextSection";
 
 import { useFormContext } from "react-hook-form";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 /**
  * AboutCourse component renders a page for instructors to input course title,
@@ -15,7 +17,21 @@ import { useFormContext } from "react-hook-form";
  */
 
 export default function AboutCourse() {
-  const { register, formState: { errors } } = useFormContext();
+  const { register, setValue, formState: { errors } } = useFormContext();
+  const course = useSelector((state) => state.course.courseData);
+
+  useEffect(() => {
+    if (course.length > 0) {
+      const { name, description, courseObjective } = course[0].course;
+      console.log(name, description, courseObjective);
+      
+      setValue("courseName", name);
+      setValue("description", description);
+      setValue("courseObjective", courseObjective);
+    };
+  }, [course, setValue]);
+  
+  
   return (
     <Box className="container">
       <IconWithTitle
@@ -32,9 +48,9 @@ export default function AboutCourse() {
         fullWidth
         id="outlined-controlled"
         label="Enter your course title"
-        {...register("courseTitle", { required: "Title is required" })}
-        error={!!errors.courseTitle}
-        helperText={errors.courseTitle?.message}
+        {...register("courseName", { required: "Title is required" })}
+        error={!!errors.courseName}
+        helperText={errors.courseName?.message}
       />
       <Typography variant="bsr" color="dark.300" sx={{ mt: 2 }}>
         eg: How to plant an indoor tomatoes 100% edible
@@ -53,9 +69,9 @@ export default function AboutCourse() {
           fullWidth
           multiline
           label="Enter your course description"
-          {...register("courseDescription", { required: "Description is required" })}
-          error={!!errors.courseDescription}
-          helperText={errors.courseDescription?.message}
+          {...register("description", { required: "Description is required" })}
+          error={!!errors.description}
+          helperText={errors.description?.message}
         />
       </Box>
       <TextSection
@@ -72,9 +88,9 @@ export default function AboutCourse() {
         multiline
         id="outlined-controlled"
         label="What they will learn in this course: "
-        {...register("objective", { required: "Objective is required" })} 
-        error={!!errors.objective}
-        helperText={errors.objective?.message}
+        {...register("courseObjective", { required: "Objective is required" })} 
+        error={!!errors.courseObjective}
+        helperText={errors.courseObjective?.message}
       />
     </Box>
   );

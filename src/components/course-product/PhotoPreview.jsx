@@ -144,6 +144,7 @@
 import { useState, useRef, useEffect } from "react";
 import { Stack, Box, Typography, Button, FormHelperText } from "@mui/material";
 import { useFormContext } from "react-hook-form";
+import { useLocation } from "react-router";
 
 export default function PhotoPreview({
   name,
@@ -160,6 +161,15 @@ export default function PhotoPreview({
     watch,
     formState: { errors },
   } = useFormContext();
+
+  const url = useLocation().state?.course.thumbnailUrl;
+  useEffect(() => {
+    if (url) {
+      setValue(name, url);
+      setSelectedImage(url);
+    }
+  }, [url]);
+  
 
   const [selectedImage, setSelectedImage] = useState(
     file ? URL.createObjectURL(file) : null

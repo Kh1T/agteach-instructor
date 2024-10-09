@@ -1,0 +1,354 @@
+[
+  {
+    "sectionLectureId": 472,
+    "lectureId": 488,
+    "courseId": 429,
+    "instructorId": 71,
+    "sectionId": 419,
+    "createdAt": "2024-10-08T04:38:06.192Z",
+    "updatedAt": "2024-10-08T04:38:06.192Z",
+    "course": {
+      "courseId": 429,
+      "instructorId": 71,
+      "name": "fdasf",
+      "description": "asd",
+      "previewVideoUrl": "https://northatlanticaviationmuseum.com/wp-content/uploads/2020/10/Lorem-ipsum-video-Dummy-video-for-your-website.mp4?_=2",
+      "thumbnailUrl": "https://placehold.co/400",
+      "duration": {},
+      "numberOfVideo": 12,
+      "courseObjective": "fda",
+      "price": "120",
+      "createdAt": "2024-10-08T04:38:05.003Z",
+      "updatedAt": "2024-10-08T04:38:05.003Z"
+    },
+    "section": {
+      "sectionId": 419,
+      "instructorId": 71,
+      "name": "section 1",
+      "createdAt": "2024-10-08T04:38:05.371Z",
+      "updatedAt": "2024-10-08T04:38:05.371Z"
+    },
+    "lecture": {
+      "lectureId": 488,
+      "instructorId": 71,
+      "name": "lecture 1",
+      "videoUrl": "undefinedcourses/429/section_419/lecture-488.mp4",
+      "duration": {},
+      "createdAt": "2024-10-08T04:38:05.782Z",
+      "updatedAt": "2024-10-08T04:38:06.818Z"
+    }
+  }
+]
+
+{
+  "courseName": "course title",
+  "description": "description",
+  "courseObjective": "objective",
+  "allSection": [
+    {
+      "sectionName": "section 1",
+      "allLecture": [
+        {
+          "lectureName": "lecture 1",
+          "video": File {...}
+        }
+      ]
+    }
+  ],
+  "coursePrice": "12",
+  "courseThumbnail": {}
+}
+
+[
+    {
+        "sectionLectureId": 584,
+        "lectureId": 599,
+        "courseId": 468,
+        "instructorId": 71,
+        "sectionId": 512,
+        "createdAt": "2024-10-09T05:32:00.522Z",
+        "updatedAt": "2024-10-09T05:32:00.522Z",
+        "course": {
+            "courseId": 468,
+            "instructorId": 71,
+            "name": "a title",
+            "description": "afdff",
+            "previewVideoUrl": "https://northatlanticaviationmuseum.com/wp-content/uploads/2020/10/Lorem-ipsum-video-Dummy-video-for-your-website.mp4?_=2",
+            "thumbnailUrl": "https://placehold.co/400",
+            "duration": {},
+            "numberOfVideo": 12,
+            "courseObjective": "af",
+            "price": "12",
+            "createdAt": "2024-10-09T05:31:57.523Z",
+            "updatedAt": "2024-10-09T05:31:57.525Z"
+        },
+        "section": {
+            "sectionId": 512,
+            "instructorId": 71,
+            "name": "section 1",
+            "createdAt": "2024-10-09T05:31:57.828Z",
+            "updatedAt": "2024-10-09T05:31:57.828Z"
+        },
+        "lecture": {
+            "lectureId": 599,
+            "instructorId": 71,
+            "name": "lecture 2",
+            "videoUrl": "https://agteach-dev-assets.s3.ap-southeast-2.amazonaws.comcourses/468/section_512/lecture-599.mp4",
+            "duration": {
+                "seconds": 15
+            },
+            "createdAt": "2024-10-09T05:31:58.251Z",
+            "updatedAt": "2024-10-09T05:32:01.714Z"
+        }
+    },
+    {
+        "sectionLectureId": 589,
+        "lectureId": 604,
+        "courseId": 468,
+        "instructorId": 71,
+        "sectionId": 517,
+        "createdAt": "2024-10-09T05:32:00.522Z",
+        "updatedAt": "2024-10-09T05:32:00.522Z",
+        "course": {
+            "courseId": 468,
+            "instructorId": 71,
+            "name": "a title",
+            "description": "afdff",
+            "previewVideoUrl": "https://northatlanticaviationmuseum.com/wp-content/uploads/2020/10/Lorem-ipsum-video-Dummy-video-for-your-website.mp4?_=2",
+            "thumbnailUrl": "https://placehold.co/400",
+            "duration": {},
+            "numberOfVideo": 12,
+            "courseObjective": "af",
+            "price": "12",
+            "createdAt": "2024-10-09T05:31:57.523Z",
+            "updatedAt": "2024-10-09T05:31:57.525Z"
+        },
+        "section": {
+            "sectionId": 517,
+            "instructorId": 71,
+            "name": "section 6",
+            "createdAt": "2024-10-09T05:31:57.829Z",
+            "updatedAt": "2024-10-09T05:31:57.829Z"
+        },
+        "lecture": {
+            "lectureId": 604,
+            "instructorId": 71,
+            "name": "lecture 1",
+            "videoUrl": "https://agteach-dev-assets.s3.ap-southeast-2.amazonaws.comcourses/468/section_517/lecture-604.mp4",
+            "duration": {
+                "seconds": 12,
+                "milliseconds": 866.667
+            },
+            "createdAt": "2024-10-09T05:31:59.773Z",
+            "updatedAt": "2024-10-09T05:32:02.166Z"
+        }
+    },
+    {
+        "sectionLectureId": 587,
+        "lectureId": 603,
+        "courseId": 468,
+        "instructorId": 71,
+        "sectionId": 515,
+        "createdAt": "2024-10-09T05:32:00.522Z",
+        "updatedAt": "2024-10-09T05:32:00.522Z",
+        "course": {
+            "courseId": 468,
+            "instructorId": 71,
+            "name": "a title",
+            "description": "afdff",
+            "previewVideoUrl": "https://northatlanticaviationmuseum.com/wp-content/uploads/2020/10/Lorem-ipsum-video-Dummy-video-for-your-website.mp4?_=2",
+            "thumbnailUrl": "https://placehold.co/400",
+            "duration": {},
+            "numberOfVideo": 12,
+            "courseObjective": "af",
+            "price": "12",
+            "createdAt": "2024-10-09T05:31:57.523Z",
+            "updatedAt": "2024-10-09T05:31:57.525Z"
+        },
+        "section": {
+            "sectionId": 515,
+            "instructorId": 71,
+            "name": "section 4",
+            "createdAt": "2024-10-09T05:31:57.829Z",
+            "updatedAt": "2024-10-09T05:31:57.829Z"
+        },
+        "lecture": {
+            "lectureId": 603,
+            "instructorId": 71,
+            "name": "lecture 1",
+            "videoUrl": "https://agteach-dev-assets.s3.ap-southeast-2.amazonaws.comcourses/468/section_515/lecture-603.mp4",
+            "duration": {
+                "seconds": 12,
+                "milliseconds": 866.667
+            },
+            "createdAt": "2024-10-09T05:31:59.265Z",
+            "updatedAt": "2024-10-09T05:32:01.714Z"
+        }
+    },
+    {
+        "sectionLectureId": 583,
+        "lectureId": 600,
+        "courseId": 468,
+        "instructorId": 71,
+        "sectionId": 512,
+        "createdAt": "2024-10-09T05:32:00.522Z",
+        "updatedAt": "2024-10-09T05:32:00.522Z",
+        "course": {
+            "courseId": 468,
+            "instructorId": 71,
+            "name": "a title",
+            "description": "afdff",
+            "previewVideoUrl": "https://northatlanticaviationmuseum.com/wp-content/uploads/2020/10/Lorem-ipsum-video-Dummy-video-for-your-website.mp4?_=2",
+            "thumbnailUrl": "https://placehold.co/400",
+            "duration": {},
+            "numberOfVideo": 12,
+            "courseObjective": "af",
+            "price": "12",
+            "createdAt": "2024-10-09T05:31:57.523Z",
+            "updatedAt": "2024-10-09T05:31:57.525Z"
+        },
+        "section": {
+            "sectionId": 512,
+            "instructorId": 71,
+            "name": "section 1",
+            "createdAt": "2024-10-09T05:31:57.828Z",
+            "updatedAt": "2024-10-09T05:31:57.828Z"
+        },
+        "lecture": {
+            "lectureId": 600,
+            "instructorId": 71,
+            "name": "lecture 1",
+            "videoUrl": "https://agteach-dev-assets.s3.ap-southeast-2.amazonaws.comcourses/468/section_512/lecture-600.mp4",
+            "duration": {
+                "seconds": 15
+            },
+            "createdAt": "2024-10-09T05:31:58.250Z",
+            "updatedAt": "2024-10-09T05:32:01.714Z"
+        }
+    },
+    {
+        "sectionLectureId": 585,
+        "lectureId": 601,
+        "courseId": 468,
+        "instructorId": 71,
+        "sectionId": 513,
+        "createdAt": "2024-10-09T05:32:00.522Z",
+        "updatedAt": "2024-10-09T05:32:00.522Z",
+        "course": {
+            "courseId": 468,
+            "instructorId": 71,
+            "name": "a title",
+            "description": "afdff",
+            "previewVideoUrl": "https://northatlanticaviationmuseum.com/wp-content/uploads/2020/10/Lorem-ipsum-video-Dummy-video-for-your-website.mp4?_=2",
+            "thumbnailUrl": "https://placehold.co/400",
+            "duration": {},
+            "numberOfVideo": 12,
+            "courseObjective": "af",
+            "price": "12",
+            "createdAt": "2024-10-09T05:31:57.523Z",
+            "updatedAt": "2024-10-09T05:31:57.525Z"
+        },
+        "section": {
+            "sectionId": 513,
+            "instructorId": 71,
+            "name": "section 2",
+            "createdAt": "2024-10-09T05:31:57.829Z",
+            "updatedAt": "2024-10-09T05:31:57.829Z"
+        },
+        "lecture": {
+            "lectureId": 601,
+            "instructorId": 71,
+            "name": "lecture 1",
+            "videoUrl": "https://agteach-dev-assets.s3.ap-southeast-2.amazonaws.comcourses/468/section_513/lecture-601.mp4",
+            "duration": {
+                "seconds": 15
+            },
+            "createdAt": "2024-10-09T05:31:58.649Z",
+            "updatedAt": "2024-10-09T05:32:01.713Z"
+        }
+    },
+    {
+        "sectionLectureId": 586,
+        "lectureId": 602,
+        "courseId": 468,
+        "instructorId": 71,
+        "sectionId": 514,
+        "createdAt": "2024-10-09T05:32:00.522Z",
+        "updatedAt": "2024-10-09T05:32:00.522Z",
+        "course": {
+            "courseId": 468,
+            "instructorId": 71,
+            "name": "a title",
+            "description": "afdff",
+            "previewVideoUrl": "https://northatlanticaviationmuseum.com/wp-content/uploads/2020/10/Lorem-ipsum-video-Dummy-video-for-your-website.mp4?_=2",
+            "thumbnailUrl": "https://placehold.co/400",
+            "duration": {},
+            "numberOfVideo": 12,
+            "courseObjective": "af",
+            "price": "12",
+            "createdAt": "2024-10-09T05:31:57.523Z",
+            "updatedAt": "2024-10-09T05:31:57.525Z"
+        },
+        "section": {
+            "sectionId": 514,
+            "instructorId": 71,
+            "name": "section 3",
+            "createdAt": "2024-10-09T05:31:57.829Z",
+            "updatedAt": "2024-10-09T05:31:57.829Z"
+        },
+        "lecture": {
+            "lectureId": 602,
+            "instructorId": 71,
+            "name": "lecture 1",
+            "videoUrl": "https://agteach-dev-assets.s3.ap-southeast-2.amazonaws.comcourses/468/section_514/lecture-602.mp4",
+            "duration": {
+                "seconds": 12,
+                "milliseconds": 866.667
+            },
+            "createdAt": "2024-10-09T05:31:58.929Z",
+            "updatedAt": "2024-10-09T05:32:01.712Z"
+        }
+    },
+    {
+        "sectionLectureId": 588,
+        "lectureId": 605,
+        "courseId": 468,
+        "instructorId": 71,
+        "sectionId": 516,
+        "createdAt": "2024-10-09T05:32:00.522Z",
+        "updatedAt": "2024-10-09T05:32:00.522Z",
+        "course": {
+            "courseId": 468,
+            "instructorId": 71,
+            "name": "a title",
+            "description": "afdff",
+            "previewVideoUrl": "https://northatlanticaviationmuseum.com/wp-content/uploads/2020/10/Lorem-ipsum-video-Dummy-video-for-your-website.mp4?_=2",
+            "thumbnailUrl": "https://placehold.co/400",
+            "duration": {},
+            "numberOfVideo": 12,
+            "courseObjective": "af",
+            "price": "12",
+            "createdAt": "2024-10-09T05:31:57.523Z",
+            "updatedAt": "2024-10-09T05:31:57.525Z"
+        },
+        "section": {
+            "sectionId": 516,
+            "instructorId": 71,
+            "name": "section5",
+            "createdAt": "2024-10-09T05:31:57.829Z",
+            "updatedAt": "2024-10-09T05:31:57.829Z"
+        },
+        "lecture": {
+            "lectureId": 605,
+            "instructorId": 71,
+            "name": "lecture 1",
+            "videoUrl": "https://agteach-dev-assets.s3.ap-southeast-2.amazonaws.comcourses/468/section_516/lecture-605.mp4",
+            "duration": {
+                "seconds": 12,
+                "milliseconds": 866.667
+            },
+            "createdAt": "2024-10-09T05:32:00.244Z",
+            "updatedAt": "2024-10-09T05:32:02.164Z"
+        }
+    }
+]
