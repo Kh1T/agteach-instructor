@@ -16,7 +16,7 @@ export const productApi = createApi({
         method: "POST",
         body: productData,
       }),
-      // invalidatesTags: ["Product"],
+      invalidatesTags: ["Product"],
     }),
 
     getAllProducts: builder.query({
@@ -28,6 +28,7 @@ export const productApi = createApi({
     }),
 
     searchProducts: builder.query({
+      providesTags: ["Product"],
       query: ({ name, order }) => {
         let url = "/api/product/searchData?name=";
 
@@ -53,6 +54,7 @@ export const productApi = createApi({
     }),
 
     getProducts: builder.query({
+      providesTags: ["Product"],
       query: () => ({
         url: "/api/products",
         method: "GET",
@@ -67,10 +69,12 @@ export const productApi = createApi({
     }),
 
     getProductsImages: builder.query({
+      providesTags: ["Product"],
       query: (productId) => `/api/product/getProductImages/${productId}`,
     }),
 
     updateProduct: builder.mutation({
+      invalidatesTags: ["Product"],
       query: ({ productId, productData }) => ({
         url: `/api/product/updateProduct/${productId}`,
         method: "PATCH",

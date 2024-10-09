@@ -178,9 +178,9 @@ export default function PhotoPreview({
   setValue,
   unregister,
   children,
-  defaultValue
+  defaultValue,
+  editMode,
 }) {
-
   const [selectedImage, setSelectedImage] = useState(
     file ? URL.createObjectURL(file) : defaultValue || null
   );
@@ -269,7 +269,7 @@ export default function PhotoPreview({
             sx={{ maxWidth: "150px", maxHeight: "150px", objectFit: "cover" }}
           />
           <Stack spacing={1}>
-            <Typography variant="bmdsm">{fileInfo.name}</Typography>
+            <Typography variant="bmdsm">Name: {fileInfo.name}</Typography>
             <Typography variant="bmdr">Size: {fileInfo.size}</Typography>
             <Button
               variant="outlined"
@@ -286,20 +286,19 @@ export default function PhotoPreview({
           </Stack>
         </Stack>
       )}
-
-      {errors[name] && (
-        <FormHelperText sx={{ pl: 2, mt: 1 }} error>
-          {errors[name]?.message || "This field is required"}
-        </FormHelperText>
-      )}
       <input
         type="file"
         hidden
-        accept="image/*"
+        accept="image/png, image/jpeg, image/jpg"
         {...register(name, { required: "Image is required" })}
         onChange={handleFileUpload}
         ref={inputRef}
       />
+      {!photoFile && errors[name] && (
+        <FormHelperText sx={{ color: "error.main" }}>
+          {errors[name].message}
+        </FormHelperText>
+      )}
     </Box>
   );
 }

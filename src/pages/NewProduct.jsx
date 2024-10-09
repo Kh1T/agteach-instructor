@@ -55,7 +55,7 @@ function NewProductPage() {
   const [removedImages, setRemovedImages] = useState([]);
   const handleUploadProduct = async (data) => {
     const formData = new FormData();
-    console.log(data)
+    console.log("This is the data before appending: ", data);
 
     formData.append("categoryId", data.categoryId);
     formData.append("name", data.name);
@@ -65,9 +65,10 @@ function NewProductPage() {
     formData.append("removedImages", JSON.stringify(removedImages));
 
     // Check if productCover exists and append it
-    // if (data.productCover && data.productCover.length > 0) {
+    if (data.productCover instanceof File) {
+      console.log("This is the product cover: ", data.productCover);
       formData.append("productCover", data.productCover);
-    // }
+    }
 
     // Append additional product images
     if (data.productImages && data.productImages.length > 0) {
@@ -80,7 +81,7 @@ function NewProductPage() {
       });
     }
 
-    console.log([...formData]);
+    console.log("This is the form data", [...formData]);
     try {
       if (editMode) {
         console.log(formData);
@@ -130,6 +131,7 @@ function NewProductPage() {
           setValue={setValue}
           watch={watch}
           defaultValue={product?.imageUrl}
+          editMode={editMode}
         />
         <ProductPrice register={register} errors={errors} />
         <AdditionalPhoto
@@ -146,7 +148,7 @@ function NewProductPage() {
           variant="contained"
           sx={{ mt: 4, bgcolor: "purple.main" }}
           disabled={isSubmitting}
-          onClick={console.log(watch())}
+          // onClick={console.log(watch())}
         >
           {isSubmitting ? <CircularProgress size={24} /> : ButtonText}
         </Button>
@@ -158,8 +160,8 @@ function NewProductPage() {
               : "Product created successfully Close here to navigate to product page."
           }
           open={isSubmitSuccessful}
-          onClose={() => navigate("/product")}
         />
+        {isSubmitSuccessful && navigate("/product")}
       </form>
     </Box>
   );

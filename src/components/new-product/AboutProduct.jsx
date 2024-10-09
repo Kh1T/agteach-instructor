@@ -42,8 +42,8 @@ export default function AboutProduct({ register, errors }) {
         {...register("name", {
           required: "Product name is required",
           maxLength: {
-            value: 25,
-            message: "Product name should be less than 25 characters",
+            value: 50,
+            message: "Product name should be less than 50 characters",
           },
         })}
         error={!!errors.name}
@@ -73,8 +73,8 @@ export default function AboutProduct({ register, errors }) {
         {...register("description", {
           required: "Product description is required",
           maxLength: {
-            value: 400,
-            message: "Product description should be less than 400 characters",
+            value: 1000,
+            message: "Product description should be less than 1000 characters",
           },
         })}
         error={!!errors.description}
