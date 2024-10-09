@@ -74,6 +74,12 @@ function CustomFileUpload({ open, handleClose, ...props }) {
 
 export default CustomFileUpload;
 
-{
-  /* <input type="file" hidden accept="image/*" onChange={handleImageUpload} />; */
-}
+
+
+
+
+
+
+// {
+//   /* <input type="file" hidden accept="image/*" onChange={handleImageUpload} />; */
+// }
