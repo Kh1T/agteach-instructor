@@ -39,26 +39,33 @@ function SettingPage() {
 
     const [updateInfo, { isLoading, isError, isSuccess, error }] = useUpdateInstructorInfoMutation();
 
-  const handleImageUpload = async (event) => {
-    const file = event.target.files[0];
-    setProfileImg(URL.createObjectURL(file));
+    const handleImageUpload = async (event) => {
+      const file = event.target.files[0];
+      setProfileImg(URL.createObjectURL(file));
+  
+      if (file) {
+        const imageUrl = URL.createObjectURL(file);
+        // setIsImageUploaded(true); 
+        setIsImageUploaded(imageUrl); 
+      }
+      const formData = new FormData();
+      formData.append("photo", file);
+      try {
+        const response = await updateInfo(formData).unwrap();
+        // setIsImageUploaded(true);
+        // await refetch();
+        // refetch({ true });
+        // const updatedUrl = `${instructorInfo.imageUrl}?t=${new Date().getTime()}`;
+        // setProfileImg('hdahd' ,updatedUrl);
 
-    if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setIsImageUploaded(true); 
-    }
-    const formData = new FormData();
-    formData.append("photo", file);
-    try {
-      await updateInfo(formData).unwrap();
-      setIsImageUploaded(true);
-      // await refetch();
-      refetch();
-      window.location.reload();
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
+        window.location.reload();
+        console.log("Success:", response);
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+  
+  
 
   const {
     register: basicInfoRegister,
@@ -108,8 +115,12 @@ function SettingPage() {
       console.log(instructorInfo);
       handleBasicInfoReset(instructorInfo);
       handleSecurityReset(instructorInfo);
-
       setProfileImg(instructorInfo.imageUrl);
+
+      // if (instructorInfo.imageUrl !== profileImg) {
+      //   setProfileImg(instructorInfo.imageUrl);
+      // }
+
     }
   }, [data]);
 
@@ -172,6 +183,7 @@ function SettingPage() {
             }}
           >
             {isLoading ? 'CHANGING...' : 'CHANGE'}
+            {/* CHANGE */}
           </CustomButton>
           {!isImageUploaded && (
             <CustomFileUpload
