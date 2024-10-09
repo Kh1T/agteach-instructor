@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const courseApi = createApi({
-    reducerPath: "productApi",
+    reducerPath: "courseApi",
     baseQuery: fetchBaseQuery({
       baseUrl: "http://localhost:3001",
       credentials: "include",
@@ -9,13 +9,6 @@ export const courseApi = createApi({
     tagTypes: ["Course"],
   
     endpoints: (builder) => ({
-      // addProduct: builder.mutation({
-      //   query: (productData) => ({
-      //     url: "/api/products",
-      //     method: "POST",
-      //     body: productData,
-      //   }),
-      // }),
   
       getAllCourses: builder.query({
         providesTags: ["Course"],
@@ -27,7 +20,7 @@ export const courseApi = createApi({
   
       searchCourses: builder.query({
         query: ({ name, order }) => {
-          let url = "/api/product/searchData?name=";
+          let url = "/api/course/searchData?name=";
   
           if (name) url += name;
           if (order) {
@@ -42,9 +35,10 @@ export const courseApi = createApi({
         },
       }),
   
+  
       confirmDelete: builder.mutation({
         query: (id) => ({
-          url: `/api/product/deleteOneProduct/${id}`,
+          url: `/api/course/deleteOneCourse/${id}`,
           method: "DELETE",
         }),
       }),
