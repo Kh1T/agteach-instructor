@@ -12,31 +12,6 @@ import { useAddCourseMutation } from "../services/api/courseApi";
 import { CustomAlert } from "../components/CustomAlert";
 import { useState } from "react";
 
-// {
-//   "courseName": "testing",
-//   "description": "testing bulkCreate course",
-//   "price": "12",
-//   "courseObjective": "make sure it work",
-//   "allSection": [
-//     {
-//       "sectionName": "testing",
-//       "allLecture": [
-//         { "lectureName": "lectureName" },
-//         { "lectureName": "lectureName" },
-//         { "lectureName": "lectureName" }
-//       ]
-//     },
-//     {
-//       "sectionName": "testing",
-//       "allLecture": [{ "lectureName": "lectureName", "video": "123123123123" }]
-//     },
-//     {
-//       "sectionName": "testing",
-//       "allLecture": [{ "lectureName": "lectureName" }]
-//     }
-//   ]
-// }
-
 function NewCoursePage() {
   const navigate = useNavigate();
   const methods = useForm();
@@ -53,7 +28,7 @@ function NewCoursePage() {
       coursePrice,
       objective,
       allSection,
-      thumbnail,
+      courseThumbnail,
     } = data;
 
     const submitData = {
@@ -69,11 +44,10 @@ function NewCoursePage() {
         })),
       })),
     };
-    console.log('courseTitle', {...submitData});
-    console.log('courseDescription', courseDescription);
-    
-    const formData = new FormData();
+    console.log("courseTitle", { ...submitData });
+    console.log("courseDescription", courseDescription);
 
+    const formData = new FormData();
 
     // console.log(submitData.allSection,'allsection')
     // Append course details
@@ -82,6 +56,7 @@ function NewCoursePage() {
     formData.append("price", coursePrice);
     formData.append("courseObjective", objective);
     formData.append("allSection", JSON.stringify(allSection));
+    formData.append("thumbnailUrl", courseThumbnail);
 
     allSection.forEach((section) => {
       section.allLecture.forEach((lecture) => {
@@ -89,18 +64,17 @@ function NewCoursePage() {
       });
     });
 
+
     console.log([...formData]);
 
     console.log("formData", [...formData]);
-    
 
     try {
-      console.log('before api call');
-      
+      console.log("before api call");
+
       const response = await addCourse(formData).unwrap();
       console.log("response", response);
-      console.log('success', isSuccess);
-      
+
       // setAlertMessage("Course created successfully");
     } catch (error) {
       console.log("error", error);

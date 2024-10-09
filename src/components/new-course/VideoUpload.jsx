@@ -3,22 +3,31 @@ import { useRef, useState } from "react";
 import UploadFileOutlinedIcon from "@mui/icons-material/UploadFileOutlined";
 import { useFormContext } from "react-hook-form";
 
-export default function VideoUpload({ name, onFileChange, isPreviewVisible, file }) {
+export default function VideoUpload({
+  name,
+  onFileChange,
+  isPreviewVisible,
+  file,
+}) {
   const {
     register,
     setValue,
     watch,
     formState: { errors },
   } = useFormContext();
-  
-  const [videoUrl, setVideoUrl] = useState(file ? URL.createObjectURL(file) : null);
-  const [fileInfo, setFileInfo] = useState(file ? { name: file.name, size: (file.size / 1024).toFixed(2) + " KB" } : {});
+
+  const [videoUrl, setVideoUrl] = useState(
+    file ? URL.createObjectURL(file) : null
+  );
+  const [fileInfo, setFileInfo] = useState(
+    file ? { name: file.name, size: (file.size / 1024).toFixed(2) + " KB" } : {}
+  );
 
   const inputRef = useRef(null);
   const videoFile = watch(name);
 
   const handleVideoUpload = (event) => {
-    const newFile = event.target.files[0];
+    const newFile = event.target.files[0];    
 
     if (newFile && newFile.type.includes("video")) {
       setVideoUrl(URL.createObjectURL(newFile));
@@ -74,7 +83,7 @@ export default function VideoUpload({ name, onFileChange, isPreviewVisible, file
             component="video"
             controls
             src={videoUrl}
-            sx={{ width: "180px", height: "120px", objectFit: "cover" }}
+            sx={{ maxWidth: "180px", maxHeight: "120px", objectFit: "cover" }}
           />
           <Stack spacing={1}>
             <Typography variant="bmdsm">{fileInfo.name}</Typography>
@@ -111,7 +120,6 @@ export default function VideoUpload({ name, onFileChange, isPreviewVisible, file
   );
 }
 
-
 // import { Box, Button, FormHelperText, Stack, Typography } from "@mui/material";
 // import { useRef, useState } from "react";
 // import UploadFileOutlinedIcon from "@mui/icons-material/UploadFileOutlined";
@@ -124,7 +132,7 @@ export default function VideoUpload({ name, onFileChange, isPreviewVisible, file
 //     watch,
 //     formState: { errors },
 //   } = useFormContext();
-  
+
 //   const [videoUrl, setVideoUrl] = useState(file ? URL.createObjectURL(file) : null);
 //   const [fileInfo, setFileInfo] = useState(file ? { name: file.name, size: (file.size / 1024).toFixed(2) + " KB" } : {});
 

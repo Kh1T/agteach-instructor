@@ -2,10 +2,9 @@ import { configureStore as createStore } from "@reduxjs/toolkit";
 import { authApi } from "../services/api/authApi";
 import { locationApi } from "../services/api/locationApi";
 import { productApi } from "../services/api/productApi";
+import { courseApi } from "../services/api/courseApi";
 import userReducer from "../features/user/userSlice";
-import { courseApi } from "../services/api/courseApi";
 import authSlice from "../features/user/authSlice";
-import { courseApi } from "../services/api/courseApi";
 
 export const store = createStore({
   reducer: {

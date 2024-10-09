@@ -64,7 +64,7 @@ export default function SectionComponent({ id, onDelete, number, type, sectionNu
 
   return (
     <Box bgcolor="grey.100" padding={2} mb={2}>
-      <Stack position="relative" direction="row" padding={2} justifyContent="space-between">
+      <Stack position="relative" direction="row" pt={2} justifyContent="space-between">
         <Typography variant="blgr">
           <strong>Section {number}:</strong> Write your section title below
         </Typography>
@@ -79,7 +79,7 @@ export default function SectionComponent({ id, onDelete, number, type, sectionNu
               position: "absolute",
               top: 40,
               right: 20,
-              bgcolor: "common.white",
+              bgcolor: "gray.300",
               p: 1,
               gap: 1,
               justifyItems: "center",
@@ -99,7 +99,7 @@ export default function SectionComponent({ id, onDelete, number, type, sectionNu
         error={!!errors.allSection?.[number - 1]?.sectionName}
         helperText={errors.allSection?.[number - 1]?.sectionName?.message}
       />
-      <Box bgcolor="grey.300" padding={4} paddingTop={0}>
+      <Box bgcolor="gray.500" padding={4} paddingTop={0}>
         {lectures.map((lecture, index) => (
           <LectureComponent
             key={lecture.id}
