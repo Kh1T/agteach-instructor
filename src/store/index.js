@@ -4,7 +4,6 @@ import { locationApi } from "../services/api/locationApi";
 import { productApi } from "../services/api/productApi";
 import { courseApi } from "../services/api/courseApi";
 import userReducer from "../features/user/userSlice";
-import { courseApi } from "../services/api/courseApi";
 import authSlice from "../features/user/authSlice";
 
 export const store = createStore({
