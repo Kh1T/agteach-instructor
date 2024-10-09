@@ -37,7 +37,7 @@ function SettingPage() {
   const [updateInstructorPassword] =
     useUpdateInstructorPasswordMutation();
 
-    const [updateInfo, { isLoading, isError, isSuccess, error }] = useUpdateInstructorInfoMutation();
+    const [updateInfo, { isLoading }] = useUpdateInstructorInfoMutation();
 
     const handleImageUpload = async (event) => {
       const file = event.target.files[0];
@@ -45,19 +45,12 @@ function SettingPage() {
   
       if (file) {
         const imageUrl = URL.createObjectURL(file);
-        // setIsImageUploaded(true); 
         setIsImageUploaded(imageUrl); 
       }
       const formData = new FormData();
       formData.append("photo", file);
       try {
         const response = await updateInfo(formData).unwrap();
-        // setIsImageUploaded(true);
-        // await refetch();
-        // refetch({ true });
-        // const updatedUrl = `${instructorInfo.imageUrl}?t=${new Date().getTime()}`;
-        // setProfileImg('hdahd' ,updatedUrl);
-
         window.location.reload();
         console.log("Success:", response);
       } catch (error) {
@@ -104,10 +97,8 @@ function SettingPage() {
   };
 
   const { data, isLoading: isAccountInformationLoading, refetch} =
-    useGetInstructorInfoQuery();
+  useGetInstructorInfoQuery();
   let instructorInfo = {};
-
-  console.log("instructorInfo00000", instructorInfo.imageUrl);
 
   useEffect(() => {
     if (data) {
@@ -117,12 +108,10 @@ function SettingPage() {
       handleSecurityReset(instructorInfo);
       setProfileImg(instructorInfo.imageUrl);
 
-      // if (instructorInfo.imageUrl !== profileImg) {
-      //   setProfileImg(instructorInfo.imageUrl);
-      // }
-
+      console.log("instructorInfo00000", instructorInfo.imageUrl);
     }
   }, [data]);
+
 
   const handleSubmitUpdatePassword = async (data) => {
     const { currentPassword, newPassword, confirmNewPassword } = data;
