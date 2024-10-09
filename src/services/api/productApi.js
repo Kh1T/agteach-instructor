@@ -19,7 +19,8 @@ export const productApi = createApi({
     getAllProducts: builder.query({
       providesTags: ["Product"],
       query: () => ({
-        url: "/api/product/getAllProduct",
+        // url: "/api/product/getAllProduct",
+        url: "/api/product/getInstructorProduct",
         method: "GET",
       }),
     }),
