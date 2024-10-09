@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-
+// http://localhost:3001
+// https://api.agteach.site
 export const authApi = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
@@ -7,6 +8,7 @@ export const authApi = createApi({
     // baseUrl: "https://api.agteach.site",
     credentials: "include", // Move this line here
   }),
+  tagTypes: ["Instructor"],
   endpoints: (builder) => ({
     signup: builder.mutation({
       query: (signupData) => ({
@@ -14,6 +16,7 @@ export const authApi = createApi({
         method: "POST",
         body: signupData,
       }),
+      invalidatesTags: ["Instructor"],
     }),
 
     login: builder.mutation({
@@ -21,6 +24,7 @@ export const authApi = createApi({
         url: "/api/users/login",
         method: "POST",
         body: loginData,
+        headers: { "X-Frontend-URL": window.location },
       }),
     }),
 
@@ -105,6 +109,7 @@ export const {
   useResendVerifyCodeMutation,
   useAdditionalInfoMutation,
   useGetInstructorInfoQuery,
+  useUpdateInstructorInfoMutation,
   useIsLoginQuery,
   useUpdateInstructorPasswordMutation,
 } = authApi;

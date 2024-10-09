@@ -18,12 +18,15 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useLoginMutation } from "../services/api/authApi";
 import { CustomAlert } from "../components/CustomAlert";
+import { useDispatch, useSelector } from "react-redux";
+import { checkLoginStatus } from "../features/user/authSlice";
 
 function LoginPage() {
   const [login, { isLoading, isError }] = useLoginMutation();
   const [showPassword, setShowPassword] = useState(false);
   const [open, setOpen] = useState(false);
   const navigator = useNavigate();
+  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
@@ -43,6 +46,7 @@ function LoginPage() {
     try {
       const response = await login(data).unwrap();
       console.log("Login successful", response);
+      dispatch(checkLoginStatus(true));
       navigator("/");
     } catch (error) {
       console.error("Incorrect email or password", error);
@@ -59,6 +63,9 @@ function LoginPage() {
       );
     }
   };
+
+  const { isAuthenticated } = useSelector((state) => state.auth);
+  console.log('login',isAuthenticated);
 
   return (
     <Grid

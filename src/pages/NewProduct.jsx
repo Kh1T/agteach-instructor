@@ -18,12 +18,15 @@ import {
 import { useNavigate, useLocation } from "react-router-dom";
 
 import { useForm } from "react-hook-form";
-
 import { useEffect, useState } from "react";
+
 function NewProductPage() {
   const [createProduct] = useCreateProductMutation();
   const [updateProduct] = useUpdateProductMutation();
   const navigate = useNavigate();
+  const location = useLocation();
+  const product = location.state?.product; // Highlighted: Get the product from the state
+
   const {
     register,
     unregister,
@@ -33,8 +36,6 @@ function NewProductPage() {
     formState: { errors, isSubmitting, isSubmitSuccessful },
   } = useForm();
 
-  const location = useLocation();
-  const product = location.state?.product;
   const editMode = location.state?.editMode;
   const productId = location.state?.productId;
 
@@ -168,3 +169,4 @@ function NewProductPage() {
 }
 
 export default NewProductPage;
+

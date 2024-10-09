@@ -9,9 +9,8 @@ import {
 } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import CustomInputField from "../components/CustomInputField"; // custom component
 import CustomButton from "../components/CustomButton"; // custom component
-import logo from "./../assets/logo.svg";
+import Logo from "../assets/agteach.png";
 import { useForm } from "react-hook-form";
 import { useAdditionalInfoMutation } from "../services/api/authApi";
 import FormInput from "../components/login-signup/FormInput";
@@ -20,22 +19,24 @@ import { useSelector } from "react-redux";
 function AdditionalInformation() {
   const navigate = useNavigate();
   const { dob } = useSelector((state) => state.user);
-  const { email } = useSelector((state) => state.user);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const [addPerosnalInfo, { isLoading, isError, isSuccess, error }] = useAdditionalInfoMutation();
+  const [addPerosnalInfo, { isLoading, isError, isSuccess, error }] =
+    useAdditionalInfoMutation();
 
   const onSubmit = async (data) => {
-    console.log(data);
     try {
-      const { firstName, lastName, phone, address, city } = data
+      const { firstName, lastName, phone, address, city } = data;
       const response = await addPerosnalInfo({
-        firstName, lastName, phone, address, city,
+        firstName,
+        lastName,
+        phone,
+        address,
+        city,
         dateOfBirth: dob,
-        // email: email
       }).unwrap();
       console.log("Success:", response);
       navigate("/auth/signup/verification");
@@ -45,9 +46,17 @@ function AdditionalInformation() {
   };
 
   return (
-    <Grid2 container justifyContent="center" direction="column" mt={12} gap={15}>
+    <Grid2
+      container
+      justifyContent="center"
+      direction="column"
+      my={12}
+      gap={5}
+    >
       {/* Container for the entire form */}
-      <Box component="img" src={logo} alt="Logo" />
+      <Box sx={{ display: "flex", justifyContent: "center" }}>
+        <img src={Logo} alt="Logo" />
+      </Box>
       {/* Add alt text for accessibility */}
       <Grid2 container justifyContent="center" alignItems="center" gap={12}>
         {/* Container for the main content area */}
@@ -142,11 +151,11 @@ function AdditionalInformation() {
             <Stack flexDirection="row" gap={2}>
               <FormInput
                 label="Phone number"
-                placeholder="e.g. +855 123456789"
+                placeholder="e.g. 0123456789"
                 {...register("phone", {
                   required: "Phone number is required",
                   pattern: {
-                    value: /^\+\d{1,3}\s*\d{1,4}(\s*\d{1,4}){1,4}$/,
+                    value: /^[0-9]+$/,
                     message: "Please enter a valid phone number",
                   },
                 })}
@@ -154,7 +163,11 @@ function AdditionalInformation() {
                 helperText={errors?.phone?.message}
               />
             </Stack>
-            <CustomButton color="primary" disabled={isLoading} variant="contained">
+            <CustomButton
+              color="primary"
+              disabled={isLoading}
+              variant="contained"
+            >
               {isLoading ? "Submitting..." : "Continue"}
             </CustomButton>
           </Stack>

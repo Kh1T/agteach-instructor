@@ -16,6 +16,7 @@ import { Avatar, Chip, Container, Link, Stack } from "@mui/material";
 import sidebarList from "../data/sideBarData";
 
 import { useLogoutMutation } from "../services/api/authApi";
+import { useGetInstructorInfoQuery } from "../services/api/authApi";
 
 /**
  * Sidebar component that renders a drawer and app bar with content.
@@ -29,6 +30,7 @@ import { useLogoutMutation } from "../services/api/authApi";
  */
 export default function Sidebar({ children }) {
   const { pathname } = useLocation();
+  const { data } = useGetInstructorInfoQuery();
   const drawerWidth = 250;
   const param = useParams();
 
@@ -50,6 +52,11 @@ export default function Sidebar({ children }) {
 
   const description = des && des.description;
   const headerTitle = head && head.title;
+
+  let instructorInfo = {};
+  if (data) {
+    instructorInfo = data.data.instructor;
+  }
 
   const drawerContent = (
     <Drawer
@@ -186,8 +193,8 @@ export default function Sidebar({ children }) {
               </Typography>
             </Stack>
             <Chip
-              avatar={<Avatar src={avtarChip} label="Avatar" />}
-              label="Jack Ma"
+              avatar={<Avatar src={instructorInfo.imageUrl} label="Avatar" />}
+              label={instructorInfo.firstName ? instructorInfo.firstName : "Instructor"}
               sx={{
                 height: "40px",
                 borderRadius: "63px",
