@@ -86,7 +86,7 @@ export const authApi = createApi({
         method: "PATCH",
         body: additionalInfoData,
       }),
-      providesTags: ["Instructor"],
+      invalidatesTags: ["Instructor"],
     }),
 
     isLogin: builder.query({
