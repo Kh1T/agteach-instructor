@@ -6,7 +6,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const productApi = createApi({
   reducerPath: "productApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: " http://localhost:3001",
+    baseUrl: "https://api.agteach.site",
     credentials: "include",
   }),
   tagTypes: ["Product"],
