@@ -24,7 +24,7 @@ function CoursePage() {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectState, setSelectState] = useState(0);
-  // const [isLoadingSearch, setIsLoadingSearch] = useState(false); // New loading state
+  const [isLoadingSearch, setIsLoadingSearch] = useState(false); // New loading state
   const {
     data: course,
     isLoading,
@@ -86,12 +86,15 @@ function CoursePage() {
         ),
       })) || [];
 
-      const handleSearch = () => {
-        // setIsLoadingSearch(true); // Set loading state to true
-        const term = searchRef.current.value;
-        setSearchTerm(term); // Update the search term state
-        // setIsLoadingSearch(false); // Reset loading state after setting the search term
-      };
+  // console.log(courseList, "courseList");
+
+  const handleSearch = () => {
+    setIsLoadingSearch(true); // Set loading state to true
+    const term = searchRef.current.value;
+    setSearchTerm(term); // Update the search term state
+    setIsLoadingSearch(false); // Reset loading state after setting the search term
+  };
+
 
 
   return (
@@ -106,7 +109,7 @@ function CoursePage() {
         pathCreated="/course/new"
         labelCreate="Create Course"
       />
-      {isLoading ? (
+      {isSearching || isLoadingSearch ? (
         <Typography>Loading courses...</Typography>
       ) : courseList.length === 0 ? (
         <Box

@@ -1,9 +1,12 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
+// //  https://api.agteach.site
+// //  http://localhost:3001
+
 export const productApi = createApi({
   reducerPath: "productApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:3001",
+    baseUrl: " http://localhost:3001",
     credentials: "include",
   }),
   tagTypes: ["Product"],
@@ -15,25 +18,18 @@ export const productApi = createApi({
         body: productData,
       }),
     }),
-
+    
     getAllProducts: builder.query({
       providesTags: ["Product"],
-      query: () => ({
-        url: "/api/product/getAllProduct",
-        method: "GET",
-      }),
-    }),
-
-    searchProducts: builder.query({
-      query: ({ name, order }) => {
-        let url = "/api/product/searchData?name=";
-
-        if (name) url += name;
+      query: ({ name = "", order }) => {
+        let url = `/api/product/getInstructorProduct?name=${name}`;
+        
+        // Include order only if it's defined
         if (order) {
-          const dataOrder = order === 10 ? "desc" : "asc";
+          const dataOrder = order === "Newest" ? "desc" : "asc";
           url += `&order=${dataOrder}`;
         }
-
+    
         return {
           url,
           method: "GET",
@@ -54,6 +50,5 @@ export const productApi = createApi({
 export const {
   useAddProductMutation,
   useGetAllProductsQuery,
-  useSearchProductsQuery,
   useConfirmDeleteMutation,
 } = productApi;

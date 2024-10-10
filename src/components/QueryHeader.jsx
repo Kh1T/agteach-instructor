@@ -47,6 +47,7 @@ export default function QueryHeader({
           inputRef={searchRef}
           sx={{ width: 300 }}
           onKeyDown={handleKeyDown} 
+          onKeyDown={handleKeyDown} 
         />
         <CustomSelect
           label="Sort"

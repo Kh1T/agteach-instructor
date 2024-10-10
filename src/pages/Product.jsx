@@ -14,7 +14,7 @@ import CustomTable from "../components/CustomTable";
 import QueryHeader from "../components/QueryHeader";
 import {
   useConfirmDeleteMutation,
-  useSearchProductsQuery,
+  useGetAllProductsQuery,
 } from "../services/api/productApi";
 import { useNavigate } from "react-router";
 import deletBin from "../assets/Go Green Grey Hanger Bag.png";
@@ -23,8 +23,13 @@ import emptyProduct from "../assets/Spooky Stickers Sweet Franky.png";
 function ProductPage() {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectState, setSelectState] = useState(0);
-  const { data: searchedProducts, isFetching: isSearching, refetch } = useSearchProductsQuery({ name: searchTerm, order: selectState });
+  const [selectState, setSelectState] = useState();
+  const [isLoadingSearch, setIsLoadingSearch] = useState(false);
+  const {
+    data: products,
+    isLoading: isSearching,
+    refetch,
+  } = useGetAllProductsQuery({ name: searchTerm, order: selectState });
   const [confirmDelete] = useConfirmDeleteMutation();
   const searchRef = useRef();
   const label = "Sort";
@@ -53,36 +58,40 @@ function ProductPage() {
     handleCloseDialog();
   };
 
-  const productList = isSearching
-    ? []
-    : searchedProducts?.data?.map((item) => ({
-        Name: item.name,
-        Category: item.categoryId,
-        Quantity: item.quantity,
-        Price: item.price,
-        edit: (
-          <EditIcon
-            sx={{ cursor: "pointer" }}
-            onClick={() => {
-              navigate("/product/new", {
-                state: {
-                  product: item, // Pass the entire product object
-                },
-              });
-            }}
-          />
-        ),
-        delete: (
-          <DeleteIcon
-            color="red"
-            sx={{ cursor: "pointer" }}
-            onClick={() => handleDeleteClick(item)}
-          />
-        ),
-      }));
+  const productList =
+    isSearching || !products
+      ? []
+      : products?.item?.map((item) => ({
+          Name: item.name,
+          Category: item.categoryId,
+          Quantity: item.quantity,
+          Price: item.price,
+          edit: (
+            <EditIcon
+              sx={{ cursor: "pointer" }}
+              onClick={() => {
+                navigate("/product/new", {
+                  state: {
+                    product: item,
+                  },
+                });
+              }}
+            />
+          ),
+          delete: (
+            <DeleteIcon
+              color="red"
+              sx={{ cursor: "pointer" }}
+              onClick={() => handleDeleteClick(item)}
+            />
+          ),
+        })) || [];
 
   const handleSearch = () => {
-    setSearchTerm(searchRef.current.value);
+    setIsLoadingSearch(true);
+    const term = searchRef.current.value;
+    setSearchTerm(term); // Update the search term state
+    setIsLoadingSearch(false);
   };
 
   return (
@@ -97,9 +106,9 @@ function ProductPage() {
         pathCreated="/product/new"
         labelCreate="Create Product"
       />
-      {isSearching ? (
+      {isSearching || isLoadingSearch ? (
         <Typography>Loading products...</Typography>
-      ) : productList && productList.length === 0 ? (
+      ) : productList.length === 0 ? (
         <Box
           display="flex"
           flexDirection="column"
@@ -137,7 +146,8 @@ function ProductPage() {
               Delete Confirmation
             </Typography>
             <Typography variant="bxsr">
-              Are you sure you want to delete this product? <br /> You won't be able to retrieve it back.
+              Are you sure you want to delete this product? <br /> You won't be
+              able to retrieve it back.
             </Typography>
           </Box>
         </DialogContent>
@@ -163,5 +173,3 @@ function ProductPage() {
 }
 
 export default ProductPage;
-
-
