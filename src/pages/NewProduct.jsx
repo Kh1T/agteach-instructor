@@ -148,6 +148,7 @@ function NewProductPage() {
           productId={product?.productId}
           editMode={editMode}
           setRemovedImages={setRemovedImages}
+          watch={watch}
         />
         <Button
           type="submit"

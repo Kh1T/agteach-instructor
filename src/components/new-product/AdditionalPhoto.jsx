@@ -20,6 +20,7 @@ export default function AdditionalPhotos({
   productId,
   editMode,
   setRemovedImages,
+  watch,
 }) {
   const { data, isLoading } = useGetProductsImagesQuery(!editMode ? 'creating':productId);
 
@@ -41,6 +42,8 @@ export default function AdditionalPhotos({
         name={"productImages"}
         defaultValue={data}
         setRemovedImages={setRemovedImages}
+        watch={watch}
+        mode={editMode ? "edit" : "create"}
       />
       <Divider sx={{ my: 2 }} />
       <Typography component="ul">
