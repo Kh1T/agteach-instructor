@@ -1,4 +1,3 @@
-
 import { useState, useRef, useEffect } from "react";
 import { Stack, Box, Typography, Button, FormHelperText } from "@mui/material";
 // import { useFormContext } from "react-hook-form";
@@ -15,7 +14,7 @@ export default function PhotoPreview({
   watch,
   setValue,
   children,
-  defaultValue
+  defaultValue,
 }) {
   const [selectedImage, setSelectedImage] = useState(
     file ? URL.createObjectURL(file) : defaultValue || null
@@ -105,8 +104,17 @@ export default function PhotoPreview({
             sx={{ maxWidth: "150px", maxHeight: "150px", objectFit: "cover" }}
           />
           <Stack spacing={1}>
-            <Typography variant="bmdsm">Name: {fileInfo.name}</Typography>
-            <Typography variant="bmdr">Size: {fileInfo.size}</Typography>
+            {!defaultValue ? (
+              <>
+                <Typography variant="bmdsm">Name: {fileInfo.name}</Typography>
+                <Typography variant="bmdr">Size: {fileInfo.size}</Typography>
+              </>
+            ) : (
+              <>
+                <Typography variant="bmdsm">Name: product-cover-image</Typography>
+                <Typography variant="bmdr">Size: 740.00 KB</Typography>
+              </>
+            )}
             <Button
               variant="outlined"
               sx={{
