@@ -23,8 +23,8 @@ import emptyProduct from "../assets/Spooky Stickers Sweet Franky.png";
 function CoursePage() {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectState, setSelectState] = useState();
-  const [isLoadingSearch, setIsLoadingSearch] = useState(false); // New loading state
+  const [selectState, setSelectState] = useState(0);
+  // const [isLoadingSearch, setIsLoadingSearch] = useState(false); // New loading state
   const {
     data: course,
     isLoading,
@@ -87,10 +87,10 @@ function CoursePage() {
       })) || [];
 
       const handleSearch = () => {
-        setIsLoadingSearch(true); // Set loading state to true
+        // setIsLoadingSearch(true); // Set loading state to true
         const term = searchRef.current.value;
         setSearchTerm(term); // Update the search term state
-        setIsLoadingSearch(false); // Reset loading state after setting the search term
+        // setIsLoadingSearch(false); // Reset loading state after setting the search term
       };
 
 
@@ -106,7 +106,7 @@ function CoursePage() {
         pathCreated="/course/new"
         labelCreate="Create Course"
       />
-      {isLoading || isLoadingSearch ? (
+      {isLoading ? (
         <Typography>Loading courses...</Typography>
       ) : courseList.length === 0 ? (
         <Box
