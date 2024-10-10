@@ -44,7 +44,6 @@ export default function AddManyPhotos({
   const [modalOpen, setModalOpen] = useState(false);
   const [fileInputKey, setFileInputKey] = useState(Date.now()); // to trigger input reset
 
-  // console.log(uploadedPhotos);
   /**
    * Handle file change event by adding new photos to the uploadedPhotos array
    * and updating the form value. If the total number of photos exceeds 4, an error
@@ -52,7 +51,6 @@ export default function AddManyPhotos({
    *
    * @param {Event} event event object
    */
-  /******  9d71ff02-79f8-4573-8ca3-8b3244685b3e  *******/
   const handleFileChange = (event) => {
     const newPhotos = Array.from(event.target.files);
     if (newPhotos.length + uploadedPhotos.length > 4) {
@@ -75,7 +73,6 @@ export default function AddManyPhotos({
       setValue(name, updatedPhotos); // Correctly update form with filtered photos
       return updatedPhotos;
     });
-    console.log(file);
     setRemovedImages((prev) => [...prev, file]);
   };
 
@@ -176,6 +173,7 @@ export default function AddManyPhotos({
         style={{ display: "none" }}
         key={fileInputKey}
         accept="image/png, image/jpeg, image/jpg"
+        // required
       />
     </Stack>
   );

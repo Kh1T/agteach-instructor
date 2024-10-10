@@ -1,4 +1,9 @@
-import { TextField, Box, Divider, Typography } from "@mui/material";
+import {
+  TextField,
+  Box,
+  Divider,
+  Typography,
+} from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
 import IconWithTitle from "../course-product/IconWithTitle";
 import TextSection from "../course-product/TextSection";
@@ -19,9 +24,37 @@ import TextSection from "../course-product/TextSection";
  *
  * The component returns a Box component with children.
  */
-export default function AboutProduct({ register, errors }) {
+import { useEffect, useState } from "react";
+export default function AboutProduct({
+  register,
+  errors,
+  name='',
+  description='',
+  setValue,
+}) {
+  const [nameCharCount, setNameCharCount] = useState(0);
+  const [descCharCount, setDescCharCount] = useState(0);
+
+  useEffect(() => {
+    setNameCharCount(name.length);
+    setDescCharCount(description.length);
+  }, [name, description]);
+
+  const maxNameLength = 50;
+  const maxDescLength = 1000;
+
+  const handleNameCharCount = (event) => {
+    setValue("name", event.target.value);
+    setNameCharCount(event.target.value.length);
+  };
+
+  const handleDescCharCount = (event) => {
+    setValue("description", event.target.value);
+    setDescCharCount(event.target.value.length);
+  };
+
   return (
-    <Box className="container">
+    <Box>
       <IconWithTitle
         title="About this Product"
         icon={<InfoIcon sx={{ color: "common.white" }} />}
@@ -33,17 +66,21 @@ export default function AboutProduct({ register, errors }) {
         description="Your product name should be short and meaningful."
       />
       <TextField
-        // error={errors}
-        sx={{ my: 2 }}
         fullWidth
-        id="outlined-controlled"
+        id="outlined-name"
         type="text"
-        label="Product Name"
+        value={name}
+        label={
+          nameCharCount === 0
+            ? "Product Name"
+            : `Product Name : ${nameCharCount} / ${maxNameLength}`
+        }
+        onChange={handleNameCharCount}
         {...register("name", {
           required: "Product name is required",
           maxLength: {
-            value: 50,
-            message: "Product name should be less than 50 characters",
+            value: maxNameLength,
+            message: `Product name should be less than ${maxNameLength} characters`,
           },
         })}
         error={!!errors.name}
@@ -57,24 +94,26 @@ export default function AboutProduct({ register, errors }) {
         title="Tell us more about your product"
         description="Help explain what does the product do and key feature"
       />
+
       <TextField
-        // error={error}
         multiline
         minRows={4}
         maxRows={10}
-        slotProps={{
-          input: { sx: { alignItems: "flex-start" } },
-        }}
-        sx={{ my: 2 }}
         fullWidth
-        id="outlined-controlled"
-        label="Description"
-        // onChange={(event) => setdescription(event.target.value)}
+        id="outlined-description"
+        label={
+          descCharCount === 0
+            ? "Product Description"
+            : `Product Description :  
+            ${descCharCount} / ${maxDescLength}`
+        }
+        value={description}
+        onChange={handleDescCharCount}
         {...register("description", {
           required: "Product description is required",
           maxLength: {
-            value: 1000,
-            message: "Product description should be less than 1000 characters",
+            value: maxDescLength,
+            message: `Product description should be less than ${maxDescLength} characters`,
           },
         })}
         error={!!errors.description}

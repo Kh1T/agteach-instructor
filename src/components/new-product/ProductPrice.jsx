@@ -43,12 +43,15 @@ export default function ProductPrice({ errors, register }) {
         type="number"
         fullWidth
         {...register("price", {
-          min: 0,
-          required: "Price is required and Cannot be less than 0.",
+          required: "Price is required",
+          min: {
+            value: 1,
+            message: "Price is required and Cannot be less than 1.",
+          },
           max: {
             value: 1000,
             message: "Price must be less than 1000.",
-          }
+          },
         })}
         error={!!errors.price}
         helperText={errors.price?.message}

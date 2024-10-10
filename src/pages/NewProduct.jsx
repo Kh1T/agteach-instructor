@@ -67,7 +67,6 @@ function NewProductPage() {
 
     // Check if productCover exists and append it
     if (data.productCover instanceof File) {
-      console.log("This is the product cover: ", data.productCover);
       formData.append("productCover", data.productCover);
     }
 
@@ -118,7 +117,13 @@ function NewProductPage() {
           errors={errors}
           defaultValue={product?.categoryId}
         />
-        <AboutProduct register={register} errors={errors} />
+        <AboutProduct
+          register={register}
+          errors={errors}
+          setValue={setValue}
+          name={watch("name")}
+          description={watch("description")}
+        />
         <ProductQuantity
           register={register}
           errors={errors}
@@ -149,7 +154,6 @@ function NewProductPage() {
           variant="contained"
           sx={{ mt: 4, bgcolor: "purple.main" }}
           disabled={isSubmitting}
-          // onClick={console.log(watch())}
         >
           {isSubmitting ? <CircularProgress size={24} /> : ButtonText}
         </Button>
@@ -169,4 +173,3 @@ function NewProductPage() {
 }
 
 export default NewProductPage;
-

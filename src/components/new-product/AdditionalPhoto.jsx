@@ -18,12 +18,11 @@ export default function AdditionalPhotos({
   errors,
   setValue,
   productId,
-  editMode, 
-  setRemovedImages
+  editMode,
+  setRemovedImages,
 }) {
+  const { data, isLoading } = useGetProductsImagesQuery(!editMode ? 'creating':productId);
 
-  const { data , isLoading } = useGetProductsImagesQuery(productId);
-  
   return (
     <Box>
       <IconWithTitle
