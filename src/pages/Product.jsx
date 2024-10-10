@@ -24,6 +24,7 @@ function ProductPage() {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectState, setSelectState] = useState();
+  const [isLoadingSearch, setIsLoadingSearch] = useState(false);
   const {
     data: products,
     isLoading: isSearching,
@@ -57,9 +58,6 @@ function ProductPage() {
     handleCloseDialog();
   };
 
-  // Determine if we should show loading state
-  const isLoading = isSearching;
-
   const productList =
     isSearching || !products
       ? []
@@ -90,8 +88,10 @@ function ProductPage() {
         })) || [];
 
   const handleSearch = () => {
+    setIsLoadingSearch(true);
     const term = searchRef.current.value;
     setSearchTerm(term); // Update the search term state
+    setIsLoadingSearch(false);
   };
 
   return (
@@ -106,7 +106,7 @@ function ProductPage() {
         pathCreated="/product/new"
         labelCreate="Create Product"
       />
-      {isLoading ? (
+      {isSearching || isLoadingSearch ? (
         <Typography>Loading products...</Typography>
       ) : productList.length === 0 ? (
         <Box
