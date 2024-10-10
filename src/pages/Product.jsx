@@ -14,7 +14,6 @@ import CustomTable from "../components/CustomTable";
 import QueryHeader from "../components/QueryHeader";
 import {
   useConfirmDeleteMutation,
-  useSearchProductsQuery,
   useGetAllProductsQuery,
 } from "../services/api/productApi";
 import { useNavigate } from "react-router";
@@ -25,10 +24,7 @@ function ProductPage() {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectState, setSelectState] = useState();
-  const { data: searchedProducts, isFetching } = useSearchProductsQuery({
-    name: searchTerm,
-    order: selectState,
-  });
+  const [isLoadingSearch, setIsLoadingSearch] = useState(false);
   const {
     data: products,
     isLoading: isSearching,
@@ -62,14 +58,10 @@ function ProductPage() {
     handleCloseDialog();
   };
 
-   // Determine if we should show loading state
-  const isLoading = isSearching || isFetching;
-
-  // Use searchedProducts if a search term is present
   const productList =
     isSearching || !products
       ? []
-      : (searchTerm ? searchedProducts?.item : products?.item)?.map((item) => ({
+      : products?.item?.map((item) => ({
           Name: item.name,
           Category: item.categoryId,
           Quantity: item.quantity,
@@ -96,8 +88,10 @@ function ProductPage() {
         })) || [];
 
   const handleSearch = () => {
+    setIsLoadingSearch(true);
     const term = searchRef.current.value;
     setSearchTerm(term); // Update the search term state
+    setIsLoadingSearch(false);
   };
 
   return (
@@ -112,7 +106,7 @@ function ProductPage() {
         pathCreated="/product/new"
         labelCreate="Create Product"
       />
-      {isLoading ? (
+      {isSearching || isLoadingSearch ? (
         <Typography>Loading products...</Typography>
       ) : productList.length === 0 ? (
         <Box
