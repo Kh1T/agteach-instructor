@@ -14,7 +14,6 @@ import CustomTable from "../components/CustomTable";
 import QueryHeader from "../components/QueryHeader";
 import {
   useConfirmDeleteMutation,
-  useSearchProductsQuery,
   useGetAllProductsQuery,
 } from "../services/api/productApi";
 import { useNavigate } from "react-router";
@@ -25,10 +24,6 @@ function ProductPage() {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectState, setSelectState] = useState();
-  const { data: searchedProducts, isFetching } = useSearchProductsQuery({
-    name: searchTerm,
-    order: selectState,
-  });
   const {
     data: products,
     isLoading: isSearching,
@@ -62,14 +57,13 @@ function ProductPage() {
     handleCloseDialog();
   };
 
-   // Determine if we should show loading state
-  const isLoading = isSearching || isFetching;
+  // Determine if we should show loading state
+  const isLoading = isSearching;
 
-  // Use searchedProducts if a search term is present
   const productList =
     isSearching || !products
       ? []
-      : (searchTerm ? searchedProducts?.item : products?.item)?.map((item) => ({
+      : products?.item?.map((item) => ({
           Name: item.name,
           Category: item.categoryId,
           Quantity: item.quantity,

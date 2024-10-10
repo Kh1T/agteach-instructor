@@ -36,26 +36,6 @@ export const productApi = createApi({
         };
       },
     }),
-    
-    searchProducts: builder.query({
-      query: ({ name = "", order }) => {
-        let url = `/api/product/getInstructorProduct?name=${name}`;
-    
-        // Include order only if it's defined
-        if (order) {
-          const dataOrder = order === "Newest" ? "desc" : "asc";
-          url += `&order=${dataOrder}`;
-        }
-    
-        return {
-          url,
-          method: "GET",
-        };
-      },
-      providesTags: ["Product"],
-    }),
-    
-
 
     confirmDelete: builder.mutation({
       invalidatesTags: ["Product"],
@@ -70,6 +50,5 @@ export const productApi = createApi({
 export const {
   useAddProductMutation,
   useGetAllProductsQuery,
-  useSearchProductsQuery,
   useConfirmDeleteMutation,
 } = productApi;
