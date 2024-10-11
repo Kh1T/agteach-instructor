@@ -16,6 +16,18 @@ import { useAdditionalInfoMutation } from "../services/api/authApi";
 import FormInput from "../components/login-signup/FormInput";
 import { useSelector } from "react-redux";
 
+/**
+ * AdditionalInformation is a component that displays the second step of the
+ * registration process. It consists of a form with fields for the user's name,
+ * address, and contact information. The form is validated using the
+ * react-hook-form library. The `onSubmit` function is called when the form is
+ * submitted, and it makes a request to the API to add the user's information.
+ * If the request is successful, the user is redirected to the verification page.
+ * If the request fails, an error message is displayed.
+ *
+ * @return {React.ReactElement} A JSX element containing the AdditionalInformation
+ * component
+ */
 function AdditionalInformation() {
   const navigate = useNavigate();
   const { dob } = useSelector((state) => state.user);
