@@ -1,9 +1,4 @@
-import {
-  TextField,
-  Box,
-  Divider,
-  Typography,
-} from "@mui/material";
+import { TextField, Box, Divider, Typography } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
 import IconWithTitle from "../course-product/IconWithTitle";
 import TextSection from "../course-product/TextSection";
@@ -28,8 +23,8 @@ import { useEffect, useState } from "react";
 export default function AboutProduct({
   register,
   errors,
-  name='',
-  description='',
+  name = "",
+  description = "",
   setValue,
 }) {
   const [nameCharCount, setNameCharCount] = useState(0);
@@ -86,9 +81,11 @@ export default function AboutProduct({
         error={!!errors.name}
         helperText={errors.name?.message}
       />
-      <Typography variant="bsr" color="dark.300" sx={{ mt: 2 }}>
-        eg: Grow Lights - LED or fluorescent grow lights
-      </Typography>
+      {name.length === 0 && (
+        <Typography variant="bsr" color="dark.300" sx={{ mt: 2 }}>
+          eg: Grow Lights - LED or fluorescent grow lights
+        </Typography>
+      )}
 
       <TextSection
         title="Tell us more about your product"

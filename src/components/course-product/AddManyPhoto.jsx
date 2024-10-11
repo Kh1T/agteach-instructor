@@ -171,10 +171,9 @@ export default function AddManyPhotos({
                 return "At least one image is required";
               }
 
-              if (mode === "edit" && !defaultValue.images ) {
+              if (mode === "edit" && totalImages === 0) {
                 return "Cannot remove all images. At least one image is required";
               }
-
               return true;
             },
             lessThan4: (files) => {
@@ -190,7 +189,7 @@ export default function AddManyPhotos({
               Array.from(files).every((file) =>
                 ["image/jpeg", "image/jpg", "image/png"].includes(file.type)
               ) ||
-              "Only PNG and JPEG formats are allowed",
+              "Only PNG , JPG and JPEG formats are allowed",
           },
         })}
         onChange={handleFileChange}
