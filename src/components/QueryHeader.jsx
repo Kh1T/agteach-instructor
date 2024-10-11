@@ -33,6 +33,8 @@ export default function QueryHeader({
       handleSearch(); // Trigger search when Enter is pressed
     }
   };
+
+
   // const selectComponent =
   const content = (
     <Stack direction="row" sx={{ justifyContent: "space-between", mb: 2 }}>
@@ -44,7 +46,7 @@ export default function QueryHeader({
           placeholder={placeholder}
           inputRef={searchRef}
           sx={{ width: 300 }}
-          onKeyDown={handleKeyDown} 
+          onKeyDown={handleKeyDown}  
         />
         <CustomSelect
           label="Sort"
