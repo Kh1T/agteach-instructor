@@ -109,7 +109,7 @@ function CoursePage() {
         pathCreated="/course/new"
         labelCreate="Create Course"
       />
-      {isSearching || isLoadingSearch ? (
+      {isLoading || isLoadingSearch ? (
         <Typography>Loading courses...</Typography>
       ) : courseList.length === 0 ? (
         <Box
