@@ -12,28 +12,39 @@ export const courseApi = createApi({
   
       getAllCourses: builder.query({
         providesTags: ["Course"],
-        query: () => ({
-          url: "/api/course/getAllCourse",
-          method: "GET",
-        }),
-      }),
-  
-      searchCourses: builder.query({
-        query: ({ name, order }) => {
-          let url = "/api/course/searchData?name=";
-  
-          if (name) url += name;
+        query: ({ name = "", order }) => {
+          let url = `/api/course/getInstructorCourse?name=${name}`;
+          
+          // Include order only if it's defined
           if (order) {
-            const dataOrder = order === 10 ? "desc" : "asc";
+            const dataOrder = order === "Newest" ? "desc" : "asc";
             url += `&order=${dataOrder}`;
           }
-  
+      
           return {
             url,
             method: "GET",
           };
         },
       }),
+  
+  
+      // searchCourses: builder.query({
+      //   query: ({ name, order }) => {
+      //     let url = "/api/course/searchData?name=";
+  
+      //     if (name) url += name;
+      //     if (order) {
+      //       const dataOrder = order === 10 ? "desc" : "asc";
+      //       url += `&order=${dataOrder}`;
+      //     }
+  
+      //     return {
+      //       url,
+      //       method: "GET",
+      //     };
+      //   },
+      // }),
   
   
       confirmDelete: builder.mutation({
@@ -48,6 +59,6 @@ export const courseApi = createApi({
   export const {
     useGetAllCoursesQuery,
     useConfirmDeleteMutation,
-    useSearchCoursesQuery,
+    // useSearchCoursesQuery,
   } = courseApi;
   
