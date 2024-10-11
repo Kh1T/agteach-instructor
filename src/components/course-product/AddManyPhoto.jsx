@@ -10,9 +10,7 @@ import {
 import InsertPhotoIcon from "@mui/icons-material/InsertPhoto";
 import ClearIcon from "@mui/icons-material/Clear";
 
-import {
-  UploadedPhotoStyle,
-} from "../../theme/CourseProductStyle";
+import { UploadedPhotoStyle } from "../../theme/CourseProductStyle";
 
 /**
  * AddManyPhotos component renders an upload area for multiple photos
@@ -39,12 +37,17 @@ export default function AddManyPhotos({
 }) {
   const [existingUrls, setExistingUrls] = useState([]);
   const watchProductImages = watch(name);
+  const [validated, setValidated] = useState(true);
 
   useEffect(() => {
     if (defaultValue && defaultValue.images && defaultValue.images.length > 0) {
       const imageUrls = defaultValue.images.map((image) => image.imageUrl);
+      console.log({ imageUrls });
       setExistingUrls(imageUrls);
       setValue(name, imageUrls, { shouldValidate: true });
+      if (imageUrls) {
+        setValidated(true);
+      }
     }
   }, [defaultValue, name, setValue]);
 
@@ -74,6 +77,10 @@ export default function AddManyPhotos({
       const removedUrl = existingUrls[index];
       const newUrls = existingUrls.filter((_, i) => i !== index);
       setExistingUrls(newUrls);
+      console.log({newUrls})
+      if (newUrls.length === 0) {
+        setValidated(false);
+      }
       if (setRemovedImages) {
         setRemovedImages((prev) => [...prev, removedUrl]);
       }
@@ -171,7 +178,7 @@ export default function AddManyPhotos({
                 return "At least one image is required";
               }
 
-              if (mode === "edit" && totalImages === 0) {
+              if (mode === "edit" && totalImages === 0 && !validated) {
                 return "Cannot remove all images. At least one image is required";
               }
               return true;
