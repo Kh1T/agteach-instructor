@@ -6,8 +6,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const productApi = createApi({
   reducerPath: "productApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: " http://localhost:3001",
-    // baseUrl: "https://api.agteach.site",
+    baseUrl: "https://api.agteach.site",
+    // baseUrl: " http://localhost:3001",
     credentials: "include",
   }),
 
@@ -21,44 +21,24 @@ export const productApi = createApi({
       }),
       invalidatesTags: ["Product"],
     }),
-    
+
     getAllProducts: builder.query({
       providesTags: ["Product"],
       query: ({ name = "", order }) => {
         let url = `/api/product/getInstructorProduct?name=${name}`;
-        
-        // Include order only if it's defined
-        if (order) {
-          const dataOrder = order === "Newest" ? "desc" : "asc";
-          url += `&order=${dataOrder}`;
-        }
-    
-        return {
-          url,
-          method: "GET",
-        };
-      },
-    }),
-    
-    searchProducts: builder.query({
-      query: ({ name = "", order }) => {
-        let url = `/api/product/getInstructorProduct?name=${name}`;
-    
-        // Include order only if it's defined
-        if (order) {
-          const dataOrder = order === "Newest" ? "desc" : "asc";
-          url += `&order=${dataOrder}`;
-        }
-    
-        return {
-          url,
-          method: "GET",
-        };
-      },
-      providesTags: ["Product"],
-    }),
-    
 
+        // Include order only if it's defined
+        if (order) {
+          const dataOrder = order === "Newest" ? "desc" : "asc";
+          url += `&order=${dataOrder}`;
+        }
+
+        return {
+          url,
+          method: "GET",
+        };
+      },
+    }),
 
     confirmDelete: builder.mutation({
       invalidatesTags: ["Product"],
@@ -102,7 +82,6 @@ export const productApi = createApi({
 export const {
   useCreateProductMutation,
   useGetAllProductsQuery,
-  useSearchProductsQuery,
   useConfirmDeleteMutation,
   useGetProductsQuery,
   useGetInstructorDataQuery,

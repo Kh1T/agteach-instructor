@@ -16,6 +16,18 @@ import { useAdditionalInfoMutation } from "../services/api/authApi";
 import FormInput from "../components/login-signup/FormInput";
 import { useSelector } from "react-redux";
 
+/**
+ * AdditionalInformation is a component that displays the second step of the
+ * registration process. It consists of a form with fields for the user's name,
+ * address, and contact information. The form is validated using the
+ * react-hook-form library. The `onSubmit` function is called when the form is
+ * submitted, and it makes a request to the API to add the user's information.
+ * If the request is successful, the user is redirected to the verification page.
+ * If the request fails, an error message is displayed.
+ *
+ * @return {React.ReactElement} A JSX element containing the AdditionalInformation
+ * component
+ */
 function AdditionalInformation() {
   const navigate = useNavigate();
   const { dob } = useSelector((state) => state.user);
@@ -24,7 +36,7 @@ function AdditionalInformation() {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const [addPerosnalInfo, { isLoading, isError, isSuccess, error }] =
+  const [addPerosnalInfo, { isLoading }] =
     useAdditionalInfoMutation();
 
   const onSubmit = async (data) => {
@@ -45,14 +57,15 @@ function AdditionalInformation() {
     }
   };
 
+  const validatePhone = (value) => {
+    const phonePattern = /^[0-9]+$/; // Only digits numbers
+    if (!value) return true; // Allow empty input if not required
+    if (value.length > 15) return "Phone number cannot exceed 15 digits";
+    return phonePattern.test(value) || "Please enter a valid phone number";
+  };
+
   return (
-    <Grid2
-      container
-      justifyContent="center"
-      direction="column"
-      my={12}
-      gap={5}
-    >
+    <Grid2 container justifyContent="center" direction="column" my={12} gap={5}>
       {/* Container for the entire form */}
       <Box sx={{ display: "flex", justifyContent: "center" }}>
         <img src={Logo} alt="Logo" />
@@ -153,11 +166,7 @@ function AdditionalInformation() {
                 label="Phone number"
                 placeholder="e.g. 0123456789"
                 {...register("phone", {
-                  required: "Phone number is required",
-                  pattern: {
-                    value: /^[0-9]+$/,
-                    message: "Please enter a valid phone number",
-                  },
+                  validate: validatePhone,
                 })}
                 error={!!errors.phone}
                 helperText={errors?.phone?.message}
