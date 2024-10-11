@@ -43,6 +43,9 @@ export default function LectureComponent({
     `allSection[${sectionNumber - 1}].allLecture[${lectureNumber - 1}].video`
   );
 
+  console.log("videoUrl", videoUrl);
+  
+
   return (
     <Box bgcolor='grey.300' sx={{ alignItems: "center", padding: '20px 30px 15px 30px' }}>
       <Stack direction="row" justifyContent="space-between">
@@ -82,7 +85,7 @@ export default function LectureComponent({
             newFile
           )
         }
-        file={videoUrl ? new File([videoUrl], videoUrl.split("/").pop()) : null} // Create a fake File object for display purposes
+        file={videoUrl ? new File([videoUrl], videoUrl) : null}
       />
       <DeleteConfirmModal
         open={modalOpen}
@@ -92,3 +95,4 @@ export default function LectureComponent({
     </Box>
   );
 }
+

@@ -4,6 +4,7 @@ const initialState = {
   id: "",
   courseData: {},
   isLoading: true,
+  productId: [{}],
 };
 
 const courseSlice = createSlice({
@@ -22,11 +23,16 @@ const courseSlice = createSlice({
       state.courseData = action.payload;
     },
 
+    setProductId: (state, action) => {
+      state.productId = action.payload;
+    },
+
     clearUser: (state) => {
       state.courseData = {};
     },
   },
 });
 
-export const { setId, setCourse, isLoading, clearUser } = courseSlice.actions;
+export const { setId, setCourse, isLoading, setProductId, clearUser } =
+  courseSlice.actions;
 export default courseSlice.reducer;

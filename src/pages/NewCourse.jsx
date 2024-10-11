@@ -6,40 +6,71 @@ import AddThumbnail from "../components/new-course/AddThumbnail";
 import RelatedProduct from "../components/new-course/RelatedProduct";
 import ButtonComponent from "../components/course-product/ButtonInBox";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { useForm, FormProvider } from "react-hook-form";
-import { useAddCourseMutation, useGetCourseQuery } from "../services/api/courseApi";
+import {
+  useAddCourseMutation,
+  useGetCourseQuery,
+} from "../services/api/courseApi";
 import { CustomAlert } from "../components/CustomAlert";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { setCourse } from "../features/course/courseSlice";
+import { setCourse, setId } from "../features/course/courseSlice";
 
 function NewCoursePage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const id = useSelector((state) => state.course.id)
+  const id = useSelector((state) => state.course.id);
+  const productId = useSelector((state) => state.course.productId);
+  const { action } = useParams();
   console.log("id", id);
-  
+  console.log("productId", productId);
+
+  dispatch(setId(action));
+
   const methods = useForm();
-  const { handleSubmit } = methods;
-  const [addCourse, { isLoading: isLoadingAddCourse, isSuccess, isError, error }] =
-    useAddCourseMutation();
-  const { data, isLoading: isLoadingGetCourse } = useGetCourseQuery(id)
+  const { handleSubmit, reset } = methods;
+  const [
+    addCourse,
+    { isLoading: isLoadingAddCourse, isSuccess, isError, error },
+  ] = useAddCourseMutation();
+  const { data, isLoading: isLoadingGetCourse } = useGetCourseQuery(action, {
+    skip: action === "new",
+  });
+
+  console.log('data', data);
+  
 
   // const { alertMessage, setAlertMessage } = useState();
 
   const location = useLocation();
-  const course = location.state?.course
+  const course = location.state?.course;
   // console.log("course", course);
-  
+
+  const handleBack = () => {
+    dispatch(setCourse(null));
+    navigate(-1);
+  };
+
+  // useEffect(() => {
+  //   if (data) {
+  //     dispatch(setCourse(data.data));
+  //     reset(data.data)
+  //     console.log("new data", data);
+  //   } else {
+  //     reset()
+  //   }
+  // }, [data, dispatch]);
 
   useEffect(() => {
-    if (data) {
+    if (action === "new") {
+      dispatch(setCourse(null));
+    } else if (data) {
       dispatch(setCourse(data.data));
-      console.log("data", data.data);
     }
-  }, [data, dispatch]);
+  }, [action, data, dispatch]);
+  
 
   const submitHandler = async (data) => {
     console.log("formData", data);
@@ -52,25 +83,8 @@ function NewCoursePage() {
       courseThumbnail,
     } = data;
 
-    // const submitData = {
-    //   courseName: courseTitle,
-    //   description: courseDescription,
-    //   price: coursePrice,
-    //   courseObjective: objective,
-    //   allSection: allSection.map((section) => ({
-    //     sectionName: section.sectionName || "untitled section",
-    //     allLecture: section.allLecture.map((lecture) => ({
-    //       lectureName: lecture.lectureName,
-    //       video: lecture.video ? lecture.video : null,
-    //     })),
-    //   })),
-    // };
-    // console.log("courseTitle", { ...submitData });
-    // console.log("courseDescription", courseDescription);
-
     const formData = new FormData();
 
-    // console.log(submitData.allSection,'allsection')
     // Append course details
     formData.append("courseName", courseName);
     formData.append("description", description);
@@ -78,13 +92,13 @@ function NewCoursePage() {
     formData.append("courseObjective", courseObjective);
     formData.append("allSection", JSON.stringify(allSection));
     formData.append("thumbnailUrl", courseThumbnail);
+    formData.append("ProductSuggestionId", JSON.stringify(productId));
 
     allSection.forEach((section) => {
       section.allLecture.forEach((lecture) => {
         formData.append("videos", lecture.video);
       });
     });
-
 
     console.log([...formData]);
 
@@ -120,7 +134,7 @@ function NewCoursePage() {
               color: "dark.300",
               typography: "bmdr",
             }}
-            onClick={() => navigate(-1)}
+            onClick={handleBack}
           >
             Go Back
           </Button>
@@ -132,7 +146,15 @@ function NewCoursePage() {
           <RelatedProduct />
           <ButtonComponent
             type={"submit"}
-            text={isLoadingAddCourse ? "CREATING..." : "CREATE COURSE"}
+            text={
+              action === "new"
+                ? isLoadingAddCourse
+                  ? "CREATING..."
+                  : "CREATE COURSE"
+                : isLoadingGetCourse
+                  ? "UPDATING..."
+                  : "UPDATE COURSE"
+            }
             variant={"contained"}
             bgcolor={"purple.main"}
           />

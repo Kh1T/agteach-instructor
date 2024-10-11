@@ -14,33 +14,39 @@ import IconWithTitle from "../course-product/IconWithTitle";
 import TextSection from "../course-product/TextSection";
 
 import { useState, useEffect } from "react";
-
-import { fakeProductData } from "../../data/searchBarData";
+import { useGetInstructoreProductQuery } from "../../services/api/courseApi";
 import AddedProduct from "../course-product/AddedProduct";
 
-const allProduct = fakeProductData;
-/**
- * RelatedProduct component
- *
- * This component displays a list of suggested products that are relevant to
- * the course. It allows the user to search for products, add them to the
- * course, and remove them.
- *
- * The component also displays a list of products that have already been
- * added to the course.
- *
- * @returns A RelatedProduct component
- */
 export default function RelatedProduct() {
-  const [searchResults, setSearchResults] = useState([allProduct]);
+  const [searchResults, setSearchResults] = useState([]);
   const [addedProducts, setAddedProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [error, setError] = useState(null);
 
+  const { data } = useGetInstructoreProductQuery({ name: searchTerm });
+
+  let products = [];
+  if (data) {
+    products = data.item.map((product) => ({
+      src: product.imageUrl,
+      title: product.name,
+      price: product.price,
+      id: product.productId,
+    }));
+  }
+
+
+  // Set initial search results to all products
   useEffect(() => {
-    // Initially set all products
-    setSearchResults(allProduct);
-  }, []);
+    if (products.length > 0) {
+      // Filter out added products from the search results
+      const filteredProducts = products.filter(
+        (product) => !addedProducts.some((p) => p.id === product.id)
+      );
+      setSearchResults(filteredProducts);
+    }
+  }, [products, addedProducts]);
+
   const handleAddProduct = (product) => {
     if (addedProducts.some((p) => p.id === product.id)) {
       setError("This product is already added.");
@@ -53,23 +59,23 @@ export default function RelatedProduct() {
 
   const handleRemoveProduct = (productId) => {
     setAddedProducts((prevProducts) =>
-      prevProducts.filter((product) => product.id !== productId),
+      prevProducts.filter((product) => product.id !== productId)
     );
   };
 
   const handleSearchInputChange = (event) => {
     setSearchTerm(event.target.value);
-    const filteredResults = fakeProductData.filter((product) =>
-      product.title.toLowerCase().includes(event.target.value.toLowerCase()),
+    // Filter products based on search term
+    const filteredResults = products.filter((product) =>
+      product.title.toLowerCase().includes(event.target.value.toLowerCase())
     );
-    setSearchResults(filteredResults);
-  };
 
-  const handleSearch = () => {
-    const filteredResults = fakeProductData.filter((product) =>
-      product.title.toLowerCase().includes(searchTerm.toLowerCase()),
+    // Also filter out already added products
+    const availableResults = filteredResults.filter(
+      (product) => !addedProducts.some((p) => p.id === product.id)
     );
-    setSearchResults(filteredResults);
+
+    setSearchResults(availableResults);
   };
 
   return (
@@ -85,11 +91,15 @@ export default function RelatedProduct() {
         description="Recommend products that are relevant to this course where students can buy for practical learning"
       />
 
+      <Divider sx={{ my: 3 }} />
+
+      {/* Added Products Display */}
       <AddedProduct
         products={addedProducts}
         onRemoveProduct={handleRemoveProduct}
       />
 
+      {/* Added Products Section */}
       <Stack direction="row" gap={2}>
         <TextField
           sx={{ my: 2, minWidth: "300px" }}
@@ -102,7 +112,7 @@ export default function RelatedProduct() {
           text="SEARCH"
           variant="contained"
           height="56px"
-          onClick={handleSearch}
+          // No need for a separate search button; filtering happens on input change.
         />
       </Stack>
 
@@ -119,18 +129,17 @@ export default function RelatedProduct() {
         ))}
       </Stack>
 
-      <Divider />
-
       <Typography component="ul" paddingY={2}>
         <Typography variant="bsr" color="dark.300" paddingY={1} component="li">
-          Please verify your course information before submitting
+          Please verify your course information before submitting.
         </Typography>
         <Typography variant="bsr" color="dark.300" component="li">
           By clicking <strong>CREATE COURSE</strong> you ensure that all the
           provided course above information is following AgTeach Terms and
-          Policy
+          Policy.
         </Typography>
       </Typography>
+
       {error && (
         <Snackbar
           open={Boolean(error)}

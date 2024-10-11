@@ -6,7 +6,7 @@ export const courseApi = createApi({
     baseUrl: "http://localhost:3001",
     credentials: "include",
   }),
-
+  tagTypes: ["Course"],
   endpoints: (builder) => ({
     addCourse: builder.mutation({
       query: (productData) => ({
@@ -14,6 +14,7 @@ export const courseApi = createApi({
         method: "POST",
         body: productData,
       }),
+      invalidatesTags: ["Course"],
     }),
 
     getCourse: builder.query({
@@ -21,14 +22,26 @@ export const courseApi = createApi({
         url: `/api/course/getOneCourse/${id}`,
         method: "GET",
       }),
+      providesTags: ["Course"],
     }),
 
     getAllCourses: builder.query({
-      providesTags: ["Course"],
       query: () => ({
         url: "/api/course/getAllCourse",
         method: "GET",
       }),
+      providesTags: ["Course"],
+    }),
+
+    getInstructoreProduct: builder.query({
+      query: ({ name }) => {
+        let url = `/api/product/getInstructorProduct?name=${name}`;
+
+        return {
+          url,
+          method: "GET",
+        }
+      },
     }),
 
     searchCourses: builder.query({
@@ -53,8 +66,8 @@ export const courseApi = createApi({
         url: `/api/course/deleteOneCourse/${id}`,
         method: "DELETE",
       }),
+      invalidatesTags: ["Course"],
     }),
-
   }),
 });
 
@@ -62,6 +75,7 @@ export const {
   useAddCourseMutation,
   useGetCourseQuery,
   useGetAllCoursesQuery,
+  useGetInstructoreProductQuery,
   useSearchCoursesQuery,
   useConfirmDeleteMutation,
 } = courseApi;

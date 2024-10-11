@@ -5,7 +5,6 @@ import TextSection from "../course-product/TextSection";
 
 import { useFormContext } from "react-hook-form";
 import { useSelector } from "react-redux";
-import { useEffect } from "react";
 
 /**
  * AboutCourse component renders a page for instructors to input course title,
@@ -17,21 +16,21 @@ import { useEffect } from "react";
  */
 
 export default function AboutCourse() {
-  const { register, setValue, formState: { errors } } = useFormContext();
+  const {
+    register,
+    setValue,
+    formState: { errors },
+  } = useFormContext();
   const course = useSelector((state) => state.course.courseData);
 
-  useEffect(() => {
-    if (course.length > 0) {
-      const { name, description, courseObjective } = course[0].course;
-      console.log(name, description, courseObjective);
-      
-      setValue("courseName", name);
-      setValue("description", description);
-      setValue("courseObjective", courseObjective);
-    };
-  }, [course, setValue]);
-  
-  
+  if (course) {
+    const { name, description, courseObjective } = course;
+
+    setValue("courseName", name);
+    setValue("description", description);
+    setValue("courseObjective", courseObjective);
+  }
+
   return (
     <Box className="container">
       <IconWithTitle
@@ -88,7 +87,7 @@ export default function AboutCourse() {
         multiline
         id="outlined-controlled"
         label="What they will learn in this course: "
-        {...register("courseObjective", { required: "Objective is required" })} 
+        {...register("courseObjective", { required: "Objective is required" })}
         error={!!errors.courseObjective}
         helperText={errors.courseObjective?.message}
       />

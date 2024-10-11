@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Box, Typography, Stack, Divider } from "@mui/material";
 import ProductCard from "../new-course/ProductCard";
+import { useDispatch } from "react-redux";
+import { setProductId } from "../../features/course/courseSlice";
 /**
  * AddedProduct component renders a list of products that have been added to the course.
  *
@@ -30,11 +32,20 @@ import ProductCard from "../new-course/ProductCard";
  * If the `products` array is empty, the component renders a Typography component with the text "No products added yet.".
  */
 export default function AddedProduct({ products, onRemoveProduct }) {
+  const dispatch = useDispatch();
   const handleRemoveProduct = (productId) => {
     if (onRemoveProduct) {
       onRemoveProduct(productId);
     }
   };
+
+  useEffect(() => {
+    const formattedProducts = products.map((product) => ({
+      productId: product.id,
+    }))
+    dispatch(setProductId(formattedProducts));
+  }, [products, dispatch]);
+
   return (
     <Box>
       <Typography variant="blgsm" sx={{ paddingBottom: 2 }}>
@@ -54,7 +65,7 @@ export default function AddedProduct({ products, onRemoveProduct }) {
             />
           ))
         ) : (
-          <Typography>No products added yet.</Typography>
+          <Typography>No products added yet</Typography>
         )}
       </Stack>
       <Divider />

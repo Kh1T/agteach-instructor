@@ -351,4 +351,127 @@
             "updatedAt": "2024-10-09T05:32:02.164Z"
         }
     }
-]
+
+
+"data": {
+    "courseId": 520,
+    "instructorId": 61,
+    "name": "Updated Course Name",
+    "description": "Updated course description.",
+    "previewVideoUrl": "https://northatlanticaviationmuseum.com/wp-content/uploads/2020/10/Lorem-ipsum-video-Dummy-video-for-your-website.mp4?_=2",
+    "thumbnailUrl": "https://placehold.co/400",
+    "duration": {},
+    "numberOfVideo": 2,
+    "courseObjective": "Updated course objectives.",
+    "price": "100",
+    "createdAt": "2024-10-10T08:02:58.598Z",
+    "updatedAt": "2024-10-10T08:02:58.599Z",
+    "sections": [
+        {
+            "sectionId": 616,
+            "instructorId": 61,
+            "courseId": 520,
+            "name": "Section 1",
+            "createdAt": "2024-10-10T08:02:59.158Z",
+            "updatedAt": "2024-10-10T08:02:59.158Z",
+            "lectures": [
+                {
+                    "lectureId": 763,
+                    "instructorId": 61,
+                    "sectionId": 616,
+                    "name": "Lecture 1",
+                    "videoUrl": "https://northatlanticaviationmuseum.com/wp-content/uploads/2020/10/Lorem-ipsum-video-Dummy-video-for-your-website.mp4?_=2",
+                    "duration": {},
+                    "createdAt": "2024-10-10T08:02:59.470Z",
+                    "updatedAt": "2024-10-10T08:02:59.470Z"
+                },
+                {
+                    "lectureId": 764,
+                    "instructorId": 61,
+                    "sectionId": 616,
+                    "name": "Lecture 1",
+                    "videoUrl": "https://northatlanticaviationmuseum.com/wp-content/uploads/2020/10/Lorem-ipsum-video-Dummy-video-for-your-website.mp4?_=2",
+                    "duration": {},
+                    "createdAt": "2024-10-10T08:02:59.470Z",
+                    "updatedAt": "2024-10-10T08:02:59.470Z"
+                }
+            ]
+        },
+        {
+            "sectionId": 617,
+            "instructorId": 61,
+            "courseId": 520,
+            "name": "Section 1",
+            "createdAt": "2024-10-10T08:02:59.158Z",
+            "updatedAt": "2024-10-10T08:02:59.159Z",
+            "lectures": [
+                {
+                    "lectureId": 765,
+                    "instructorId": 61,
+                    "sectionId": 617,
+                    "name": "Lecture 1",
+                    "videoUrl": "https://northatlanticaviationmuseum.com/wp-content/uploads/2020/10/Lorem-ipsum-video-Dummy-video-for-your-website.mp4?_=2",
+                    "duration": {},
+                    "createdAt": "2024-10-10T08:02:59.746Z",
+                    "updatedAt": "2024-10-10T08:02:59.746Z"
+                },
+                {
+                    "lectureId": 766,
+                    "instructorId": 61,
+                    "sectionId": 617,
+                    "name": "Lecture 1",
+                    "videoUrl": "https://northatlanticaviationmuseum.com/wp-content/uploads/2020/10/Lorem-ipsum-video-Dummy-video-for-your-website.mp4?_=2",
+                    "duration": {},
+                    "createdAt": "2024-10-10T08:02:59.746Z",
+                    "updatedAt": "2024-10-10T08:02:59.746Z"
+                }
+            ]
+        },
+        {
+            "sectionId": 618,
+            "instructorId": 61,
+            "courseId": 520,
+            "name": "Section 1",
+            "createdAt": "2024-10-10T08:02:59.159Z",
+            "updatedAt": "2024-10-10T08:02:59.159Z",
+            "lectures": [
+                {
+                    "lectureId": 767,
+                    "instructorId": 61,
+                    "sectionId": 618,
+                    "name": "Lecture 1",
+                    "videoUrl": "https://northatlanticaviationmuseum.com/wp-content/uploads/2020/10/Lorem-ipsum-video-Dummy-video-for-your-website.mp4?_=2",
+                    "duration": {},
+                    "createdAt": "2024-10-10T08:03:00.037Z",
+                    "updatedAt": "2024-10-10T08:03:00.038Z"
+                },
+                {
+                    "lectureId": 768,
+                    "instructorId": 61,
+                    "sectionId": 618,
+                    "name": "Lecture 1",
+                    "videoUrl": "https://northatlanticaviationmuseum.com/wp-content/uploads/2020/10/Lorem-ipsum-video-Dummy-video-for-your-website.mp4?_=2",
+                    "duration": {},
+                    "createdAt": "2024-10-10T08:03:00.038Z",
+                    "updatedAt": "2024-10-10T08:03:00.038Z"
+                }
+            ]
+        }
+    ],
+    "instructor": {
+        "instructorId": 61,
+        "firstName": "abc",
+        "lastName": "qwe",
+        "phone": "8553012130",
+        "dateOfBirth": "2024-09-03",
+        "email": "pmunyphalla@gmail.com",
+        "imageUrl": null,
+        "userUid": "61633838-2190-445e-a03e-7dd6ea1ef8b1",
+        "locationId": null,
+        "bio": null,
+        "createdAt": "2024-09-30T02:00:59.370Z",
+        "updatedAt": "2024-09-30T02:00:59.371Z"
+    }
+}
+
+

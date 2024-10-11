@@ -1,5 +1,5 @@
 import { Box, Button, FormHelperText, Stack, Typography } from "@mui/material";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import UploadFileOutlinedIcon from "@mui/icons-material/UploadFileOutlined";
 import { useFormContext } from "react-hook-form";
 
@@ -16,9 +16,7 @@ export default function VideoUpload({
     formState: { errors },
   } = useFormContext();
 
-  const [videoUrl, setVideoUrl] = useState(
-    file ? URL.createObjectURL(file) : null
-  );
+  const [isError, setIsError] = useState(false);
   const [fileInfo, setFileInfo] = useState(
     file ? { name: file.name, size: (file.size / 1024).toFixed(2) + " KB" } : {}
   );
@@ -26,12 +24,27 @@ export default function VideoUpload({
   const inputRef = useRef(null);
   const videoFile = watch(name);
 
+  useEffect(() => {
+    // If the videoFile exists, clear the error
+    if (videoFile) {
+      setIsError(false);
+    }
+  }, [videoFile]);
+
   const handleVideoUpload = (event) => {
     const newFile = event.target.files[0];
     setFileInfo({
-      name: newFile.name,
-      size: (newFile.size / 1024).toFixed(2) + " KB",
+      name: newFile?.name || "",
+      size: newFile ? (newFile.size / 1024).toFixed(2) + " KB" : "",
     });
+    
+    // If no file is selected, show an error
+    if (!newFile) {
+      setIsError(true);
+    } else {
+      setIsError(false);
+    }
+
     onFileChange(newFile);
     setValue(name, newFile);
   };
@@ -50,8 +63,8 @@ export default function VideoUpload({
         <>
           <Box
             sx={{
-              backgroundColor: !!errors[name] ? "red.light" : "gray.300",
-              border: `2px dashed ${!!errors[name] ? "red" : "gray"}`,
+              backgroundColor: isError ? "red.light" : "grey.300",
+              border: `2px dashed ${isError ? "red" : "grey"}`,
               cursor: "pointer",
               alignItems: "center",
               justifyItems: "center",
@@ -94,9 +107,9 @@ export default function VideoUpload({
           </Stack>
         </Stack>
       )}
-      {errors[name] && (
-        <FormHelperText sx={{ pl: 2, mt: 1 }} error>
-          {errors[name]?.message || "This field is required"}
+      {isError && (
+        <FormHelperText sx={{ pl: 2 }} error>
+          Video is required
         </FormHelperText>
       )}
       <input

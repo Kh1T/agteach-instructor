@@ -4,6 +4,7 @@ import WallpaperOutlinedIcon from "@mui/icons-material/WallpaperOutlined";
 import IconWithTitle from "../course-product/IconWithTitle";
 import TextSection from "../course-product/TextSection";
 import PhotoPreview from "../course-product/PhotoPreview";
+import { useSelector } from "react-redux";
 
 /**
  * AddThumbnail component for adding thumbnail image of course
@@ -15,6 +16,13 @@ import PhotoPreview from "../course-product/PhotoPreview";
  *   - PhotoPreview component with icon .
  */
 export default function AddThumbnail() {
+  const course = useSelector((state) => state.course.courseData);
+  let url;
+
+  if (course) {
+    url = course.thumbnailUrl;
+  }
+
   return (
     <Box>
       <IconWithTitle
@@ -30,6 +38,7 @@ export default function AddThumbnail() {
         icon={<InsertPhotoIcon />}
         name="courseThumbnail"
         type="image"
+        url={url}
       >
         <Typography color="gray">
           Upload Course thumbnail image, png, jpg, webp

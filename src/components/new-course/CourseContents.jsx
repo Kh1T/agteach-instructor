@@ -17,85 +17,52 @@ export default function CourseContents() {
 
   const course = useSelector((state) => state.course.courseData);
 
-  // useEffect(() => {
-  //   if (course && course.length > 0) {
-  //     // Map the sections and lectures from the API response
-  //     const mappedSections = course.map((item, index) => ({
-  //       id: uuidv4(),
-  //       number: index + 1,
-  //       sectionName: item.section.name,
-  //       allLecture: item.lecture ? [{
-  //         lectureName: item.lecture.name,
-  //         video: item.lecture.videoUrl
-  //       }] : []
-  //     }));
-      
-  //     setSections(mappedSections);
-
-  //     // Set form values for each section and lecture
-  //     mappedSections.forEach((section, sectionIndex) => {
-  //       setValue(`allSection[${sectionIndex}].sectionName`, section.sectionName);
-  //       section.allLecture.forEach((lecture, lectureIndex) => {
-  //         setValue(`allSection[${sectionIndex}].allLecture[${lectureIndex}].lectureName`, lecture.lectureName);
-  //         setValue(`allSection[${sectionIndex}].allLecture[${lectureIndex}].video`, lecture.video);
-  //         // setValue(`allSection[${sectionIndex}].allLecture[${lectureIndex}]`, lecture.);
-  //       });
-  //     });
-  //     console.log("mappedSections", mappedSections);
-      
-  //   }
-  // }, [course, setValue]);
-
   useEffect(() => {
-    if (course && course.length > 0) {
-        // Sort the course data by lectureId
-        const sortedCourse = [...course].sort((a, b) => a.lectureId - b.lectureId);
-
-        // Create a mapping of sections to their lectures
-        const sectionMap = {};
-
-        sortedCourse.forEach(item => {
-            const sectionId = item.section.sectionId;
-            const lecture = item.lecture;
-
-            // Initialize the section if it doesn't exist
-            if (!sectionMap[sectionId]) {
-                sectionMap[sectionId] = {
-                    id: uuidv4(),
-                    number: Object.keys(sectionMap).length + 1,
-                    sectionName: item.section.name,
-                    allLecture: []
-                };
-            }
-
-            // Add the lecture to the corresponding section
-            if (lecture) {
-                const extension = lecture.videoUrl.split('.').pop();
-                const fileName = lecture.name.split(' ').join('_');
-                sectionMap[sectionId].allLecture.push({
-                    lectureName: lecture.name,
-                    video: `${fileName}.${extension}`
-                });
-            }
+    if (course) {
+      // Check if course has sections and lectures
+      if (course.sections && course.sections.length > 0) {
+        console.log("course.sections", course.sections);
+  
+        const updatedSections = course.sections.map((section, sectionIndex) => ({
+          id: uuidv4(),
+          number: sectionIndex + 1,
+          sectionName: section.name,
+          lectures: section.lectures.map((lecture, lectureIndex) => {
+            const extension = lecture.videoUrl.split(".").pop(); // Get the file extension from the video URL
+            const fileName = lecture.name.split(" ").join("_"); // Replace spaces with underscores
+            const videoFileName = `${fileName}.${extension}`; // Combine lecture name and extension
+  
+            return {
+              id: uuidv4(),
+              lectureName: lecture.name,
+              videoUrl: videoFileName, // Use the new formatted video file name
+              number: lectureIndex + 1,
+            };
+          }),
+        }));
+  
+        setSections(updatedSections);
+  
+        // Set form values for sections and lectures dynamically
+        updatedSections.forEach((section, sectionIndex) => {
+          setValue(
+            `allSection[${sectionIndex}].sectionName`,
+            section.sectionName
+          );
+          section.lectures.forEach((lecture, lectureIndex) => {
+            setValue(
+              `allSection[${sectionIndex}].allLecture[${lectureIndex}].lectureName`,
+              lecture.lectureName
+            );
+            setValue(
+              `allSection[${sectionIndex}].allLecture[${lectureIndex}].video`,
+              lecture.videoUrl
+            );
+          });
         });
-
-        // Convert the section map to an array
-        const mappedSections = Object.values(sectionMap);
-
-        setSections(mappedSections);
-
-        // Set form values for each section and lecture
-        mappedSections.forEach((section, sectionIndex) => {
-            setValue(`allSection[${sectionIndex}].sectionName`, section.sectionName);
-            section.allLecture.forEach((lecture, lectureIndex) => {
-                setValue(`allSection[${sectionIndex}].allLecture[${lectureIndex}].lectureName`, lecture.lectureName);
-                setValue(`allSection[${sectionIndex}].allLecture[${lectureIndex}].video`, lecture.video);
-            });
-        });
-
-        console.log("mappedSections", mappedSections);
+      }
     }
-}, [course, setValue]);
+  }, [course, setValue]);
   
 
   const handleAddSection = () => {
@@ -107,15 +74,16 @@ export default function CourseContents() {
 
   const handleDeleteSection = (id) => {
     setSections((prevSections) => {
-      const updatedSections = prevSections.filter((section) => section.id !== id);
+      const updatedSections = prevSections.filter(
+        (section) => section.id !== id
+      );
       updatedSections.forEach((section, index) => {
-        section.number = index + 1; 
+        section.number = index + 1;
       });
 
-      unregister(`section[${updatedSections.length}]`); 
+      unregister(`section[${updatedSections.length}]`);
       return updatedSections;
     });
-
   };
 
   return (

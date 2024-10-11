@@ -27,7 +27,6 @@ export default function QueryHeader({
   placeholder = "Search",
   isCreateNew = false,
 }) {
-  // const selectComponent =
   const content = (
     <Stack direction="row" sx={{ justifyContent: "space-between", mb: 2 }}>
       <Stack direction="row" spacing={2}>
@@ -61,7 +60,7 @@ export default function QueryHeader({
           variant="contained"
           sx={{ backgroundColor: "purple.main", textTransform: "uppercase" ,height: "100%"}}
           // handleCreateNew={handleCreateNew}
-          path={pathCreated}
+          path={pathCreated === "/" ? "/course/new" : pathCreated}
         >
           {labelCreate}
           <AddIcon sx={{ ml: 1 }} />

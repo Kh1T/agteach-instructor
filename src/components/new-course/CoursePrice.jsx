@@ -4,9 +4,8 @@ import AttachMoneyOutlinedIcon from "@mui/icons-material/AttachMoneyOutlined";
 import IconWithTitle from "../course-product/IconWithTitle";
 import TextSection from "../course-product/TextSection";
 import { useFormContext } from "react-hook-form";
-import PhotoPreview from "../course-product/PhotoPreview";
 import { useSelector } from "react-redux";
-import { useEffect } from "react";
+
 /**
  * CoursePrice component renders a page for instructors to input course price.
  *
@@ -25,14 +24,13 @@ export default function CoursePrice() {
   const { register, setValue, formState: { errors } } = useFormContext();
   const course = useSelector((state) => state.course.courseData);
 
-  useEffect(() => {
-    if (course.length > 0) {
-      const { price } = course[0].course;
-      console.log(price);
+
+    if (course) {
+      const { price } = course;
       
       setValue("coursePrice", price);
     }
-  }, [course]);
+
   
   return (
     <Box className="container">

@@ -65,11 +65,7 @@ function CoursePage() {
 
   const handleEditClick = (course) => {
     dispatch(setId(course?.courseId));
-    navigate("/course/new", {
-      state: {
-        course: course,
-      },
-    });
+    navigate(`/course/${course?.courseId}`);
   };
 
   const courseList = isSearching
