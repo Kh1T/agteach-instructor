@@ -20,6 +20,25 @@ import { useNavigate } from "react-router";
 import deletBin from "../assets/Go Green Grey Hanger Bag.png";
 import emptyProduct from "../assets/Spooky Stickers Sweet Franky.png";
 
+
+/**
+ * CoursePage renders a page for viewing and managing courses.
+ *
+ * It renders a QueryHeader component at the top for searching and filtering courses.
+ * Below the QueryHeader, it renders a list of courses in a table format using the CustomTable component.
+ * Each row in the table contains the course name, price, edit and delete icons.
+ * The edit icon navigates to the course edit page when clicked.
+ * The delete icon opens a confirmation dialog when clicked.
+ * If the user confirms the deletion, the course is deleted and the table is updated.
+ * If the user cancels the deletion, the confirmation dialog is closed.
+ *
+ * The component also renders a confirmation dialog when the delete icon is clicked.
+ * The dialog shows a message asking the user to confirm the deletion of the course.
+ * If the user confirms the deletion, the course is deleted and the dialog is closed.
+ * If the user cancels the deletion, the dialog is closed.
+ *
+ * @returns a JSX element containing the CoursePage component.
+ */
 function CoursePage() {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
