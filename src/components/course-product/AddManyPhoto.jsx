@@ -1,13 +1,16 @@
-import { useState } from "react";
-import { Stack, Box, Typography, Button, IconButton } from "@mui/material";
+import { useEffect, useState } from "react";
+import {
+  Stack,
+  Box,
+  Typography,
+  Button,
+  IconButton,
+  FormHelperText,
+} from "@mui/material";
 import InsertPhotoIcon from "@mui/icons-material/InsertPhoto";
 import ClearIcon from "@mui/icons-material/Clear";
-import AddPhotoModal from "./AddPhotoModal";
 
-import {
-  UploadedPhotoStyle,
-  NotYetUploadedPhotoStyle,
-} from "../../theme/CourseProductStyle";
+import { UploadedPhotoStyle } from "../../theme/CourseProductStyle";
 
 /**
  * AddManyPhotos component renders an upload area for multiple photos
@@ -22,116 +25,224 @@ import {
  *
  * @returns A JSX element containing the AddManyPhotos component
  */
-export default function AddManyPhotos({ setValue, name}) {
-  const [uploadedPhotos, setUploadedPhotos] = useState([]);
-  const [uploadError, setUploadError] = useState("");
-  const [modalOpen, setModalOpen] = useState(false);
-  const [fileInputKey, setFileInputKey] = useState(Date.now()); // to trigger input reset
+export default function AddManyPhotos({
+  setValue,
+  name = "productImages",
+  register,
+  errors,
+  watch,
+  defaultValue,
+  setRemovedImages,
+  mode = "create", // 'create' or 'edit'
+}) {
+  const [existingUrls, setExistingUrls] = useState([]);
+  const watchProductImages = watch(name);
+  const [validated, setValidated] = useState(true);
+
+  useEffect(() => {
+    if (defaultValue && defaultValue.images && defaultValue.images.length > 0) {
+      const imageUrls = defaultValue.images.map((image) => image.imageUrl);
+      console.log({ imageUrls });
+      setExistingUrls(imageUrls);
+      setValue(name, imageUrls, { shouldValidate: true });
+      if (imageUrls) {
+        setValidated(true);
+      }
+    }
+  }, [defaultValue, name, setValue]);
 
   const handleFileChange = (event) => {
-    const newPhotos = Array.from(event.target.files);
-    if (newPhotos.length + uploadedPhotos.length > 4) {
-      setUploadError("Max 5 photos can be uploaded");
-      return;
+    const newFiles = Array.from(event.target.files);
+
+    const existingFiles =
+      watchProductImages instanceof FileList
+        ? Array.from(watchProductImages)
+        : [];
+    let combinedFiles = [...existingFiles, ...newFiles];
+
+    if (combinedFiles.length + existingUrls.length > 4) {
+      combinedFiles = combinedFiles.slice(0, 4 - existingUrls.length);
     }
-    setUploadError("");
-    setUploadedPhotos((prevPhotos) => {
-      const updatedPhotos = [...prevPhotos, ...newPhotos];
-      setValue(name, updatedPhotos);  // Use the updated photos here
-      return updatedPhotos;
+
+    const dataTransfer = new DataTransfer();
+    combinedFiles.forEach((file) => {
+      dataTransfer.items.add(file);
     });
-    setFileInputKey(Date.now()); // Reset file input key
+
+    setValue(name, dataTransfer.files, { shouldValidate: true });
   };
 
-  const handleRemovePhoto = (index) => {
-    setUploadedPhotos((prevPhotos) => prevPhotos.filter((_, i) => i !== index));
-  };
+  const handleRemovePhoto = (index, isUrl = false) => {
+    if (isUrl) {
+      const removedUrl = existingUrls[index];
+      const newUrls = existingUrls.filter((_, i) => i !== index);
+      setExistingUrls(newUrls);
+      console.log({newUrls})
+      if (newUrls.length === 0) {
+        setValidated(false);
+      }
+      if (setRemovedImages) {
+        setRemovedImages((prev) => [...prev, removedUrl]);
+      }
+    } else {
+      if (!watchProductImages || !(watchProductImages instanceof FileList))
+        return;
 
-  const handleButtonClick = () => {
-    setModalOpen(true);
-  };
+      const files = Array.from(watchProductImages);
+      const newFiles = files.filter((_, i) => i !== index);
 
-  const handleCloseModal = () => {
-    setModalOpen(false);
-  };
+      const dataTransfer = new DataTransfer();
+      newFiles.forEach((file) => {
+        dataTransfer.items.add(file);
+      });
 
-  const handleFileUpload = () => {
-    document.getElementById("file-input").click();
-  };
-
-  const handleFileDrop = (files) => {
-    const newPhotos = Array.from(files);
-    if (newPhotos.length + uploadedPhotos.length > 5) {
-      setUploadError("Max 5 photos can be uploaded");
-      return;
+      setValue(name, newFiles.length > 0 ? dataTransfer.files : null, {
+        shouldValidate: true,
+      });
     }
-    setUploadError("");
-    setUploadedPhotos((prevPhotos) => [...prevPhotos, ...newPhotos]);
+  };
+
+  const getTotalPhotos = () => {
+    const fileCount =
+      watchProductImages instanceof FileList ? watchProductImages.length : 0;
+    return fileCount + existingUrls.length;
+  };
+
+  const renderPreview = () => {
+    return (
+      <Stack direction="row" flexWrap="wrap">
+        {existingUrls.map((url, index) => (
+          <Box key={`url-${index}`} sx={UploadedPhotoStyle}>
+            <img src={url} alt={`Existing ${index + 1}`} />
+            <IconButton
+              onClick={() => handleRemovePhoto(index, true)}
+              sx={{
+                position: "absolute",
+                top: 4,
+                right: 4,
+                height: "32px",
+                width: "32px",
+                backgroundColor: "white",
+                opacity: 0.5,
+                "&:hover": { backgroundColor: "white", opacity: 1 },
+              }}
+            >
+              <ClearIcon color="error" />
+            </IconButton>
+          </Box>
+        ))}
+
+        {watchProductImages instanceof FileList &&
+          Array.from(watchProductImages).map((file, index) => (
+            <Box key={`file-${index}`} sx={UploadedPhotoStyle}>
+              <img
+                src={URL.createObjectURL(file)}
+                alt={`Preview ${index + 1}`}
+              />
+              <IconButton
+                onClick={() => handleRemovePhoto(index)}
+                sx={{
+                  position: "absolute",
+                  top: 4,
+                  right: 4,
+                  height: "32px",
+                  width: "32px",
+                  backgroundColor: "white",
+                  opacity: 0.5,
+                  "&:hover": { backgroundColor: "white", opacity: 1 },
+                }}
+              >
+                <ClearIcon color="error" />
+              </IconButton>
+            </Box>
+          ))}
+      </Stack>
+    );
   };
 
   return (
     <Stack paddingY={2} spacing={2}>
-      {!uploadedPhotos.length ? (
-        <Stack onClick={handleButtonClick} sx={NotYetUploadedPhotoStyle}>
+      <input
+        id="file-input"
+        type="file"
+        multiple
+        accept="image/png, image/jpeg, image/jpg"
+        style={{ display: "none" }}
+        {...register(name, {
+          validate: {
+            required: (files) => {
+              const fileCount = files instanceof FileList ? files.length : 0;
+              const totalImages = fileCount + existingUrls.length;
+
+              if (mode === "create" && totalImages === 0) {
+                return "At least one image is required";
+              }
+
+              if (mode === "edit" && totalImages === 0 && !validated) {
+                return "Cannot remove all images. At least one image is required";
+              }
+              return true;
+            },
+            lessThan4: (files) => {
+              const fileCount = files instanceof FileList ? files.length : 0;
+              return (
+                fileCount + existingUrls.length <= 4 ||
+                "Maximum 4 photos allowed"
+              );
+            },
+            acceptedFormats: (files) =>
+              !files ||
+              !(files instanceof FileList) ||
+              Array.from(files).every((file) =>
+                ["image/jpeg", "image/jpg", "image/png"].includes(file.type)
+              ) ||
+              "Only PNG , JPG and JPEG formats are allowed",
+          },
+        })}
+        onChange={handleFileChange}
+      />
+
+      {getTotalPhotos() === 0 ? (
+        <Stack
+          onClick={() => document.getElementById("file-input").click()}
+          sx={{
+            maxWidth: "200px",
+            padding: "64px",
+            paddingX: "12px",
+            cursor: "pointer",
+            alignItems: "center",
+            justifyItems: "center",
+            mb: 2,
+            backgroundColor: !!errors.productCover ? "red.light" : "gray.300",
+            border: `2px dashed ${!!errors.productCover ? "red" : "gray"}`,
+          }}
+        >
           <InsertPhotoIcon />
-          <Typography variant="btr" color="gray">
-            Upload up to 5 photos (png, jpg, webp)
-          </Typography>
-          <Typography variant="btr" color="gray">
-            580 x 580 (Limit size: 1 MB)
-          </Typography>
+          <Typography variant="bxsmd">Upload up to 4 photos</Typography>
+          <Typography variant="btr">(PNG, JPG - 580x580, max 1MB)</Typography>
         </Stack>
       ) : (
-        <Stack direction="row" flexWrap="wrap">
-          {uploadedPhotos.map((file, index) => (
-            <Box key={index} sx={UploadedPhotoStyle}>
-              <Box
-                component="img"
-                src={URL.createObjectURL(file)}
-                alt={`Uploaded ${index}`}
-              />
-              <Box
-                onClick={() => handleRemovePhoto(index)}
-                sx={{ position: "absolute", top: 1, right: 1, zIndex: 1 }}
-              >
-                <IconButton sx={{ backgroundColor: "common.white" }}>
-                  <ClearIcon color="error" />
-                </IconButton>
-              </Box>
-            </Box>
-          ))}
-        </Stack>
+        renderPreview()
       )}
-      {uploadError && <Typography color="red">{uploadError}</Typography>}
+
+      {errors[name] && (
+        <FormHelperText error>{errors[name].message}</FormHelperText>
+      )}
+
       <Button
-        variant={uploadedPhotos.length !== 4 ? "outlined" : "contained"}
-        color={uploadedPhotos.length !== 4 ? "error" : "success"}
+        variant={getTotalPhotos() === 4 ? "contained" : "outlined"}
+        color={getTotalPhotos() === 4 ? "success" : "primary"}
+        onClick={() => document.getElementById("file-input").click()}
+        disabled={getTotalPhotos() >= 4}
         sx={{
           px: 4,
           py: 1.5,
           borderRadius: "8px",
           maxWidth: "200px",
         }}
-        onClick={handleButtonClick}
       >
-        <Typography variant="bssm">
-          Add Photos {uploadedPhotos.length}/4
-        </Typography>
+        Add Photos ({getTotalPhotos()}/4)
       </Button>
-      <AddPhotoModal
-        open={modalOpen}
-        handleClose={handleCloseModal}
-        handleFileUpload={handleFileUpload}
-        handleFileDrop={handleFileDrop}
-      />
-      <input
-        id="file-input"
-        type="file"
-        multiple
-        onChange={handleFileChange}
-        style={{ display: "none" }}
-        key={fileInputKey}
-      />
     </Stack>
   );
 }

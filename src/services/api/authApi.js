@@ -81,15 +81,6 @@ export const authApi = createApi({
       }),
     }),
 
-    updateInstructorInfo: builder.mutation({
-      query: (additionalInfoData) => ({
-        url: "/api/instructor/updateMe",
-        method: "PATCH",
-        body: additionalInfoData,
-      }),
-      invalidatesTags: ["Instructor"],
-    }),
-
     isLogin: builder.query({
       query: () => ({
         url: "/api/users/isLoginedIn",
