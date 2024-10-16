@@ -28,25 +28,6 @@ export const courseApi = createApi({
         },
       }),
   
-  
-      // searchCourses: builder.query({
-      //   query: ({ name, order }) => {
-      //     let url = "/api/course/searchData?name=";
-  
-      //     if (name) url += name;
-      //     if (order) {
-      //       const dataOrder = order === 10 ? "desc" : "asc";
-      //       url += `&order=${dataOrder}`;
-      //     }
-  
-      //     return {
-      //       url,
-      //       method: "GET",
-      //     };
-      //   },
-      // }),
-  
-  
       confirmDelete: builder.mutation({
         query: (id) => ({
           url: `/api/course/deleteOneCourse/${id}`,

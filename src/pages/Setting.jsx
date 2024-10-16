@@ -19,29 +19,7 @@ import { useForm } from "react-hook-form";
 import FormInput from "../components/login-signup/FormInput";
 import { CustomAlert } from "../components/CustomAlert";
 
-/**
- * A component that renders a page for instructor to update their profile information,
- * contact information, and account security.
- *
- * The page is divided into three sections. The first section is for updating the instructor's
- * profile information, including their name, bio, and profile picture. The second section
- * is for updating the instructor's contact information, including their phone number and
- * address. The third section is for updating the instructor's account security, including
- * their password.
- *
- * The page uses the useGetInstructorInfoQuery hook to retrieve the instructor's current
- * information. The page also uses the useUpdateInstructorInfoMutation and
- * useUpdateInstructorPasswordMutation hooks to update the instructor's information.
- *
- * The page uses the useForm hook to handle form submissions and validation.
- *
- * The page uses the CustomFileUpload component to handle image uploads.
- *
- * The page uses the CustomAlert component to display messages to the user.
- *
- * The page uses the useSnackbar hook to display a snackbar message to the user when
- * the user submits the form.
- */
+
 function SettingPage() {
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPasswords, setShowNewPasswords] = useState(false);
