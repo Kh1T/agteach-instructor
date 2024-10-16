@@ -6,6 +6,7 @@ import {
   MenuItem,
   Divider,
   TextField,
+  Box,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import CustomButton from "../components/CustomButton";
@@ -381,7 +382,7 @@ function SettingPage() {
     );
   }
 
-  return <div>{content}</div>;
+  return <Box>{content}</Box>;
 }
 
 export default SettingPage;
