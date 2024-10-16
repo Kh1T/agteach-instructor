@@ -6,7 +6,7 @@ import { courseApi } from "../services/api/courseApi";
 import userReducer from "../features/user/userSlice";
 import authSlice from "../features/user/authSlice";
 import productReducer from "./productStore";
-
+import { balanceApi } from "../services/api/balanceApi";
 
 export const store = createStore({
   reducer: {
@@ -14,6 +14,7 @@ export const store = createStore({
     [locationApi.reducerPath]: locationApi.reducer,
     [productApi.reducerPath]: productApi.reducer,
     [courseApi.reducerPath]: courseApi.reducer,
+    [balanceApi.reducerPath]: balanceApi.reducer,
     user: userReducer,
     auth: authSlice,
     products: productReducer,
@@ -23,6 +24,7 @@ export const store = createStore({
       authApi.middleware,
       locationApi.middleware,
       productApi.middleware,
-      courseApi.middleware
+      courseApi.middleware,
+      balanceApi.middleware
     ),
 });
