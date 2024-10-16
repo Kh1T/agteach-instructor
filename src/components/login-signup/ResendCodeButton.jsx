@@ -7,7 +7,7 @@ import { useResendVerifyCodeMutation } from "../../services/api/authApi";
 import { useState } from "react";
 import { CustomAlert } from "../CustomAlert";
 
-const ResendCodeButton = ({ email }) => {
+const ResendCodeButton = ({ email, timeoutRef }) => {
   const [open, setOpen] = useState(true);
 
   const [resendVerifyCode, { isLoading, isError, isSuccess, error }] =
@@ -18,8 +18,12 @@ const ResendCodeButton = ({ email }) => {
   };
 
   const handleOnClick = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+
     setOpen(true);
-    setTimeout(() => {
+    timeoutRef.current = setTimeout(() => {
       setOpen(false);
     }, 4000);
   };

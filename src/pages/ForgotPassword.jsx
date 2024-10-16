@@ -172,7 +172,7 @@ const ForgotPassword = () => {
       )}
       {isError && (
         <CustomAlert
-          label={`Please wait ${Math.floor(error?.data?.remainingCooldown / 1000)}s before request resend the code again.`}
+          label={`Please wait ${Math.floor(error?.data?.remainingCooldown / 1000)}s before request resend restpassword link again.`}
           open={open}
           onClose={() => setOpen(false)}
           severity="error"
