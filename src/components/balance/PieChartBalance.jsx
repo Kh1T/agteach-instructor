@@ -2,11 +2,6 @@ import { PieChart } from "@mui/x-charts/PieChart";
 import { useDrawingArea } from "@mui/x-charts/hooks";
 import { styled } from "@mui/material/styles";
 
-const data = [
-  { value: 4, label: "Course" },
-  { value: 10, label: "Product" },
-];
-
 const size = {
   width: 400,
   height: 250,
@@ -34,13 +29,16 @@ function PieCenterLabel({ children }) {
  *
  * @returns {JSX.Element} A JSX element representing a PieChart with a single series.
  */
-export default function PieChartBalance() {
+export default function PieChartBalance({ balance }) {
+  console.log(balance)
+const {course, product} = balance
+  const data = [
+    { value: course || 0, label: "Course" },
+    { value: product || 0, label: "Product" },
+  ]; 
   return (
-    <PieChart
-      series={[{ data, innerRadius: 80 }]}
-      {...size}
-    >
-      <PieCenterLabel>Summary</PieCenterLabel>
+    <PieChart series={[{ data, innerRadius: 80 }]} {...size}>
+      <PieCenterLabel>Summary</PieCenterLabel> 
     </PieChart>
   );
 }

@@ -1,4 +1,4 @@
-import { Box, Paper, Stack, Tab, Tabs } from "@mui/material";
+import { Box, Paper, Stack, Tab, Tabs, Typography } from "@mui/material";
 import RecentTransaction from "../components/RecentTransaction";
 import Grid from "@mui/material/Grid2";
 import PieChartBalance from "../components/balance/PieChartBalance";
@@ -9,10 +9,21 @@ import { useState } from "react";
 import CustomPanel from "../components/balance/CustomPanel";
 import CustomTable from "../components/CustomTable";
 import { products } from "../data/productsDummy";
+import { useGetBalanceQuery } from "../services/api/balanceApi";
 function BalancePage() {
   const [selectState, setSelectState] = useState("");
   const [value, setValue] = useState(0);
+  const { data: balance, isLoading } = useGetBalanceQuery();
 
+  if (isLoading) {
+    return (
+      <>
+        <Typography variant="h2">Loading...</Typography>
+      </>
+    );
+  }
+  const {product, course} = balance.data
+  const total = course + product
   return (
     <Stack spacing={5} sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
@@ -35,17 +46,17 @@ function BalancePage() {
                   borderRadius: 1,
                 }}
               >
-                <PieChartBalance />
+                <PieChartBalance balance={balance.data} />
               </Box>
               <Stack width={"100%"} direction="column" spacing={2}>
-                <BalanceCard />
-                <TotalCard />
+                <BalanceCard balance={balance.data} />
+                <TotalCard total={total} />
               </Stack>
             </Stack>
           </Box>
         </Grid>
         <Grid size={4}>
-            <RecentTransaction />
+          <RecentTransaction />
         </Grid>
       </Grid>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>

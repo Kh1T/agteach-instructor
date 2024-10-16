@@ -1,6 +1,7 @@
 import { Box, Divider, Stack, Typography } from "@mui/material";
 
-function BalanceCard() {
+function BalanceCard({ balance }) {
+  const { course, product } = balance;
   return (
     <Box
       sx={{
@@ -26,7 +27,7 @@ function BalanceCard() {
           </Typography>
         </Stack>
         <Typography variant="blgsm" sx={{ color: "dark.400" }}>
-          $435.70
+          ${course || 0}
         </Typography>
         <Divider />
         <Stack
@@ -44,7 +45,7 @@ function BalanceCard() {
         </Stack>
 
         <Typography variant="blgsm" color="dark.400">
-          $635.70
+          ${product || 0}
         </Typography>
       </Stack>
     </Box>

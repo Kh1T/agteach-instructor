@@ -15,7 +15,7 @@ export const balanceApi = createApi({
 
       query: () => {
         return {
-          url: "/api/balance",
+          url: "/api/instructor/balance",
           method: "GET",
         };
       },
