@@ -43,7 +43,17 @@ function BalancePage() {
   }
   if (!isLoadingProducts) console.log(products);
 
-  const productList = products?.data || [];
+  const productList =
+    products?.data.map((product) => {
+      return {
+        Date: product.date,
+        "Product Name": product.productName,
+        Name: product.customerName,
+        Quantity: product.quantity,
+        "Unit Price": `$ ${product.price}`,
+        "Total Price": `$ ${product.purchasedPrice}`,
+      };
+    }) || [];
   const courseList =
     courses?.data.map((course) => {
       return {
@@ -121,7 +131,7 @@ function BalancePage() {
             selectData={["Newest", "Oldest"]}
           />
           {isLoadingCourses ? (
-            <Typography variant="h2">Loading...</Typography>
+            <Typography>Loading...</Typography>
           ) : courseList.length === 0 ? (
             <Box
               display="flex"
@@ -156,8 +166,8 @@ function BalancePage() {
             useSelectState={[selectProductState, setSelectProductState]}
             selectData={["Newest", "Oldest"]}
           />
-          {isLoadingCourses ? (
-            <Typography variant="h2">Loading...</Typography>
+          {isLoadingProducts ? (
+            <Typography>Loading...</Typography>
           ) : productList.length === 0 ? (
             <Box
               display="flex"
