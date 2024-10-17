@@ -42,10 +42,7 @@ export default function LectureComponent({
   const videoUrl = watch(
     `allSection[${sectionNumber - 1}].allLecture[${lectureNumber - 1}].video`
   );
-
-  console.log("videoUrl", videoUrl);
   
-
   return (
     <Box bgcolor='grey.300' sx={{ alignItems: "center", padding: '20px 30px 15px 30px' }}>
       <Stack direction="row" justifyContent="space-between">
@@ -79,6 +76,7 @@ export default function LectureComponent({
       />
       <VideoUpload
         name={`allSection[${sectionNumber - 1}].allLecture[${lectureNumber - 1}].video`}
+        lectureDuration={`allSection[${sectionNumber - 1}].allLecture[${lectureNumber - 1}].lectureDuration`}
         onFileChange={(newFile) =>
           setValue(
             `allSection[${sectionNumber - 1}].allLecture[${lectureNumber - 1}].video`,

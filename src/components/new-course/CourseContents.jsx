@@ -22,33 +22,43 @@ export default function CourseContents() {
       // Check if course has sections and lectures
       if (course.sections && course.sections.length > 0) {
         console.log("course.sections", course.sections);
-  
-        const updatedSections = course.sections.map((section, sectionIndex) => ({
-          id: uuidv4(),
-          number: sectionIndex + 1,
-          sectionName: section.name,
-          lectures: section.lectures.map((lecture, lectureIndex) => {
-            const extension = lecture.videoUrl.split(".").pop(); // Get the file extension from the video URL
-            const fileName = lecture.name.split(" ").join("_"); // Replace spaces with underscores
-            const videoFileName = `${fileName}.${extension}`; // Combine lecture name and extension
-  
-            return {
-              id: uuidv4(),
-              lectureName: lecture.name,
-              videoUrl: videoFileName, // Use the new formatted video file name
-              number: lectureIndex + 1,
-            };
-          }),
-        }));
-  
+
+        const updatedSections = course.sections.map(
+          (section, sectionIndex) => ({
+            sectionId: section.sectionId,
+            number: sectionIndex + 1,
+            sectionName: section.name,
+            lectures: section.lectures.map((lecture, lectureIndex) => {
+              const extension = lecture.videoUrl.split(".").pop();
+              const fileName = lecture.name.split(" ").join("_");
+              const videoFileName = `${fileName}.${extension}`;
+              const lectureDuration =
+                (lecture.duration?.hours ?? 0) * 3600 +
+                (lecture.duration?.minutes ?? 0) * 60 +
+                (lecture.duration?.seconds ?? 0);
+
+              return {
+                lectureId: lecture.lectureId,
+                lectureName: lecture.name,
+                lectureDuration: lectureDuration,
+                videoUrl: videoFileName,
+                number: lectureIndex + 1,
+              };
+            }),
+          })
+        );
+
         setSections(updatedSections);
-  
+
         // Set form values for sections and lectures dynamically
         updatedSections.forEach((section, sectionIndex) => {
           setValue(
             `allSection[${sectionIndex}].sectionName`,
             section.sectionName
           );
+          setValue(`allSection[${sectionIndex}].sectionId`, section.sectionId);
+          console.log("sectioId", section);
+
           section.lectures.forEach((lecture, lectureIndex) => {
             setValue(
               `allSection[${sectionIndex}].allLecture[${lectureIndex}].lectureName`,
@@ -58,12 +68,19 @@ export default function CourseContents() {
               `allSection[${sectionIndex}].allLecture[${lectureIndex}].video`,
               lecture.videoUrl
             );
+            setValue(
+              `allSection[${sectionIndex}].allLecture[${lectureIndex}].lectureId`,
+              lecture.lectureId
+            );
+            setValue(
+              `allSection[${sectionIndex}].allLecture[${lectureIndex}].lectureDuration`,
+              lecture.lectureDuration
+            );
           });
         });
       }
     }
   }, [course, setValue]);
-  
 
   const handleAddSection = () => {
     setSections((prevSections) => [
@@ -105,7 +122,7 @@ export default function CourseContents() {
           lectureIndex={section.number - 1}
           sectionNumber={section.number}
           sectionName={section.sectionName}
-          allLecture={section.allLecture}
+          allLecture={section.lectures}
         />
       ))}
       <Divider />

@@ -49,7 +49,6 @@ export default function CoursePrice() {
         id="outlined-controlled"
         label="Price"
         type="number"
-        inputProps={{ min: 1 }}
         {...register("coursePrice", { required: "Price is required", 
           min: { value: 1, message: "Price must be greater than 0" },
          })}

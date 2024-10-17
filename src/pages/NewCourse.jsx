@@ -11,10 +11,10 @@ import { useForm, FormProvider } from "react-hook-form";
 import {
   useAddCourseMutation,
   useGetCourseQuery,
+  useUpdateCourseMutation,
 } from "../services/api/courseApi";
 import { CustomAlert } from "../components/CustomAlert";
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { setCourse, setId } from "../features/course/courseSlice";
 
@@ -33,44 +33,38 @@ function NewCoursePage() {
   const { handleSubmit, reset } = methods;
   const [
     addCourse,
-    { isLoading: isLoadingAddCourse, isSuccess, isError, error },
+    { isLoading: isLoadingAddCourse, isSuccess: isSuccessAddCourse },
   ] = useAddCourseMutation();
   const { data, isLoading: isLoadingGetCourse } = useGetCourseQuery(action, {
     skip: action === "new",
   });
+  const [
+    updateCourse,
+    { isLoading: isLoadingUpdateCourse, isSuccess: isSuccessUpdateCourse },
+  ] = useUpdateCourseMutation(520);
 
-  console.log('data', data);
-  
+  console.log("data", data);
 
-  // const { alertMessage, setAlertMessage } = useState();
-
-  const location = useLocation();
-  const course = location.state?.course;
-  // console.log("course", course);
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    severity: "",
+    msg: "",
+  });
 
   const handleBack = () => {
-    dispatch(setCourse(null));
+    // dispatch(setCourse(null));
+    reset();
     navigate(-1);
   };
 
-  // useEffect(() => {
-  //   if (data) {
-  //     dispatch(setCourse(data.data));
-  //     reset(data.data)
-  //     console.log("new data", data);
-  //   } else {
-  //     reset()
-  //   }
-  // }, [data, dispatch]);
-
   useEffect(() => {
     if (action === "new") {
-      dispatch(setCourse(null));
+      // dispatch(setCourse(null));
+      reset();
     } else if (data) {
       dispatch(setCourse(data.data));
     }
-  }, [action, data, dispatch]);
-  
+  }, [action, data, dispatch, reset]);
 
   const submitHandler = async (data) => {
     console.log("formData", data);
@@ -84,6 +78,7 @@ function NewCoursePage() {
     } = data;
 
     const formData = new FormData();
+    let totalDuration = 0;
 
     // Append course details
     formData.append("courseName", courseName);
@@ -94,36 +89,85 @@ function NewCoursePage() {
     formData.append("thumbnailUrl", courseThumbnail);
     formData.append("ProductSuggestionId", JSON.stringify(productId));
 
-    allSection.forEach((section) => {
-      section.allLecture.forEach((lecture) => {
-        formData.append("videos", lecture.video);
+    let newSection = -1;
+    let newLecture = 0;
+    let newVidInSection = 0;
+    
+    const isNewLecture = (section, lecture) => section.sectionId && !lecture.lectureId;
+    const isExistingLecture = (section, lecture) => section.sectionId && lecture.lectureId && typeof(lecture.video) === "object";
+    const isNewVideo = (lecture) => typeof(lecture.video) === "object";
+    
+    allSection.forEach((section, sectionIndex) => {
+      const isNewSection = !section.sectionId;
+      console.log('isNewSection', isNewSection);
+    
+      if (isNewSection) {
+        newSection++;
+        newLecture = 0; 
+      }
+    
+      section.allLecture.forEach((lecture, lectureIndex) => {
+        if (action === "new") {
+          formData.append(`videos[${sectionIndex}][${lectureIndex}]`, lecture.video);
+        } else {
+          if (isExistingLecture(section, lecture)) {
+            formData.append(`videos[${section.sectionId}][${lecture.lectureId}]`, lecture.video);
+          } else if (isNewLecture(section, lecture)) {
+            formData.append(`videos[${section.sectionId}][${newVidInSection}]`, lecture.video);
+            newVidInSection++;
+          } else if (isNewVideo(lecture)) {
+            formData.append(`videos[${newSection}][${newLecture}]`, lecture.video);
+            newLecture++;
+          }
+        }
+        totalDuration += parseFloat(lecture.lectureDuration);
       });
     });
 
-    console.log([...formData]);
-
+    formData.append("totalDuration", totalDuration);
     console.log("formData", [...formData]);
 
     try {
       console.log("before api call");
 
-      const response = await addCourse(formData).unwrap();
-      console.log("response", response);
-
-      // setAlertMessage("Course created successfully");
+      if (action === "new") {
+        console.log("new course");
+        const response = await addCourse(formData).unwrap();
+        console.log("response", response);
+        setSnackbar({
+          open: true,
+          severity: "success",
+          msg: "Course created successfully",
+        });
+      } else {
+        console.log("update course");
+        const response = await updateCourse(formData).unwrap();
+        console.log("response", response);
+        setSnackbar({
+          open: true,
+          severity: "success",
+          msg: "Course updated successfully",
+        });
+      }
     } catch (error) {
       console.log("error", error);
-      // setAlertMessage('Course creation failed');
+      if (error)
+        setSnackbar({
+          open: true,
+          severity: "error",
+          msg: "Something went wrong",
+        });
     }
   };
 
   return (
     <Box sx={{ width: "100%", paddingBottom: "200px" }}>
-      {/* <CustomAlert
-        open={isSuccess}
-        severity={isSuccess ? "success" : "error"}
-        message={alertMessage}
-      /> */}
+      <CustomAlert
+        open={snackbar.open}
+        severity={snackbar.severity}
+        onClose={() => setSnackbar({ ...snackbar, open: false })}
+        label={snackbar.msg}
+      />
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(submitHandler)}>
           <Button
@@ -151,7 +195,7 @@ function NewCoursePage() {
                 ? isLoadingAddCourse
                   ? "CREATING..."
                   : "CREATE COURSE"
-                : isLoadingGetCourse
+                : isLoadingUpdateCourse
                   ? "UPDATING..."
                   : "UPDATE COURSE"
             }

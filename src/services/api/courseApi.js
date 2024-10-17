@@ -19,7 +19,7 @@ export const courseApi = createApi({
 
     getCourse: builder.query({
       query: (id) => ({
-        url: `/api/course/getOneCourse/${id}`,
+        url: `/api/course/getOneCourse/${738}`,
         method: "GET",
       }),
       providesTags: ["Course"],
@@ -40,7 +40,7 @@ export const courseApi = createApi({
         return {
           url,
           method: "GET",
-        }
+        };
       },
     }),
 
@@ -68,6 +68,15 @@ export const courseApi = createApi({
       }),
       invalidatesTags: ["Course"],
     }),
+
+    updateCourse: builder.mutation({
+      query: (courseId) => ({
+        url: `/api/course/${738}`,
+        method: "PATCH",
+        body: courseId,
+      }),
+      invalidatesTags: ["Course"],
+    }),
   }),
 });
 
@@ -78,4 +87,5 @@ export const {
   useGetInstructoreProductQuery,
   useSearchCoursesQuery,
   useConfirmDeleteMutation,
+  useUpdateCourseMutation,
 } = courseApi;

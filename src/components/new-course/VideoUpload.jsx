@@ -5,6 +5,7 @@ import { useFormContext } from "react-hook-form";
 
 export default function VideoUpload({
   name,
+  lectureDuration,
   onFileChange,
   isPreviewVisible,
   file,
@@ -33,6 +34,16 @@ export default function VideoUpload({
 
   const handleVideoUpload = (event) => {
     const newFile = event.target.files[0];
+    const videoUrl = URL.createObjectURL(newFile);
+    const video = document.createElement("video");
+
+    video.src = videoUrl;
+    video.onloadedmetadata = () => {
+      console.log("Video duration:", video.duration);
+      // register(lectureDuration, { value: video.duration.toString() });
+      setValue(lectureDuration, video.duration.toString());
+    };
+
     setFileInfo({
       name: newFile?.name || "",
       size: newFile ? (newFile.size / 1024).toFixed(2) + " KB" : "",

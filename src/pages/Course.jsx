@@ -21,23 +21,28 @@ import deletBin from "../assets/Go Green Grey Hanger Bag.png";
 import emptyProduct from "../assets/Spooky Stickers Sweet Franky.png";
 import { useDispatch } from "react-redux";
 import { setId } from "../features/course/courseSlice";
+import { CustomAlert } from "../components/CustomAlert";
 
 function CoursePage() {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectState, setSelectState] = useState(0);
-  const [isLoadingSearch, setIsLoadingSearch] = useState(false); // New loading state
+  const [isLoadingSearch, setIsLoadingSearch] = useState(false);
   const {
     data: searchedCourse,
     isFetching: isSearching,
     refetch,
   } = useSearchCoursesQuery({ name: searchTerm, order: selectState });
-  if (searchedCourse) console.log("searchedCourse", searchedCourse);
   const [confirmDelete] = useConfirmDeleteMutation();
   const searchRef = useRef();
   const label = "Sort";
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState(null);
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    msg: "",
+    severity: "",
+  });
   const dispatch = useDispatch();
 
   const handleDeleteClick = (course) => {
@@ -54,11 +59,20 @@ function CoursePage() {
     if (selectedCourse?.courseId) {
       console.log("Deleting course with ID:", selectedCourse.courseId);
       try {
-        await confirmDelete(selectedCourse.courseId).unwrap();
-        console.log("Course deleted successfully");
+        const response = await confirmDelete(selectedCourse.courseId).unwrap();
+        setSnackbar({
+          open: true,
+          msg: "Course deleted successfully",
+          severity: "success",
+        });
         refetch();
       } catch (error) {
         console.error("Failed to delete the course: ", error);
+        setSnackbar({
+          open: true,
+          msg: "Failed to delete the course",
+          severity: "error",
+        });
       }
     }
     handleCloseDialog();
@@ -73,7 +87,6 @@ function CoursePage() {
     ? []
     : searchedCourse?.data?.map((item) => ({
         Date: new Date(item.createdAt).toISOString().split("T")[0],
-        // Course: item.courseId,
         Name: item.name,
         Price: item.price,
         edit: (
@@ -91,16 +104,12 @@ function CoursePage() {
         ),
       })) || [];
 
-  // console.log(courseList, "courseList");
-
   const handleSearch = () => {
     setIsLoadingSearch(true); // Set loading state to true
     const term = searchRef.current.value;
     setSearchTerm(term); // Update the search term state
     setIsLoadingSearch(false); // Reset loading state after setting the search term
   };
-
-
 
   return (
     <Stack gap="30px">
@@ -178,6 +187,12 @@ function CoursePage() {
           </Button>
         </DialogActions>
       </Dialog>
+      <CustomAlert
+        label={snackbar?.msg}
+        open={snackbar?.open}
+        severity={snackbar?.severity}
+        onClose={() => setSnackbar({ ...snackbar, open: false })}
+      />
     </Stack>
   );
 }
