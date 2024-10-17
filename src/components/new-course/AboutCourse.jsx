@@ -83,7 +83,13 @@ export default function AboutCourse() {
           fullWidth
           multiline
           label="Enter your course description"
-          {...register("description", { required: "Description is required" })}
+          {...register("description", {
+            required: "Description is required",
+            maxLength: {
+              value: 1000,
+              message: "Description cannot be exceed 1000 characters",
+            },
+          })}
           error={!!errors.description}
           helperText={errors.description?.message}
         />
