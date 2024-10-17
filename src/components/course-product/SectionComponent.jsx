@@ -120,6 +120,10 @@ export default function SectionComponent({
         label="eg: Introduction to indoor gardening"
         {...register(`allSection[${number - 1}].sectionName`, {
           required: "Title is required",
+          maxLength: {
+            value: 70,
+            message: 'Title cannot be exceed 70 character'
+          }
         })}
         error={!!errors.allSection?.[number - 1]?.sectionName}
         helperText={errors.allSection?.[number - 1]?.sectionName?.message}
