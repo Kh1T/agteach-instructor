@@ -54,7 +54,13 @@ export default function AboutCourse() {
         //   inputLabel: { shrink: course && !!course.name },
         // }}
         label="Enter your course title"
-        {...register("courseName", { required: "Title is required" })}
+        {...register("courseName", {
+          required: "Title is required",
+          maxLength: {
+            value: 70,
+            message: "Title cannot be exceed 70 characters",
+          },
+        })}
         error={!!errors.courseName}
         helperText={errors.courseName?.message}
       />
