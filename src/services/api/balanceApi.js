@@ -21,17 +21,17 @@ export const balanceApi = createApi({
       },
     }),
     searchProductBalance: builder.query({
-      query: () => {
+      query: ({name='', order=''}) => {
         return {
-          url: "/api/instructor/searchProductBalance",
+          url: `/api/instructor/searchProductBalance?name=${name}&order=${order}`,
           method: "GET",
         };
       },
     }),
     searchCourseBalance: builder.query({
-      query: () => {
+      query: ({name='', order=''}) => {
         return {
-          url: "/api/instructor/searchCourseBalance",
+          url: `/api/instructor/searchCourseBalance?name=${name}&order=${order}`,
           method: "GET",
         };
       },

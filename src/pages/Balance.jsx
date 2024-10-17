@@ -5,16 +5,35 @@ import PieChartBalance from "../components/balance/PieChartBalance";
 import BalanceCard from "../components/balance/BalanceCard";
 import TotalCard from "../components/balance/TotalCard";
 import QueryHeader from "../components/QueryHeader";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import CustomPanel from "../components/balance/CustomPanel";
 import CustomTable from "../components/CustomTable";
-import { products } from "../data/productsDummy";
-import { useGetBalanceQuery } from "../services/api/balanceApi";
+import emptyProduct from "../assets/Spooky Stickers Sweet Franky.png";
+// import { products } from "../data/productsDummy";
+import {
+  useGetBalanceQuery,
+  useSearchCourseBalanceQuery,
+  useSearchProductBalanceQuery,
+} from "../services/api/balanceApi";
 function BalancePage() {
-  const [selectState, setSelectState] = useState("");
+  const [selectProductState, setSelectProductState] = useState("");
+  const [selectCourseState, setSelectCourseState] = useState("");
   const [value, setValue] = useState(0);
   const { data: balance, isLoading } = useGetBalanceQuery();
-
+  const [searchCourseTerm, setSearchCourseTerm] = useState("");
+  const [searchProductTerm, setSearchProductTerm] = useState("");
+  const searchCourseRef = useRef();
+  const searchProductRef = useRef();
+  const { data: courses, isLoading: isLoadingCourses } =
+    useSearchCourseBalanceQuery({
+      name: searchCourseTerm,
+      order: selectCourseState,
+    });
+  const { data: products, isLoading: isLoadingProducts } =
+    useSearchProductBalanceQuery({
+      name: searchProductTerm,
+      order: selectProductState,
+    });
   if (isLoading) {
     return (
       <>
@@ -22,8 +41,27 @@ function BalancePage() {
       </>
     );
   }
-  const {product, course} = balance.data
-  const total = course + product
+  if (!isLoadingProducts) console.log(products);
+
+  const productList = products?.data || [];
+  const courseList = courses?.data || [];
+  const { product, course } = balance.data;
+  const total = course + product;
+
+  const handleSearchCourse = () => {
+    // setIsLoadingSearch(true);
+    const term = searchCourseRef.current.value;
+    console.log("searching...", term);
+    setSearchCourseTerm(term); // Update the search term state
+    // setIsLoadingSearch(false);
+  };
+  const handleSearchProducts = () => {
+    // setIsLoadingSearch(true);
+    const term = searchProductRef.current.value;
+    console.log("searching...", term);
+    setSearchProductTerm(term); // Update the search term state
+    // setIsLoadingSearch(false);
+  };
   return (
     <Stack spacing={5} sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
@@ -65,23 +103,76 @@ function BalancePage() {
           <Tab label="Product" id="tab-2" />
         </Tabs>
       </Box>
+
       <CustomPanel value={value} index={0}>
         <Box>
           <QueryHeader
-            useSelectState={[selectState, setSelectState]}
+            searchRef={searchCourseRef}
+            handleSearch={handleSearchCourse}
+            useSelectState={[selectCourseState, setSelectCourseState]}
             selectData={["Newest", "Oldest"]}
           />
-          <CustomTable data={products} isPagination={true} />
+          {isLoadingCourses ? (
+            <Typography variant="h2">Loading...</Typography>
+          ) : courseList.length === 0 ? (
+            <Box
+              display="flex"
+              flexDirection="column"
+              alignItems="center"
+              justifyContent="center"
+              height={"20vh"}
+              sx={{ textAlign: "center" }}
+            >
+              <img
+                src={emptyProduct}
+                alt="emptyProduct"
+                style={{
+                  width: "200px",
+                  height: "200px",
+                  marginBottom: "10px",
+                }}
+              />
+              <Typography variant="bmdr">No products found</Typography>
+            </Box>
+          ) : (
+            <CustomTable data={courseList} isPagination={true} />
+          )}
         </Box>
       </CustomPanel>
 
       <CustomPanel value={value} index={1}>
         <Box>
           <QueryHeader
-            useSelectState={[selectState, setSelectState]}
+            searchRef={searchProductRef}
+            handleSearch={handleSearchProducts}
+            useSelectState={[selectProductState, setSelectProductState]}
             selectData={["Newest", "Oldest"]}
           />
-          <CustomTable data={products} isPagination={true} />
+          {isLoadingCourses ? (
+            <Typography variant="h2">Loading...</Typography>
+          ) : productList.length === 0 ? (
+            <Box
+              display="flex"
+              flexDirection="column"
+              alignItems="center"
+              justifyContent="center"
+              height={"20vh"}
+              sx={{ textAlign: "center" }}
+            >
+              <img
+                src={emptyProduct}
+                alt="emptyProduct"
+                style={{
+                  width: "200px",
+                  height: "200px",
+                  marginBottom: "10px",
+                }}
+              />
+              <Typography variant="bmdr">No products found</Typography>
+            </Box>
+          ) : (
+            <CustomTable data={productList} isPagination={true} />
+          )}
         </Box>
       </CustomPanel>
     </Stack>
