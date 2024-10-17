@@ -60,8 +60,6 @@ function SettingPage() {
       }
     };
   
-  
-
   const {
     register: basicInfoRegister,
     handleSubmit: handleBasicInfoSubmit,
