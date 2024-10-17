@@ -9,9 +9,10 @@ import ResendCodeButton from "../components/login-signup/ResendCodeButton.jsx";
 import Logo from "../assets/agteach.png";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 export default function VerificationPage() {
+  const timeoutRef = useRef(null);
     const [open, setOpen] = useState(true);
   
     const navigate = useNavigate();
@@ -37,8 +38,12 @@ export default function VerificationPage() {
     };
   
     const handleOnClick = () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+
       setOpen(true);
-      setTimeout(() => {
+      timeoutRef.current = setTimeout(() => {
         setOpen(false);
       }, 4000);
     };
@@ -108,7 +113,7 @@ export default function VerificationPage() {
                 )}
                 {isError && (
                   <CustomAlert
-                    label="Wrong Verification Code!"
+                    label="Incorrect Verification Code!"
                     open={open}
                     onClose={() => setOpen(false)}
                     severity="error"
@@ -123,7 +128,7 @@ export default function VerificationPage() {
                   >
                     Submit
                   </Button>
-                  <ResendCodeButton email={email} />
+                  <ResendCodeButton email={email} timeoutRef={timeoutRef} />
                   <Button
                     fullWidth
                     variant="outlined"

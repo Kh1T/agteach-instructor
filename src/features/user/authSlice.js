@@ -15,9 +15,13 @@ const authSlice = createSlice({
     },
     startLoading: (state) => {
       state.isLoading = true;
+    },
+
+    getInstructorId: (state, action) => {
+      state.id = action.payload;
     }
   },
 });
 
-export const { checkLoginStatus, startLoading } = authSlice.actions;
+export const { checkLoginStatus, startLoading, getInstructorId } = authSlice.actions;
 export default authSlice.reducer;

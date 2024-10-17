@@ -2,7 +2,8 @@ import { Divider, Box, TextField, Typography } from "@mui/material";
 import IconWithTitle from "../course-product/IconWithTitle";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import TextSection from "../course-product/TextSection";
-import { useState } from "react";
+
+import { Money } from "@mui/icons-material";
 
 /**
  * ProductPrice component renders a page for instructors to input product price.
@@ -21,7 +22,7 @@ import { useState } from "react";
  * The component returns a Box component with children.
  */
 
-export default function ProductPrice({register, errors}) {
+export default function ProductPrice({ errors, register }) {
   return (
     <Box className="container">
       <IconWithTitle
@@ -41,7 +42,17 @@ export default function ProductPrice({register, errors}) {
         label="Price"
         type="number"
         fullWidth
-        {...register("price", { required: "Price is required" })}
+        {...register("price", {
+          required: "Price is required",
+          min: {
+            value: 1,
+            message: "Price is required and Cannot be less than 1.",
+          },
+          max: {
+            value: 1000,
+            message: "Price must be less than 1000.",
+          },
+        })}
         error={!!errors.price}
         helperText={errors.price?.message}
       />

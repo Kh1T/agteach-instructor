@@ -5,6 +5,7 @@ import React from "react";
 import IconWithTitle from "../course-product/IconWithTitle";
 import TextSection from "../course-product/TextSection";
 import AddManyPhoto from "../course-product/AddManyPhoto";
+import { useGetProductsImagesQuery } from "../../services/api/productApi";
 
 /**
  * AdditionalPhotos component renders a box with a title, icon, description, and AddManyPhoto component.
@@ -12,7 +13,17 @@ import AddManyPhoto from "../course-product/AddManyPhoto";
  *
  * @returns {React.ReactElement} A JSX element containing the AdditionalPhotos component
  */
-export default function AdditionalPhotos({ register, errors, setValue }) {
+export default function AdditionalPhotos({
+  register,
+  errors,
+  setValue,
+  productId,
+  editMode,
+  setRemovedImages,
+  watch,
+}) {
+  const { data, isLoading } = useGetProductsImagesQuery(!editMode ? 'creating':productId);
+
   return (
     <Box>
       <IconWithTitle
@@ -24,7 +35,16 @@ export default function AdditionalPhotos({ register, errors, setValue }) {
         title="Help customers see the product better"
         description="Adding more images can help customers have a better overview of your product."
       />
-      <AddManyPhoto  register={register} errors={errors} setValue={setValue} name={"additionalImages"} />
+      <AddManyPhoto
+        register={register}
+        errors={errors}
+        setValue={setValue}
+        name={"productImages"}
+        defaultValue={data}
+        setRemovedImages={setRemovedImages}
+        watch={watch}
+        mode={editMode ? "edit" : "create"}
+      />
       <Divider sx={{ my: 2 }} />
       <Typography component="ul">
         <Typography variant="bsr" color="dark.300" paddingY={1} component="li">
