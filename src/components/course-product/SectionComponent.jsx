@@ -140,13 +140,13 @@ export default function SectionComponent({
             type={lecture.type}
           />
         ))}
-        <ButtonComponent
+        {lectures.length < 15 ? <ButtonComponent
           onClick={handleAddLecture}
           text="Add Lecture +"
           variant="outlined"
           flexEnd
           sx={{ px: 2 }}
-        />
+        /> : <Typography sx={{textAlign: "end", paddingTop: "16px", color: "red.main"}}>You have reach the maximium lecture per section</Typography>}
       </Box>
       <DeleteConfirmModal
         open={modalOpen}

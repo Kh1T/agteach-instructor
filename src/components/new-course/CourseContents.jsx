@@ -127,12 +127,12 @@ export default function CourseContents() {
         />
       ))}
       <Divider />
-      <ButtonComponent
+      {sections.length < 25 ? <ButtonComponent
         onClick={handleAddSection}
         text="Add Section +"
         flexEnd
         variant="contained"
-      />
+      /> : <Typography sx={{textAlign: "end", paddingTop: "16px", color: "red.main"}}>You have reach the maximium sections per course</Typography>}
     </Box>
   );
 }
