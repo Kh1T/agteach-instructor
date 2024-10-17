@@ -24,26 +24,25 @@ function NewCoursePage() {
   const id = useSelector((state) => state.course.id);
   const productId = useSelector((state) => state.course.productId);
   const { action } = useParams();
-  console.log("id", id);
-  console.log("productId", productId);
 
   dispatch(setId(action));
 
   const methods = useForm();
   const { handleSubmit, reset } = methods;
+
   const [
     addCourse,
     { isLoading: isLoadingAddCourse, isSuccess: isSuccessAddCourse },
   ] = useAddCourseMutation();
+
   const { data, isLoading: isLoadingGetCourse } = useGetCourseQuery(action, {
     skip: action === "new",
   });
+
   const [
     updateCourse,
     { isLoading: isLoadingUpdateCourse, isSuccess: isSuccessUpdateCourse },
-  ] = useUpdateCourseMutation(520);
-
-  console.log("data", data);
+  ] = useUpdateCourseMutation();
 
   const [snackbar, setSnackbar] = useState({
     open: false,
@@ -92,31 +91,47 @@ function NewCoursePage() {
     let newSection = -1;
     let newLecture = 0;
     let newVidInSection = 0;
-    
-    const isNewLecture = (section, lecture) => section.sectionId && !lecture.lectureId;
-    const isExistingLecture = (section, lecture) => section.sectionId && lecture.lectureId && typeof(lecture.video) === "object";
-    const isNewVideo = (lecture) => typeof(lecture.video) === "object";
-    
+
+    const isNewLecture = (section, lecture) =>
+      section.sectionId && !lecture.lectureId;
+    const isExistingLecture = (section, lecture) =>
+      section.sectionId &&
+      lecture.lectureId &&
+      typeof lecture.video === "object";
+    const isNewVideo = (lecture) => typeof lecture.video === "object";
+
     allSection.forEach((section, sectionIndex) => {
       const isNewSection = !section.sectionId;
-      console.log('isNewSection', isNewSection);
-    
+      console.log("isNewSection", isNewSection);
+
       if (isNewSection) {
         newSection++;
-        newLecture = 0; 
+        newLecture = 0;
       }
-    
+
       section.allLecture.forEach((lecture, lectureIndex) => {
         if (action === "new") {
-          formData.append(`videos[${sectionIndex}][${lectureIndex}]`, lecture.video);
+          formData.append(
+            `videos[${sectionIndex}][${lectureIndex}]`,
+            lecture.video
+          );
         } else {
           if (isExistingLecture(section, lecture)) {
-            formData.append(`videos[${section.sectionId}][${lecture.lectureId}]`, lecture.video);
+            formData.append(
+              `videos[${section.sectionId}][${lecture.lectureId}]`,
+              lecture.video
+            );
           } else if (isNewLecture(section, lecture)) {
-            formData.append(`videos[${section.sectionId}][${newVidInSection}]`, lecture.video);
+            formData.append(
+              `videos[${section.sectionId}][${newVidInSection}]`,
+              lecture.video
+            );
             newVidInSection++;
           } else if (isNewVideo(lecture)) {
-            formData.append(`videos[${newSection}][${newLecture}]`, lecture.video);
+            formData.append(
+              `videos[${newSection}][${newLecture}]`,
+              lecture.video
+            );
             newLecture++;
           }
         }
@@ -141,7 +156,10 @@ function NewCoursePage() {
         });
       } else {
         console.log("update course");
-        const response = await updateCourse(formData).unwrap();
+        const response = await updateCourse({
+          courseId: action,
+          formData,
+        }).unwrap();
         console.log("response", response);
         setSnackbar({
           open: true,

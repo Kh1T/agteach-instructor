@@ -19,7 +19,7 @@ export const courseApi = createApi({
 
     getCourse: builder.query({
       query: (id) => ({
-        url: `/api/course/getOneCourse/${738}`,
+        url: `/api/course/getOneCourse/${id}`,
         method: "GET",
       }),
       providesTags: ["Course"],
@@ -70,10 +70,10 @@ export const courseApi = createApi({
     }),
 
     updateCourse: builder.mutation({
-      query: (courseId) => ({
-        url: `/api/course/${738}`,
+      query: ({courseId, formData}) => ({
+        url: `/api/course/${courseId}`,
         method: "PATCH",
-        body: courseId,
+        body: formData,
       }),
       invalidatesTags: ["Course"],
     }),

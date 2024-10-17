@@ -5,6 +5,7 @@ import IconWithTitle from "../course-product/IconWithTitle";
 import TextSection from "../course-product/TextSection";
 import { useFormContext } from "react-hook-form";
 import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 /**
  * CoursePrice component renders a page for instructors to input course price.
@@ -25,11 +26,13 @@ export default function CoursePrice() {
   const course = useSelector((state) => state.course.courseData);
 
 
+  useEffect(() => {
     if (course) {
       const { price } = course;
       
       setValue("coursePrice", price);
     }
+  }, [course, setValue]);
 
   
   return (
