@@ -16,8 +16,8 @@ import {
   useSearchProductBalanceQuery,
 } from "../services/api/balanceApi";
 function BalancePage() {
-  const [selectProductState, setSelectProductState] = useState("");
-  const [selectCourseState, setSelectCourseState] = useState("");
+  const [selectProductState, setSelectProductState] = useState(0);
+  const [selectCourseState, setSelectCourseState] = useState(0);
   const [value, setValue] = useState(0);
   const { data: balance, isLoading } = useGetBalanceQuery();
   const [searchCourseTerm, setSearchCourseTerm] = useState("");
@@ -37,14 +37,22 @@ function BalancePage() {
   if (isLoading) {
     return (
       <>
-        <Typography variant="h2">Loading...</Typography>
+        <Typography>Loading...</Typography>
       </>
     );
   }
   if (!isLoadingProducts) console.log(products);
 
   const productList = products?.data || [];
-  const courseList = courses?.data || [];
+  const courseList =
+    courses?.data.map((course) => {
+      return {
+        Date: course.date,
+        "Course Name": course.courseName,
+        Name: course.customerName,
+        Price: `$ ${course.salePrice}`,
+      };
+    }) || [];
   const { product, course } = balance.data;
   const total = course + product;
 

@@ -22,14 +22,16 @@ export const balanceApi = createApi({
     }),
     searchProductBalance: builder.query({
       query: ({name='', order=''}) => {
+        order = order === 10 ?  "asc": "desc";
         return {
           url: `/api/instructor/searchProductBalance?name=${name}&order=${order}`,
           method: "GET",
         };
       },
     }),
-    searchCourseBalance: builder.query({
+    searchCourseBalance: builder.query({      
       query: ({name='', order=''}) => {
+        order = order === 10 ? "asc": "desc";
         return {
           url: `/api/instructor/searchCourseBalance?name=${name}&order=${order}`,
           method: "GET",
