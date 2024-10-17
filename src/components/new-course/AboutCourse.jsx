@@ -110,7 +110,13 @@ export default function AboutCourse() {
         id="courseObjective"
         label="What they will learn in this course: "
         // InputLabelProps={{ shrink: true }}
-        {...register("courseObjective", { required: "Objective is required" })}
+        {...register("courseObjective", {
+          required: "Objective is required",
+          maxLength: {
+            value: 1000,
+            message: "course objectives cannot be exceed 1000 characters",
+          },
+        })}
         error={!!errors.courseObjective}
         helperText={errors.courseObjective?.message}
       />
