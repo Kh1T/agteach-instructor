@@ -40,9 +40,7 @@ export default function AddedProduct({ products, onRemoveProduct }) {
   };
 
   useEffect(() => {
-    const formattedProducts = products.map((product) => ({
-      productId: product.id,
-    }))
+    const formattedProducts = products.map((product) => product.id);
     dispatch(setProductId(formattedProducts));
   }, [products, dispatch]);
 
