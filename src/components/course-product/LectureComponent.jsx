@@ -61,6 +61,10 @@ export default function LectureComponent({
           `allSection[${sectionNumber - 1}].allLecture[${lectureNumber - 1}].lectureName`,
           {
             required: "Title is required",
+            maxLength: {
+              value: 70,
+              message: 'Title cannot be exceed 70 characters',
+            }
           }
         )}
         error={

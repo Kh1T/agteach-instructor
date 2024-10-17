@@ -18,6 +18,7 @@ export default function CourseContents() {
   const course = useSelector((state) => state.course.courseData);
 
   useEffect(() => {
+    console.log("\n\nsection", sections)
     if (course) {
       // Check if course has sections and lectures
       if (course.sections && course.sections.length > 0) {
