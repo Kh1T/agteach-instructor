@@ -18,6 +18,7 @@ export default function CourseContents() {
   const course = useSelector((state) => state.course.courseData);
 
   useEffect(() => {
+    console.log("\n\nsection", sections)
     if (course) {
       // Check if course has sections and lectures
       if (course.sections && course.sections.length > 0) {
@@ -126,12 +127,12 @@ export default function CourseContents() {
         />
       ))}
       <Divider />
-      <ButtonComponent
+      {sections.length < 25 ? <ButtonComponent
         onClick={handleAddSection}
         text="Add Section +"
         flexEnd
         variant="contained"
-      />
+      /> : <Typography sx={{textAlign: "end", paddingTop: "16px", color: "red.main"}}>You have reach the maximium sections per course</Typography>}
     </Box>
   );
 }
