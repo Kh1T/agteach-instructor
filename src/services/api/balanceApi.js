@@ -20,7 +20,23 @@ export const balanceApi = createApi({
         };
       },
     }),
+    searchProductBalance: builder.query({
+      query: () => {
+        return {
+          url: "/api/instructor/searchProductBalance",
+          method: "GET",
+        };
+      },
+    }),
+    searchCourseBalance: builder.query({
+      query: () => {
+        return {
+          url: "/api/instructor/searchCourseBalance",
+          method: "GET",
+        };
+      },
+    }),
   }),
 });
 
-export const { useGetBalanceQuery } = balanceApi;
+export const { useGetBalanceQuery, useSearchCourseBalanceQuery, useSearchProductBalanceQuery } = balanceApi;
