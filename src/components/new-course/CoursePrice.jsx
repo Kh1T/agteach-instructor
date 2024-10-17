@@ -53,7 +53,8 @@ export default function CoursePrice() {
         label="Price"
         type="number"
         {...register("coursePrice", { required: "Price is required", 
-          min: { value: 1, message: "Price must be greater than 0" },
+          min: { value: 1, message: "Price must be greater than $0" },
+          max: { value: 1000, message: "Price must be less than $1000" }
          })}
         error={!!errors.coursePrice}
         helperText={errors.coursePrice?.message}

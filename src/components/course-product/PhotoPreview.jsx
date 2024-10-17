@@ -19,15 +19,15 @@ export default function PhotoPreview({
     formState: { errors },
   } = useFormContext();
 
+  const [selectedImage, setSelectedImage] = useState(
+    file ? URL.createObjectURL(file) : null
+  );
   console.log("url", url);
   useEffect(() => {
     setValue(name, url);
     setSelectedImage(url);
   }, [url]);
 
-  const [selectedImage, setSelectedImage] = useState(
-    file ? URL.createObjectURL(file) : null
-  );
   const [fileInfo, setFileInfo] = useState(
     file
       ? { name: file.name, size: (file.size / 1024).toFixed(2) + " KB" }
@@ -72,8 +72,10 @@ export default function PhotoPreview({
         name: file.name,
         size: (file.size / 1024).toFixed(2) + " KB",
       });
+    } else if (url) {
+      setSelectedImage(url);
     }
-  }, [file]);
+  }, [file, url]);
 
   return (
     <Box sx={{ my: 2 }}>

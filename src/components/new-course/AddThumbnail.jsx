@@ -21,6 +21,7 @@ export default function AddThumbnail() {
 
   if (course) {
     url = course.thumbnailUrl;
+    console.log("url", url);
   }
 
   return (
