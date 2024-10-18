@@ -5,6 +5,7 @@ const initialState = {
   dob: "",
   name: "",
   image: "",
+  id: "",
 };
 
 const userSlice = createSlice({
@@ -28,5 +29,6 @@ const userSlice = createSlice({
   },
 });
 
-export const { setEmail, setDob, clearUser, setUser } = userSlice.actions;
+export const { setEmail, setDob, clearUser, setUser } =
+  userSlice.actions;
 export default userSlice.reducer;
