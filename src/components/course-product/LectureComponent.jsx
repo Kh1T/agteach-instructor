@@ -42,9 +42,16 @@ export default function LectureComponent({
   const videoUrl = watch(
     `allSection[${sectionNumber - 1}].allLecture[${lectureNumber - 1}].video`
   );
-  
+
+  const lectureTitle = watch(
+    `allSection[${sectionNumber - 1}].allLecture[${lectureNumber - 1}].lectureName`
+  );
+
   return (
-    <Box bgcolor='grey.300' sx={{ alignItems: "center", padding: '20px 30px 15px 30px' }}>
+    <Box
+      bgcolor="grey.300"
+      sx={{ alignItems: "center", padding: "20px 30px 15px 30px" }}
+    >
       <Stack direction="row" justifyContent="space-between">
         <Typography variant="bmdr">
           <strong>Lecture {lectureNumber}:</strong> Write your lecture title
@@ -54,7 +61,8 @@ export default function LectureComponent({
       </Stack>
       <TextField
         fullWidth
-        label="Title of Lecture"
+        // label="Title of Lecture"
+        label={`${lectureTitle ? `Lecture Title : ${lectureTitle.length} / 70` : "eg: What is in this course"}`}
         sx={{ my: 2 }}
         variant="outlined"
         {...register(
@@ -63,8 +71,8 @@ export default function LectureComponent({
             required: "Title is required",
             maxLength: {
               value: 70,
-              message: 'Title cannot be exceed 70 characters',
-            }
+              message: "Title cannot be exceed 70 characters",
+            },
           }
         )}
         error={
@@ -81,14 +89,14 @@ export default function LectureComponent({
       <VideoUpload
         name={`allSection[${sectionNumber - 1}].allLecture[${lectureNumber - 1}].video`}
         lectureDuration={`allSection[${sectionNumber - 1}].allLecture[${lectureNumber - 1}].lectureDuration`}
-        onFileChange={(newFile) =>{
+        onFileChange={(newFile) => {
           setValue(
             `allSection[${sectionNumber - 1}].allLecture[${lectureNumber - 1}].video`,
             newFile
-          )
-        }
-        }
+          );
+        }}
         file={videoUrl ? new File([videoUrl], videoUrl) : null}
+        isPreviewVisible={videoUrl ? true : false}
       />
       <DeleteConfirmModal
         open={modalOpen}
@@ -98,4 +106,3 @@ export default function LectureComponent({
     </Box>
   );
 }
-

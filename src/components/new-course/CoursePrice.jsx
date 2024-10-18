@@ -1,4 +1,4 @@
-import { Divider, Box, TextField, Typography } from "@mui/material";
+import { Divider, Box, TextField, Typography, InputLabel } from "@mui/material";
 
 import AttachMoneyOutlinedIcon from "@mui/icons-material/AttachMoneyOutlined";
 import IconWithTitle from "../course-product/IconWithTitle";
@@ -22,7 +22,7 @@ import { useEffect } from "react";
  * @returns {JSX.Element} Box component with children
  */
 export default function CoursePrice() {
-  const { register, setValue, formState: { errors } } = useFormContext();
+  const { register, setValue, watch, formState: { errors } } = useFormContext();
   const course = useSelector((state) => state.course.courseData);
 
 
@@ -51,6 +51,9 @@ export default function CoursePrice() {
         sx={{ my: 2 }}
         id="outlined-controlled"
         label="Price"
+        slotProps={{
+          inputLabel: { shrink: course && !!course.price || !!watch("coursePrice") },
+        }}
         type="number"
         {...register("coursePrice", { required: "Price is required", 
           min: { value: 1, message: "Price must be greater than $0" },

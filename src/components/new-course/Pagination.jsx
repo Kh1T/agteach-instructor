@@ -10,7 +10,7 @@ export default function PaginationComponent({ totalItems, itemsPerPage, currentP
         page={currentPage}
         onChange={onPageChange}
         color="primary"
-        size="large"
+        size="medium"
       />
     </Stack>
   );

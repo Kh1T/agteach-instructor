@@ -21,6 +21,7 @@ export default function SectionComponent({
   const {
     register,
     unregister,
+    watch,
     formState: { errors },
   } = useFormContext();
   const [lectures, setLectures] = useState(
@@ -28,7 +29,7 @@ export default function SectionComponent({
   );
   const [modalOpen, setModalOpen] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
-  const course = useSelector((state) => state.course.courseData);
+  const sectionTitle = watch(`allSection[${number - 1}].sectionName`);
 
   // Add a new lecture
   const handleAddLecture = () => {
@@ -117,13 +118,13 @@ export default function SectionComponent({
         sx={{ my: 2 }}
         fullWidth
         id="outlined-controlled"
-        label="eg: Introduction to indoor gardening"
+        label={`${sectionTitle ? `Section Title : ${sectionTitle.length} / 70` : "eg: Introduction to indoor gardening"}`}
         {...register(`allSection[${number - 1}].sectionName`, {
           required: "Title is required",
           maxLength: {
             value: 70,
-            message: 'Title cannot be exceed 70 character'
-          }
+            message: "Title cannot be exceed 70 character",
+          },
         })}
         error={!!errors.allSection?.[number - 1]?.sectionName}
         helperText={errors.allSection?.[number - 1]?.sectionName?.message}
@@ -140,13 +141,21 @@ export default function SectionComponent({
             type={lecture.type}
           />
         ))}
-        {lectures.length < 15 ? <ButtonComponent
-          onClick={handleAddLecture}
-          text="Add Lecture +"
-          variant="outlined"
-          flexEnd
-          sx={{ px: 2 }}
-        /> : <Typography sx={{textAlign: "end", paddingTop: "16px", color: "red.main"}}>You have reach the maximium lecture per section</Typography>}
+        {lectures.length < 15 ? (
+          <ButtonComponent
+            onClick={handleAddLecture}
+            text="Add Lecture +"
+            variant="outlined"
+            flexEnd
+            sx={{ px: 2 }}
+          />
+        ) : (
+          <Typography
+            sx={{ textAlign: "end", paddingTop: "16px", color: "red.main" }}
+          >
+            You have reach the maximium lecture per section
+          </Typography>
+        )}
       </Box>
       <DeleteConfirmModal
         open={modalOpen}

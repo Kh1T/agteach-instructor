@@ -16,6 +16,7 @@ export default function CourseThumbnail({
     register,
     setValue,
     watch,
+    reset,
     formState: { errors },
   } = useFormContext();
 
@@ -23,10 +24,49 @@ export default function CourseThumbnail({
     file ? URL.createObjectURL(file) : null
   );
   console.log("url", url);
+
+//   useEffect(() => {
+//     if (file) {
+//       const imageUrl = URL.createObjectURL(file);
+//       setSelectedImage(imageUrl);
+//       setFileInfo({
+//         name: file.name,
+//         size: (file.size / 1024).toFixed(2) + " KB",
+//       });
+//     } else if (url) {
+//       setSelectedImage(url);
+//       setFileInfo({
+//         name: "Existing image",
+//         size: "N/A",
+//       });
+//     } else {
+//       setSelectedImage(null);
+//       setFileInfo({
+//         name: "Thumbnail Image",
+//         size: "N/A",
+//       });
+//     }
+//   }, [file, url]);
+  
+
   useEffect(() => {
     setValue(name, url);
     setSelectedImage(url);
   }, [url]);
+  useEffect(() => {
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      console.log("imageUrl", imageUrl);
+
+      setSelectedImage(imageUrl);
+      setFileInfo({
+        name: file.name,
+        size: (file.size / 1024).toFixed(2) + " KB",
+      });
+    } else if (url) {
+      setSelectedImage(url);
+    }
+  }, [file, url]);
 
   const [fileInfo, setFileInfo] = useState(
     file
@@ -62,20 +102,7 @@ export default function CourseThumbnail({
     }
   };
 
-  useEffect(() => {
-    if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      console.log("imageUrl", imageUrl);
 
-      setSelectedImage(imageUrl);
-      setFileInfo({
-        name: file.name,
-        size: (file.size / 1024).toFixed(2) + " KB",
-      });
-    } else if (url) {
-      setSelectedImage(url);
-    }
-  }, [file, url]);
 
   return (
     <Box sx={{ my: 2 }}>
@@ -116,7 +143,7 @@ export default function CourseThumbnail({
             sx={{ maxWidth: "150px", maxHeight: "150px", objectFit: "cover" }}
           />
           <Stack spacing={1}>
-            <Typography variant="bmdsm">{fileInfo.name}</Typography>
+            <Typography variant="bmdsm">Name: {fileInfo.name}</Typography>
             <Typography variant="bmdr">Size: {fileInfo.size}</Typography>
             <Button
               variant="outlined"

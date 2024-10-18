@@ -51,15 +51,13 @@ function NewCoursePage() {
   });
 
   const handleBack = () => {
-    // dispatch(setCourse(null));
-    reset();
+    dispatch(setCourse({}));
     navigate(-1);
   };
 
   useEffect(() => {
     if (action === "new") {
-      // dispatch(setCourse(null));
-      reset();
+      dispatch(setCourse({}));
     } else if (data) {
       dispatch(setCourse(data.data));
     }

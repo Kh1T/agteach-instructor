@@ -5,7 +5,7 @@ import TextSection from "../course-product/TextSection";
 
 import { useFormContext } from "react-hook-form";
 import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 /**
  * AboutCourse component renders a page for instructors to input course title,
@@ -35,6 +35,10 @@ export default function AboutCourse() {
     }
   }, [course, setValue]);
 
+  const courseName = watch("courseName");
+  const description = watch("description");
+  const courseObjective = watch("courseObjective");
+
   return (
     <Box className="container">
       <IconWithTitle
@@ -50,10 +54,11 @@ export default function AboutCourse() {
         sx={{ my: 2 }}
         fullWidth
         id="courseName"
-        // slotProps={{
-        //   inputLabel: { shrink: course && !!course.name },
-        // }}
-        label="Enter your course title"
+        slotProps={{
+          inputLabel: { shrink: (course && !!course.name) || !!courseName },
+        }}
+        label={`Course Title ${courseName ? `: ${courseName.length} / 70` : ""}`}
+        value={watch("courseName")}
         {...register("courseName", {
           required: "Title is required",
           maxLength: {
@@ -75,14 +80,16 @@ export default function AboutCourse() {
         />
         <TextField
           id="description"
-          // slotProps={{
-          //   input: { sx: { alignItems: "flex-start", minHeight: "150px" } },
-          //   inputLabel: { shrink: course && !!course.description },
-          // }}
+          slotProps={{
+            inputLabel: {
+              shrink:
+                (course && !!course.description) || !!watch("description"),
+            },
+          }}
           sx={{ my: 2 }}
           fullWidth
           multiline
-          label="Enter your course description"
+          label={`Course Description ${description ? `: ${description.length} / 1000` : ""}`}
           {...register("description", {
             required: "Description is required",
             maxLength: {
@@ -100,16 +107,19 @@ export default function AboutCourse() {
           achieve after completing this course"
       />
       <TextField
-        // slotProps={{
-        //   input: { sx: { alignItems: "flex-start", maxHeight: "150px" } },
-        //   inputLabel: { shrink: course && !!course.courseObjective },
-        // }}
+        slotProps={{
+          inputLabel: {
+            shrink:
+              (course && !!course.courseObjective) ||
+              !!watch("courseObjective"),
+          },
+        }}
         sx={{ my: 2 }}
         fullWidth
         multiline
         id="courseObjective"
-        label="What they will learn in this course: "
-        // InputLabelProps={{ shrink: true }}
+        label={`Course Objective ${courseObjective ? `: ${courseObjective.length} / 1000` : ""}`}
+        value={watch("courseObjective")}
         {...register("courseObjective", {
           required: "Objective is required",
           maxLength: {

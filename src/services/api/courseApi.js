@@ -45,6 +45,7 @@ export const courseApi = createApi({
     }),
 
     getInstructorProduct: builder.query({
+      providesTags: ["Course"],
       query: ({ name }) => {
         let url = `/api/product/getInstructorProduct?name=${name}`;
 
