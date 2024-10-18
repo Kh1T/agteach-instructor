@@ -89,6 +89,15 @@ export const authApi = createApi({
       }),
     }),
 
+    updateInstructorInfo: builder.mutation({
+      query: (additionalInfoData) => ({
+        url: "/api/instructor/updateMe",
+        method: "PATCH",
+        body: additionalInfoData,
+      }),
+      invalidatesTags: ["Instructor"],
+    }),
+
     updateInstructorPassword: builder.mutation({
       query: (passwordInfo) => ({
         url: "/api/users/updatePassword",

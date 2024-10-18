@@ -6,6 +6,7 @@ import {
   MenuItem,
   Divider,
   TextField,
+  Box,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import CustomButton from "../components/CustomButton";
@@ -18,6 +19,7 @@ import {
 import { useForm } from "react-hook-form";
 import FormInput from "../components/login-signup/FormInput";
 import { CustomAlert } from "../components/CustomAlert";
+
 
 function SettingPage() {
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
@@ -58,8 +60,6 @@ function SettingPage() {
       }
     };
   
-  
-
   const {
     register: basicInfoRegister,
     handleSubmit: handleBasicInfoSubmit,
@@ -380,7 +380,7 @@ function SettingPage() {
     );
   }
 
-  return <div>{content}</div>;
+  return <Box>{content}</Box>;
 }
 
 export default SettingPage;
