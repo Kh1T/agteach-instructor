@@ -38,10 +38,6 @@ export default function ProductPhoto({
           "Most customers will decide to buy a product based on an image"
         }
       />
-      {/* <PhotoPreview icon={<InsertPhotoIcon />} register={register} errors={errors} setValue={setValue} name={"image"} >
-        <Typography color="gray">
-          Upload Product image, png, jpg, webp
-        </Typography> */}
       <PhotoPreview
         icon={<InsertPhotoIcon />}
         register={register}

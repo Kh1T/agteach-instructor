@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect } from "react";
 import { Stack, Box, Typography, Button, FormHelperText } from "@mui/material";
-// import { useFormContext } from "react-hook-form";
 
 export default function PhotoPreview({
   name,
@@ -50,20 +49,6 @@ export default function PhotoPreview({
       console.log("Input ref not found/null");
     }
   };
-
-  // useEffect(() => {
-  //   if (file) {
-  //     const imageUrl = URL.createObjectURL(file);
-  //     setSelectedImage(imageUrl);
-  //     setFileInfo({
-  //       name: newFile.name,
-  //       size: (newFile.size / 1024).toFixed(2) + " KB",
-  //     });
-  //   } else if (defaultValue) {
-  //     // If no file, use the defaultValue (for existing image in edit mode)
-  //     setSelectedImage(defaultValue);
-  //   }
-  // }, [file, defaultValue]);
 
   return (
     <Box sx={{ my: 2 }}>

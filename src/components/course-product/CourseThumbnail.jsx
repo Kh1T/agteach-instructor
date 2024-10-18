@@ -24,31 +24,7 @@ export default function CourseThumbnail({
     file ? URL.createObjectURL(file) : null
   );
   console.log("url", url);
-
-//   useEffect(() => {
-//     if (file) {
-//       const imageUrl = URL.createObjectURL(file);
-//       setSelectedImage(imageUrl);
-//       setFileInfo({
-//         name: file.name,
-//         size: (file.size / 1024).toFixed(2) + " KB",
-//       });
-//     } else if (url) {
-//       setSelectedImage(url);
-//       setFileInfo({
-//         name: "Existing image",
-//         size: "N/A",
-//       });
-//     } else {
-//       setSelectedImage(null);
-//       setFileInfo({
-//         name: "Thumbnail Image",
-//         size: "N/A",
-//       });
-//     }
-//   }, [file, url]);
   
-
   useEffect(() => {
     setValue(name, url);
     setSelectedImage(url);
