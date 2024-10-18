@@ -61,6 +61,10 @@ export default function LectureComponent({
           `allSection[${sectionNumber - 1}].allLecture[${lectureNumber - 1}].lectureName`,
           {
             required: "Title is required",
+            maxLength: {
+              value: 70,
+              message: 'Title cannot be exceed 70 characters',
+            }
           }
         )}
         error={
@@ -77,11 +81,12 @@ export default function LectureComponent({
       <VideoUpload
         name={`allSection[${sectionNumber - 1}].allLecture[${lectureNumber - 1}].video`}
         lectureDuration={`allSection[${sectionNumber - 1}].allLecture[${lectureNumber - 1}].lectureDuration`}
-        onFileChange={(newFile) =>
+        onFileChange={(newFile) =>{
           setValue(
             `allSection[${sectionNumber - 1}].allLecture[${lectureNumber - 1}].video`,
             newFile
           )
+        }
         }
         file={videoUrl ? new File([videoUrl], videoUrl) : null}
       />

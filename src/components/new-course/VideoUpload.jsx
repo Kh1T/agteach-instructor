@@ -24,6 +24,7 @@ export default function VideoUpload({
 
   const inputRef = useRef(null);
   const videoFile = watch(name);
+  const [errorMessage, setErrorMessage] = useState('Video is requied')
 
   useEffect(() => {
     // If the videoFile exists, clear the error
@@ -33,32 +34,64 @@ export default function VideoUpload({
   }, [videoFile]);
 
   const handleVideoUpload = (event) => {
+    setIsError(false);
+  
     const newFile = event.target.files[0];
+    const MAX_FILE_SIZE = 150 * 1024 * 1024; // 150MB
+    const MAX_VIDEO_DURATION = 10 * 60; //10mn
+  
+    // Check file size
+    if (newFile.size > MAX_FILE_SIZE) {
+      setIsError(true);
+      setErrorMessage('Video size exceeds 150MB. Please ensure the video size is under 150MB');
+      return;
+    }
+  
     const videoUrl = URL.createObjectURL(newFile);
     const video = document.createElement("video");
-
+  
+    // Load video metadata to get dimensions and duration
     video.src = videoUrl;
     video.onloadedmetadata = () => {
+      const videoWidth = video.videoWidth;
+      const videoHeight = video.videoHeight;
+      const aspectRatio = (videoWidth / videoHeight).toFixed(2);
+  
+      // Check if the video is in landscape mode
+      if (aspectRatio < 1) {
+        setIsError(true);
+        setErrorMessage('Video must be a landscape video');
+        return;
+      };
+      
+      // Check if the video duration exceeds the 10-minute limit
+      const videoDuration = video.duration;
+      if (videoDuration > MAX_VIDEO_DURATION) {
+        setIsError(true);
+        setErrorMessage('Video duration exceeds 10 minutes. Please upload a video under 10 minutes.');
+        return;
+      }
+  
       console.log("Video duration:", video.duration);
-      // register(lectureDuration, { value: video.duration.toString() });
       setValue(lectureDuration, video.duration.toString());
+  
+      // Set file info after successful video validation
+      setFileInfo({
+        name: newFile?.name || "",
+        size: newFile ? (newFile.size / 1024).toFixed(2) + " KB" : "",
+      });
+  
+      onFileChange(newFile);
+      setValue(name, newFile);
     };
-
-    setFileInfo({
-      name: newFile?.name || "",
-      size: newFile ? (newFile.size / 1024).toFixed(2) + " KB" : "",
-    });
-    
-    // If no file is selected, show an error
+  
+    // If no file is selected
     if (!newFile) {
       setIsError(true);
-    } else {
-      setIsError(false);
+      setErrorMessage('No video file selected');
     }
-
-    onFileChange(newFile);
-    setValue(name, newFile);
   };
+  
 
   const handleChange = () => {
     if (inputRef.current) {
@@ -120,7 +153,7 @@ export default function VideoUpload({
       )}
       {isError && (
         <FormHelperText sx={{ pl: 2 }} error>
-          Video is required
+          {errorMessage || 'Video is required'}
         </FormHelperText>
       )}
       <input
