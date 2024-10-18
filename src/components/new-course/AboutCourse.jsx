@@ -89,6 +89,7 @@ export default function AboutCourse() {
           sx={{ my: 2 }}
           fullWidth
           multiline
+          minRows={3}
           label={`Course Description ${description ? `: ${description.length} / 1000` : ""}`}
           {...register("description", {
             required: "Description is required",
@@ -117,6 +118,7 @@ export default function AboutCourse() {
         sx={{ my: 2 }}
         fullWidth
         multiline
+        minRows={3}
         id="courseObjective"
         label={`Course Objective ${courseObjective ? `: ${courseObjective.length} / 1000` : ""}`}
         value={watch("courseObjective")}
