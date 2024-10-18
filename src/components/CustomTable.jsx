@@ -28,7 +28,6 @@ export default function CustomTable({
   let headers = Object.keys(data[0]).map(
     (key) => key.charAt(0).toUpperCase() + key.slice(1)
   );
-  console.log('data', data)
   let rows = data.map((item) => Object.values(item));
 
   // Pagination state

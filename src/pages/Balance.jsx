@@ -45,7 +45,6 @@ function BalancePage() {
       </>
     );
   }
-  if (!isLoadingProducts) console.log(products);
 
   const productList =
     products?.data.map((product) => {
@@ -75,7 +74,6 @@ function BalancePage() {
   const handleSearchCourse = () => {
     // setIsLoadingSearch(true);
     const term = searchCourseRef.current.value;
-    console.log("searching...", term);
     setSearchCourseTerm(term); // Update the search term state
     // setIsLoadingSearch(false);
   };
