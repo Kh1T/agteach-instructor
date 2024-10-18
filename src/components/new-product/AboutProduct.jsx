@@ -13,16 +13,43 @@ import TextSection from "../course-product/TextSection";
  *   - Typography component with example
  *   - TextField component for inputting product description
  *
- * The component is given two props: `productName` and `productDescription`.
+ * The component is given two props: `productName` and `description`.
  * `productName` is a string representing the product name.
- * `productDescription` is a string representing the product description.
+ * `description` is a string representing the product description.
  *
  * The component returns a Box component with children.
  */
-export default function AboutProduct({ register, errors }) {
+import { useEffect, useState } from "react";
+export default function AboutProduct({
+  register,
+  errors,
+  name = "",
+  description = "",
+  setValue,
+}) {
+  const [nameCharCount, setNameCharCount] = useState(0);
+  const [descCharCount, setDescCharCount] = useState(0);
+
+  useEffect(() => {
+    setNameCharCount(name.length);
+    setDescCharCount(description.length);
+  }, [name, description]);
+
+  const maxNameLength = 50;
+  const maxDescLength = 1000;
+
+  const handleNameCharCount = (event) => {
+    setValue("name", event.target.value);
+    setNameCharCount(event.target.value.length);
+  };
+
+  const handleDescCharCount = (event) => {
+    setValue("description", event.target.value);
+    setDescCharCount(event.target.value.length);
+  };
 
   return (
-    <Box className="container">
+    <Box>
       <IconWithTitle
         title="About this Product"
         icon={<InfoIcon sx={{ color: "common.white" }} />}
@@ -34,35 +61,60 @@ export default function AboutProduct({ register, errors }) {
         description="Your product name should be short and meaningful."
       />
       <TextField
-        sx={{ my: 2 }}
         fullWidth
-        id="outlined-controlled"
-        label="Product Name"
-        // onChange={(event) => setProductName(event.target.value)}
-        {...register("productName", { required: "Product name is required" })}
-        error={!!errors.productName}
-        helperText={errors.productName?.message}
+        id="outlined-name"
+        type="text"
+        value={name}
+        label={
+          nameCharCount === 0
+            ? "Product Name"
+            : `Product Name : ${nameCharCount} / ${maxNameLength}`
+        }
+        onChange={handleNameCharCount}
+        {...register("name", {
+          required: "Product name is required",
+          maxLength: {
+            value: maxNameLength,
+            message: `Product name should be less than ${maxNameLength} characters`,
+          },
+        })}
+        error={!!errors.name}
+        helperText={errors.name?.message}
       />
-      <Typography variant="bsr" color="dark.300" sx={{ mt: 2 }}>
-        eg: Grow Lights - LED or fluorescent grow lights
-      </Typography>
+      {name.length === 0 && (
+        <Typography variant="bsr" color="dark.300" sx={{ mt: 2 }}>
+          eg: Grow Lights - LED or fluorescent grow lights
+        </Typography>
+      )}
 
       <TextSection
         title="Tell us more about your product"
         description="Help explain what does the product do and key feature"
       />
+
       <TextField
-        slotProps={{
-          input: { sx: { alignItems: "flex-start", height: "156px" } },
-        }}
-        sx={{ my: 2 }}
+        multiline
+        minRows={4}
+        maxRows={10}
         fullWidth
-        id="outlined-controlled"
-        label="Description"
-        // onChange={(event) => setProductDescription(event.target.value)}
-        {...register("productDescription", { required: "Product description is required" })}
-        error={!!errors.productDescription}
-        helperText={errors.productDescription?.message}
+        id="outlined-description"
+        label={
+          descCharCount === 0
+            ? "Product Description"
+            : `Product Description :  
+            ${descCharCount} / ${maxDescLength}`
+        }
+        value={description}
+        onChange={handleDescCharCount}
+        {...register("description", {
+          required: "Product description is required",
+          maxLength: {
+            value: maxDescLength,
+            message: `Product description should be less than ${maxDescLength} characters`,
+          },
+        })}
+        error={!!errors.description}
+        helperText={errors.description?.message}
       />
     </Box>
   );

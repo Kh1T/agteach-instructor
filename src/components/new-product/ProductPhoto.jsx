@@ -15,7 +15,16 @@ import PhotoPreview from "../course-product/PhotoPreview";
  *
  * @returns {JSX.Element} a JSX element containing the icon and title
  */
-export default function ProductPhoto({ register, errors, setValue }) {
+export default function ProductPhoto({
+  register,
+  unregister,
+  errors,
+  defaultValue,
+  setValue,
+  watch,
+  editMode
+}) {
+
   return (
     <Box>
       <IconWithTitle
@@ -33,6 +42,18 @@ export default function ProductPhoto({ register, errors, setValue }) {
         <Typography color="gray">
           Upload Product image, png, jpg, webp
         </Typography>
+      <PhotoPreview
+        icon={<InsertPhotoIcon />}
+        register={register}
+        unregister={unregister}
+        errors={errors}
+        watch={watch}
+        setValue={setValue}
+        name={"productCover"}
+        defaultValue={defaultValue}
+        editMode={editMode}
+      >
+        <Typography color="gray">Upload Product image, png, jpg</Typography>
         <Typography color="gray">580 x 580 (Limit size: 1 MB)</Typography>
       </PhotoPreview> */}
     </Box>

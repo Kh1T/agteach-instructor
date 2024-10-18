@@ -73,6 +73,8 @@ function ProductPage() {
                 navigate("/product/new", {
                   state: {
                     product: item,
+                    editMode: true,
+                    productId: item.productId,
                   },
                 });
               }}

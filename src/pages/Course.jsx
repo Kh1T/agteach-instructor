@@ -14,7 +14,7 @@ import QueryHeader from "../components/QueryHeader";
 import CustomTable from "../components/CustomTable";
 import {
   useConfirmDeleteMutation,
-  useSearchCoursesQuery,
+  useGetAllCoursesQuery,
 } from "../services/api/courseApi";
 import { useNavigate } from "react-router";
 import deletBin from "../assets/Go Green Grey Hanger Bag.png";
@@ -23,16 +23,35 @@ import { useDispatch } from "react-redux";
 import { setId } from "../features/course/courseSlice";
 import { CustomAlert } from "../components/CustomAlert";
 
+
+/**
+ * CoursePage renders a page for viewing and managing courses.
+ *
+ * It renders a QueryHeader component at the top for searching and filtering courses.
+ * Below the QueryHeader, it renders a list of courses in a table format using the CustomTable component.
+ * Each row in the table contains the course name, price, edit and delete icons.
+ * The edit icon navigates to the course edit page when clicked.
+ * The delete icon opens a confirmation dialog when clicked.
+ * If the user confirms the deletion, the course is deleted and the table is updated.
+ * If the user cancels the deletion, the confirmation dialog is closed.
+ *
+ * The component also renders a confirmation dialog when the delete icon is clicked.
+ * The dialog shows a message asking the user to confirm the deletion of the course.
+ * If the user confirms the deletion, the course is deleted and the dialog is closed.
+ * If the user cancels the deletion, the dialog is closed.
+ *
+ * @returns a JSX element containing the CoursePage component.
+ */
 function CoursePage() {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectState, setSelectState] = useState(0);
   const [isLoadingSearch, setIsLoadingSearch] = useState(false);
   const {
-    data: searchedCourse,
-    isFetching: isSearching,
+    data: course,
+    isLoading,
     refetch,
-  } = useSearchCoursesQuery({ name: searchTerm, order: selectState });
+  } = useGetAllCoursesQuery({ name: searchTerm, order: selectState });
   const [confirmDelete] = useConfirmDeleteMutation();
   const searchRef = useRef();
   const label = "Sort";
@@ -54,10 +73,9 @@ function CoursePage() {
     setOpenDialog(false);
     setSelectedCourse(null);
   };
-
+  
   const handleConfirmDelete = async () => {
-    if (selectedCourse?.courseId) {
-      console.log("Deleting course with ID:", selectedCourse.courseId);
+    if (selectedCourse) {
       try {
         const response = await confirmDelete(selectedCourse.courseId).unwrap();
         setSnackbar({
@@ -85,7 +103,7 @@ function CoursePage() {
 
   const courseList = isSearching
     ? []
-    : searchedCourse?.data?.map((item) => ({
+    : course?.item?.map((item) => ({
         Date: new Date(item.createdAt).toISOString().split("T")[0],
         Name: item.name,
         Price: item.price,
@@ -123,9 +141,9 @@ function CoursePage() {
         pathCreated="/course/new"
         labelCreate="Create Course"
       />
-      {isSearching || isLoadingSearch ? (
+      {isLoading || isLoadingSearch ? (
         <Typography>Loading courses...</Typography>
-      ) : courseList && courseList.length === 0 ? (
+      ) : courseList.length === 0 ? (
         <Box
           display="flex"
           flexDirection="column"
@@ -141,11 +159,11 @@ function CoursePage() {
           />
           <Typography variant="bmdr">No courses found</Typography>
         </Box>
+
+        
       ) : (
         <CustomTable data={courseList} rowLimit={10} isPagination={true} />
       )}
-
-      {/* data={[{'test' : 'test'}]} */}
 
       <Dialog open={openDialog} onClose={handleCloseDialog}>
         <DialogContent>

@@ -7,7 +7,7 @@ import theme from "./theme/theme";
 import { CssBaseline } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { useIsLoginQuery } from "./services/api/authApi";
-import { checkLoginStatus } from "./features/user/authSlice";
+import { checkLoginStatus, getInstructorId } from "./features/user/authSlice";
 import { useEffect } from "react";
 
 function App() {
@@ -17,6 +17,7 @@ function App() {
   useEffect(() => {
     if (data && !isLoading) {
       dispatch(checkLoginStatus(data.IsAuthenticated));
+      dispatch(getInstructorId(data.instructorId));
     }
   }, [data, isLoading, dispatch]);
 

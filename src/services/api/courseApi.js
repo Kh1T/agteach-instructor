@@ -26,14 +26,24 @@ export const courseApi = createApi({
     }),
 
     getAllCourses: builder.query({
-      query: () => ({
-        url: "/api/course/getAllCourse",
-        method: "GET",
-      }),
       providesTags: ["Course"],
+      query: ({ name = "", order }) => {
+        let url = `/api/course/getInstructorCourse?name=${name}`;
+        
+        // Include order only if it's defined
+        if (order) {
+          const dataOrder = order === "Newest" ? "desc" : "asc";
+          url += `&order=${dataOrder}`;
+        }
+    
+        return {
+          url,
+          method: "GET",
+        };
+      },
     }),
 
-    getInstructoreProduct: builder.query({
+    getInstructorProduct: builder.query({
       query: ({ name }) => {
         let url = `/api/product/getInstructorProduct?name=${name}`;
 
@@ -84,7 +94,7 @@ export const {
   useAddCourseMutation,
   useGetCourseQuery,
   useGetAllCoursesQuery,
-  useGetInstructoreProductQuery,
+  useGetInstructorProductQuery,
   useSearchCoursesQuery,
   useConfirmDeleteMutation,
   useUpdateCourseMutation,
