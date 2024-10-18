@@ -10,9 +10,7 @@ import EnromentPage from "../pages/Enrollment";
 import BalancePage from "../pages/Balance";
 import SettingPage from "../pages/Setting";
 import NewProductPage from "../pages/NewProduct";
-import EditProductPage from "../pages/EditProduct";
 import NewCoursePage from "../pages/NewCourse";
-import EditCoursePage from "../pages/EditCourse";
 import ForgotPassword from "../pages/ForgotPassword";
 import Signup from "../pages/Signup";
 import AdditionalInformation from "../pages/AdditionalInformation";
@@ -38,7 +36,6 @@ export const router = createBrowserRouter([
       { path: "course/:action", element: <NewCoursePage /> }, // action: "new" or "edit/:courseId"
       { path: "product", element: <ProductPage /> },
       { path: "product/new", element: <NewProductPage /> },
-      { path: "product/:productId/edit", element: <EditProductPage /> },
       { path: "purchased", element: <PurchasedPage /> },
       { path: "purchased/:purchaseId", element: <PurchasedDetailPage /> },
       { path: "enrollment", element: <EnromentPage /> },
