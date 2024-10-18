@@ -21,19 +21,27 @@ export const balanceApi = createApi({
       },
     }),
     searchProductBalance: builder.query({
-      query: ({name='', order=''}) => {
-        order = order === 10 ?  "asc": "desc";
+      query: ({ name = "", order = "" }) => {
+        order = order === 10 ? "asc" : "desc";
         return {
           url: `/api/instructor/searchProductBalance?name=${name}&order=${order}`,
           method: "GET",
         };
       },
     }),
-    searchCourseBalance: builder.query({      
-      query: ({name='', order=''}) => {
-        order = order === 10 ? "asc": "desc";
+    searchCourseBalance: builder.query({
+      query: ({ name = "", order = "" }) => {
+        order = order === 10 ? "asc" : "desc";
         return {
           url: `/api/instructor/searchCourseBalance?name=${name}&order=${order}`,
+          method: "GET",
+        };
+      },
+    }),
+    getRecentTransactions: builder.query({
+      query: () => {
+        return {
+          url: "/api/instructor/getRecentTransaction",
           method: "GET",
         };
       },
@@ -41,4 +49,9 @@ export const balanceApi = createApi({
   }),
 });
 
-export const { useGetBalanceQuery, useSearchCourseBalanceQuery, useSearchProductBalanceQuery } = balanceApi;
+export const {
+  useGetBalanceQuery,
+  useSearchCourseBalanceQuery,
+  useSearchProductBalanceQuery,
+  useGetRecentTransactionsQuery
+} = balanceApi;

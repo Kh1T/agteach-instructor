@@ -27,7 +27,7 @@ function BalanceCard({ balance }) {
           </Typography>
         </Stack>
         <Typography variant="blgsm" sx={{ color: "dark.400" }}>
-          ${course || 0}
+          $ {course || 0}
         </Typography>
         <Divider />
         <Stack
@@ -45,7 +45,7 @@ function BalanceCard({ balance }) {
         </Stack>
 
         <Typography variant="blgsm" color="dark.400">
-          ${product || 0}
+          $ {product || 0}
         </Typography>
       </Stack>
     </Box>

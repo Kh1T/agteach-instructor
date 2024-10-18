@@ -1,4 +1,4 @@
-import { Box, Paper, Stack, Tab, Tabs, Typography } from "@mui/material";
+import { Box, Stack, Tab, Tabs, Typography } from "@mui/material";
 import RecentTransaction from "../components/RecentTransaction";
 import Grid from "@mui/material/Grid2";
 import PieChartBalance from "../components/balance/PieChartBalance";
@@ -12,6 +12,7 @@ import emptyProduct from "../assets/Spooky Stickers Sweet Franky.png";
 // import { products } from "../data/productsDummy";
 import {
   useGetBalanceQuery,
+  useGetRecentTransactionsQuery,
   useSearchCourseBalanceQuery,
   useSearchProductBalanceQuery,
 } from "../services/api/balanceApi";
@@ -34,6 +35,9 @@ function BalancePage() {
       name: searchProductTerm,
       order: selectProductState,
     });
+  const { data: recentTransactions, isLoading: isLoadingRecentTransaction } =
+    useGetRecentTransactionsQuery();
+
   if (isLoading) {
     return (
       <>
@@ -63,6 +67,8 @@ function BalancePage() {
         Price: `$ ${course.salePrice}`,
       };
     }) || [];
+
+  const recentList = recentTransactions?.data || [];
   const { product, course } = balance.data;
   const total = course + product;
 
@@ -112,7 +118,11 @@ function BalancePage() {
           </Box>
         </Grid>
         <Grid size={4}>
-          <RecentTransaction />
+          {isLoadingRecentTransaction ? (
+            <Typography>Loading...</Typography>
+          ) : (
+            <RecentTransaction data={recentList} />
+          )}
         </Grid>
       </Grid>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -150,7 +160,7 @@ function BalancePage() {
                   marginBottom: "10px",
                 }}
               />
-              <Typography variant="bmdr">No products found</Typography>
+              <Typography variant="bmdr">No course found</Typography>
             </Box>
           ) : (
             <CustomTable data={courseList} isPagination={true} />
