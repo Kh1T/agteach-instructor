@@ -6,7 +6,7 @@ import Inventory2OutlinedIcon from "@mui/icons-material/Inventory2Outlined";
 import IconWithTitle from "../course-product/IconWithTitle";
 import TextSection from "../course-product/TextSection";
 import AddedProduct from "../course-product/AddedProduct";
-import { useGetInstructoreProductQuery } from "../../services/api/courseApi";
+import { useGetInstructorProductQuery } from "../../services/api/courseApi";
 import { useSelector } from "react-redux";
 import PaginationComponent from "./Pagination";
 
@@ -23,7 +23,7 @@ export default function RelatedProduct({ courseData }) {
   const [cardsPerPage, setCardsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const { data } = useGetInstructoreProductQuery({ name: searchTerm });
+  const { data } = useGetInstructorProductQuery({ name: searchTerm });
   let products = data
     ? data.item.map((product) => ({
         src: product.imageUrl,

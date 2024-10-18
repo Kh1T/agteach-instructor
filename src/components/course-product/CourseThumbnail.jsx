@@ -1,26 +1,37 @@
 import { useState, useRef, useEffect } from "react";
 import { Stack, Box, Typography, Button, FormHelperText } from "@mui/material";
-// import { useFormContext } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 
-export default function PhotoPreview({
+export default function CourseThumbnail({
   name,
   onFileChange,
   isPreviewVisible,
   file,
   sx,
   icon,
-  register,
-  errors,
-  watch,
-  setValue,
   children,
-  defaultValue,
+  url,
 }) {
+  const {
+    register,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useFormContext();
+
   const [selectedImage, setSelectedImage] = useState(
-    file ? URL.createObjectURL(file) : defaultValue || null
+    file ? URL.createObjectURL(file) : null
   );
+  console.log("url", url);
+  useEffect(() => {
+    setValue(name, url);
+    setSelectedImage(url);
+  }, [url]);
+
   const [fileInfo, setFileInfo] = useState(
-    file ? { name: file.name, size: (file.size / 1024).toFixed(2) + " KB" } : {}
+    file
+      ? { name: file.name, size: (file.size / 1024).toFixed(2) + " KB" }
+      : { name: "Thumbnail Image", size: "N/A" }
   );
 
   const inputRef = useRef(null);
@@ -51,19 +62,20 @@ export default function PhotoPreview({
     }
   };
 
-  // useEffect(() => {
-  //   if (file) {
-  //     const imageUrl = URL.createObjectURL(file);
-  //     setSelectedImage(imageUrl);
-  //     setFileInfo({
-  //       name: newFile.name,
-  //       size: (newFile.size / 1024).toFixed(2) + " KB",
-  //     });
-  //   } else if (defaultValue) {
-  //     // If no file, use the defaultValue (for existing image in edit mode)
-  //     setSelectedImage(defaultValue);
-  //   }
-  // }, [file, defaultValue]);
+  useEffect(() => {
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      console.log("imageUrl", imageUrl);
+
+      setSelectedImage(imageUrl);
+      setFileInfo({
+        name: file.name,
+        size: (file.size / 1024).toFixed(2) + " KB",
+      });
+    } else if (url) {
+      setSelectedImage(url);
+    }
+  }, [file, url]);
 
   return (
     <Box sx={{ my: 2 }}>
@@ -71,8 +83,8 @@ export default function PhotoPreview({
         <>
           <Box
             sx={{
-              backgroundColor: !!errors.productCover ? "red.light" : "gray.300",
-              border: `2px dashed ${!!errors.productCover ? "red" : "gray"}`,
+              backgroundColor: !!errors[name] ? "red.light" : "gray.300",
+              border: `2px dashed ${!!errors[name] ? "red" : "gray"}`,
               cursor: "pointer",
               alignItems: "center",
               justifyItems: "center",
@@ -104,17 +116,8 @@ export default function PhotoPreview({
             sx={{ maxWidth: "150px", maxHeight: "150px", objectFit: "cover" }}
           />
           <Stack spacing={1}>
-            {!defaultValue ? (
-              <>
-                <Typography variant="bmdsm">Name: {fileInfo.name}</Typography>
-                <Typography variant="bmdr">Size: {fileInfo.size}</Typography>
-              </>
-            ) : (
-              <>
-                <Typography variant="bmdsm">Name: product-cover-image</Typography>
-                <Typography variant="bmdr">Size: 740.00 KB</Typography>
-              </>
-            )}
+            <Typography variant="bmdsm">{fileInfo.name}</Typography>
+            <Typography variant="bmdr">Size: {fileInfo.size}</Typography>
             <Button
               variant="outlined"
               sx={{
@@ -130,19 +133,20 @@ export default function PhotoPreview({
           </Stack>
         </Stack>
       )}
+
+      {errors[name] && (
+        <FormHelperText sx={{ pl: 2, mt: 1 }} error>
+          {errors[name]?.message || "This field is required"}
+        </FormHelperText>
+      )}
       <input
         type="file"
         hidden
-        accept="image/png, image/jpeg, image/jpg"
-        {...register("productCover", { required: "Image is required" })}
+        accept="image/*"
+        {...register(name, { required: "Image is required" })}
         onChange={handleFileUpload}
         ref={inputRef}
       />
-      {!photoFile && errors.productCover && (
-        <FormHelperText sx={{ color: "error.main" }}>
-          {errors.productCover.message}
-        </FormHelperText>
-      )}
     </Box>
   );
 }

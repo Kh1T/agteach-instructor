@@ -101,7 +101,7 @@ function CoursePage() {
     navigate(`/course/${course?.courseId}`);
   };
 
-  const courseList = isSearching
+  const courseList = isLoading
     ? []
     : course?.item?.map((item) => ({
         Date: new Date(item.createdAt).toISOString().split("T")[0],
