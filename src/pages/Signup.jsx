@@ -38,15 +38,13 @@ function Signup() {
 
   const submitHandler = async (data) => {
     try {
-      console.log(data);
       data.dateOfBirth = dayjs(data.dateOfBirth).format("YYYY/MM/DD");
-      const response = await signup(data).unwrap();
+      await signup(data).unwrap();
       dispatch(setDob(data.dateOfBirth));
       dispatch(setEmail(data.email));
       navigate("additional");
     } catch (error) {
       setOpen(true);
-      console.error("Signup failed:", error);
     }
   };
 
