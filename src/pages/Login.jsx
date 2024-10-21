@@ -34,6 +34,7 @@ function LoginPage() {
     defaultValues: {
       email: "",
       password: "",
+      keepMeLoggedIn: false,
     },
   });
 
@@ -72,11 +73,7 @@ function LoginPage() {
       spacing={10}
     >
       <CustomAlert
-        label={
-          isError
-            ? "Incorrect email or password."
-            : "Login Successful!"
-        }
+        label={isError ? "Incorrect email or password." : "Login Successful!"}
         severity={isError ? "error" : "success"}
         onClose={() => setOpen(false)}
         open={open}
@@ -131,7 +128,7 @@ function LoginPage() {
               />
 
               <FormControlLabel
-                control={<Checkbox value="remember" />}
+                control={<Checkbox {...register("keepMeLoggedIn")} />}
                 label="Keep me logged in"
               />
               <Link to="/auth/forgot-password">Forgot Password?</Link>
