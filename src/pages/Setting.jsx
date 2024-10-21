@@ -7,19 +7,20 @@ import {
   Divider,
   TextField,
   Box,
+  Autocomplete,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import CustomButton from "../components/CustomButton";
 import CustomFileUpload from "../components/CustomFileUpload";
 import {
   useGetInstructorInfoQuery,
+  useGetLocationsQuery,
   useUpdateInstructorInfoMutation,
   useUpdateInstructorPasswordMutation,
 } from "../services/api/authApi";
 import { useForm } from "react-hook-form";
 import FormInput from "../components/login-signup/FormInput";
 import { CustomAlert } from "../components/CustomAlert";
-
 
 function SettingPage() {
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
@@ -29,6 +30,14 @@ function SettingPage() {
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState("success");
   const [isImageUploaded, setIsImageUploaded] = useState(false);
+  const { data: location } = useGetLocationsQuery();
+  const {
+    data,
+    isLoading: isAccountInformationLoading,
+    refetch,
+  } = useGetInstructorInfoQuery();
+  let instructorInfo = {};
+  const locations = location?.data;
 
   const handleCloseSnackbar = () => {
     setSnackbarOpen(false);
@@ -36,35 +45,35 @@ function SettingPage() {
 
   const [profileImg, setProfileImg] = useState("");
 
-  const [updateInstructorPassword] =
-    useUpdateInstructorPasswordMutation();
+  const [updateInstructorPassword] = useUpdateInstructorPasswordMutation();
 
-    const [updateInfo, { isLoading }] = useUpdateInstructorInfoMutation();
+  const [updateInfo, { isLoading }] = useUpdateInstructorInfoMutation();
 
-    const handleImageUpload = async (event) => {
-      const file = event.target.files[0];
-      setProfileImg(URL.createObjectURL(file));
-  
-      if (file) {
-        const imageUrl = URL.createObjectURL(file);
-        setIsImageUploaded(imageUrl); 
-      }
-      const formData = new FormData();
-      formData.append("photo", file);
-      try {
-        const response = await updateInfo(formData).unwrap();
-        window.location.reload();
-        console.log("Success:", response);
-      } catch (error) {
-        console.error("Error:", error);
-      }
-    };
-  
+  const handleImageUpload = async (event) => {
+    const file = event.target.files[0];
+    setProfileImg(URL.createObjectURL(file));
+
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      setIsImageUploaded(imageUrl);
+    }
+    const formData = new FormData();
+    formData.append("photo", file);
+    try {
+      const response = await updateInfo(formData).unwrap();
+      window.location.reload();
+      console.log("Success:", response);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   const {
     register: basicInfoRegister,
     handleSubmit: handleBasicInfoSubmit,
     formState: { errors: basicInfoErrors },
     reset: basicInfoReset,
+    setValue
   } = useForm();
 
   const {
@@ -76,15 +85,22 @@ function SettingPage() {
   } = useForm();
 
   const handleBasicInfoReset = (instructorInfo) => {
-    basicInfoReset({
-      firstName: instructorInfo.firstName,
-      lastName: instructorInfo.lastName,
-      bio: instructorInfo.bio || "",
-      phone: instructorInfo.phone || "",
-      address: instructorInfo.address || "",
-      location: instructorInfo.location_id || "",
-      city: instructorInfo.city || "",
-    });
+    // basicInfoReset({
+      // firstName: instructorInfo.firstName,
+      // lastName: instructorInfo.lastName,
+      // bio: instructorInfo.bio || "",
+      // phone: instructorInfo.phone || "",
+      // address: instructorInfo.address || "",
+      // location_id: instructorInfo.location_id || "",
+      // city: instructorInfo.city || "",
+      setValue("firstName", instructorInfo.firstName);
+      setValue("lastName", instructorInfo.lastName);
+      setValue("bio", instructorInfo.bio);
+      setValue("phone", instructorInfo.phone);
+      setValue("address", instructorInfo.address);
+      setValue("location_id", instructorInfo.location.name);
+      // setValue("city", instructorInfo.city);
+    // });
   };
 
   const handleSecurityReset = (instructorInfo) => {
@@ -95,10 +111,6 @@ function SettingPage() {
       confirmNewPassword: "",
     });
   };
-
-  const { data, isLoading: isAccountInformationLoading, refetch} =
-  useGetInstructorInfoQuery();
-  let instructorInfo = {};
 
   useEffect(() => {
     if (data) {
@@ -111,7 +123,6 @@ function SettingPage() {
       console.log("instructorInfo00000", instructorInfo.imageUrl);
     }
   }, [data]);
-
 
   const handleSubmitUpdatePassword = async (data) => {
     const { currentPassword, newPassword, confirmNewPassword } = data;
@@ -171,7 +182,7 @@ function SettingPage() {
               setIsImageUploaded(false); // Reset state to allow changing the image
             }}
           >
-            {isLoading ? 'CHANGING...' : 'CHANGE'}
+            {isLoading ? "CHANGING..." : "CHANGE"}
             {/* CHANGE */}
           </CustomButton>
           {!isImageUploaded && (
@@ -235,9 +246,37 @@ function SettingPage() {
               error={basicInfoErrors.address}
             />
 
-            <TextField label="Location" noValidate autoComplete="off" select>
-              <MenuItem value="Phnom Penh">Phnom Penh</MenuItem>
-            </TextField>
+            {/* <TextField label="Location" noValidate autoComplete="off" select>
+              {
+                locations.map((location) => (
+                  <MenuItem key={location.id} value={location.id}>
+                    {location.name}
+                  </MenuItem>
+              ))}
+            </TextField> */}
+            <Autocomplete
+              fullWidth
+              options={locations}
+              onChange={(event, value) => {
+                console.log(value.locationId);
+                if (value) {
+                  setValue("location_id", value.locationId);
+                }
+              }}
+              getOptionLabel={(option) => option.name}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="City"
+                  slotProps={{
+                    htmlInput: {
+                      ...params.inputProps,
+                    },
+                  }}
+                  {...basicInfoRegister("location_id", {})}
+                />
+              )}
+            />
           </Stack>
 
           {/* Contact Information Section */}
