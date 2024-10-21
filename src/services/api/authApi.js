@@ -5,7 +5,7 @@ export const authApi = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
     baseUrl: API_BASE_URL,
-    credentials: "include", 
+    credentials: "include",
   }),
   tagTypes: ["Instructor"],
   endpoints: (builder) => ({
@@ -23,7 +23,7 @@ export const authApi = createApi({
         url: "/api/users/login",
         method: "POST",
         body: loginData,
-        headers: { "X-Frontend-URL": window.location },
+        // headers: { "X-Frontend-URL": window.location },
       }),
     }),
 
@@ -85,6 +85,7 @@ export const authApi = createApi({
       query: () => ({
         url: "/api/users/isLoginedIn",
         method: "GET",
+        // headers: { "X-Frontend-URL": window.location },
       }),
     }),
 
