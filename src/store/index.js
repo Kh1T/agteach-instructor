@@ -4,8 +4,9 @@ import { locationApi } from "../services/api/locationApi";
 import { productApi } from "../services/api/productApi";
 import { courseApi } from "../services/api/courseApi";
 import userReducer from "../features/user/userSlice";
-import authSlice from "../features/user/authSlice";
 import { balanceApi } from "../services/api/balanceApi";
+import { salesApi } from "../services/salesApi";
+import authSlice from "../features/user/authSlice";
 import courseSlice from "../features/course/courseSlice";
 // import productReducer from "./productStore";
 
@@ -16,6 +17,7 @@ export const store = createStore({
     [courseApi.reducerPath]: courseApi.reducer,
     [productApi.reducerPath]: productApi.reducer,
     [courseApi.reducerPath]: courseApi.reducer,
+    [salesApi.reducerPath]: salesApi.reducer,
     [balanceApi.reducerPath]: balanceApi.reducer,
     user: userReducer,
     auth: authSlice,
@@ -28,6 +30,7 @@ export const store = createStore({
       locationApi.middleware,
       productApi.middleware,
       courseApi.middleware,
+      salesApi.middleware,
       balanceApi.middleware
     ),
 });
