@@ -42,7 +42,7 @@ export default function ProductQuantity({ register, errors, watch, setValue }) {
         <TextField
           type="number"
           value={quantity}
-          {...register("quantity", {
+          {...register("productQuantity", {
             required: "Quantity is required",
             min: {
               value: 1,
@@ -53,8 +53,8 @@ export default function ProductQuantity({ register, errors, watch, setValue }) {
               value: /^(0|[1-9][0-9]*)/,
             },
           })}
-          error={!!errors.quantity}
-          helperText={errors.quantity?.message}
+          error={!!errors.productQuantity}
+          helperText={errors.productQuantity?.message}
         />
         <Button
           sx={{ color: "white", backgroundColor: "gray" }}

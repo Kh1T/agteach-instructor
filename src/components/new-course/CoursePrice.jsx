@@ -1,8 +1,12 @@
-import { Divider, Box, TextField, Typography } from "@mui/material";
+import { Divider, Box, TextField, Typography, InputLabel } from "@mui/material";
 
 import AttachMoneyOutlinedIcon from "@mui/icons-material/AttachMoneyOutlined";
 import IconWithTitle from "../course-product/IconWithTitle";
 import TextSection from "../course-product/TextSection";
+import { useFormContext } from "react-hook-form";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
+
 /**
  * CoursePrice component renders a page for instructors to input course price.
  *
@@ -18,6 +22,19 @@ import TextSection from "../course-product/TextSection";
  * @returns {JSX.Element} Box component with children
  */
 export default function CoursePrice() {
+  const { register, setValue, watch, formState: { errors } } = useFormContext();
+  const course = useSelector((state) => state.course.courseData);
+
+
+  useEffect(() => {
+    if (course) {
+      const { price } = course;
+      
+      setValue("coursePrice", price);
+    }
+  }, [course, setValue]);
+
+  
   return (
     <Box className="container">
       <IconWithTitle
@@ -34,6 +51,16 @@ export default function CoursePrice() {
         sx={{ my: 2 }}
         id="outlined-controlled"
         label="Price"
+        slotProps={{
+          inputLabel: { shrink: course && !!course.price || !!watch("coursePrice") },
+        }}
+        type="number"
+        {...register("coursePrice", { required: "Price is required", 
+          min: { value: 1, message: "Price must be greater than $0" },
+          max: { value: 1000, message: "Price must be less than $1000" }
+         })}
+        error={!!errors.coursePrice}
+        helperText={errors.coursePrice?.message}
       />
       <Typography component={"ul"}>
         <Typography

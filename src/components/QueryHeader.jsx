@@ -70,7 +70,7 @@ export default function QueryHeader({
           variant="contained"
           sx={{ backgroundColor: "purple.main", textTransform: "uppercase" ,height: "100%"}}
           // handleCreateNew={handleCreateNew}
-          path={pathCreated}
+          path={pathCreated === "/" ? "/course/new" : pathCreated}
         >
           {labelCreate}
           <AddIcon sx={{ ml: 1 }} />
