@@ -6,20 +6,20 @@ import CustomChip from "../components/CustomChip";
 import { useGetPurchasedProductQuery } from "../services/api/productApi";
 import emptyProduct from "../assets/Spooky Stickers Sweet Franky.png";
 import { useNavigate } from "react-router";
+import CustomButton from "../components/CustomButton";
 
 function PurchasedPage() {
   const navigate = useNavigate();
-  const [selectState, setSelectState] = useState(0); 
-  const [searchTerm, setSearchTerm] = useState(""); 
-
+  const [selectState, setSelectState] = useState(0);
+  const [searchTerm, setSearchTerm] = useState("");
 
   // const [purchasedId, setPurchasedId] = useState(null);
   // const [customerId, setCustomerId] = useState(null);
 
-
   const searchRef = useRef();
   // Mapping selectState to API values for the "order" query
-  const order = selectState === 0 ? "All" : selectState === 10 ? "true" : "false";
+  const order =
+    selectState === 0 ? "All" : selectState === 10 ? "true" : "false";
   console.log("order", order);
 
   const { data: purchased, isLoading } = useGetPurchasedProductQuery({
@@ -35,38 +35,40 @@ function PurchasedPage() {
       Date: item.purchased_date,
       Customer: item.last_name,
       Total: `$ ${item.total_sum}`,
-      status: item.is_delivered === "true" || item.is_delivered === true ? (
-        <CustomChip label="Delivered" />
-      ) : (
-        <CustomChip label="Not Delivered" danger />
-      ),
+      status:
+        item.is_delivered === "true" || item.is_delivered === true ? (
+          <CustomChip label="Delivered" />
+        ) : (
+          <CustomChip label="Not Delivered" danger />
+        ),
       View: (
-        <Button
-          variant="Text"
-          sx={{ color: "dark.300" }}
+        <CustomButton
+          sx={{ backgroundColor: "blue.main" }}
+          variant="contained"
           // startIcon={<ChevronLeft />}
-          onClick={() => navigate(`/purchased/${item.purchased_id}/${item.customer_id}`)}
+          onClick={() =>
+            navigate(`/purchased/${item.purchased_id}/${item.customer_id}`)
+          }
         >
           <Typography variant="bsr" sx={{ textDecoration: "underline" }}>
             View
           </Typography>
-        </Button>
-      )
+        </CustomButton>
+      ),
     }));
   }
 
   console.log("purchased:", purchased);
 
   const handleSelectChange = (event) => {
-    setSelectState(event.target.value); 
-    
+    setSelectState(event.target.value);
   };
 
   // Handle Search functionality
   const handleSearch = () => {
     if (searchRef.current) {
-      const term = searchRef.current.value; 
-      setSearchTerm(term); 
+      const term = searchRef.current.value;
+      setSearchTerm(term);
     }
   };
 
@@ -74,10 +76,10 @@ function PurchasedPage() {
     <Stack gap="30px">
       <QueryHeader
         label="Sort"
-        useSelectState={[selectState, setSelectState]} 
+        useSelectState={[selectState, setSelectState]}
         selectData={["All", "Delivered", "Not Delivered"]}
         handleSelectChange={handleSelectChange}
-        handleSearch={handleSearch} 
+        handleSearch={handleSearch}
         isCreateNew={false}
       />
       {isLoading ? (
