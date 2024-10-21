@@ -36,13 +36,14 @@ function LoginPage() {
     defaultValues: {
       email: "",
       password: "",
+      keepMeLoggedIn: false,
     },
   });
 
   const handleShowPassword = () => setShowPassword((prev) => !prev);
 
   const submitHandler = async (data) => {
-    console.log(data);
+    console.log(data, "testing");
     try {
       const response = await login(data).unwrap();
       console.log("Login successful", response);
@@ -65,7 +66,7 @@ function LoginPage() {
   };
 
   const { isAuthenticated } = useSelector((state) => state.auth);
-  console.log('login',isAuthenticated);
+  console.log("login", isAuthenticated);
 
   return (
     <Grid
@@ -80,11 +81,7 @@ function LoginPage() {
       spacing={10}
     >
       <CustomAlert
-        label={
-          isError
-            ? "Incorrect email or password."
-            : "Login Successful!"
-        }
+        label={isError ? "Incorrect email or password." : "Login Successful!"}
         severity={isError ? "error" : "success"}
         onClose={() => setOpen(false)}
         open={open}
@@ -139,7 +136,7 @@ function LoginPage() {
               />
 
               <FormControlLabel
-                control={<Checkbox value="remember" />}
+                control={<Checkbox {...register("keepMeLoggedIn")} />}
                 label="Keep me logged in"
               />
               <Link to="/auth/forgot-password">Forgot Password?</Link>
