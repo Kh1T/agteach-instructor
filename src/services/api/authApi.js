@@ -28,7 +28,7 @@ export const authApi = createApi({
         url: "/api/users/login",
         method: "POST",
         body: loginData,
-        headers: { "X-Frontend-URL": window.location },
+        // headers: { "X-Frontend-URL": window.location },
       }),
     }),
 
@@ -90,7 +90,7 @@ export const authApi = createApi({
       query: () => ({
         url: "/api/users/isLoginedIn",
         method: "GET",
-        headers: { "X-Frontend-URL": window.location },
+        // headers: { "X-Frontend-URL": window.location },
       }),
     }),
 
