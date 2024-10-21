@@ -4,25 +4,61 @@ import QueryHeader from "../components/QueryHeader";
 import { Stack, Typography, Box } from "@mui/material";
 import { useGetEnrollmentCourseQuery } from "../services/api/courseApi";
 import emptyProduct from "../assets/Spooky Stickers Sweet Franky.png";
+import { useNavigate } from "react-router";
+import CustomButton from "../components/CustomButton";
 
 function EnromentPage() {
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectState, setSelectState] = useState();
-  const { data: enrollmentData, isLoading, error } = useGetEnrollmentCourseQuery({
+  const [selectState, setSelectState] = useState(null);
+
+  // Fixing the order value logic
+  const order =
+    selectState === "Newest"
+      ? "Newest"
+      : selectState === "Oldest"
+        ? "Oldest"
+        : "World";
+  console.log("order", order);
+
+  const {
+    data: enrollmentData,
+    isLoading,
+    error,
+  } = useGetEnrollmentCourseQuery({
     name: searchTerm,
-    order: selectState,
+    order,
   });
+
+console.log("Enrollment Data: ", enrollmentData?.courseSaleHistory);
+
   const searchRef = useRef();
   const label = "Sort";
 
   let enrollmentList = [];
-  if (!isLoading && enrollmentData && enrollmentData.data) {
-    const validPurchased = Array.isArray(enrollmentData.data) ? enrollmentData.data : [];
-    enrollmentList = validPurchased.map((item) => ({
+  if (!isLoading && enrollmentData) {
+    const validEnrollment = Array.isArray(enrollmentData.courseSaleHistory)
+      ? enrollmentData.courseSaleHistory
+      : [];
+    enrollmentList = validEnrollment.map((item) => ({
       CourseName: item.CourseName,
       Price: `$ ${item.price}`,
       Student: item.student,
-      Date : new Date(item.createdAt).toISOString().split("T")[0],
+      Date: new Date(item.CreatedAt).toISOString().split("T")[0],
+      View: (
+        <CustomButton
+          sx={{ backgroundColor: "blue.main" }}
+          variant="contained"
+          onClick={() =>
+            navigate(`/enrollment/${item.purchased_id}/${item.customer_id}`)
+          }
+        >
+          <Typography variant="bsr">
+            View
+          </Typography>
+        </CustomButton>
+      ),
+
     }));
   }
 
@@ -30,15 +66,14 @@ function EnromentPage() {
     setSelectState(event.target.value);
   };
 
-    // Handle Search functionality
-    const handleSearch = () => {
-      if (searchRef.current) {
-        const term = searchRef.current.value;
-        setSearchTerm(term);
-      }
-    };
-  
-  
+  // Handle Search functionality
+  const handleSearch = () => {
+    if (searchRef.current) {
+      const term = searchRef.current.value;
+      setSearchTerm(term);
+    }
+  };
+
   console.log("Enrollment List: ", enrollmentList);
 
   return (
@@ -54,7 +89,7 @@ function EnromentPage() {
         <Typography>Loading Enrollment...</Typography>
       ) : error ? (
         <Typography>Error: {error.message}</Typography>
-      ) : enrollmentList.length > 0 ? (
+      ) : Array.isArray(enrollmentList) && enrollmentList.length > 0 ? (
         <CustomTable data={enrollmentList} />
       ) : (
         <Box

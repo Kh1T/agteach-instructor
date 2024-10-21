@@ -7,7 +7,6 @@ import CustomTable from "../components/CustomTable";
 import { useParams } from "react-router-dom";
 import {
   useGetEnrollmentCourseQuery,
-  useGetEnrollmentCourseQuery,
 } from "../services/api/courseApi";
 
 const itemData = [
@@ -23,10 +22,10 @@ const itemData = [
 function EnrollmentDetailPage() {
   const { courseId, customerId } = useParams();
 
-  const { data: enrollmentData, isLoading: isLoadingEnrollment } =
-    useGetPurchasedProductQuery();
-  const { data: purchasedDetails, isLoading: isLoadingDetails } =
-    useGetPurchasedDetailsQuery({ purchasedId, customerId });
+//   const { data: enrollmentData, isLoading: isLoadingEnrollment } =
+//     useGetPurchasedProductQuery();
+//   const { data: purchasedDetails, isLoading: isLoadingDetails } =
+//     useGetPurchasedDetailsQuery({ purchasedId, customerId });
 
   return (
     <Grid container direction="column" gap={6}>
@@ -62,7 +61,7 @@ function EnrollmentDetailPage() {
       {/* Students Info */}
 
       <Grid container direction="column" gap={1}>
-        <Typography variant="blgsm">Students</Typography>
+        {/* <Typography variant="blgsm">Students</Typography>
         <Typography variant="bxsmd">Found (1) Student</Typography>
         {isLoadingDetails ? (
           <Typography>Loading purchased details...</Typography>
@@ -70,7 +69,7 @@ function EnrollmentDetailPage() {
           <CustomTable data={itemData} />
         ) : (
           <Typography>No purchased details found.</Typography>
-        )}
+        )} */}
       </Grid>
     </Grid>
   );
