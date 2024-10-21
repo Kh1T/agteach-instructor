@@ -17,11 +17,10 @@ import {
   useSearchProductBalanceQuery,
 } from "../services/api/balanceApi";
 function BalancePage() {
-  
   const [selectProductState, setSelectProductState] = useState(0);
   const [selectCourseState, setSelectCourseState] = useState(0);
   const [value, setValue] = useState(0);
-  
+
   const [searchCourseTerm, setSearchCourseTerm] = useState("");
   const [searchProductTerm, setSearchProductTerm] = useState("");
   const searchCourseRef = useRef();
@@ -72,7 +71,10 @@ function BalancePage() {
     }) || [];
 
   const recentList = recentTransactions?.data || [];
-  const { product, course } = balance.data;
+  const balanceData = !isLoading ? balance?.data : { course: 0, product: 0 };
+
+  console.log(recentList,'recentList')
+  const { product, course } = balanceData;
   const total = course + product;
 
   const handleSearchCourse = () => {
@@ -106,10 +108,10 @@ function BalancePage() {
                   borderRadius: 1,
                 }}
               >
-                <PieChartBalance balance={balance.data} />
+                <PieChartBalance balance={balanceData} />
               </Box>
               <Stack width={"100%"} direction="column" spacing={2}>
-                <BalanceCard balance={balance.data} />
+                <BalanceCard balance={balanceData} />
                 <TotalCard total={total} />
               </Stack>
             </Stack>

@@ -9,8 +9,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import CustomTableHeader from "./CustomTableHeader";
-import CustomTable from "./CustomTable";
-import { recentData } from "../data/recentData";
+import CustomTable from "./CustomTable"; 
 
 /**
  * RecentTransaction component
@@ -21,9 +20,10 @@ function RecentTransaction({ data }) {
   const [transaction, setTransaction] = useState();
 
   const { course, product } = data || [];
+  console.log(course, product, "course, product");
 
   const mapData = (data) => {
-    if (!data) return [];
+    if (data.length === 0) return [];
     return data.map((item, id) => {
       return { Date: item.date, Name: item.name, Amount: `$ ${item.price}` };
     });
@@ -31,8 +31,10 @@ function RecentTransaction({ data }) {
 
   const courseRecentList = mapData(course) || [];
   const productRecentList = mapData(product) || [];
+
   const [recentTransactions, setRecentTransactions] =
     useState(courseRecentList);
+
   const handleSelect = (e) => {
     if (e.target.value === 10) {
       setRecentTransactions(courseRecentList);
@@ -41,7 +43,7 @@ function RecentTransaction({ data }) {
     }
     setTransaction(e.target.value);
   };
-
+ 
   return (
     <Box
       sx={{
@@ -80,7 +82,7 @@ function RecentTransaction({ data }) {
           </FormControl>
         </Box>
       </Stack>
-      {!data ? (
+      {recentTransactions.length === 0 ? (
         <Typography>There is no transaction yet!</Typography>
       ) : (
         <CustomTable data={recentTransactions} />
