@@ -11,7 +11,9 @@ const xLabels = [
   "15-01-2024",
   "16-01-2024"
 ];
-export default function SimpleBarChart() {
+
+export default function SimpleBarChart({ data }) {
+  const { days: xLabels, totalCourseSales: pData, totalProductSales: uData } = data;
   return (
     <BarChart
       height={350}
