@@ -78,10 +78,10 @@ function NewCoursePage() {
     let totalDuration = 0;
 
     // Append course details
-    formData.append("courseName", courseName);
-    formData.append("description", description);
+    formData.append("courseName", courseName.trim());
+    formData.append("description", description.trim());
     formData.append("price", coursePrice);
-    formData.append("courseObjective", courseObjective);
+    formData.append("courseObjective", courseObjective.trim());
     formData.append("allSection", JSON.stringify(allSection));
     formData.append("thumbnailUrl", courseThumbnail);
     formData.append("ProductSuggestionId", JSON.stringify(productId));
@@ -152,6 +152,7 @@ function NewCoursePage() {
           severity: "success",
           msg: "Course created successfully",
         });
+        navigate('/course')
       } else {
         console.log("update course");
         const response = await updateCourse({
@@ -164,6 +165,7 @@ function NewCoursePage() {
           severity: "success",
           msg: "Course updated successfully",
         });
+        navigate('/course')
       }
     } catch (error) {
       console.log("error", error);
@@ -206,6 +208,7 @@ function NewCoursePage() {
           <RelatedProduct />
           <ButtonComponent
             type={"submit"}
+            disabled={isLoadingAddCourse || isLoadingUpdateCourse}
             text={
               action === "new"
                 ? isLoadingAddCourse

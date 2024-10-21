@@ -13,7 +13,7 @@ import { Box, Button } from "@mui/material";
  *
  * @returns {ReactElement} A Box component with a Button inside.
  */
-export default function ButtonComponent({ type, text, variant, bgcolor, flexEnd, height, pl, startIcon, onClick  }) {
+export default function ButtonComponent({ type, text, variant, bgcolor, flexEnd, height, pl, startIcon, onClick, ...props }) {
   return (
     <Box
       sx={{
@@ -31,6 +31,7 @@ export default function ButtonComponent({ type, text, variant, bgcolor, flexEnd,
         sx={{ bgcolor: bgcolor, height: height }}
         startIcon={startIcon}
         onClick={onClick}
+        {...props}
       >
         {text}
       </Button>
