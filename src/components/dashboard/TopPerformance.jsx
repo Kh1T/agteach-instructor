@@ -61,9 +61,6 @@ export default function TopPerformance() {
   const { data: productData, isLoading: isLoadingProducts } =
     useGetProductTopSalesQuery();
 
-  console.log("courseData", courseData);
-  console.log("productData", productData);
-
   const productSalesData =
     !isLoadingProducts && productData?.data
       ? productData.data.map((item, index) => ({

@@ -32,19 +32,6 @@ export const salesApi = createApi({
         method: "GET",
       }),
     }),
-
-    // getPurchasedProduct: builder.query({
-    //     providesTags: ["Product"],
-    //     query: ({ name = "", order = "All" }) => {
-    //       let url = `/api/purchased/getInstructorPurchased?name=${name}`;
-    //       if (order !== "All") {
-    //         url += `&order=${order}`;
-    //       } 
-        
-    //       console.log("API Request URL:", url); // Log the final URL
-    //       return { url, method: "GET" };
-    //     },
-    //   }),
     
   }),
 });
