@@ -73,7 +73,7 @@ function LoginPage() {
       direction="row"
       alignItems="center"
       sx={{
-        justifyContent: { xs: "center", md: "center", lg: "start" },
+        justifyContent: { xs: "center", md: "center", lg: "center" }, flexWrap: "nowrap", padding: { lg: "0 100px 0 0"},
         mx: { xs: 2, md: 0, lg: 0 },
       }}
       mt={{ xs: 50, md: 50, lg: 0 }}
