@@ -6,8 +6,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const productApi = createApi({
   reducerPath: "productApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://api.agteach.site",
-    // baseUrl: " http://localhost:3001",
+    // baseUrl: "https://api.agteach.site",
+    baseUrl: " http://localhost:3001",
     credentials: "include",
   }),
 
@@ -76,6 +76,37 @@ export const productApi = createApi({
         body: productData,
       }),
     }),
+
+    // getPurchasedProduct: builder.query({
+    //   providesTags: ["Product"],
+    //   query: () => ({
+    //     url: "/api/purchased/getInstructorPurchased?name=&order=",
+    //     method: "GET",
+    //   }),
+    // }),
+
+    getPurchasedProduct: builder.query({
+      providesTags: ["Product"],
+      query: ({ name = "", order = "All" }) => {
+        let url = `/api/purchased/getInstructorPurchased?name=${name}`;
+        if (order !== "All") {
+          url += `&order=${order}`;
+        } 
+      
+        console.log("API Request URL:", url); // Log the final URL
+        return { url, method: "GET" };
+      },
+    }),
+
+    getPurchasedDetails: builder.query({
+      providesTags: ["Product"],
+      query: ({ purchasedId, customerId }) => ({
+        url: `/api/purchased/purchasedDetail/${purchasedId}?cid=${customerId}`,
+        // url: `/api/purchased/purchasedDetail/52?cid=132`,
+        method: "GET",
+      }),
+    }), 
+
   }),
 });
 
@@ -87,4 +118,6 @@ export const {
   useGetInstructorDataQuery,
   useGetProductsImagesQuery,
   useUpdateProductMutation,
+  useGetPurchasedProductQuery,
+  useGetPurchasedDetailsQuery
 } = productApi;
