@@ -4,6 +4,7 @@ export const courseApi = createApi({
     reducerPath: "courseApi",
     baseQuery: fetchBaseQuery({
       baseUrl: " http://localhost:3001",
+      // baseUrl: "https://api.agteach.site",
       credentials: "include",
     }),
     tagTypes: ["Course"],
@@ -52,6 +53,7 @@ export const courseApi = createApi({
         providesTags: ["Course"],
         query: ({ courseId }) => ({
           url: `/api/enrollment/getEnrollmentDetail/${courseId}`,
+          // url: `/api/course/getOneCourse/744`,
           method: "GET",
         }),
       }), 
