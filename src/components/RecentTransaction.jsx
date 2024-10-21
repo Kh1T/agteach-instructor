@@ -25,12 +25,7 @@ function RecentTransaction({ data }) {
   const mapData = (data) => {
     if (!data) return [];
     return data.map((item, id) => {
-      return {
-        No: id + 1,
-        Date: item.date,
-        Name: item.name,
-        Amount: `$ ${item.price}`,
-      };
+      return { Date: item.date, Name: item.name, Amount: `$ ${item.price}` };
     });
   };
 
