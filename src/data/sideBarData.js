@@ -11,7 +11,7 @@ const sidebarList = [
     title: "Dashboard",
     Icon: DashboardCustomizeOutlinedIcon,
     route: "/",
-    description: "Overview intructor dashboard",
+    description: "Overview instructor dashboard",
   },
   {
     title: "Course",

@@ -38,7 +38,7 @@ function RecentTransaction() {
       >
         <CustomTableHeader
           title="Recent Transaction"
-          content="Found(5) Items"
+          content="Found (5) Items"
         />
         <Box sx={{ minWidth: 180 }}>
           <FormControl fullWidth>

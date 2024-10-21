@@ -77,7 +77,7 @@ export default function CustomTable({
                 {Object.values(row).map((cell, cellIndex) => (
                   <TableCell
                     key={cellIndex}
-                    component= {isLink ? RouterLink : "div"}
+                    component={isLink ? RouterLink : "div"}
                     to={`${id}`}
                     sx={{
                       borderBottom: "1px dashed",
