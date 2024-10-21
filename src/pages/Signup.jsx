@@ -53,7 +53,7 @@ function Signup() {
   return (
     <Grid2
       container
-      sx={{ justifyContent: { xs: "center", md: "center", lg: "start" } }}
+      sx={{ justifyContent: { xs: "center", md: "center", lg: "center" }, flexWrap: "nowrap", padding: { lg: "0 100px 0 0"} }}
       my={{ xs: 20, lg: 0 }}
       spacing={{ xs: 5, md: 15, lg: 20 }}
       alignItems={"center"}
