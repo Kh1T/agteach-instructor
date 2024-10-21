@@ -34,6 +34,21 @@ export const courseApi = createApi({
           method: "DELETE",
         }),
       }),
+
+      getEnrollmentCourse: builder.query({
+        providesTags: ["Course"],
+        query: ({ name = "", order = "Newest" }) => {
+          let url = `/api/enrollment/getEnrollment?name=${name}`;
+          if (order !== "Newest") {
+            url += `&order=${order}`;
+          } 
+        
+          console.log("API Request URL:", url); // Log the final URL
+          return { url, method: "GET" };
+        },
+      }),
+
+
     }),
   });
   
