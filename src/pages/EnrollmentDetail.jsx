@@ -2,30 +2,48 @@ import { Link } from "react-router-dom";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { Box, Grid2 as Grid, Typography, Stack, Divider } from "@mui/material";
 import courseCover from "./../assets/dashboard-enrollment/course-cover.png";
-import tableImg from "./../assets/dashboard-enrollment//student-img.png";
-import CustomTable from "../components/CustomTable";
 import { useParams } from "react-router-dom";
+import CustomTable from "../components/CustomTable";
 import {
   useGetEnrollmentCourseQuery,
+  useGetEnrollmentDetailsQuery,
 } from "../services/api/courseApi";
 
-const itemData = [
-  {
-    Photos: <Box component="img" src={tableImg} />,
-    "Student Name": "$74.99",
-    Email: 1,
-    Phone: "23/03/2024",
-    "Enrolled at": "24 / 08 / 2924",
-  },
-];
-
 function EnrollmentDetailPage() {
-  const { courseId, customerId } = useParams();
+  const { courseId } = useParams();
 
-//   const { data: enrollmentData, isLoading: isLoadingEnrollment } =
-//     useGetPurchasedProductQuery();
-//   const { data: purchasedDetails, isLoading: isLoadingDetails } =
-//     useGetPurchasedDetailsQuery({ purchasedId, customerId });
+  const { data: enrollmentData, isLoading: isLoadingPurchased } =
+    useGetEnrollmentCourseQuery();
+  const { data: enrollmentDetails, isLoading: isLoadingDetails } =
+    useGetEnrollmentDetailsQuery({ courseId });
+
+console.log("Enrollment Details: ", enrollmentDetails);
+
+  let enrollmentList = [];
+  if (!isLoadingPurchased && enrollmentData) {
+    const validEnrollment = Array.isArray(enrollmentData.data)
+      ? enrollmentData.data
+      : [];
+    enrollmentList = validEnrollment.map((item) => ({
+      ...item,
+    }));
+  }
+
+  const enrollmentItems =
+    enrollmentDetails?.enrollmentDetails &&
+    Array.isArray(enrollmentDetails.enrollmentDetails)
+      ? enrollmentDetails.enrollmentDetails
+      : [];
+  console.log("enrollment Details:", enrollmentDetails);
+
+  const tableData = enrollmentItems.map((item) => ({
+    Photo: item.product.imageUrl,
+    category: item.product.categoryId,
+    Quantity: item.quantity,
+    price: `$ ${item.price}`,
+    Total: `$ ${item.total}`,
+    OrderDate: new Date(item.createdAt).toISOString().split("T")[0],
+  }));
 
   return (
     <Grid container direction="column" gap={6}>
@@ -61,15 +79,16 @@ function EnrollmentDetailPage() {
       {/* Students Info */}
 
       <Grid container direction="column" gap={1}>
-        {/* <Typography variant="blgsm">Students</Typography>
+        <Typography variant="blgsm">Students</Typography>
         <Typography variant="bxsmd">Found (1) Student</Typography>
+
         {isLoadingDetails ? (
-          <Typography>Loading purchased details...</Typography>
+          <Typography>Loading Enrollment...</Typography>
         ) : tableData.length > 0 ? (
-          <CustomTable data={itemData} />
+          <CustomTable data={tableData} />
         ) : (
-          <Typography>No purchased details found.</Typography>
-        )} */}
+          <Typography>No enrollment data available...</Typography>
+        )}
       </Grid>
     </Grid>
   );

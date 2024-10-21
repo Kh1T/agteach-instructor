@@ -50,7 +50,7 @@ console.log("Enrollment Data: ", enrollmentData?.courseSaleHistory);
           sx={{ backgroundColor: "blue.main" }}
           variant="contained"
           onClick={() =>
-            navigate(`/enrollment/${item.purchased_id}/${item.customer_id}`)
+            navigate(`/enrollment/${item.courseId}`)
           }
         >
           <Typography variant="bsr">

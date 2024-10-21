@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const courseApi = createApi({
     reducerPath: "courseApi",
     baseQuery: fetchBaseQuery({
-      baseUrl: "https://api.agteach.site",
+      baseUrl: " http://localhost:3001",
       credentials: "include",
     }),
     tagTypes: ["Course"],
@@ -35,25 +35,6 @@ export const courseApi = createApi({
         }),
       }),
 
-      // getEnrollmentCourse: builder.query({
-      //   providesTags: ["Course"],
-      //   query: ({ name = "", order }) => {
-      //     let url = `/api/course/getInstructorCourse?name=${name}`;
-          
-      //     // Include order only if it's defined
-      //     if (order) {
-      //       const dataOrder = order === "Newest" ? "desc" : "asc";
-      //       url += `&order=${dataOrder}`;
-      //     }
-      
-      //     return {
-      //       url,
-      //       method: "GET",
-      //     };
-      //   },
-      // }),
-
-
       getEnrollmentCourse: builder.query({
         providesTags: ["Course"],
         query: ({ name = "", order = "Newest" }) => {
@@ -68,9 +49,9 @@ export const courseApi = createApi({
       }),
 
       getEnrollmentDetails: builder.query({
-        providesTags: ["Product"],
-        query: ({ courseId, customerId }) => ({
-          url: `/api/enrollment/getEnrollmentDetail/${courseId}?cid=${customerId}`,
+        providesTags: ["Course"],
+        query: ({ courseId }) => ({
+          url: `/api/enrollment/getEnrollmentDetail/${courseId}`,
           method: "GET",
         }),
       }), 
