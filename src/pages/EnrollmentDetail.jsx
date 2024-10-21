@@ -4,37 +4,44 @@ import { Box, Grid2 as Grid, Typography, Stack, Divider } from "@mui/material";
 import courseCover from "./../assets/dashboard-enrollment/course-cover.png";
 import { useParams } from "react-router-dom";
 import CustomTable from "../components/CustomTable";
-import {
-  useGetEnrollmentCourseQuery,
-  useGetEnrollmentDetailsQuery,
-} from "../services/api/courseApi";
+import { useGetEnrollmentCourseQuery, useGetEnrollmentDetailsQuery } from "../services/api/courseApi";
+import { skipToken } from '@reduxjs/toolkit/query/react'; // To handle conditional query
 
 function EnrollmentDetailPage() {
   const { courseId } = useParams();
 
-  const { data: enrollmentData, isLoading: isLoadingPurchased } =
-    useGetEnrollmentCourseQuery();
-  const { data: enrollmentDetails, isLoading: isLoadingDetails } =
-    useGetEnrollmentDetailsQuery({ courseId });
+  console.log("courseId from params:", courseId);
+  const { data: enrollmentData, isLoading: isLoadingPurchased } = useGetEnrollmentCourseQuery();
 
-console.log("Enrollment Details: ", enrollmentDetails);
+  const { data: enrollmentDetails, isLoading: isLoadingDetails, error } =
+    useGetEnrollmentDetailsQuery(courseId ? { courseId } : skipToken);
 
+  console.log("Enrollment Details: ", enrollmentData);
+
+  if (error) {
+    console.error("API Error:", error);
+  }
+
+  // Process enrollment data for table rendering
   let enrollmentList = [];
   if (!isLoadingPurchased && enrollmentData) {
-    const validEnrollment = Array.isArray(enrollmentData.data)
-      ? enrollmentData.data
+    const validEnrollment = Array.isArray(enrollmentData.courseSaleHistory)
+      ? enrollmentData.courseSaleHistory
       : [];
     enrollmentList = validEnrollment.map((item) => ({
       ...item,
     }));
   }
 
+  // Process enrollment details for table
   const enrollmentItems =
     enrollmentDetails?.enrollmentDetails &&
     Array.isArray(enrollmentDetails.enrollmentDetails)
       ? enrollmentDetails.enrollmentDetails
       : [];
-  console.log("enrollment Details:", enrollmentDetails);
+
+  // Log processed enrollment items
+  console.log("Processed Enrollment Items: ", enrollmentItems);
 
   const tableData = enrollmentItems.map((item) => ({
     Photo: item.product.imageUrl,
@@ -56,7 +63,6 @@ console.log("Enrollment Details: ", enrollmentDetails);
       </Grid>
 
       {/* Course Content */}
-
       <Grid container alignItems="center" gap={2}>
         <Box component="img" src={courseCover} />
         <Stack gap={1}>
@@ -76,12 +82,13 @@ console.log("Enrollment Details: ", enrollmentDetails);
       </Grid>
 
       <Divider sx={{ borderStyle: "dashed" }} />
-      {/* Students Info */}
 
+      {/* Students Info */}
       <Grid container direction="column" gap={1}>
         <Typography variant="blgsm">Students</Typography>
-        <Typography variant="bxsmd">Found (1) Student</Typography>
+        <Typography variant="bxsmd">Found ({tableData.length}) Students</Typography>
 
+        {/* Display loading message, table data, or no data message */}
         {isLoadingDetails ? (
           <Typography>Loading Enrollment...</Typography>
         ) : tableData.length > 0 ? (

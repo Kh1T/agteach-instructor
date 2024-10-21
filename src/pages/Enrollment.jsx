@@ -11,15 +11,15 @@ import { useGetEnrollmentDetailsQuery } from "../services/api/balanceApi";
 function EnromentPage() {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectState, setSelectState] = useState(null);
+  const [selectState, setSelectState] = useState(0);
 
   // Fixing the order value logic
   const order =
     selectState === "Newest"
       ? "Newest"
       : selectState === "Oldest"
-        ? "Oldest"
-        : "World";
+      ? "Oldest"
+      : "World";
   console.log("order", order);
 
   const {
@@ -28,10 +28,10 @@ function EnromentPage() {
     error,
   } = useGetEnrollmentCourseQuery({
     name: searchTerm,
-    order,
+    order: setSelectState, // Use 'order' here instead of 'selectState'
   });
 
-console.log("Enrollment Data: ", enrollmentData?.courseSaleHistory);
+  console.log("Enrollment Data: ", enrollmentData?.courseSaleHistory);
 
   const searchRef = useRef();
   const label = "Sort";
@@ -50,16 +50,11 @@ console.log("Enrollment Data: ", enrollmentData?.courseSaleHistory);
         <CustomButton
           sx={{ backgroundColor: "blue.main" }}
           variant="contained"
-          onClick={() =>
-            navigate(`/enrollment/${item.courseId}`)
-          }
+          onClick={() => navigate(`/enrollment/${item.courseId}`)}
         >
-          <Typography variant="bsr">
-            View
-          </Typography>
+          <Typography variant="bsr">View</Typography>
         </CustomButton>
       ),
-
     }));
   }
 
@@ -114,4 +109,3 @@ console.log("Enrollment Data: ", enrollmentData?.courseSaleHistory);
 }
 
 export default EnromentPage;
-
