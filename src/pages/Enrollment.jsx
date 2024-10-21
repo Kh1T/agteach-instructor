@@ -6,6 +6,7 @@ import { useGetEnrollmentCourseQuery } from "../services/api/courseApi";
 import emptyProduct from "../assets/Spooky Stickers Sweet Franky.png";
 import { useNavigate } from "react-router";
 import CustomButton from "../components/CustomButton";
+import { useGetEnrollmentDetailsQuery } from "../services/api/balanceApi";
 
 function EnromentPage() {
   const navigate = useNavigate();
@@ -113,3 +114,4 @@ console.log("Enrollment Data: ", enrollmentData?.courseSaleHistory);
 }
 
 export default EnromentPage;
+
