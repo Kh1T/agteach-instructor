@@ -77,14 +77,6 @@ export const productApi = createApi({
       }),
     }),
 
-    // getPurchasedProduct: builder.query({
-    //   providesTags: ["Product"],
-    //   query: () => ({
-    //     url: "/api/purchased/getInstructorPurchased?name=&order=",
-    //     method: "GET",
-    //   }),
-    // }),
-
     getPurchasedProduct: builder.query({
       providesTags: ["Product"],
       query: ({ name = "", order = "All" }) => {

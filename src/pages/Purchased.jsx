@@ -50,7 +50,7 @@ function PurchasedPage() {
             navigate(`/purchased/${item.purchased_id}/${item.customer_id}`)
           }
         >
-          <Typography variant="bsr" sx={{ textDecoration: "underline" }}>
+          <Typography variant="bsr">
             View
           </Typography>
         </CustomButton>

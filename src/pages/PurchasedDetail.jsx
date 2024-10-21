@@ -8,6 +8,7 @@ import {
   useGetPurchasedProductQuery,
   useGetPurchasedDetailsQuery,
 } from "../services/api/productApi";
+import CustomButton from "../components/CustomButton";
 
 function PurchasedDetailPage() {
   const navigate = useNavigate();
@@ -29,14 +30,23 @@ function PurchasedDetailPage() {
   console.log("Purchased:", purchased);
 
   const purchasedItems =
-    purchasedDetails?.purchasedDetails && Array.isArray(purchasedDetails.purchasedDetails)
+    purchasedDetails?.purchasedDetails &&
+    Array.isArray(purchasedDetails.purchasedDetails)
       ? purchasedDetails.purchasedDetails
       : [];
   console.log("Purchased Details:", purchasedDetails);
 
   // Transform purchasedItems into the format expected by CustomTable
   const tableData = purchasedItems.map((item) => ({
-    Photo: item.product.imageUrl,
+    Photo: (
+      <img
+        src={item.product.imageUrl}
+        alt="Product Image"
+        width="80"
+        height="80"
+        style={{ borderRadius: "5px" }}
+      />
+    ),
     category: item.product.categoryId,
     Quantity: item.quantity,
     price: `$ ${item.price}`,
@@ -91,7 +101,16 @@ function PurchasedDetailPage() {
       {isLoadingDetails ? (
         <Typography>Loading purchased details...</Typography>
       ) : tableData.length > 0 ? (
-        <CustomTable data={tableData} />
+        <>
+          <CustomTable data={tableData} />
+          <CustomButton
+          sx={{ backgroundColor: "blue.main" }}
+          variant="contained"
+            // onClick={handleButtonClick}
+          >
+            Delivered
+          </CustomButton>
+        </>
       ) : (
         <Typography>No purchased details found.</Typography>
       )}
