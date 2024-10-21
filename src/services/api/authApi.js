@@ -6,7 +6,11 @@ export const authApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: API_BASE_URL,
     credentials: "include",
-    headers: { "X-Frontend-URL": window.location },
+    prepareHeaders: (headers) => {
+      // Set the X-Frontend-URL header
+      headers.set("X-Frontend-URL", window.location);
+      return headers;
+    },
   }),
   tagTypes: ["Instructor"],
   endpoints: (builder) => ({
