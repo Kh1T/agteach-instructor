@@ -4,12 +4,7 @@ import { API_BASE_URL } from "../../constants/apiConstant";
 export const productApi = createApi({
   reducerPath: "productApi",
   baseQuery: fetchBaseQuery({
-<<<<<<< HEAD
-    // baseUrl: "https://api.agteach.site",
-    baseUrl: " http://localhost:3001",
-=======
     baseUrl: API_BASE_URL,
->>>>>>> develop
     credentials: "include",
   }),
 
@@ -101,6 +96,16 @@ export const productApi = createApi({
       }),
     }), 
 
+    updatePurchasedDetails: builder.mutation({
+      providesTags: ["Product"],
+
+      query: (purchasedData) => ({
+        url: `/api/purchased/updateDeliver`,
+        method: "PATCH",
+        body: purchasedData,
+      })
+    })
+
   }),
 });
 
@@ -113,5 +118,6 @@ export const {
   useGetProductsImagesQuery,
   useUpdateProductMutation,
   useGetPurchasedProductQuery,
-  useGetPurchasedDetailsQuery
+  useGetPurchasedDetailsQuery,
+  useUpdatePurchasedDetailsMutation
 } = productApi;

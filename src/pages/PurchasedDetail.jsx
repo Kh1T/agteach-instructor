@@ -1,58 +1,72 @@
+import React, { useState, useMemo } from "react";
 import { ChevronLeft } from "@mui/icons-material";
-import React, { useEffect, useState } from "react";
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom"; // Import useLocation
 import CustomTable from "../components/CustomTable";
 import CustomChip from "../components/CustomChip";
 import {
   useGetPurchasedProductQuery,
   useGetPurchasedDetailsQuery,
+  useUpdatePurchasedDetailsMutation,
 } from "../services/api/productApi";
 import CustomButton from "../components/CustomButton";
+import profileImg from "../assets/Monsters Standing.png";
 
 function PurchasedDetailPage() {
   const navigate = useNavigate();
   const { purchasedId, customerId } = useParams();
+  
+  const location = useLocation(); // Get the state passed from the previous page
+  const { isDelivered: initialIsDelivered } = location.state || {}; // Destructure and provide a fallback
 
-  const { data: purchased, isLoading: isLoadingPurchased } =
-    useGetPurchasedProductQuery();
   const { data: purchasedDetails, isLoading: isLoadingDetails } =
     useGetPurchasedDetailsQuery({ purchasedId, customerId });
+  
+  const [updatePurchasedDetails] = useUpdatePurchasedDetailsMutation();
 
-  let purchasedList = [];
-  if (!isLoadingPurchased && purchased) {
-    const validPurchased = Array.isArray(purchased.data) ? purchased.data : [];
-    purchasedList = validPurchased.map((item) => ({
-      ...item,
-    }));
-  }
+  // Track delivery status, initializing it from the passed state or fallback to false
+  const [isDelivered, setIsDelivered] = useState(initialIsDelivered ?? false);
 
-  console.log("Purchased:", purchased);
+  // Combine customer data with purchasedDetails
+  const combinedPurchasedDetails = useMemo(() => {
+    if (purchasedDetails?.purchasedDetails && purchasedDetails?.customer) {
+      return purchasedDetails.purchasedDetails.map((item) => ({
+        ...item,
+        customer: purchasedDetails.customer,
+      }));
+    }
+    return [];
+  }, [purchasedDetails]);
 
-  const purchasedItems =
-    purchasedDetails?.purchasedDetails &&
-    Array.isArray(purchasedDetails.purchasedDetails)
-      ? purchasedDetails.purchasedDetails
-      : [];
-  console.log("Purchased Details:", purchasedDetails);
-
-  // Transform purchasedItems into the format expected by CustomTable
-  const tableData = purchasedItems.map((item) => ({
+  const tableData = combinedPurchasedDetails.map((item) => ({
     Photo: (
       <img
-        src={item.product.imageUrl}
+        src={item.product?.imageUrl || profileImg}
         alt="Product Image"
         width="80"
         height="80"
         style={{ borderRadius: "5px" }}
       />
     ),
-    category: item.product.categoryId,
-    Quantity: item.quantity,
-    price: `$ ${item.price}`,
-    Total: `$ ${item.total}`,
-    OrderDate: new Date(item.createdAt).toISOString().split("T")[0],
+    category: item.product?.categoryId || "N/A",
+    Quantity: item.quantity || 0,
+    price: `$ ${item.price || 0}`,
+    Total: `$ ${item.total || 0}`,
+    OrderDate: item.createdAt
+      ? new Date(item.createdAt).toISOString().split("T")[0]
+      : "N/A",
   }));
+
+  const customer = purchasedDetails?.customer || {};
+
+  const handleDelivery = async () => {
+    try {
+      await updatePurchasedDetails({ purchasedId });
+      setIsDelivered(true); // Update local state to "delivered"
+    } catch (error) {
+      console.error("Failed to update delivery status", error);
+    }
+  };
 
   return (
     <Stack alignItems="start" gap={5}>
@@ -66,53 +80,60 @@ function PurchasedDetailPage() {
           Go Back
         </Typography>
       </Button>
-      <Stack
-        direction="row"
-        width="100%"
-        justifyContent="space-between"
-        alignItems="center"
-      >
+
+      <Stack direction="row" width="100%" justifyContent="space-between" alignItems="center">
         <Stack direction="row" gap={3}>
           <Box
-            src="https://images.blush.design/jJhw-B2TJJTgTuFYENbT?w=920&auto=compress&cs=srgb"
+            src={customer.imageUrl || profileImg}
             component="img"
             width={130}
             height={130}
+            alt="Customer Image"
           />
           <Stack gap>
-            <Typography variant="bxsr">Instructor Name</Typography>
-            <Typography variant="blgr">Srey Roth</Typography>
+            <Typography variant="bxsr">Customer Name</Typography>
+            <Typography variant="blgr">{`${customer.firstName || ''} ${customer.lastName || ''}`}</Typography>
             <Typography variant="bxsr">
-              <Box component="strong">Email: </Box>roth@abc.xyz
+              <Box component="strong">Email: </Box>
+              {customer.email || 'N/A'}
             </Typography>
             <Typography variant="bxsr">
-              <Box component="strong">Phone: </Box>0123456789
+              <Box component="strong">Phone: </Box>
+              {customer.phone || 'N/A'}
             </Typography>
             <Typography variant="bxsr">
-              <Box component="strong">Address: </Box>St.6, plov veng sreng
+              <Box component="strong">Address: </Box>
+              {customer.address || 'N/A'}
             </Typography>
           </Stack>
         </Stack>
-        <CustomChip label="Not Yet Delivered" danger sx={{ py: "15px" }} />
+
+        <CustomChip
+          label={isDelivered ? "Delivered" : "Not Yet Delivered"}
+          danger={!isDelivered}
+          success={isDelivered}
+          sx={{ py: "15px" }}
+        />
       </Stack>
+
       <Divider />
       <Typography variant="h3">Purchased Detail</Typography>
 
       {isLoadingDetails ? (
         <Typography>Loading purchased details...</Typography>
-      ) : tableData.length > 0 ? (
+      ) : (
         <>
           <CustomTable data={tableData} />
-          <CustomButton
-          sx={{ backgroundColor: "blue.main" }}
-          variant="contained"
-            // onClick={handleButtonClick}
-          >
-            Delivered
-          </CustomButton>
+          {!isDelivered && (
+            <CustomButton
+              sx={{ backgroundColor: "blue.main" }}
+              variant="contained"
+              onClick={handleDelivery}
+            >
+              Delivered
+            </CustomButton>
+          )}
         </>
-      ) : (
-        <Typography>No purchased details found.</Typography>
       )}
     </Stack>
   );

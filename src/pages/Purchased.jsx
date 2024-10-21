@@ -47,7 +47,9 @@ function PurchasedPage() {
           variant="contained"
           // startIcon={<ChevronLeft />}
           onClick={() =>
-            navigate(`/purchased/${item.purchased_id}/${item.customer_id}`)
+            navigate(`/purchased/${item.purchased_id}/${item.customer_id}`, {
+              state: { isDelivered: item.is_delivered }
+            })
           }
         >
           <Typography variant="bsr">
