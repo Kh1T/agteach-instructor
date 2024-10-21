@@ -35,6 +35,25 @@ export const courseApi = createApi({
         }),
       }),
 
+      // getEnrollmentCourse: builder.query({
+      //   providesTags: ["Course"],
+      //   query: ({ name = "", order }) => {
+      //     let url = `/api/course/getInstructorCourse?name=${name}`;
+          
+      //     // Include order only if it's defined
+      //     if (order) {
+      //       const dataOrder = order === "Newest" ? "desc" : "asc";
+      //       url += `&order=${dataOrder}`;
+      //     }
+      
+      //     return {
+      //       url,
+      //       method: "GET",
+      //     };
+      //   },
+      // }),
+
+
       getEnrollmentCourse: builder.query({
         providesTags: ["Course"],
         query: ({ name = "", order = "Newest" }) => {
@@ -48,6 +67,14 @@ export const courseApi = createApi({
         },
       }),
 
+      getEnrollmentDetails: builder.query({
+        providesTags: ["Product"],
+        query: ({ courseId, customerId }) => ({
+          url: `/api/enrollment/getEnrollmentDetail/${courseId}?cid=${customerId}`,
+          method: "GET",
+        }),
+      }), 
+  
 
     }),
   });
@@ -55,6 +82,8 @@ export const courseApi = createApi({
   export const {
     useGetAllCoursesQuery,
     useConfirmDeleteMutation,
+    useGetEnrollmentCourseQuery,
+    useGetEnrollmentDetailsQuery,
     // useSearchCoursesQuery,
   } = courseApi;
   

@@ -4,6 +4,11 @@ import { Box, Grid2 as Grid, Typography, Stack, Divider } from "@mui/material";
 import courseCover from "./../assets/dashboard-enrollment/course-cover.png";
 import tableImg from "./../assets/dashboard-enrollment//student-img.png";
 import CustomTable from "../components/CustomTable";
+import { useParams } from "react-router-dom";
+import {
+  useGetEnrollmentCourseQuery,
+  useGetEnrollmentCourseQuery,
+} from "../services/api/courseApi";
 
 const itemData = [
   {
@@ -16,6 +21,13 @@ const itemData = [
 ];
 
 function EnrollmentDetailPage() {
+  const { courseId, customerId } = useParams();
+
+  const { data: enrollmentData, isLoading: isLoadingEnrollment } =
+    useGetPurchasedProductQuery();
+  const { data: purchasedDetails, isLoading: isLoadingDetails } =
+    useGetPurchasedDetailsQuery({ purchasedId, customerId });
+
   return (
     <Grid container direction="column" gap={6}>
       {/* Go Back */}
@@ -52,7 +64,13 @@ function EnrollmentDetailPage() {
       <Grid container direction="column" gap={1}>
         <Typography variant="blgsm">Students</Typography>
         <Typography variant="bxsmd">Found (1) Student</Typography>
-        <CustomTable data={itemData} />
+        {isLoadingDetails ? (
+          <Typography>Loading purchased details...</Typography>
+        ) : tableData.length > 0 ? (
+          <CustomTable data={itemData} />
+        ) : (
+          <Typography>No purchased details found.</Typography>
+        )}
       </Grid>
     </Grid>
   );
