@@ -1,13 +1,13 @@
 import { ChevronLeft } from "@mui/icons-material";
 import React, { useEffect, useState } from "react";
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
-import { useNavigate, useParams } from "react-router-dom"; // useParams for getting dynamic route params
+import { useNavigate, useParams } from "react-router-dom";
 import CustomTable from "../components/CustomTable";
 import CustomChip from "../components/CustomChip";
 import {
   useGetPurchasedProductQuery,
   useGetPurchasedDetailsQuery,
-} from "../services/api/productApi"; // Import the new hook
+} from "../services/api/productApi";
 
 function PurchasedDetailPage() {
   const navigate = useNavigate();
@@ -27,7 +27,22 @@ function PurchasedDetailPage() {
   }
 
   console.log("Purchased:", purchased);
-  console.log("Purchased Details:", purchasedDetails); // Check the details data
+
+  const purchasedItems =
+    purchasedDetails?.purchasedDetails && Array.isArray(purchasedDetails.purchasedDetails)
+      ? purchasedDetails.purchasedDetails
+      : [];
+  console.log("Purchased Details:", purchasedDetails);
+
+  // Transform purchasedItems into the format expected by CustomTable
+  const tableData = purchasedItems.map((item) => ({
+    Photo: item.product.imageUrl,
+    category: item.product.categoryId,
+    Quantity: item.quantity,
+    price: `$ ${item.price}`,
+    Total: `$ ${item.total}`,
+    OrderDate: new Date(item.createdAt).toISOString().split("T")[0],
+  }));
 
   return (
     <Stack alignItems="start" gap={5}>
@@ -47,7 +62,6 @@ function PurchasedDetailPage() {
         justifyContent="space-between"
         alignItems="center"
       >
-        {/* Display instructor details, this part can be updated with actual data from purchasedDetails */}
         <Stack direction="row" gap={3}>
           <Box
             src="https://images.blush.design/jJhw-B2TJJTgTuFYENbT?w=920&auto=compress&cs=srgb"
@@ -76,8 +90,8 @@ function PurchasedDetailPage() {
 
       {isLoadingDetails ? (
         <Typography>Loading purchased details...</Typography>
-      ) : Array.isArray(purchasedDetails) && purchasedDetails.length > 0 ? (
-        <CustomTable data={purchasedDetails} />
+      ) : tableData.length > 0 ? (
+        <CustomTable data={tableData} />
       ) : (
         <Typography>No purchased details found.</Typography>
       )}
