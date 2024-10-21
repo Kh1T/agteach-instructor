@@ -48,12 +48,12 @@ export default function ProductCard({
       )}
       <CardActionArea>
         <CardMedia component="img" height="200" image={src} alt={title} />
-        <CardContent sx={{ pb: 1.5 }}>
+        <CardContent sx={{ pb: 1.5 }} width={"100%"}>
           <Typography gutterBottom variant="blgsm" component="div">
             {title}
           </Typography>
           <Typography variant="bssm" sx={{ color: "text.secondary" }}>
-            {price}
+            ${price}
           </Typography>
         </CardContent>
         {canAdd && (
