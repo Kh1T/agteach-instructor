@@ -28,7 +28,7 @@ function TotalCard({ total = "$1071.40" }) {
             }}
           >
             <Typography variant="bssm" color="dark.300">
-              Sale By
+              Sale
             </Typography>
             <Typography variant="bsr" color="dark.200">
               Total
@@ -36,7 +36,7 @@ function TotalCard({ total = "$1071.40" }) {
           </Stack>
 
           <Typography variant="blgsm" color="dark.400">
-            {total}
+            $ {total}
           </Typography>
         </Stack>
       </Box>

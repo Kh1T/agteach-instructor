@@ -1,6 +1,18 @@
 import { Box, Divider, Stack, Typography } from "@mui/material";
 
-function BalanceCard() {
+/**
+ * BalanceCard component renders a box with sale by course and product.
+ *
+ * It renders a box with two sections. The first section shows the sale by course
+ * and the second section shows the sale by product.
+ *
+ * @param {object} props - The component props
+ * @param {{ course: number, product: number }} props.balance - An object with two keys: course and product.
+ *   The course key is for the sale by course and the product key is for the sale by product.
+ * @returns {ReactElement} A React component representing a box with two sections
+ */
+function BalanceCard({ balance }) {
+  const { course, product } = balance;
   return (
     <Box
       sx={{
@@ -26,7 +38,7 @@ function BalanceCard() {
           </Typography>
         </Stack>
         <Typography variant="blgsm" sx={{ color: "dark.400" }}>
-          $435.70
+          $ {course || 0}
         </Typography>
         <Divider />
         <Stack
@@ -44,7 +56,7 @@ function BalanceCard() {
         </Stack>
 
         <Typography variant="blgsm" color="dark.400">
-          $635.70
+          $ {product || 0}
         </Typography>
       </Stack>
     </Box>
