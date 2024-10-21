@@ -17,14 +17,17 @@ import {
   useSearchProductBalanceQuery,
 } from "../services/api/balanceApi";
 function BalancePage() {
+  
   const [selectProductState, setSelectProductState] = useState(0);
   const [selectCourseState, setSelectCourseState] = useState(0);
   const [value, setValue] = useState(0);
-  const { data: balance, isLoading } = useGetBalanceQuery();
+  
   const [searchCourseTerm, setSearchCourseTerm] = useState("");
   const [searchProductTerm, setSearchProductTerm] = useState("");
   const searchCourseRef = useRef();
   const searchProductRef = useRef();
+
+  const { data: balance, isLoading } = useGetBalanceQuery();
   const { data: courses, isLoading: isLoadingCourses } =
     useSearchCourseBalanceQuery({
       name: searchCourseTerm,
@@ -46,6 +49,7 @@ function BalancePage() {
     );
   }
 
+  // Get Data to variable
   const productList =
     products?.data.map((product) => {
       return {
@@ -72,17 +76,13 @@ function BalancePage() {
   const total = course + product;
 
   const handleSearchCourse = () => {
-    // setIsLoadingSearch(true);
     const term = searchCourseRef.current.value;
     setSearchCourseTerm(term); // Update the search term state
-    // setIsLoadingSearch(false);
   };
   const handleSearchProducts = () => {
     // setIsLoadingSearch(true);
     const term = searchProductRef.current.value;
-    console.log("searching...", term);
     setSearchProductTerm(term); // Update the search term state
-    // setIsLoadingSearch(false);
   };
   return (
     <Stack spacing={5} sx={{ flexGrow: 1 }}>

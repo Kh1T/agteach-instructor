@@ -1,10 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { API_BASE_URL } from "../../constants/apiConstant";
 
 export const balanceApi = createApi({
   reducerPath: "balanceApi",
   baseQuery: fetchBaseQuery({
-    // baseUrl: "https://api.agteach.site",
-    baseUrl: " http://localhost:3001",
+    baseUrl: API_BASE_URL,
     credentials: "include",
   }),
   tagTypes: ["Balance"],
@@ -53,5 +53,5 @@ export const {
   useGetBalanceQuery,
   useSearchCourseBalanceQuery,
   useSearchProductBalanceQuery,
-  useGetRecentTransactionsQuery
+  useGetRecentTransactionsQuery,
 } = balanceApi;
