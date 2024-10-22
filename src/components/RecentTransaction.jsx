@@ -47,7 +47,8 @@ function RecentTransaction({ data }) {
   return (
     <Box
       sx={{
-        height: "440px",
+        minHeight: "440px",
+        // height: "440px",
         px: "20px",
         borderRadius: 4,
         boxShadow: "0px 10px 33px 0px rgba(5,27,58,0.1)",

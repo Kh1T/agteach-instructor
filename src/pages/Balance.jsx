@@ -9,7 +9,6 @@ import { useRef, useState } from "react";
 import CustomPanel from "../components/balance/CustomPanel";
 import CustomTable from "../components/CustomTable";
 import emptyProduct from "../assets/Spooky Stickers Sweet Franky.png";
-// import { products } from "../data/productsDummy";
 import {
   useGetBalanceQuery,
   useGetRecentTransactionsQuery,
@@ -73,7 +72,7 @@ function BalancePage() {
   const recentList = recentTransactions?.data || [];
   const balanceData = !isLoading ? balance?.data : { course: 0, product: 0 };
 
-  console.log(recentList,'recentList')
+  console.log(recentList, "recentList");
   const { product, course } = balanceData;
   const total = course + product;
 
@@ -89,7 +88,7 @@ function BalancePage() {
   return (
     <Stack spacing={5} sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
-        <Grid size={8}>
+        <Grid size={{ xs: 12, xl: 8 }}>
           <Box
             pt="30px"
             sx={{
@@ -117,7 +116,7 @@ function BalancePage() {
             </Stack>
           </Box>
         </Grid>
-        <Grid size={4}>
+        <Grid size={{ xs: 12, xl: 4 }}>
           {isLoadingRecentTransaction ? (
             <Typography>Loading...</Typography>
           ) : (
