@@ -35,7 +35,7 @@ project-root/
 │   │   └── images-1.png
 │   │
 │   ├── components/
-│   │   └── Button.js
+│   │   └── Button.jsx
 │   │
 │   ├── constants/
 │   │   └── apiConstants.js
@@ -56,11 +56,8 @@ project-root/
 │   │   └── theme.js
 │   │
 │   ├── utils/
-│   ├── App.js
-│   ├── App.css
-│   ├── index.js
-│   └── index.css
-│
+│   ├── App.jsx
+│   └── index.js
 ├── .env
 ├── .gitignore
 ├── package.json
@@ -88,18 +85,6 @@ project-root/
 | **client/src/services/**   | API service functions.                                      |
 | **client/src/store/**      | Application state that have slice, reducer and middleware   |
 | **client/src/utils/**      | Utility functions and helpers.                              |
-
-### Server Side Folder
-
-| **Folder Name**        | **Contain**                                                                |
-| ---------------------- | -------------------------------------------------------------------------- |
-| **project-name/**      | All file and folder in project                                             |
-| **server/config**      | contain configuration file                                                 |
-| **server/controllers** | Handle HTTP requests and responses.                                        |
-| **server/model**       | files that define the data schema and interact with the database directly. |
-| **server/routes/**     | Contains route definitions                                                 |
-| **server/views/**      | Components for displaying the data to the users                            |
-| **server/utils/**      | Contains utility functions and helpers.                                    |
 
 <!-- ## Pages Included
 
