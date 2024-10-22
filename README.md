@@ -27,44 +27,53 @@ We use folder structure to organize our project and it is essential for maintain
 
 ```
 project-root/
-├── client/
-│   ├── public/
-│   ├── src/
-│   │   ├── components/
-│   │   │   └── Button.js
-│   │   ├── hooks/
-│   │   ├── pages/
-│   │   ├── services/
-│   │   │   └── api.js
-│   │   ├── utils/
-│   │   └── index.js
-│   ├── config/
-│   │   └── api.js
-│   ├── .env
-│   └── package.json
-├── server/
-│   ├── config/
-│   │   └── db.js
-│   ├── controllers/
-│   │   └── userController.js
-│   ├── models/
-│   │   └── userModel.js
-│   ├── routes/
-│   │   └── userRoutes.js
-│   ├── services/
-│   │   └── userService.js
-│   ├── utils/
-│   ├── app.js
-│   ├── server.js
-│   ├── .env
-│   └── package.json
-├── scripts/
-│   ├── build/
-│   ├── deploy/
-│   └── start/
-├── .gitignore
-├── README.md
-└── package.json
+├── public/                        # Public assets like index.html and favicon
+│   └── favicon.ico
+│
+├── src/                           # Main source folder for React app
+│   ├── assets/                    # Images, fonts, or other static assets
+│   │   └── images-1.png
+│   │
+│   ├── components/                # Reusable components like buttons, inputs
+│   │   └── Button.js
+│   │
+│   ├── constants/                 # Constants for the app like API endpoints
+│   │   └── apiConstants.js
+│   │
+│   ├── features/                  # Feature-specific logic (could hold Redux slices or other logic)
+│   │
+│   ├── pages/                     # Pages for different routes (Home, Dashboard, etc.)
+│   │
+│   ├── routes/                    # Route-related components
+│   │   ├── AuthRoot.jsx           # Authentication-related routes
+│   │   ├── ProductRoot.jsx        # Product-specific routes
+│   │   ├── ProtectedRoute.jsx     # Protected route component
+│   │   ├── Root.jsx               # Base route structure
+│   │   └── index.js               # Route export or organization
+│   │
+│   ├── services/                  # API services, utilities to interact with backends
+│   │   └── api/                   # API logic for RESTful services
+│   │
+│   ├── store/                     # Redux store setup or other global state management
+│   │
+│   ├── theme/                     # Theme configuration (e.g., Material-UI theme)
+│   │   └── theme.js
+│   │
+│   ├── utils/                     # Utility functions (testing utils, helper functions, etc.)
+│   │   ├── setupTests.js
+│   │   ├── reportWebVitals.js
+│   │   └── theme.js               # Additional utility files if needed
+│   │
+│   ├── App.js                     # Main React component (App entry point)
+│   ├── App.css                    # Global app styles
+│   ├── index.js                   # Entry point for React app
+│   └── index.css                  # Global styles
+│
+├── .env                           # Environment variables for frontend (API URLs, etc.)
+├── .gitignore                     # Git ignore rules
+├── package.json                   # Frontend dependencies
+├── package-lock.json              # Exact versions of dependencies
+└── README.md                      # Project documentation
 
 ```
 
@@ -78,11 +87,14 @@ project-root/
 | -------------------------- | ----------------------------------------------------------- |
 | **client/public/**         | Contains static files like HTML, CSS, and images.           |
 | **client/src/**            | main source code for the React application                  |
+| **client/src/assets/**     | Contains images need to import into your React components   |
 | **client/src/components/** | Reusable UI components.                                     |
+| **client/src/constants/**  | API base url                                                |
 | **client/src/pages/**      | Components representing different pages of the application. |
+| **client/src/routes/**     | Components root layout and router navigate to pages         |
 | **client/src/services/**   | API service functions.                                      |
+| **client/src/store/**      | Application state that have slice, reducer and middleware   |
 | **client/src/utils/**      | Utility functions and helpers.                              |
-| **client/config/**         | configuration files.                                        |
 
 ### Server Side Folder
 
