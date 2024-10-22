@@ -89,6 +89,7 @@ function PurchasedDetailPage() {
             width={130}
             height={130}
             alt="Customer Image"
+            sx={{ borderRadius: "5px" }}
           />
           <Stack gap>
             <Typography variant="bxsr">Customer Name</Typography>
@@ -130,7 +131,7 @@ function PurchasedDetailPage() {
               variant="contained"
               onClick={handleDelivery}
             >
-              Delivered
+              {isLoadingDetails ? "Delivering..." : "Delivered"}
             </CustomButton>
           )}
         </>

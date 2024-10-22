@@ -21,7 +21,7 @@ function PurchasedPage() {
   console.log("order", order);
 
   // Fetch data using both searchTerm and order for sorting
-  const { data: purchased, isLoading } = useGetPurchasedProductQuery({
+  const { data: purchased, isLoading, refetch } = useGetPurchasedProductQuery({
     name: searchTerm, // Send search term
     order, // Send sorting order
   });
@@ -61,12 +61,14 @@ function PurchasedPage() {
     if (searchRef.current) {
       const term = searchRef.current.value;
       setSearchTerm(term);
+      refetch(); // Trigger data refetch after setting search term
     }
   };
 
   // Handle sorting selection
   const handleSelectChange = (event) => {
     setSelectState(event.target.value);
+    refetch(); // Trigger data refetch after changing sorting option
   };
 
   return (
