@@ -6,35 +6,23 @@ import { useGetEnrollmentCourseQuery } from "../services/api/courseApi";
 import emptyProduct from "../assets/Spooky Stickers Sweet Franky.png";
 import { useNavigate } from "react-router";
 import CustomButton from "../components/CustomButton";
-import { useGetEnrollmentDetailsQuery } from "../services/api/balanceApi";
 
 function EnromentPage() {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectState, setSelectState] = useState(0);
+  const [selectState, setSelectState] = useState(0); // Default to "Newest"
 
-  // Fixing the order value logic
-  const order =
-    selectState === "Newest"
-      ? "Newest"
-      : selectState === "Oldest"
-      ? "Oldest"
-      : "World";
-  console.log("order", order);
+  const searchRef = useRef();
 
+  // Call API with the selected order and search term
   const {
     data: enrollmentData,
     isLoading,
     error,
   } = useGetEnrollmentCourseQuery({
     name: searchTerm,
-    order: setSelectState, // Use 'order' here instead of 'selectState'
+    order: selectState, // Use the correct order value here
   });
-
-  console.log("Enrollment Data: ", enrollmentData?.courseSaleHistory);
-
-  const searchRef = useRef();
-  const label = "Sort";
 
   let enrollmentList = [];
   if (!isLoading && enrollmentData) {
@@ -43,9 +31,9 @@ function EnromentPage() {
       : [];
     enrollmentList = validEnrollment.map((item) => ({
       CourseName: item.CourseName,
-      Price: `$ ${item.price}`,
+      Price: `$${item.price}`, // Add the dollar sign here
       Student: item.student,
-      Date: new Date(item.CreatedAt).toISOString().split("T")[0],
+      Date: new Date(item.CreatedAt).toISOString().split("T")[0], // Format date
       View: (
         <CustomButton
           sx={{ backgroundColor: "blue.main" }}
@@ -58,6 +46,9 @@ function EnromentPage() {
     }));
   }
 
+  console.log("Enrollment List: ", enrollmentList);
+
+  // Handle Select Change
   const handleSelectChange = (event) => {
     setSelectState(event.target.value);
   };
@@ -70,17 +61,17 @@ function EnromentPage() {
     }
   };
 
-  console.log("Enrollment List: ", enrollmentList);
-
   return (
     <Stack gap="30px">
       <QueryHeader
-        label={label}
+        label="Sort"
         useSelectState={[selectState, setSelectState]}
         selectData={["Newest", "Oldest", "World"]}
         handleSelectChange={handleSelectChange}
         handleSearch={handleSearch}
+        searchRef={searchRef}
       />
+
       {isLoading ? (
         <Typography>Loading Enrollment...</Typography>
       ) : error ? (

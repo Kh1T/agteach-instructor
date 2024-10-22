@@ -105,8 +105,9 @@ export const courseApi = createApi({
 
     getEnrollmentDetails: builder.query({
       providesTags: ["Course"],
-      query: ({ courseId }) => ({
-        url: `/api/enrollment/getEnrollmentDetails/${courseId}`,
+      query: (courseId) => ({
+        url: `/api/enrollment/getEnrollmentDetail/${courseId}`,
+        // api/enrollment/getEnrollmentDetail/744
         // url: `/api/course/getOneCourse/744`,
         method: "GET",
       }),
