@@ -10,6 +10,7 @@ import { setEmail, setDob } from "../features/user/userSlice";
 import { useSignupMutation } from "../services/api/authApi";
 import { CustomAlert } from "../components/CustomAlert";
 import { useDispatch } from "react-redux";
+import { differenceInYears } from 'date-fns';
 
 function Signup() {
   const navigate = useNavigate();
@@ -38,22 +39,20 @@ function Signup() {
 
   const submitHandler = async (data) => {
     try {
-      console.log(data);
       data.dateOfBirth = dayjs(data.dateOfBirth).format("YYYY/MM/DD");
-      const response = await signup(data).unwrap();
+      await signup(data).unwrap();
       dispatch(setDob(data.dateOfBirth));
       dispatch(setEmail(data.email));
       navigate("additional");
     } catch (error) {
       setOpen(true);
-      console.error("Signup failed:", error);
     }
   };
 
   return (
     <Grid2
       container
-      sx={{ justifyContent: { xs: "center", md: "center", lg: "start" } }}
+      sx={{ justifyContent: { xs: "center", md: "center", lg: "center" }, flexWrap: "nowrap", padding: { lg: "0 100px 0 0"} }}
       my={{ xs: 20, lg: 0 }}
       spacing={{ xs: 5, md: 15, lg: 20 }}
       alignItems={"center"}
@@ -96,21 +95,30 @@ function Signup() {
             helperText={errors.username?.message}
           />
           <br />
-          <Controller
-            name="dateOfBirth"
-            control={control}
-            rules={{ required: "Please select your date of birth" }}
-            render={({ field }) => (
-              <FormInput
-                label="Date of Birth"
-                isDate={true}
-                dateValue={field.value}
-                onDateChange={(newDate) => field.onChange(newDate)}
-                error={!!errors.dateOfBirth}
-                helperText={errors.dateOfBirth?.message}
-              />
-            )}
-          />
+          
+<Controller
+  name="dateOfBirth"
+  control={control}
+  rules={{
+    required: "Please provide your date of birth",
+    validate: (value) => {
+      const currentDate = new Date();
+      const age = differenceInYears(currentDate, new Date(value));
+
+      return age >= 15 || "You must be at least 15 years old.";
+    },
+  }}
+  render={({ field }) => (
+    <FormInput
+      label="Date of Birth"
+      isDate={true}
+      dateValue={field.value}
+      onDateChange={(newDate) => field.onChange(newDate)}
+      error={!!errors.dateOfBirth}
+      helperText={errors.dateOfBirth?.message}
+    />
+  )}
+/>
           <br />
           <FormInput
             label="Email"

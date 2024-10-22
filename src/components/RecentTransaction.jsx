@@ -64,6 +64,7 @@ function RecentTransaction({ data }) {
       >
         <CustomTableHeader
           title="Recent Transaction"
+          // content="Found (5) Items"
           content={`${recentTransactions.length} items`}
         />
         <Box sx={{ minWidth: 180 }}>
