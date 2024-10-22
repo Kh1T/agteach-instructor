@@ -65,14 +65,14 @@ function PurchasedPage() {
     if (searchRef.current) {
       const term = searchRef.current.value;
       setSearchTerm(term);
-      refetch(); // Trigger data refetch after setting search term
+      refetch(); 
     }
   };
 
   // Handle sorting selection
   const handleSelectChange = (event) => {
     setSelectState(event.target.value);
-    refetch(); // Trigger data refetch after changing sorting option
+    refetch();
   };
 
   return (
