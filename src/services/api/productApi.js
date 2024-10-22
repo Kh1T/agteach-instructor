@@ -73,6 +73,39 @@ export const productApi = createApi({
         body: productData,
       }),
     }),
+
+    getPurchasedProduct: builder.query({
+      providesTags: ["Product"],
+      query: ({ name = "", order = "All" }) => {
+        let url = `/api/purchased/getInstructorPurchased?name=${name}`;
+        if (order !== "All") {
+          url += `&order=${order}`;
+        } 
+      
+        console.log("API Request URL:", url); // Log the final URL
+        return { url, method: "GET" };
+      },
+    }),
+
+    getPurchasedDetails: builder.query({
+      providesTags: ["Product"],
+      query: ({ purchasedId, customerId }) => ({
+        url: `/api/purchased/purchasedDetail/${purchasedId}?cid=${customerId}`,
+        // url: `/api/purchased/purchasedDetail/52?cid=132`,
+        method: "GET",
+      }),
+    }), 
+
+    updatePurchasedDetails: builder.mutation({
+      providesTags: ["Product"],
+
+      query: (purchasedData) => ({
+        url: `/api/purchased/updateDeliver`,
+        method: "PATCH",
+        body: purchasedData,
+      })
+    })
+
   }),
 });
 
@@ -84,4 +117,7 @@ export const {
   useGetInstructorDataQuery,
   useGetProductsImagesQuery,
   useUpdateProductMutation,
+  useGetPurchasedProductQuery,
+  useGetPurchasedDetailsQuery,
+  useUpdatePurchasedDetailsMutation
 } = productApi;

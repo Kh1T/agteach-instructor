@@ -5,23 +5,49 @@ import {
   MenuItem,
   Select,
   Stack,
+  Typography,
 } from "@mui/material";
 import { useState } from "react";
 import CustomTableHeader from "./CustomTableHeader";
-import CustomTable from "./CustomTable";
-import { recentData } from "../data/recentData";
+import CustomTable from "./CustomTable"; 
 
 /**
  * RecentTransaction component
  * @description A component that displays a table of recent transactions with a select dropdown to filter by course or product
  * @returns {ReactElement} A JSX element representing the RecentTransaction component
  */
-function RecentTransaction() {
+function RecentTransaction({ data }) {
   const [transaction, setTransaction] = useState();
+
+  const { course, product } = data || [];
+
+  const mapData = (data) => {
+    if (data.length === 0) return [];
+    return data.map((item, id) => {
+      return { Date: item.date, Name: item.name, Amount: `$ ${item.price}` };
+    });
+  };
+
+  const courseRecentList = mapData(course) || [];
+  const productRecentList = mapData(product) || [];
+
+  const [recentTransactions, setRecentTransactions] =
+    useState(courseRecentList);
+
+  const handleSelect = (e) => {
+    if (e.target.value === 10) {
+      setRecentTransactions(courseRecentList);
+    } else {
+      setRecentTransactions(productRecentList);
+    }
+    setTransaction(e.target.value);
+  };
+ 
   return (
     <Box
       sx={{
-        height: "440px",
+        minHeight: "440px",
+        // height: "440px",
         px: "20px",
         borderRadius: 4,
         boxShadow: "0px 10px 33px 0px rgba(5,27,58,0.1)",
@@ -38,7 +64,8 @@ function RecentTransaction() {
       >
         <CustomTableHeader
           title="Recent Transaction"
-          content="Found(5) Items"
+          // content="Found (5) Items"
+          content={`${recentTransactions.length} items`}
         />
         <Box sx={{ minWidth: 180 }}>
           <FormControl fullWidth>
@@ -46,7 +73,7 @@ function RecentTransaction() {
             <Select
               id="demo-simple-select"
               value={transaction}
-              onChange={(e) => setTransaction(e.target.value)}
+              onChange={handleSelect}
               label="Transaction"
               defaultValue="10"
             >
@@ -56,8 +83,11 @@ function RecentTransaction() {
           </FormControl>
         </Box>
       </Stack>
-
-      <CustomTable data={recentData} />
+      {recentTransactions.length === 0 ? (
+        <Typography>There is no transaction yet!</Typography>
+      ) : (
+        <CustomTable data={recentTransactions} />
+      )}
     </Box>
   );
 }

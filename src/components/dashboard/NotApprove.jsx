@@ -22,8 +22,8 @@ function NotApprove() {
             Please be patient. We will send you an email when this process is
             finished.
           </Typography>
-          <Typography variant="btr" color="dark.200">
-            More Info: agteach@gmai.com | 012 345 678
+          <Typography variant="bsr" color="dark.200">
+            More Info: agteach@gmail.com | 012 345 678
           </Typography>
         </Stack>
       </Stack>

@@ -22,6 +22,8 @@ export default function CustomTable({
   isPagination = false,
   isLink = false,
 }) {
+
+  
   // const tableHead = data.
   let headers = Object.keys(data[0]).map(
     (key) => key.charAt(0).toUpperCase() + key.slice(1)
@@ -77,7 +79,7 @@ export default function CustomTable({
                 {Object.values(row).map((cell, cellIndex) => (
                   <TableCell
                     key={cellIndex}
-                    component= {isLink ? RouterLink : "div"}
+                    component={isLink ? RouterLink : "div"}
                     to={`${id}`}
                     sx={{
                       borderBottom: "1px dashed",
@@ -108,5 +110,7 @@ export default function CustomTable({
       )}
     </>
   );
+
+
   return content;
 }

@@ -10,9 +10,7 @@ export default function CustomTableHeader({title, content}){
     return(
         <Stack
           direction="column"
-          sx={{
-            alignItems: "flex-start"
-          }}
+          spacing={1}
         >
           <Typography variant="bmdsm" sx={{color: "dark.400"}}>{title}</Typography>
           <Typography variant="bsr" sx={{color: "dark.400"}}>{content}</Typography>
