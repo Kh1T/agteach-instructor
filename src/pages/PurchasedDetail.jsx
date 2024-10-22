@@ -1,45 +1,76 @@
+import React, { useState, useMemo } from "react";
 import { ChevronLeft } from "@mui/icons-material";
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-// import CustomChip from "../components/CustomChip";
+import { useNavigate, useParams, useLocation } from "react-router-dom"; // Import useLocation
 import CustomTable from "../components/CustomTable";
 import CustomChip from "../components/CustomChip";
+import {
+  useGetPurchasedProductQuery,
+  useGetPurchasedDetailsQuery,
+  useUpdatePurchasedDetailsMutation,
+} from "../services/api/productApi";
+import CustomButton from "../components/CustomButton";
+import profileImg from "../assets/Monsters Standing.png";
+import { CustomAlert } from "../components/CustomAlert";
 
 function PurchasedDetailPage() {
-  const purchasedDetail = [
-    {
-      id: 1,
-      productname: "Prunning Shears",
-      category: "Tools",
-      quantity: 2,
-      price: 100,
-      total: 200,
-      orderdate: "2022-01-01",
-    },
-    {
-      id: 2,
-      productname: "Feterlizer Kit",
-      category: "Feterlizers",
-      quantity: 3,
-      price: 50,
-      total: 150,
-      orderdate: "2022-01-02",
-    },
-  ];
+  const navigate = useNavigate();
+  const { purchasedId, customerId } = useParams();
 
-  const purchasedList = purchasedDetail.map((item) => ({
-    photos: (
-      <Box
-        src="https://img.freepik.com/free-photo/organic-cosmetic-product-with-dreamy-aesthetic-fresh-background_23-2151382816.jpg"
-        component={"img"}
-        width={70}
-        height={70}
+  const location = useLocation(); // Get the state passed from the previous page
+  const { isDelivered: initialIsDelivered } = location.state || {}; // Destructure and provide a fallback
+
+  const { data: purchasedDetails, isLoading: isLoadingDetails } =
+    useGetPurchasedDetailsQuery({ purchasedId, customerId });
+
+  const [updatePurchasedDetails] = useUpdatePurchasedDetailsMutation();
+
+  const [isDelivered, setIsDelivered] = useState(initialIsDelivered ?? false);
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
+
+  // Combine customer data with purchasedDetails
+  const combinedPurchasedDetails = useMemo(() => {
+    if (purchasedDetails?.purchasedDetails && purchasedDetails?.customer) {
+      return purchasedDetails.purchasedDetails.map((item) => ({
+        ...item,
+        customer: purchasedDetails.customer,
+      }));
+    }
+    return [];
+  }, [purchasedDetails]);
+
+  const tableData = combinedPurchasedDetails.map((item) => ({
+    Photo: (
+      <img
+        src={item.product?.imageUrl || profileImg}
+        alt="Product Image"
+        width="80"
+        height="80"
+        style={{ borderRadius: "5px" }}
       />
     ),
-    ...item,
+    "Product Name": item.product?.name || "N/A",
+    category: item.product?.categoryId || "N/A",
+    Quantity: item.quantity || 0,
+    price: `$ ${item.price || 0}`,
+    Total: `$ ${item.total || 0}`,
+    OrderDate: item.createdAt
+      ? new Date(item.createdAt).toISOString().split("T")[0]
+      : "N/A",
   }));
 
-  const navigate = useNavigate();
+  const customer = purchasedDetails?.customer || {};
+
+  const handleDelivery = async () => {
+    try {
+      await updatePurchasedDetails({ purchasedId });
+      setIsDelivered(true); // Update local state to "delivered"
+      setIsAlertOpen(true); // Show success alert
+    } catch (error) {
+      console.error("Failed to update delivery status", error);
+    }
+  };
+
   return (
     <Stack alignItems="start" gap={5}>
       <Button
@@ -52,6 +83,7 @@ function PurchasedDetailPage() {
           Go Back
         </Typography>
       </Button>
+
       <Stack
         direction="row"
         width="100%"
@@ -60,30 +92,65 @@ function PurchasedDetailPage() {
       >
         <Stack direction="row" gap={3}>
           <Box
-            src="https://images.blush.design/jJhw-B2TJJTgTuFYENbT?w=920&auto=compress&cs=srgb"
+            src={customer.imageUrl || profileImg}
             component="img"
             width={130}
             height={130}
+            alt="Customer Image"
+            sx={{ borderRadius: "5px" }}
           />
           <Stack gap>
-            <Typography variant="bxsr">Instructor Name</Typography>
-            <Typography variant="blgr">Srey Roth</Typography>
+            <Typography variant="bxsr">Customer Name</Typography>
+            <Typography variant="blgr">{`${customer.firstName || ""} ${customer.lastName || ""}`}</Typography>
             <Typography variant="bxsr">
-              <Box component="strong">Email: </Box>roth@abc.xyz
+              <Box component="strong">Email: </Box>
+              {customer.email || "N/A"}
             </Typography>
             <Typography variant="bxsr">
-              <Box component="strong">Phone: </Box>0123456789
+              <Box component="strong">Phone: </Box>
+              {customer.phone || "N/A"}
             </Typography>
             <Typography variant="bxsr">
-              <Box component="strong">Address: </Box>St.6, plov veng sreng
+              <Box component="strong">Address: </Box>
+              {customer.address || "N/A"}
             </Typography>
           </Stack>
         </Stack>
-        <CustomChip label="Not Yet Delivered" danger sx={{ py: "15px" }} />
+
+        <CustomChip
+          label={isDelivered ? "Delivered" : "Not Yet Delivered"}
+          danger={!isDelivered}
+          success={isDelivered}
+          sx={{ py: "15px" }}
+        />
       </Stack>
+
       <Divider />
       <Typography variant="h3">Purchased Detail</Typography>
-      <CustomTable data={purchasedList} />
+
+      {isLoadingDetails ? (
+        <Typography>Loading purchased details...</Typography>
+      ) : (
+        <>
+          <CustomTable data={tableData} />
+          {!isDelivered && (
+            <CustomButton
+              sx={{ backgroundColor: "blue.main" }}
+              variant="contained"
+              onClick={handleDelivery}
+            >
+              Delivered
+            </CustomButton>
+          )}
+          <CustomAlert
+            severity="success"
+            open={isAlertOpen}
+            onClose={() => setIsAlertOpen(false)} // Close the alert without changing isDelivered
+            duration={100}
+            label="The products has been delivered."
+          />
+        </>
+      )}
     </Stack>
   );
 }
