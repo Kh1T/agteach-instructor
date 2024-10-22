@@ -10,15 +10,13 @@ import {
 
 import { useForm } from "react-hook-form";
 import FormInput from "../components/login-signup/FormInput";
-import CustomInputField from "../components/CustomInputField";
 import SideBarImg from "../components/SideBarImg";
 import { Link } from "react-router-dom";
-import CustomButton from "../components/CustomButton";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useLoginMutation } from "../services/api/authApi";
 import { CustomAlert } from "../components/CustomAlert";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { checkLoginStatus } from "../features/user/authSlice";
 
 function LoginPage() {
@@ -43,14 +41,11 @@ function LoginPage() {
   const handleShowPassword = () => setShowPassword((prev) => !prev);
 
   const submitHandler = async (data) => {
-    console.log(data, "testing");
     try {
-      const response = await login(data).unwrap();
-      console.log("Login successful", response);
+      await login(data).unwrap();
       dispatch(checkLoginStatus(true));
       navigator("/");
     } catch (error) {
-      console.error("Incorrect email or password", error);
       setOpen(true);
       setError(
         "email",
@@ -65,16 +60,13 @@ function LoginPage() {
     }
   };
 
-  const { isAuthenticated } = useSelector((state) => state.auth);
-  console.log("login", isAuthenticated);
-
   return (
     <Grid
       container
       direction="row"
       alignItems="center"
       sx={{
-        justifyContent: { xs: "center", md: "center", lg: "start" },
+        justifyContent: { xs: "center", md: "center", lg: "center" }, flexWrap: "nowrap", padding: { lg: "0 100px 0 0"},
         mx: { xs: 2, md: 0, lg: 0 },
       }}
       mt={{ xs: 50, md: 50, lg: 0 }}
