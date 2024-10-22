@@ -21,7 +21,11 @@ function PurchasedPage() {
   console.log("order", order);
 
   // Fetch data using both searchTerm and order for sorting
-  const { data: purchased, isLoading, refetch } = useGetPurchasedProductQuery({
+  const {
+    data: purchased,
+    isLoading,
+    refetch,
+  } = useGetPurchasedProductQuery({
     name: searchTerm, // Send search term
     order, // Send sorting order
   });
@@ -86,11 +90,7 @@ function PurchasedPage() {
       {isLoading ? (
         <Typography>Loading purchased...</Typography>
       ) : Array.isArray(purchasedList) && purchasedList.length > 0 ? (
-        <CustomTable
-          data={purchasedList}
-          rowLimit={10}
-          isPagination={true}
-        />
+        <CustomTable data={purchasedList} rowLimit={10} isPagination={true} />
       ) : (
         <Box
           display="flex"

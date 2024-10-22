@@ -25,10 +25,7 @@ function PurchasedDetailPage() {
 
   const [updatePurchasedDetails] = useUpdatePurchasedDetailsMutation();
 
-  // Track delivery status, initializing it from the passed state or fallback to false
   const [isDelivered, setIsDelivered] = useState(initialIsDelivered ?? false);
-  
-  // Track alert visibility state
   const [isAlertOpen, setIsAlertOpen] = useState(false);
 
   // Combine customer data with purchasedDetails
