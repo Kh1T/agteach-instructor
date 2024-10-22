@@ -27,53 +27,46 @@ We use folder structure to organize our project and it is essential for maintain
 
 ```
 project-root/
-├── public/                        # Public assets like index.html and favicon
+├── public/
 │   └── favicon.ico
 │
-├── src/                           # Main source folder for React app
-│   ├── assets/                    # Images, fonts, or other static assets
+├── src/
+│   ├── assets/
 │   │   └── images-1.png
 │   │
-│   ├── components/                # Reusable components like buttons, inputs
+│   ├── components/
 │   │   └── Button.js
 │   │
-│   ├── constants/                 # Constants for the app like API endpoints
+│   ├── constants/
 │   │   └── apiConstants.js
 │   │
-│   ├── features/                  # Feature-specific logic (could hold Redux slices or other logic)
+│   ├── features/
 │   │
-│   ├── pages/                     # Pages for different routes (Home, Dashboard, etc.)
+│   ├── pages/
 │   │
-│   ├── routes/                    # Route-related components
-│   │   ├── AuthRoot.jsx           # Authentication-related routes
-│   │   ├── ProductRoot.jsx        # Product-specific routes
-│   │   ├── ProtectedRoute.jsx     # Protected route component
-│   │   ├── Root.jsx               # Base route structure
-│   │   └── index.js               # Route export or organization
+│   ├── routes/
+│   │   └── index.js
 │   │
-│   ├── services/                  # API services, utilities to interact with backends
-│   │   └── api/                   # API logic for RESTful services
+│   ├── services/
+│   │   └── api/
 │   │
-│   ├── store/                     # Redux store setup or other global state management
+│   ├── store/
 │   │
-│   ├── theme/                     # Theme configuration (e.g., Material-UI theme)
+│   ├── theme/
 │   │   └── theme.js
 │   │
-│   ├── utils/                     # Utility functions (testing utils, helper functions, etc.)
-│   │   ├── setupTests.js
-│   │   ├── reportWebVitals.js
-│   │   └── theme.js               # Additional utility files if needed
-│   │
-│   ├── App.js                     # Main React component (App entry point)
-│   ├── App.css                    # Global app styles
-│   ├── index.js                   # Entry point for React app
-│   └── index.css                  # Global styles
+│   ├── utils/
+│   ├── App.js
+│   ├── App.css
+│   ├── index.js
+│   └── index.css
 │
-├── .env                           # Environment variables for frontend (API URLs, etc.)
-├── .gitignore                     # Git ignore rules
-├── package.json                   # Frontend dependencies
-├── package-lock.json              # Exact versions of dependencies
-└── README.md                      # Project documentation
+├── .env
+├── .gitignore
+├── package.json
+├── package-lock.json
+└── README.md
+
 
 ```
 
