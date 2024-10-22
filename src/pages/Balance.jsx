@@ -72,7 +72,6 @@ function BalancePage() {
   const recentList = recentTransactions?.data || [];
   const balanceData = !isLoading ? balance?.data : { course: 0, product: 0 };
 
-  console.log(recentList, "recentList");
   const { product, course } = balanceData;
   const total = course + product;
 

@@ -20,7 +20,6 @@ function RecentTransaction({ data }) {
   const [transaction, setTransaction] = useState();
 
   const { course, product } = data || [];
-  console.log(course, product, "course, product");
 
   const mapData = (data) => {
     if (data.length === 0) return [];
