@@ -10,7 +10,7 @@ import {
   useUpdatePurchasedDetailsMutation,
 } from "../services/api/productApi";
 import CustomButton from "../components/CustomButton";
-import profileImg from "../assets/Monsters Standing.png";
+import profileImg from "../assets/monsters-standing.png";
 import { CustomAlert } from "../components/CustomAlert";
 
 function PurchasedDetailPage() {
