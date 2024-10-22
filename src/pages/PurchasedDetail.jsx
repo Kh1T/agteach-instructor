@@ -11,21 +11,25 @@ import {
 } from "../services/api/productApi";
 import CustomButton from "../components/CustomButton";
 import profileImg from "../assets/Monsters Standing.png";
+import { CustomAlert } from "../components/CustomAlert";
 
 function PurchasedDetailPage() {
   const navigate = useNavigate();
   const { purchasedId, customerId } = useParams();
-  
+
   const location = useLocation(); // Get the state passed from the previous page
   const { isDelivered: initialIsDelivered } = location.state || {}; // Destructure and provide a fallback
 
   const { data: purchasedDetails, isLoading: isLoadingDetails } =
     useGetPurchasedDetailsQuery({ purchasedId, customerId });
-  
+
   const [updatePurchasedDetails] = useUpdatePurchasedDetailsMutation();
 
   // Track delivery status, initializing it from the passed state or fallback to false
   const [isDelivered, setIsDelivered] = useState(initialIsDelivered ?? false);
+  
+  // Track alert visibility state
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
 
   // Combine customer data with purchasedDetails
   const combinedPurchasedDetails = useMemo(() => {
@@ -48,6 +52,7 @@ function PurchasedDetailPage() {
         style={{ borderRadius: "5px" }}
       />
     ),
+    "Product Name": item.product?.name || "N/A",
     category: item.product?.categoryId || "N/A",
     Quantity: item.quantity || 0,
     price: `$ ${item.price || 0}`,
@@ -63,6 +68,7 @@ function PurchasedDetailPage() {
     try {
       await updatePurchasedDetails({ purchasedId });
       setIsDelivered(true); // Update local state to "delivered"
+      setIsAlertOpen(true); // Show success alert
     } catch (error) {
       console.error("Failed to update delivery status", error);
     }
@@ -81,7 +87,12 @@ function PurchasedDetailPage() {
         </Typography>
       </Button>
 
-      <Stack direction="row" width="100%" justifyContent="space-between" alignItems="center">
+      <Stack
+        direction="row"
+        width="100%"
+        justifyContent="space-between"
+        alignItems="center"
+      >
         <Stack direction="row" gap={3}>
           <Box
             src={customer.imageUrl || profileImg}
@@ -93,18 +104,18 @@ function PurchasedDetailPage() {
           />
           <Stack gap>
             <Typography variant="bxsr">Customer Name</Typography>
-            <Typography variant="blgr">{`${customer.firstName || ''} ${customer.lastName || ''}`}</Typography>
+            <Typography variant="blgr">{`${customer.firstName || ""} ${customer.lastName || ""}`}</Typography>
             <Typography variant="bxsr">
               <Box component="strong">Email: </Box>
-              {customer.email || 'N/A'}
+              {customer.email || "N/A"}
             </Typography>
             <Typography variant="bxsr">
               <Box component="strong">Phone: </Box>
-              {customer.phone || 'N/A'}
+              {customer.phone || "N/A"}
             </Typography>
             <Typography variant="bxsr">
               <Box component="strong">Address: </Box>
-              {customer.address || 'N/A'}
+              {customer.address || "N/A"}
             </Typography>
           </Stack>
         </Stack>
@@ -131,9 +142,16 @@ function PurchasedDetailPage() {
               variant="contained"
               onClick={handleDelivery}
             >
-              {isLoadingDetails ? "Delivering..." : "Delivered"}
+              Delivered
             </CustomButton>
           )}
+          <CustomAlert
+            severity="success"
+            open={isAlertOpen}
+            onClose={() => setIsAlertOpen(false)} // Close the alert without changing isDelivered
+            duration={100}
+            label="The products has been delivered."
+          />
         </>
       )}
     </Stack>
