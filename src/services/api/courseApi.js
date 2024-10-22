@@ -103,6 +103,27 @@ export const courseApi = createApi({
       },
     }),
 
+    // getEnrollmentCourse: builder.query({
+    //   providesTags: ["Product"],
+    //   query: ({ name = "", order }) => {
+    //     let url = `/api/enrollment/getEnrollment?name=${name}`;
+
+    //     // Include order only if it's defined
+    //     if (order) {
+    //       const dataOrder = order === "Newest" ? "desc" : "asc";
+    //       url += `&order=${dataOrder}`;
+    //     }
+
+    //     return {
+    //       url,
+    //       method: "GET",
+    //     };
+    //   },
+    // }),
+
+
+    
+
     getEnrollmentDetails: builder.query({
       providesTags: ["Course"],
       query: (courseId) => ({

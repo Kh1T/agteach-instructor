@@ -11,6 +11,7 @@ function EnromentPage() {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectState, setSelectState] = useState(0); // Default to "Newest"
+  const label = "Sort";
 
   const searchRef = useRef();
 
@@ -21,17 +22,35 @@ function EnromentPage() {
     error,
   } = useGetEnrollmentCourseQuery({
     name: searchTerm,
-    order: selectState, // Use the correct order value here
+    order: selectState,
   });
+
+  console.log("order ", selectState);
 
   let enrollmentList = [];
   if (!isLoading && enrollmentData) {
     const validEnrollment = Array.isArray(enrollmentData.courseSaleHistory)
       ? enrollmentData.courseSaleHistory
       : [];
-    enrollmentList = validEnrollment.map((item) => ({
+
+    // Sorting logic based on selectState
+    const sortedEnrollment = [...validEnrollment].sort((a, b) => {
+      const dateA = new Date(a.CreatedAt);
+      const dateB = new Date(b.CreatedAt);
+
+      if (selectState === 0) {
+        // Newest first
+        return dateB - dateA;
+      } else {
+        // Oldest first
+        return dateA - dateB;
+      }
+    });
+
+    // Map the sorted list
+    enrollmentList = sortedEnrollment.map((item) => ({
       CourseName: item.CourseName,
-      Price: `$${item.price}`, // Add the dollar sign here
+      Price: `$${item.price}`,
       Student: item.student,
       Date: new Date(item.CreatedAt).toISOString().split("T")[0], // Format date
       View: (
@@ -50,7 +69,7 @@ function EnromentPage() {
 
   // Handle Select Change
   const handleSelectChange = (event) => {
-    setSelectState(event.target.value);
+    setSelectState(Number(event.target.value)); // Ensure value is a number
   };
 
   // Handle Search functionality
@@ -64,9 +83,9 @@ function EnromentPage() {
   return (
     <Stack gap="30px">
       <QueryHeader
-        label="Sort"
+        label={label}
         useSelectState={[selectState, setSelectState]}
-        selectData={["Newest", "Oldest", "World"]}
+        selectData={["Newest", "Oldest"]}
         handleSelectChange={handleSelectChange}
         handleSearch={handleSearch}
         searchRef={searchRef}

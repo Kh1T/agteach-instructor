@@ -99,6 +99,7 @@ function EnrollmentDetailPage() {
           width={130}
           height={130}
           alt="Customer Image"
+          sx={{ borderRadius: "5px" }}
         />
         <Stack gap={1}>
           <Typography variant="bxsmd">Course Name</Typography>
