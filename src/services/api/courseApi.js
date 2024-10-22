@@ -89,6 +89,53 @@ export const courseApi = createApi({
       }),
       invalidatesTags: ["Course"],
     }),
+
+    getEnrollmentCourse: builder.query({
+      providesTags: ["Course"],
+      query: ({ name = "", order = "Newest" }) => {
+        let url = `/api/enrollment/getEnrollment?name=${name}`;
+        if (order !== "Newest") {
+          url += `&order=${order}`;
+        } 
+      
+        console.log("API Request URL:", url); // Log the final URL
+        return { url, method: "GET" };
+      },
+    }),
+
+    // getEnrollmentCourse: builder.query({
+    //   providesTags: ["Product"],
+    //   query: ({ name = "", order }) => {
+    //     let url = `/api/enrollment/getEnrollment?name=${name}`;
+
+    //     // Include order only if it's defined
+    //     if (order) {
+    //       const dataOrder = order === "Newest" ? "desc" : "asc";
+    //       url += `&order=${dataOrder}`;
+    //     }
+
+    //     return {
+    //       url,
+    //       method: "GET",
+    //     };
+    //   },
+    // }),
+
+
+    
+
+    getEnrollmentDetails: builder.query({
+      providesTags: ["Course"],
+      query: (courseId) => ({
+        url: `/api/enrollment/getEnrollmentDetail/${courseId}`,
+        // api/enrollment/getEnrollmentDetail/744
+        // url: `/api/course/getOneCourse/744`,
+        method: "GET",
+      }),
+    }), 
+
+
+
   }),
 });
 
@@ -100,4 +147,6 @@ export const {
   useSearchCoursesQuery,
   useConfirmDeleteMutation,
   useUpdateCourseMutation,
+  useGetEnrollmentCourseQuery,
+  useGetEnrollmentDetailsQuery,
 } = courseApi;

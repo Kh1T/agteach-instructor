@@ -9,7 +9,6 @@ import { useRef, useState } from "react";
 import CustomPanel from "../components/balance/CustomPanel";
 import CustomTable from "../components/CustomTable";
 import emptyProduct from "../assets/Spooky Stickers Sweet Franky.png";
-// import { products } from "../data/productsDummy";
 import {
   useGetBalanceQuery,
   useGetRecentTransactionsQuery,
@@ -17,11 +16,10 @@ import {
   useSearchProductBalanceQuery,
 } from "../services/api/balanceApi";
 function BalancePage() {
-  
   const [selectProductState, setSelectProductState] = useState(0);
   const [selectCourseState, setSelectCourseState] = useState(0);
   const [value, setValue] = useState(0);
-  
+
   const [searchCourseTerm, setSearchCourseTerm] = useState("");
   const [searchProductTerm, setSearchProductTerm] = useState("");
   const searchCourseRef = useRef();
@@ -72,7 +70,9 @@ function BalancePage() {
     }) || [];
 
   const recentList = recentTransactions?.data || [];
-  const { product, course } = balance.data;
+  const balanceData = !isLoading ? balance?.data : { course: 0, product: 0 };
+
+  const { product, course } = balanceData;
   const total = course + product;
 
   const handleSearchCourse = () => {
@@ -87,7 +87,7 @@ function BalancePage() {
   return (
     <Stack spacing={5} sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
-        <Grid size={8}>
+        <Grid size={{ xs: 12, xl: 8 }}>
           <Box
             pt="30px"
             sx={{
@@ -106,16 +106,16 @@ function BalancePage() {
                   borderRadius: 1,
                 }}
               >
-                <PieChartBalance balance={balance.data} />
+                <PieChartBalance balance={balanceData} />
               </Box>
               <Stack width={"100%"} direction="column" spacing={2}>
-                <BalanceCard balance={balance.data} />
+                <BalanceCard balance={balanceData} />
                 <TotalCard total={total} />
               </Stack>
             </Stack>
           </Box>
         </Grid>
-        <Grid size={4}>
+        <Grid size={{ xs: 12, xl: 4 }}>
           {isLoadingRecentTransaction ? (
             <Typography>Loading...</Typography>
           ) : (
