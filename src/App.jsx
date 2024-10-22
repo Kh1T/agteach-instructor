@@ -1,7 +1,7 @@
 import { ThemeProvider } from "@emotion/react";
 import { RouterProvider } from "react-router-dom";
 
-import { router } from "./route/index";
+import { router } from "./routes/index";
 import theme from "./theme/theme";
 import { CssBaseline } from "@mui/material";
 import { useDispatch } from "react-redux";
