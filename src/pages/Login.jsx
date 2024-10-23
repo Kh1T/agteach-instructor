@@ -66,7 +66,7 @@ function LoginPage() {
       direction="row"
       alignItems="center"
       sx={{
-        justifyContent: { xs: "center", md: "center", lg: "center" }, flexWrap: "nowrap", padding: { lg: "0 100px 0 0"},
+        justifyContent: { xs: "center", md: "center", lg: "start" }, flexWrap: "nowrap",
         mx: { xs: 2, md: 0, lg: 0 },
       }}
       mt={{ xs: 50, md: 50, lg: 0 }}
@@ -78,10 +78,10 @@ function LoginPage() {
         onClose={() => setOpen(false)}
         open={open}
       />
-      <Grid sx={{ display: { xs: "none", md: "none", lg: "block" } }}>
+      <Grid item xs={12} md={6} sx={{width: '100%', display: { xs: "none", md: "none", lg: "block" } }}>
         <SideBarImg />
       </Grid>
-      <Grid>
+      <Grid item xs={12} md={6} sx={{width: '100%', display: 'flex', justifyContent: 'center'}}>
         <Stack>
           <Box
             display="flex"
