@@ -16,7 +16,6 @@ export default function CourseThumbnail({
     register,
     setValue,
     watch,
-    reset,
     formState: { errors },
   } = useFormContext();
 
@@ -28,13 +27,11 @@ export default function CourseThumbnail({
   useEffect(() => {
     setValue(name, url);
     setSelectedImage(url);
-  }, [url]);
-  useEffect(() => {
     if (file) {
       const imageUrl = URL.createObjectURL(file);
       console.log("imageUrl", imageUrl);
 
-      setSelectedImage(imageUrl);
+      setSelectedImage(imageUrl + new Date().getTime());
       setFileInfo({
         name: file.name,
         size: (file.size / 1024).toFixed(2) + " KB",
@@ -42,7 +39,7 @@ export default function CourseThumbnail({
     } else if (url) {
       setSelectedImage(url);
     }
-  }, [file, url]);
+  }, [url]);
 
   const [fileInfo, setFileInfo] = useState(
     file
