@@ -83,17 +83,16 @@ function LoginPage() {
       </Grid>
       <Grid item xs={12} md={6} sx={{width: '100%', display: 'flex', justifyContent: 'center'}}>
         <Stack>
-          <Box
-            display="flex"
-            flexDirection="column"
+          <Stack
             textAlign="center"
-            gap="20px"
+            py={3}
+            gap={1}
           >
             <Typography variant="h1">Welcome back Instructor</Typography>
             <Typography color="dark.300">
               Please login to continue to your account.
             </Typography>
-          </Box>
+          </Stack>
           <Box>
             <form
               onSubmit={handleSubmit(submitHandler)}
