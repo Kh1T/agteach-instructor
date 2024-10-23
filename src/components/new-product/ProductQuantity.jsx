@@ -1,5 +1,5 @@
 import { Box, Divider, Stack, TextField, Button } from "@mui/material";
-import { Remove, Add, Pattern } from "@mui/icons-material";
+import { Remove, Add } from "@mui/icons-material";
 import ProductionQuantityLimitsIcon from "@mui/icons-material/ProductionQuantityLimits";
 import IconWithTitle from "../course-product/IconWithTitle";
 import TextSection from "../course-product/TextSection";
@@ -17,14 +17,19 @@ import TextSection from "../course-product/TextSection";
  * @returns {JSX.Element} Box component with children
  */
 export default function ProductQuantity({ register, errors, watch, setValue }) {
-  const quantity = watch("quantity", 0);
+  const quantity = watch("quantity", "");
 
   const handleIncrease = () => {
-    setValue("quantity", parseInt(quantity) + 1);
+    setValue("quantity", parseInt(quantity || 0) + 1);
   };
 
   const handleDecrease = () => {
-    setValue("quantity", Math.max(0, parseInt(quantity) - 1));
+    setValue("quantity", Math.max(0, parseInt(quantity || 0) - 1));
+  };
+
+  const handleQuantityChange = (e) => {
+    const value = e.target.value;
+    setValue("quantity", value);
   };
 
   return (
@@ -42,28 +47,26 @@ export default function ProductQuantity({ register, errors, watch, setValue }) {
         <TextField
           type="number"
           value={quantity}
-          {...register("productQuantity", {
+          onChange={handleQuantityChange}
+          {...register("quantity", {
             required: "Quantity is required",
             min: {
               value: 1,
               message: "Quantity must be greater than 0",
             },
             max: { value: 10000, message: "Quantity must be less than 10000" },
-            pattern: {
-              value: /^(0|[1-9][0-9]*)/,
-            },
           })}
-          error={!!errors.productQuantity}
-          helperText={errors.productQuantity?.message}
+          error={!!errors.quantity}
+          helperText={errors.quantity?.message}
         />
         <Button
-          sx={{ color: "white", backgroundColor: "gray" }}
+          sx={{ color: "white", backgroundColor: "grey", height: "56px" }}
           onClick={handleDecrease}
         >
           <Remove />
         </Button>
         <Button
-          sx={{ color: "white", backgroundColor: "black" }}
+          sx={{ color: "white", backgroundColor: "black", height: "56px" }}
           onClick={handleIncrease}
         >
           <Add />

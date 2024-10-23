@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import { Box, Stack, Typography, TextField, Button } from "@mui/material";
+import { Box, Stack, Typography, TextField } from "@mui/material";
 import LectureComponent from "./LectureComponent"; // Import your LectureComponent
 import ButtonComponent from "./ButtonInBox";
 import { v4 as uuidv4 } from "uuid";
 import { Delete, MoreVertRounded } from "@mui/icons-material";
 import DeleteConfirmModal from "./DeleteConfirmModal";
 import { useFormContext } from "react-hook-form";
-import { useSelector } from "react-redux";
 
 export default function SectionComponent({
   id,
@@ -16,7 +15,6 @@ export default function SectionComponent({
   sectionNumber,
   lectureIndex,
   allLecture,
-  sectionName,
 }) {
   const {
     register,
@@ -46,17 +44,13 @@ export default function SectionComponent({
         (lecture) => lecture.id !== lectureId
       );
 
-      // Update lecture numbers and unregister the lecture field dynamically
       updatedLectures.forEach((lecture, index) => {
         lecture.number = index + 1;
       });
 
       return updatedLectures;
     });
-
-    // Unregister the correct lecture
-    // unregister(`section[${number - 1}].lecture[${lectures.findIndex((lecture) => lecture.id === lectureId)}]`);
-    unregister(`section[${sectionNumber - 1}].allLecture[${lectureIndex}]`); // lectureIndex is the current index
+    unregister(`section[${sectionNumber - 1}].allLecture[${lectureIndex}]`);
   };
 
   // Delete section confirmation modal
