@@ -3,7 +3,7 @@ import { Stack, Typography, Box } from "@mui/material";
 import QueryHeader from "../components/QueryHeader";
 import CustomTable from "../components/CustomTable";
 import CustomChip from "../components/CustomChip";
-import { useGetPurchasedProductQuery } from "../services/api/productApi";
+import { useGetPurchasedProductQuery, useGetPurchasedDetailsQuery } from "../services/api/productApi";
 import emptyProduct from "../assets/Spooky Stickers Sweet Franky.png";
 import { useNavigate } from "react-router";
 import CustomButton from "../components/CustomButton";
@@ -49,7 +49,7 @@ function PurchasedPage() {
           sx={{ backgroundColor: "blue.main" }}
           variant="contained"
           onClick={() =>
-            navigate(`/purchased/${item.customer_email}/${item.purchased_id}/${item.customer_id}`, {
+            navigate(`/purchased/${item.purchased_id}/${item.customer_id}`, {
               state: { isDelivered: item.is_delivered },
             })
           }
