@@ -38,7 +38,6 @@ export default function ProductCategoryForm({ register, errors , defaultValue })
   if (isLoading) {
     return <Box>Loading...</Box>
   }
-  console.log(data.data)
   const cateData = data.data || [];
   return (
     <Stack className="container" gap={1} alignItems="flex-start">
