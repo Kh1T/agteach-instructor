@@ -41,7 +41,7 @@ export default function CourseThumbnail({
     } else if (url) {
       setSelectedImage(url + `?${new Date().getTime()}`);
     }
-  }, [url]);
+  }, [url, file]);
 
   const [fileInfo, setFileInfo] = useState(
     file

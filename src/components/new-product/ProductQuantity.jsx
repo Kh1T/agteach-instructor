@@ -1,5 +1,5 @@
 import { Box, Divider, Stack, TextField, Button } from "@mui/material";
-import { Remove, Add, Pattern } from "@mui/icons-material";
+import { Remove, Add } from "@mui/icons-material";
 import ProductionQuantityLimitsIcon from "@mui/icons-material/ProductionQuantityLimits";
 import IconWithTitle from "../course-product/IconWithTitle";
 import TextSection from "../course-product/TextSection";

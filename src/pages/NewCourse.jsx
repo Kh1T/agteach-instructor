@@ -21,7 +21,6 @@ import { setCourse, setId } from "../features/course/courseSlice";
 function NewCoursePage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const id = useSelector((state) => state.course.id);
   const productId = useSelector((state) => state.course.productId);
   const { action } = useParams();
 
@@ -32,16 +31,16 @@ function NewCoursePage() {
 
   const [
     addCourse,
-    { isLoading: isLoadingAddCourse, isSuccess: isSuccessAddCourse },
+    { isLoading: isLoadingAddCourse },
   ] = useAddCourseMutation();
 
-  const { data, isLoading: isLoadingGetCourse } = useGetCourseQuery(action, {
+  const { data } = useGetCourseQuery(action, {
     skip: action === "new",
   });
 
   const [
     updateCourse,
-    { isLoading: isLoadingUpdateCourse, isSuccess: isSuccessUpdateCourse },
+    { isLoading: isLoadingUpdateCourse},
   ] = useUpdateCourseMutation();
 
   const [snackbar, setSnackbar] = useState({
@@ -64,7 +63,6 @@ function NewCoursePage() {
   }, [action, data, dispatch, reset]);
 
   const submitHandler = async (data) => {
-    console.log("formData", data);
     const {
       courseName,
       description,
@@ -100,7 +98,6 @@ function NewCoursePage() {
 
     allSection.forEach((section, sectionIndex) => {
       const isNewSection = !section.sectionId;
-      console.log("isNewSection", isNewSection);
 
       if (isNewSection) {
         newSection++;
@@ -138,15 +135,10 @@ function NewCoursePage() {
     });
 
     formData.append("totalDuration", totalDuration);
-    console.log("formData", [...formData]);
 
     try {
-      console.log("before api call");
-
       if (action === "new") {
-        console.log("new course");
-        const response = await addCourse(formData).unwrap();
-        console.log("response", response);
+        await addCourse(formData).unwrap();
         setSnackbar({
           open: true,
           severity: "success",
@@ -154,12 +146,10 @@ function NewCoursePage() {
         });
         navigate('/course')
       } else {
-        console.log("update course");
-        const response = await updateCourse({
+          await updateCourse({
           courseId: action,
           formData,
         }).unwrap();
-        console.log("response", response);
         setSnackbar({
           open: true,
           severity: "success",
@@ -168,7 +158,6 @@ function NewCoursePage() {
         navigate('/course')
       }
     } catch (error) {
-      console.log("error", error);
       if (error)
         setSnackbar({
           open: true,
