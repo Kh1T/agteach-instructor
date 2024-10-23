@@ -23,7 +23,6 @@ export const authApi = createApi({
         url: "/api/users/login",
         method: "POST",
         body: loginData,
-        // headers: { "X-Frontend-URL": window.location },
       }),
     }),
 
@@ -98,6 +97,13 @@ export const authApi = createApi({
       invalidatesTags: ["Instructor"],
     }),
 
+    getLocations: builder.query({
+      query: () => ({
+        url: "/api/users/getLocation",
+        method: "GET",
+      }),
+    }),
+
     updateInstructorPassword: builder.mutation({
       query: (passwordInfo) => ({
         url: "/api/users/updatePassword",
@@ -113,6 +119,7 @@ export const {
   useResetPasswordMutation,
   useSignupMutation,
   useLoginMutation,
+  useGetLocationsQuery,
   useLogoutMutation,
   useVerifyEmailMutation,
   useResendVerifyCodeMutation,
