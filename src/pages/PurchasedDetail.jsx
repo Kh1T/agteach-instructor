@@ -65,14 +65,14 @@ function PurchasedDetailPage() {
 
   const handleDelivery = async () => {
     try {
-      const email = customer.email; 
-      if (!email) {
+      const customerEmail = customer.email; 
+      if (!customerEmail) {
         console.error("Email is missing");
         return;
       }
       
       // Send both purchasedId and email to the backend
-      await updatePurchasedDetails({ purchasedId, email });
+      await updatePurchasedDetails({ purchasedId, customerEmail });
       
       setIsDelivered(true); // Update local state to "delivered"
       setIsAlertOpen(true); // Show success alert
