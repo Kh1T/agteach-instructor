@@ -49,7 +49,7 @@ function PurchasedPage() {
           sx={{ backgroundColor: "blue.main" }}
           variant="contained"
           onClick={() =>
-            navigate(`/purchased/${item.purchased_id}/${item.customer_id}`, {
+            navigate(`/purchased/${item.customer_email}/${item.purchased_id}/${item.customer_id}`, {
               state: { isDelivered: item.is_delivered },
             })
           }
@@ -74,6 +74,8 @@ function PurchasedPage() {
     setSelectState(event.target.value);
     refetch();
   };
+
+  console.log("purchasedList", purchased);
 
   return (
     <Stack gap="30px">

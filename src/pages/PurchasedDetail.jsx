@@ -61,6 +61,8 @@ function PurchasedDetailPage() {
 
   const customer = purchasedDetails?.customer || {};
 
+  console.log("Purchased Details:", purchasedDetails);
+
   const handleDelivery = async () => {
     try {
       await updatePurchasedDetails({ purchasedId });
