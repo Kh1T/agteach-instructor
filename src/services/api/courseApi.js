@@ -20,7 +20,7 @@ export const courseApi = createApi({
 
     getCourse: builder.query({
       query: (id) => ({
-        url: `/api/course/getOneCourse/${id}`,
+        url: `/api/course/getOneCourseDetail/${id}`,
         method: "GET",
       }),
       providesTags: ["Course"],
@@ -102,39 +102,14 @@ export const courseApi = createApi({
         return { url, method: "GET" };
       },
     }),
-
-    // getEnrollmentCourse: builder.query({
-    //   providesTags: ["Product"],
-    //   query: ({ name = "", order }) => {
-    //     let url = `/api/enrollment/getEnrollment?name=${name}`;
-
-    //     // Include order only if it's defined
-    //     if (order) {
-    //       const dataOrder = order === "Newest" ? "desc" : "asc";
-    //       url += `&order=${dataOrder}`;
-    //     }
-
-    //     return {
-    //       url,
-    //       method: "GET",
-    //     };
-    //   },
-    // }),
-
-
     
-
     getEnrollmentDetails: builder.query({
       providesTags: ["Course"],
       query: (courseId) => ({
         url: `/api/enrollment/getEnrollmentDetail/${courseId}`,
-        // api/enrollment/getEnrollmentDetail/744
-        // url: `/api/course/getOneCourse/744`,
         method: "GET",
       }),
     }), 
-
-
 
   }),
 });

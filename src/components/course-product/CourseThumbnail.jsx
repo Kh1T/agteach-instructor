@@ -16,13 +16,15 @@ export default function CourseThumbnail({
     register,
     setValue,
     watch,
+    clearErrors,
     formState: { errors },
   } = useFormContext();
 
+  console.log('thumbnail error', errors, name)
   const [selectedImage, setSelectedImage] = useState(
     file ? URL.createObjectURL(file) : null
   );
-  console.log("url", url);
+  console.log("url", url + new Date().getTime());
   
   useEffect(() => {
     setValue(name, url);
@@ -31,13 +33,13 @@ export default function CourseThumbnail({
       const imageUrl = URL.createObjectURL(file);
       console.log("imageUrl", imageUrl);
 
-      setSelectedImage(imageUrl + new Date().getTime());
+      setSelectedImage(imageUrl);
       setFileInfo({
         name: file.name,
         size: (file.size / 1024).toFixed(2) + " KB",
       });
     } else if (url) {
-      setSelectedImage(url);
+      setSelectedImage(url + `?${new Date().getTime()}`);
     }
   }, [url]);
 
@@ -61,6 +63,7 @@ export default function CourseThumbnail({
       });
 
       setValue(name, newFile);
+      clearErrors(name);
       onFileChange && onFileChange(newFile);
     } else {
       alert("Please select a valid image file.");
@@ -74,8 +77,6 @@ export default function CourseThumbnail({
       console.log("Input ref not found/null");
     }
   };
-
-
 
   return (
     <Box sx={{ my: 2 }}>
@@ -134,7 +135,7 @@ export default function CourseThumbnail({
         </Stack>
       )}
 
-      {errors[name] && (
+      {!!errors[name] && (
         <FormHelperText sx={{ pl: 2, mt: 1 }} error>
           {errors[name]?.message || "This field is required"}
         </FormHelperText>
