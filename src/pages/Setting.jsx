@@ -11,21 +11,21 @@ import {
   Select,
   MenuItem,
   FormHelperText,
-} from "@mui/material";
-import { useEffect, useState } from "react";
-import { Controller, useForm } from "react-hook-form";
+} from '@mui/material';
+import { useEffect, useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 
-import CustomButton from "../components/CustomButton";
-import CustomFileUpload from "../components/CustomFileUpload";
-import { CustomAlert } from "../components/CustomAlert";
-import FormInput from "../components/login-signup/FormInput";
+import CustomButton from '../components/CustomButton';
+import CustomFileUpload from '../components/CustomFileUpload';
+import { CustomAlert } from '../components/CustomAlert';
+import FormInput from '../components/login-signup/FormInput';
 
 import {
   useGetInstructorInfoQuery,
   useGetLocationsQuery,
   useUpdateInstructorInfoMutation,
   useUpdateInstructorPasswordMutation,
-} from "../services/api/authApi";
+} from '../services/api/authApi';
 
 function SettingPage() {
   // BasicInfo From Control
@@ -74,7 +74,7 @@ function SettingPage() {
     new: false,
   });
   const [isImageSelected, setIsImageSelected] = useState(false);
-  const [profileImage, setProfileImage] = useState("");
+  const [profileImage, setProfileImage] = useState('');
   const [loading, setLoading] = useState({
     profileImg: false,
     basicInfo: false,
@@ -85,8 +85,8 @@ function SettingPage() {
   // MUI Component State Management
   const [snackbar, setSnackbar] = useState({
     open: false,
-    message: "",
-    severity: "success",
+    message: '',
+    severity: 'success',
   });
 
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -94,7 +94,7 @@ function SettingPage() {
   //*********************************************************/
   //Data Destructuring
 
-  const locations = locationData?.data;
+  const locations = locationData?.data || [];
   const instructorInfo = instructorData?.data?.instructor;
 
   //*********************************************************/
@@ -102,7 +102,7 @@ function SettingPage() {
   // Populate form on mount with instructor's info
   useEffect(() => {
     if (!isLoading) {
-      console.log(instructorInfo);
+      console.log();
       console.log(locations);
       handleResetBasicInfo();
       handleResetSecurity();
@@ -112,30 +112,30 @@ function SettingPage() {
 
   //*********************************************************/
 
-  const handleResetBasicInfo = () => {
+  const handleResetBasicInfo = async () => {
     try {
       resetBasicInfo({
         firstName: instructorInfo?.firstName,
         lastName: instructorInfo?.lastName,
-        bio: instructorInfo?.bio || "",
-        phone: instructorInfo?.phone || "",
-        address: instructorInfo?.address || "",
-        location_id: instructorInfo?.location?.id || 0,
+        bio: instructorInfo?.bio || '',
+        phone: instructorInfo?.phone || '',
+        address: instructorInfo?.address || '',
+        locationId: instructorInfo?.location?.locationId,
       });
     } catch (error) {
-      console.log("An error occured", error);
+      console.log('An error occured', error);
     }
   };
   const handleResetSecurity = () => {
     try {
       resetSecurity({
         email: instructorInfo.email,
-        currentPassword: "",
-        newPassword: "",
-        confirmNewPassword: "",
+        currentPassword: '',
+        newPassword: '',
+        confirmNewPassword: '',
       });
     } catch (error) {
-      console.log("An error occured", error);
+      console.log('An error occured', error);
     }
   };
   //*********************************************************/
@@ -149,7 +149,7 @@ function SettingPage() {
     setProfileImage(URL.createObjectURL(file));
 
     const formData = new FormData();
-    formData.append("photo", file);
+    formData.append('photo', file);
 
     try {
       setLoading((prev) => ({ ...prev, profileImg: true }));
@@ -157,14 +157,14 @@ function SettingPage() {
       refetch();
       setSnackbar({
         open: true,
-        message: "Profile image updated successfully",
-        severity: "success",
+        message: 'Profile image updated successfully',
+        severity: 'success',
       });
     } catch (error) {
       setSnackbar({
         open: true,
-        message: "Error uploading image",
-        severity: "error",
+        message: 'Error uploading image',
+        severity: 'error',
       });
     } finally {
       setLoading((prev) => ({ ...prev, profileImg: false }));
@@ -183,14 +183,14 @@ function SettingPage() {
       refetch();
       setSnackbar({
         open: true,
-        message: "Information updated successfully",
-        severity: "success",
+        message: 'Information updated successfully',
+        severity: 'success',
       });
     } catch (error) {
       setSnackbar({
         open: true,
-        message: "Error updating information",
-        severity: "error",
+        message: 'Error updating information',
+        severity: 'error',
       });
     } finally {
       setLoading((prev) => ({ ...prev, basicInfo: false }));
@@ -208,19 +208,19 @@ function SettingPage() {
         passwordConfirm: confirmNewPassword,
       }).unwrap();
 
-      if (response.status === "success") {
+      if (response.status === 'success') {
         setSnackbar({
           open: true,
-          message: "Password updated successfully",
-          severity: "success",
+          message: 'Password updated successfully',
+          severity: 'success',
         });
         resetSecurity();
       }
     } catch (err) {
       setSnackbar({
         open: true,
-        message: "Error updating password",
-        severity: "error",
+        message: 'Error updating password',
+        severity: 'error',
       });
     }
   };
@@ -242,10 +242,10 @@ function SettingPage() {
           />
           <CustomButton
             variant="outlined"
-            sx={{ color: "blue.main", borderColor: "blue.main" }}
+            sx={{ color: 'blue.main', borderColor: 'blue.main' }}
             onClick={() => setDialogOpen(true)}
           >
-            {loading.profileImg && isImageSelected ? "CHANGING..." : "CHANGE"}
+            {loading.profileImg && isImageSelected ? 'CHANGING...' : 'CHANGE'}
           </CustomButton>
           {dialogOpen && !isImageSelected && (
             <CustomFileUpload
@@ -267,8 +267,8 @@ function SettingPage() {
                 <TextField
                   label="First Name"
                   fullWidth
-                  {...registerBasicInfo("firstName", {
-                    required: "First name is required",
+                  {...registerBasicInfo('firstName', {
+                    required: 'First name is required',
                   })}
                   error={!!basicInfoErrors.firstName}
                   helperText={basicInfoErrors.firstName?.message}
@@ -276,8 +276,8 @@ function SettingPage() {
                 <TextField
                   label="Last Name"
                   fullWidth
-                  {...registerBasicInfo("lastName", {
-                    required: "Last name is required",
+                  {...registerBasicInfo('lastName', {
+                    required: 'Last name is required',
                   })}
                   error={!!basicInfoErrors.lastName}
                   helperText={basicInfoErrors.lastName?.message}
@@ -288,7 +288,7 @@ function SettingPage() {
                 rows={4}
                 label="Bio"
                 fullWidth
-                {...registerBasicInfo("bio")}
+                {...registerBasicInfo('bio')}
               />
             </Stack>
 
@@ -299,8 +299,8 @@ function SettingPage() {
             <TextField
               label="Address"
               fullWidth
-              {...registerBasicInfo("address", {
-                required: "Address is required",
+              {...registerBasicInfo('address', {
+                required: 'Address is required',
               })}
               error={!!basicInfoErrors.address}
               helperText={basicInfoErrors.address?.message}
@@ -314,8 +314,8 @@ function SettingPage() {
                   validate: (value) =>
                     value
                       ? locations.some((city) => city.locationId === value) ||
-                        "Please provide a valid city"
-                      : "Please select a city",
+                        'Please provide a valid city'
+                      : 'Please select a city',
                 }}
                 render={({ field }) => (
                   <Select {...field} label="City">
@@ -337,19 +337,19 @@ function SettingPage() {
             <TextField
               label="Phone Number"
               disabled
-              {...registerBasicInfo("phone")}
+              {...registerBasicInfo('phone')}
             />
             <Box display="flex" justifyContent="flex-end" gap={2}>
               <CustomButton
                 type="submit"
                 variant="contained"
-                sx={{ bgcolor: "blue.main" }}
+                sx={{ bgcolor: 'blue.main' }}
               >
-                {loading.basicInfo ? "SAVING..." : "SAVE CHANGES"}
+                {loading.basicInfo ? 'SAVING...' : 'SAVE CHANGES'}
               </CustomButton>
               <CustomButton
                 variant="outlined"
-                sx={{ color: "blue.main", borderColor: "blue.main" }}
+                sx={{ color: 'blue.main', borderColor: 'blue.main' }}
                 onClick={() => resetBasicInfo()}
               >
                 CANCEL
@@ -366,7 +366,7 @@ function SettingPage() {
             <Typography variant="h5" color="primary">
               Account Security
             </Typography>
-            <TextField label="Email" disabled {...registerSecurity("email")} />
+            <TextField label="Email" disabled {...registerSecurity('email')} />
             <FormInput
               label="Current Password"
               type="password"
@@ -376,8 +376,8 @@ function SettingPage() {
                   current: !prev.current,
                 }))
               }
-              {...registerSecurity("currentPassword", {
-                required: "Current password is required",
+              {...registerSecurity('currentPassword', {
+                required: 'Current password is required',
               })}
               error={!!securityErrors.currentPassword}
               helperText={securityErrors.currentPassword?.message}
@@ -389,11 +389,11 @@ function SettingPage() {
               handleClickShowPassword={() =>
                 setIsPasswordVisible((prev) => ({ ...prev, new: !prev.new }))
               }
-              {...registerSecurity("newPassword", {
-                required: "New password is required",
+              {...registerSecurity('newPassword', {
+                required: 'New password is required',
                 minLength: {
                   value: 8,
-                  message: "Password must be at least 8 characters",
+                  message: 'Password must be at least 8 characters',
                 },
               })}
               error={!!securityErrors.newPassword}
@@ -406,10 +406,10 @@ function SettingPage() {
               handleClickShowPassword={() =>
                 setIsPasswordVisible((prev) => ({ ...prev, new: !prev.new }))
               }
-              {...registerSecurity("confirmNewPassword", {
-                required: "Please confirm the new password",
+              {...registerSecurity('confirmNewPassword', {
+                required: 'Please confirm the new password',
                 validate: (value) =>
-                  value === watch("newPassword") || "Passwords do not match",
+                  value === watch('newPassword') || 'Passwords do not match',
               })}
               error={!!securityErrors.confirmNewPassword}
               helperText={securityErrors.confirmNewPassword?.message}
@@ -419,13 +419,13 @@ function SettingPage() {
               <CustomButton
                 type="submit"
                 variant="contained"
-                sx={{ bgcolor: "blue.main" }}
+                sx={{ bgcolor: 'blue.main' }}
               >
-                {isUpdatingPassword ? "SAVING..." : "SAVE CHANGES"}
+                {isUpdatingPassword ? 'SAVING...' : 'SAVE CHANGES'}
               </CustomButton>
               <CustomButton
                 variant="outlined"
-                sx={{ color: "blue.main", borderColor: "blue.main" }}
+                sx={{ color: 'blue.main', borderColor: 'blue.main' }}
                 onClick={() => resetSecurity()}
               >
                 CANCEL
@@ -442,7 +442,7 @@ function SettingPage() {
           severity={snackbar.severity}
           open={snackbar.open}
           onClose={() =>
-            setSnackbar({ open: false, message: "", severity: "success" })
+            setSnackbar({ open: false, message: '', severity: 'success' })
           }
         />
       )}
