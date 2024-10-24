@@ -1,3 +1,12 @@
+import { useEffect, useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import {
+  useGetInstructorInfoQuery,
+  useGetLocationsQuery,
+  useUpdateInstructorInfoMutation,
+  useUpdateInstructorPasswordMutation,
+} from '../services/api/authApi';
+
 import {
   Avatar,
   Grid,
@@ -11,20 +20,11 @@ import {
   MenuItem,
   FormHelperText,
 } from '@mui/material';
-import { useEffect, useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
 
+import { CustomAlert } from '../components/CustomAlert';
 import CustomButton from '../components/CustomButton';
 import CustomFileUpload from '../components/CustomFileUpload';
-import { CustomAlert } from '../components/CustomAlert';
 import FormInput from '../components/login-signup/FormInput';
-
-import {
-  useGetInstructorInfoQuery,
-  useGetLocationsQuery,
-  useUpdateInstructorInfoMutation,
-  useUpdateInstructorPasswordMutation,
-} from '../services/api/authApi';
 
 function SettingPage() {
   // BasicInfo From Control
