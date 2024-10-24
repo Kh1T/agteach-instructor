@@ -3,7 +3,7 @@ import CustomTable from "../components/CustomTable";
 import QueryHeader from "../components/QueryHeader";
 import { Stack, Typography, Box } from "@mui/material";
 import { useGetEnrollmentCourseQuery } from "../services/api/courseApi";
-import emptyProduct from "../assets/Spooky Stickers Sweet Franky.png";
+import emptyProduct from "../assets/spooky-stickers-sweet-franky.png";
 import { useNavigate } from "react-router";
 import CustomButton from "../components/CustomButton";
 
@@ -49,7 +49,7 @@ function EnromentPage() {
 
     // Map the sorted list
     enrollmentList = sortedEnrollment.map((item) => ({
-      CourseName: item.CourseName,
+      "Course Name": item.CourseName,
       Price: `$${item.price}`,
       Student: item.student,
       Date: new Date(item.CreatedAt).toISOString().split("T")[0], // Format date

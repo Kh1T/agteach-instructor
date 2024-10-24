@@ -8,7 +8,7 @@ import QueryHeader from "../components/QueryHeader";
 import { useRef, useState } from "react";
 import CustomPanel from "../components/balance/CustomPanel";
 import CustomTable from "../components/CustomTable";
-import emptyProduct from "../assets/Spooky Stickers Sweet Franky.png";
+import emptyProduct from "../assets/spooky-stickers-sweet-franky.png";
 import {
   useGetBalanceQuery,
   useGetRecentTransactionsQuery,

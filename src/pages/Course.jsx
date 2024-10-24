@@ -17,8 +17,8 @@ import {
   useGetAllCoursesQuery,
 } from "../services/api/courseApi";
 import { useNavigate } from "react-router";
-import deletBin from "../assets/Go Green Grey Hanger Bag.png";
-import emptyProduct from "../assets/Spooky Stickers Sweet Franky.png";
+import deletBin from "../assets/go-green-grey-hanger-bag.png";
+import emptyProduct from "../assets/spooky-stickers-sweet-franky.png";
 import { useDispatch } from "react-redux";
 import { setId } from "../features/course/courseSlice";
 import { CustomAlert } from "../components/CustomAlert";
@@ -105,8 +105,8 @@ function CoursePage() {
     ? []
     : course?.item?.map((item) => ({
         Date: new Date(item.createdAt).toISOString().split("T")[0],
-        Name: item.name,
-        Price: item.price,
+        "Course Name": item.name,
+        Price: `$${item.price}`,
         edit: (
           <EditIcon
             sx={{ cursor: "pointer" }}
