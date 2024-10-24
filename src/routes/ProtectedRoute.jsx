@@ -9,6 +9,7 @@ export default function ProtectedRoute({ children }) {
   );
   const navigate = useNavigate();
   useEffect(() => {
+    console.log(isAuthenticated, isVerify, isLoading)
     if (isAuthenticated && !isVerify) {
       navigate('/auth/signup/verification');
     }
