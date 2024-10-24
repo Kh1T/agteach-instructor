@@ -18,7 +18,6 @@ function PurchasedPage() {
   // Mapping selectState to API values for the "order" query
   const order =
     selectState === 0 ? "All" : selectState === 10 ? "true" : "false";
-  console.log("order", order);
 
   // Fetch data using both searchTerm and order for sorting
   const {
@@ -75,7 +74,7 @@ function PurchasedPage() {
     refetch();
   };
 
-  console.log("purchasedList", purchased);
+
 
   return (
     <Stack gap="30px">
