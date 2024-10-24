@@ -89,7 +89,7 @@ function Signup() {
             style={{ display: "flex", flexDirection: "column" }}
           >
             <FormInput
-              label="Name"
+              label="Username"
               {...register("username", {
                 required: "Please enter your name",
               })}
