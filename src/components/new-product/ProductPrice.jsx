@@ -42,6 +42,7 @@ export default function ProductPrice({ errors, register }) {
         label="Price"
         type="number"
         fullWidth
+        slotProps={{ htmlInput: { step: "0.01" } }}
         {...register("price", {
           required: "Price is required",
           min: {

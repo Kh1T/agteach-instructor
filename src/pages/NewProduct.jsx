@@ -55,7 +55,6 @@ function NewProductPage() {
   const [removedImages, setRemovedImages] = useState([]);
   const handleUploadProduct = async (data) => {
     const formData = new FormData();
-    console.log("This is the data before appending: ", data);
 
     formData.append("categoryId", data.categoryId);
     formData.append("name", data.name);
@@ -80,15 +79,13 @@ function NewProductPage() {
       });
     }
 
-    console.log("This is the form data", [...formData]);
     try {
       if (editMode) {
-        console.log(formData);
         await updateProduct({ productId, productData: formData }).unwrap();
-        console.log("Product updated successfully");
+        // console.log("Product updated successfully");
       } else {
         await createProduct(formData).unwrap();
-        console.log("Product created successfully");
+        // console.log("Product created successfully");
       }
     } catch (error) {
       // Differentiate error messages for better debugging
