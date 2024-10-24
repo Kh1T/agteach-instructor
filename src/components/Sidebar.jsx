@@ -15,23 +15,25 @@ import {
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 
 import logoIcon from "../assets/logo.svg";
-import { Avatar, Chip, Container, Link, Stack } from "@mui/material";
+import {
+  Avatar,
+  Chip,
+  Container,
+  Link,
+  Stack,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  Button,
+} from "@mui/material";
 
 import sidebarList from "../data/sideBarData";
-
 import { useLogoutMutation } from "../services/api/authApi";
 import { useGetInstructorInfoQuery } from "../services/api/authApi";
+import logoutIcon from "../assets/red-circle-logout.png";
+import { useState } from "react";
 
-/**
- * Sidebar component that renders a drawer and app bar with content.
- *
- * This component accepts a children prop which is rendered between the app bar and drawer.
- * The app bar will render a title and description based on the route that is currently active.
- * The drawer will render a list of links based on the sidebarList data.
- *
- * @prop {React.ReactNode} children - The content to be rendered between the app bar and drawer.
- * @returns {React.ReactNode} A React component that renders a drawer and app bar with content.
- */
 export default function Sidebar({ children }) {
   const { pathname } = useLocation();
   const { data } = useGetInstructorInfoQuery();
@@ -46,12 +48,22 @@ export default function Sidebar({ children }) {
     return element.route === pathname;
   });
 
-  const [logout] = useLogoutMutation();
-  const nagivate = useNavigate();
+  const [logout, { isLoading, isError, error, isSuccess }] = useLogoutMutation();
+  const navigate = useNavigate();
 
-  const handleLogout = () => {
-    logout();
-    nagivate("/auth/login");
+  const [open, setOpen] = useState(false); // State to control dialog visibility
+
+  const handleLogout = async () => {
+    await logout();
+    if (isSuccess || !isLoading) navigate("/auth/login");
+  };
+
+  const handleClickOpen = () => {
+    setOpen(true); // Open the confirmation dialog
+  };
+
+  const handleClose = () => {
+    setOpen(false); // Close the confirmation dialog
   };
 
   const description = des && des.description;
@@ -141,15 +153,70 @@ export default function Sidebar({ children }) {
       </Stack>
 
       <Box>
-        <ListItemButton onClick={handleLogout}>
+        {/* Button that triggers the confirmation dialog */}
+        <ListItemButton onClick={handleClickOpen}>
           <LogoutOutlinedIcon sx={{ color: "dark.300", mr: "20px" }} />
           <Typography variant="bmdr" sx={{ color: "dark.300" }}>
             Logout
           </Typography>
         </ListItemButton>
+
+        {/* Confirmation dialog for logout */}
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogContent
+            fullWidth
+            sx={{
+              textAlign: "center",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Box
+              component="img"
+              src={logoutIcon}
+              height={100}
+              width={100}
+              m={5}
+            />
+            <DialogContentText
+              id="alert-dialog-title"
+              color="dark.500"
+              variant="bmdsm"
+              px={4}
+            >
+              Are you sure you want to logout?
+            </DialogContentText>
+          </DialogContent>
+
+          <DialogActions
+            fullWidth
+            sx={{ justifyContent: "center", gap: "12px", pb: "16px" }}
+          >
+            <Button
+              onClick={() => {
+                handleLogout(); // Perform logout
+                handleClose(); // Close dialog after confirming
+              }}
+              variant="contained"
+              color="error"
+              autoFocus
+            >
+              Logout
+            </Button>
+            <Button onClick={handleClose} variant="contained" color="grey.500">
+              Cancel
+            </Button>
+          </DialogActions>
+        </Dialog>
       </Box>
     </Drawer>
   );
+
   const appBarContent = (
     <AppBar
       position="fixed"
@@ -219,6 +286,7 @@ export default function Sidebar({ children }) {
       </Toolbar>
     </AppBar>
   );
+
   const childContent = (
     <Container
       maxWidth="1300px"
@@ -230,6 +298,7 @@ export default function Sidebar({ children }) {
       {children}
     </Container>
   );
+
   const sideBarContent = (
     <Box sx={{ display: "flex" }}>
       {appBarContent}
@@ -237,5 +306,6 @@ export default function Sidebar({ children }) {
       {childContent}
     </Box>
   );
+
   return sideBarContent;
 }
