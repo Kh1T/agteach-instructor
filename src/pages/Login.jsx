@@ -14,9 +14,9 @@ import SideBarImg from '../components/SideBarImg';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { useLoginMutation } from '../services/api/authApi';
+import { useIsLoginQuery, useLoginMutation } from '../services/api/authApi';
 import { CustomAlert } from '../components/CustomAlert';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { checkLoginStatus } from '../features/user/authSlice';
 
 import AgTeachLogo from '../assets/agteach.png';
@@ -40,13 +40,21 @@ function LoginPage() {
     },
   });
 
+  const { data:userData } = useIsLoginQuery();
+
   const handleShowPassword = () => setShowPassword((prev) => !prev);
 
   const submitHandler = async (data) => {
     try {
-      await login(data).unwrap();
-      dispatch(checkLoginStatus(true));
-      navigator('/');
+      const res = await login(data).unwrap();
+      if (res.token) {
+        dispatch(checkLoginStatus({ IsAuthenticated: true , IsVerify: userData?.IsVerify }));
+        if (userData.IsVerify) {
+          navigator('/');
+          return;
+        }
+        navigator('/auth/signup/verification');
+      }
     } catch (error) {
       setOpen(true);
       setError(
@@ -96,7 +104,7 @@ function LoginPage() {
         sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}
       >
         <Stack>
-          <Stack textAlign="center" py={3} gap={1} alignItems='center'>
+          <Stack textAlign="center" py={3} gap={1} alignItems="center">
             <Box component="img" src={AgTeachLogo} sx={{ width: '100px' }} />
             <Typography variant="h1">Welcome back Instructor</Typography>
             <Typography color="dark.300">

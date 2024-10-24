@@ -1,14 +1,19 @@
-import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { useEffect } from "react";
-import { CircularProgress, Container } from "@mui/material";
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { CircularProgress, Container } from '@mui/material';
 
 export default function ProtectedRoute({ children }) {
-  const { isAuthenticated, isLoading } = useSelector((state) => state.auth);
+  const { isAuthenticated, isVerify, isLoading } = useSelector(
+    (state) => state.auth
+  );
   const navigate = useNavigate();
   useEffect(() => {
-    if (!isLoading && !isAuthenticated) {
-      navigate("/auth/login");
+    if (isAuthenticated && !isVerify) {
+      navigate('/auth/signup/verification');
+    }
+    if (!isLoading && !isAuthenticated &&!isVerify) {
+      navigate('/auth/login');
     }
   }, [isAuthenticated, isLoading, navigate]);
 
@@ -16,10 +21,10 @@ export default function ProtectedRoute({ children }) {
     return (
       <Container
         sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100vh",
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '100vh',
         }}
       >
         <CircularProgress />
