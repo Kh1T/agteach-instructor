@@ -40,7 +40,7 @@ const ResendCodeButton = ({ email, timeoutRef }) => {
 
   return (
     <Box onClick={handleOnClick}>
-      <Stack direction="row" sx={{ alignItems: "center" }}>
+      <Stack direction="row" sx={{ alignItems: "center", justifyContent: "center" }}>
         <Typography variant="bssm" color="dark.300">Didn't receive the code?</Typography>
         <Button
           sx={{
@@ -50,7 +50,6 @@ const ResendCodeButton = ({ email, timeoutRef }) => {
             typography: "bssm",
           }}
           linkButton={true}
-          startIcon={<ArrowForwardRounded />}
           onClick={handleResend}
           disabled={isLoading}
           variant="text"
