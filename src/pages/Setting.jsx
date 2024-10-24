@@ -101,41 +101,27 @@ function SettingPage() {
   // Populate form on mount with instructor's info
   useEffect(() => {
     if (!isLoading) {
-      handleResetBasicInfo();
-      handleResetSecurity();
+      try {
+        resetBasicInfo({
+          firstName: instructorInfo?.firstName,
+          lastName: instructorInfo?.lastName,
+          bio: instructorInfo?.bio || '',
+          phone: instructorInfo?.phone || '',
+          address: instructorInfo?.address || '',
+          locationId: instructorInfo?.location?.locationId,
+        });
+        resetSecurity({
+          email: instructorInfo.email,
+          currentPassword: '',
+          newPassword: '',
+          confirmNewPassword: '',
+        });
+      } catch (error) {
+        console.log('An error occured', error);
+      }
       setProfileImage(`${instructorInfo.imageUrl}?${new Date().getTime()}`);
     }
-  }, [instructorInfo, resetBasicInfo, resetSecurity]);
-
-  //*********************************************************/
-
-  const handleResetBasicInfo = async () => {
-    try {
-      resetBasicInfo({
-        firstName: instructorInfo?.firstName,
-        lastName: instructorInfo?.lastName,
-        bio: instructorInfo?.bio || '',
-        phone: instructorInfo?.phone || '',
-        address: instructorInfo?.address || '',
-        locationId: instructorInfo?.location?.locationId,
-      });
-    } catch (error) {
-      console.log('An error occured', error);
-    }
-  };
-  const handleResetSecurity = () => {
-    try {
-      resetSecurity({
-        email: instructorInfo.email,
-        currentPassword: '',
-        newPassword: '',
-        confirmNewPassword: '',
-      });
-    } catch (error) {
-      console.log('An error occured', error);
-    }
-  };
-  //*********************************************************/
+  }, [instructorInfo, isLoading, resetBasicInfo, resetSecurity]);
 
   // Image Upload Handler
   const handleImageUpload = async (event) => {
