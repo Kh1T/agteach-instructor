@@ -10,7 +10,7 @@ import { setEmail, setDob } from "../features/user/userSlice";
 import { useSignupMutation } from "../services/api/authApi";
 import { CustomAlert } from "../components/CustomAlert";
 import { useDispatch } from "react-redux";
-import { differenceInYears } from 'date-fns';
+// import { differenceInYears } from 'date-fns';
 
 function Signup() {
   const navigate = useNavigate();
@@ -102,10 +102,10 @@ function Signup() {
   rules={{
     required: "Please provide your date of birth",
     validate: (value) => {
-      const currentDate = new Date();
-      const age = differenceInYears(currentDate, new Date(value));
+      // const currentDate = new Date();
+      // const age = differenceInYears(currentDate, new Date(value));
 
-      return age >= 15 || "You must be at least 15 years old.";
+      // return age >= 15 || "You must be at least 15 years old.";
     },
   }}
   render={({ field }) => (
