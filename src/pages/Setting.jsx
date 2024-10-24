@@ -5,7 +5,6 @@ import {
   Stack,
   TextField,
   Box,
-  Autocomplete,
   Divider,
   FormControl,
   Select,
@@ -102,8 +101,6 @@ function SettingPage() {
   // Populate form on mount with instructor's info
   useEffect(() => {
     if (!isLoading) {
-      console.log();
-      console.log(locations);
       handleResetBasicInfo();
       handleResetSecurity();
       setProfileImage(`${instructorInfo.imageUrl}?${new Date().getTime()}`);
