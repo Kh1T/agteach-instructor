@@ -11,8 +11,11 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import CustomButton from "../components/CustomButton"; // custom component
 import Logo from "../assets/agteach.png";
-import { useForm } from "react-hook-form";
-import { useAdditionalInfoMutation } from "../services/api/authApi";
+import { get, useForm } from "react-hook-form";
+import {
+  useAdditionalInfoMutation,
+  useGetLocationsQuery,
+} from "../services/api/authApi";
 import FormInput from "../components/login-signup/FormInput";
 import { useSelector } from "react-redux";
 
@@ -36,18 +39,22 @@ function AdditionalInformation() {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const [addPerosnalInfo, { isLoading }] =
-    useAdditionalInfoMutation();
+
+  const [addPerosnalInfo, { isLoading }] = useAdditionalInfoMutation();
+  const { data: locationData, isLoading: isLoadingLocation } =
+    useGetLocationsQuery();
 
   const onSubmit = async (data) => {
     try {
-      const { firstName, lastName, phone, address, city } = data;
+      console.log(data);
+      const { firstName, lastName, phone, address, locationId } = data;
+      console.log(locationId);
       const response = await addPerosnalInfo({
         firstName,
         lastName,
         phone,
         address,
-        city,
+        locationId,
         dateOfBirth: dob,
       }).unwrap();
       console.log("Success:", response);
@@ -125,13 +132,20 @@ function AdditionalInformation() {
                 helperText={errors?.lastName?.message}
               />
             </Stack>
-
             {/* Address Field */}
             <Autocomplete
               id="country-select-demo"
               fullWidth
-              options={city}
-              getOptionLabel={(option) => option.label}
+              options={
+                isLoadingLocation
+                  ? [] // Return an empty array when loading
+                  : locationData.data.map((location) => ({
+                      label: location.name, // Correct usage of label
+                      value: location.locationId, // You can add any other data you need here
+                    }))
+              }
+              {...register("locationId", { required: "City is required" })}
+              getOptionLabel={(option) => option.label} // Return the label as a string
               renderInput={(params) => (
                 <TextField
                   {...params}
@@ -141,7 +155,6 @@ function AdditionalInformation() {
                       ...params.inputProps,
                     },
                   }}
-                  {...register("city", { required: "City is required" })}
                   error={!!errors.city}
                   helperText={errors?.city?.message}
                 />
@@ -157,9 +170,7 @@ function AdditionalInformation() {
               error={!!errors.address}
               helperText={errors?.address?.message}
             />
-
             <Divider />
-
             <Typography variant="blgsm">Contact Information</Typography>
             <Stack flexDirection="row" gap={2}>
               <FormInput
@@ -187,14 +198,3 @@ function AdditionalInformation() {
 }
 
 export default AdditionalInformation;
-
-const city = [
-  { label: "Phnom Penh" },
-  { label: "Siem Reap" },
-  { label: "Battambang" },
-  { label: "Sihanoukville" },
-  { label: "Kampot" },
-  { label: "Kratie" },
-  { label: "Pursat" },
-  { label: "Koh Kong" },
-];
