@@ -34,7 +34,6 @@ function SettingPage() {
     register: registerBasicInfo,
     handleSubmit: handleBasicInfoSubmit,
     reset: resetBasicInfo,
-    setValue,
     formState: { errors: basicInfoErrors },
   } = useForm();
 
