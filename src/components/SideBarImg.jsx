@@ -10,7 +10,7 @@ function SideBarImg() {
           component="img"
           src={loginImg}
           alt="login-img"
-          sx={{ width: "100%", height: "100vh" }}
+          sx={{ width: "100%", height: "100vh", objectFit: "cover", objectPosition: " left " }}
         />
       </Box>
       <Box

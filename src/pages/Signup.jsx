@@ -10,6 +10,7 @@ import { setEmail, setDob } from "../features/user/userSlice";
 import { useSignupMutation } from "../services/api/authApi";
 import { CustomAlert } from "../components/CustomAlert";
 import { useDispatch } from "react-redux";
+import { differenceInYears } from 'date-fns';
 
 function Signup() {
   const navigate = useNavigate();
@@ -38,22 +39,20 @@ function Signup() {
 
   const submitHandler = async (data) => {
     try {
-      console.log(data);
       data.dateOfBirth = dayjs(data.dateOfBirth).format("YYYY/MM/DD");
-      const response = await signup(data).unwrap();
+      await signup(data).unwrap();
       dispatch(setDob(data.dateOfBirth));
       dispatch(setEmail(data.email));
       navigate("additional");
     } catch (error) {
       setOpen(true);
-      console.error("Signup failed:", error);
     }
   };
 
   return (
     <Grid2
       container
-      sx={{ justifyContent: { xs: "center", md: "center", lg: "start" } }}
+      sx={{ justifyContent: { xs: "center", md: "center", lg: "start" }, flexWrap: "nowrap", padding: { lg: "0 100px 0 0"} }}
       my={{ xs: 20, lg: 0 }}
       spacing={{ xs: 5, md: 15, lg: 20 }}
       alignItems={"center"}
@@ -68,120 +67,132 @@ function Signup() {
         open={open}
         onClose={() => setOpen(false)}
       />
-      <Grid2 sx={{ display: { xs: "none", md: "none", lg: "block" } }}>
+      <Grid2 item xs={12} md={6} sx={{width: '100%', display: { xs: "none", md: "none", lg: "block" } }}>
         <SideBarImg />
       </Grid2>
-      <Stack gap="20px">
-        <Box
-          display="flex"
-          flexDirection="column"
-          textAlign="center"
-          gap="10px"
-        >
-          <Typography variant="h1">Create Account</Typography>
-          <Typography color="dark.300">
-            Get your account now to explore further on AgTeach.
-          </Typography>
-        </Box>
-        <form
-          onSubmit={handleSubmit(submitHandler)}
-          style={{ display: "flex", flexDirection: "column" }}
-        >
-          <FormInput
-            label="Name"
-            {...register("username", {
-              required: "Please enter your name",
-            })}
-            error={!!errors.username}
-            helperText={errors.username?.message}
-          />
-          <br />
-          <Controller
-            name="dateOfBirth"
-            control={control}
-            rules={{ required: "Please select your date of birth" }}
-            render={({ field }) => (
-              <FormInput
-                label="Date of Birth"
-                isDate={true}
-                dateValue={field.value}
-                onDateChange={(newDate) => field.onChange(newDate)}
-                error={!!errors.dateOfBirth}
-                helperText={errors.dateOfBirth?.message}
-              />
-            )}
-          />
-          <br />
-          <FormInput
-            label="Email"
-            {...register("email", {
-              required: "Please enter your email",
-              pattern: {
-                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                message: "Invalid email address",
-              },
-            })}
-            error={!!errors.email}
-            helperText={errors.email?.message}
-          />
-          <br />
-          <FormInput
-            label="Password"
-            type="password"
-            showPassword={showPassword}
-            handleClickShowPassword={handleShowPassword}
-            {...register("password", {
-              required: "Please enter your password",
-              minLength: {
-                value: 8,
-                message: "Password must be at least 8 characters",
-              },
-              maxLength: {
-                value: 20,
-                message: "Password must be at most 20 characters",
-              },
-              pattern: {
-                value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}$/,
-                message:
-                  "Password must contain at least one letter and one number",
-              },
-            })}
-            error={!!errors.password}
-            helperText={errors.password?.message}
-          />
-          <br />
-          <FormInput
-            label="Confirm Password"
-            type="password"
-            showPassword={showPassword}
-            handleClickShowPassword={handleShowPassword}
-            {...register("passwordConfirm", {
-              required: "Please confirm your password",
-              validate: (value) => {
-                if (value !== watch("password")) {
-                  return "Passwords do not match";
-                }
-              },
-            })}
-            error={!!errors.passwordConfirm}
-            helperText={errors.passwordConfirm?.message}
-          />
-          <br />
-          <Button
-            type="submit"
-            variant="contained"
-            fullWidth
-            sx={{ padding: "12px" }}
-            disabled={isLoading}
+
+      <Grid2 item xs={12} md={6} sx={{width: '100%', display: 'flex', justifyContent: 'center'}}>
+        <Stack gap="20px">
+          <Box
+            display="flex"
+            flexDirection="column"
+            textAlign="center"
+            gap="10px"
           >
-            {isLoading ? "Signing Up..." : "Sign Up"}
-          </Button>
-        </form>
-        <Typography textAlign="center">
-          Already have an account?
-          <Link to="/auth/login">Go Back</Link>
-        </Typography>
-      </Stack>
+            <Typography variant="h1">Create Account</Typography>
+            <Typography color="dark.300">
+              Get your account now to explore further on AgTeach.
+            </Typography>
+          </Box>
+          <form
+            onSubmit={handleSubmit(submitHandler)}
+            style={{ display: "flex", flexDirection: "column" }}
+          >
+            <FormInput
+              label="Name"
+              {...register("username", {
+                required: "Please enter your name",
+              })}
+              error={!!errors.username}
+              helperText={errors.username?.message}
+            />
+            <br />
+            
+            <Controller
+              name="dateOfBirth"
+              control={control}
+              rules={{
+                required: "Please provide your date of birth",
+                validate: (value) => {
+                  const currentDate = new Date();
+                  const age = differenceInYears(currentDate, new Date(value));
+
+                  return age >= 15 || "You must be at least 15 years old.";
+                },
+              }}
+              render={({ field }) => (
+                <FormInput
+                  label="Date of Birth"
+                  isDate={true}
+                  dateValue={field.value}
+                  onDateChange={(newDate) => field.onChange(newDate)}
+                  error={!!errors.dateOfBirth}
+                  helperText={errors.dateOfBirth?.message}
+                />
+              )}
+            />
+            <br />
+            <FormInput
+              label="Email"
+              {...register("email", {
+                required: "Please enter your email",
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: "Invalid email address",
+                },
+              })}
+              error={!!errors.email}
+              helperText={errors.email?.message}
+            />
+            <br />
+            <FormInput
+              label="Password"
+              type="password"
+              showPassword={showPassword}
+              handleClickShowPassword={handleShowPassword}
+              {...register("password", {
+                required: "Please enter your password",
+                minLength: {
+                  value: 8,
+                  message: "Password must be at least 8 characters",
+                },
+                maxLength: {
+                  value: 20,
+                  message: "Password must be at most 20 characters",
+                },
+                pattern: {
+                  value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}$/,
+                  message:
+                    "Password must contain at least one letter and one number",
+                },
+              })}
+              error={!!errors.password}
+              helperText={errors.password?.message}
+            />
+            <br />
+            <FormInput
+              label="Confirm Password"
+              type="password"
+              showPassword={showPassword}
+              handleClickShowPassword={handleShowPassword}
+              {...register("passwordConfirm", {
+                required: "Please confirm your password",
+                validate: (value) => {
+                  if (value !== watch("password")) {
+                    return "Passwords do not match";
+                  }
+                },
+              })}
+              error={!!errors.passwordConfirm}
+              helperText={errors.passwordConfirm?.message}
+            />
+            <br />
+            <Button
+              type="submit"
+              variant="contained"
+              fullWidth
+              sx={{ padding: "12px" }}
+              disabled={isLoading}
+            >
+              {isLoading ? "Signing Up..." : "Sign Up"}
+            </Button>
+          </form>
+          <Typography textAlign="center">
+            Already have an account?
+            <Link to="/auth/login">Go Back</Link>
+          </Typography>
+        </Stack>
+      </Grid2>
     </Grid2>
   );
 }

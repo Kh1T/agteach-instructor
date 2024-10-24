@@ -6,20 +6,20 @@ import {
   FormControlLabel,
   Stack,
   Button,
-} from "@mui/material";
+} from '@mui/material';
 
-import { useForm } from "react-hook-form";
-import FormInput from "../components/login-signup/FormInput";
-import CustomInputField from "../components/CustomInputField";
-import SideBarImg from "../components/SideBarImg";
-import { Link } from "react-router-dom";
-import CustomButton from "../components/CustomButton";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { useLoginMutation } from "../services/api/authApi";
-import { CustomAlert } from "../components/CustomAlert";
-import { useDispatch, useSelector } from "react-redux";
-import { checkLoginStatus } from "../features/user/authSlice";
+import { useForm } from 'react-hook-form';
+import FormInput from '../components/login-signup/FormInput';
+import SideBarImg from '../components/SideBarImg';
+import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { useLoginMutation } from '../services/api/authApi';
+import { CustomAlert } from '../components/CustomAlert';
+import { useDispatch } from 'react-redux';
+import { checkLoginStatus } from '../features/user/authSlice';
+
+import AgTeachLogo from '../assets/agteach.png';
 
 function LoginPage() {
   const [login, { isLoading, isError }] = useLoginMutation();
@@ -34,38 +34,33 @@ function LoginPage() {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      email: "",
-      password: "",
+      email: '',
+      password: '',
+      keepMeLoggedIn: false,
     },
   });
 
   const handleShowPassword = () => setShowPassword((prev) => !prev);
 
   const submitHandler = async (data) => {
-    console.log(data);
     try {
-      const response = await login(data).unwrap();
-      console.log("Login successful", response);
+      await login(data).unwrap();
       dispatch(checkLoginStatus(true));
-      navigator("/");
+      navigator('/');
     } catch (error) {
-      console.error("Incorrect email or password", error);
       setOpen(true);
       setError(
-        "email",
-        { type: "manual", message: "Incorrect email or password" },
+        'email',
+        { type: 'manual', message: 'Incorrect email or password' },
         { shouldFocus: true }
       );
       setError(
-        "password",
-        { type: "manual", message: "Incorrect email or password" },
+        'password',
+        { type: 'manual', message: 'Incorrect email or password' },
         { shouldFocus: true }
       );
     }
   };
-
-  const { isAuthenticated } = useSelector((state) => state.auth);
-  console.log('login',isAuthenticated);
 
   return (
     <Grid
@@ -73,52 +68,55 @@ function LoginPage() {
       direction="row"
       alignItems="center"
       sx={{
-        justifyContent: { xs: "center", md: "center", lg: "start" },
+        justifyContent: { xs: 'center', md: 'center', lg: 'start' },
+        flexWrap: 'nowrap',
         mx: { xs: 2, md: 0, lg: 0 },
       }}
       mt={{ xs: 50, md: 50, lg: 0 }}
       spacing={10}
     >
       <CustomAlert
-        label={
-          isError
-            ? "Incorrect email or password."
-            : "Login Successful!"
-        }
-        severity={isError ? "error" : "success"}
+        label={isError ? 'Incorrect email or password.' : 'Login Successful!'}
+        severity={isError ? 'error' : 'success'}
         onClose={() => setOpen(false)}
         open={open}
       />
-      <Grid sx={{ display: { xs: "none", md: "none", lg: "block" } }}>
+      <Grid
+        item
+        xs={12}
+        md={6}
+        sx={{ width: '100%', display: { xs: 'none', md: 'none', lg: 'block' } }}
+      >
         <SideBarImg />
       </Grid>
-      <Grid>
+      <Grid
+        item
+        xs={12}
+        md={6}
+        sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}
+      >
         <Stack>
-          <Box
-            display="flex"
-            flexDirection="column"
-            textAlign="center"
-            gap="20px"
-          >
+          <Stack textAlign="center" py={3} gap={1} alignItems='center'>
+            <Box component="img" src={AgTeachLogo} sx={{ width: '100px' }} />
             <Typography variant="h1">Welcome back Instructor</Typography>
             <Typography color="dark.300">
               Please login to continue to your account.
             </Typography>
-          </Box>
+          </Stack>
           <Box>
             <form
               onSubmit={handleSubmit(submitHandler)}
-              style={{ display: "flex", flexDirection: "column", gap: "20px" }}
+              style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}
             >
               <FormInput
                 variant="outlined"
                 label="Email"
                 fullWidth
-                {...register("email", {
-                  required: "Please enter your email",
+                {...register('email', {
+                  required: 'Please enter your email',
                   pattern: {
                     value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                    message: "Invalid email address",
+                    message: 'Invalid email address',
                   },
                 })}
                 error={!!errors.email}
@@ -129,8 +127,8 @@ function LoginPage() {
                 label="Password"
                 fullWidth
                 type="password"
-                {...register("password", {
-                  required: "Please enter your password",
+                {...register('password', {
+                  required: 'Please enter your password',
                 })}
                 error={!!errors.password}
                 helperText={errors.password?.message}
@@ -139,7 +137,7 @@ function LoginPage() {
               />
 
               <FormControlLabel
-                control={<Checkbox value="remember" />}
+                control={<Checkbox {...register('keepMeLoggedIn')} />}
                 label="Keep me logged in"
               />
               <Link to="/auth/forgot-password">Forgot Password?</Link>
@@ -148,11 +146,11 @@ function LoginPage() {
                 variant="contained"
                 fullWidth
                 style={{
-                  marginTop: "10px",
-                  padding: "12px",
+                  marginTop: '10px',
+                  padding: '12px',
                 }}
               >
-                {isLoading ? "Logging in..." : "Login"}
+                {isLoading ? 'Logging in...' : 'Login'}
               </Button>
               <Typography>
                 Need an account? <Link to="/auth/signup">Create one</Link>

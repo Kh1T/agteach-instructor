@@ -30,7 +30,7 @@ function PieCenterLabel({ children }) {
  * @returns {JSX.Element} A JSX element representing a PieChart with a single series.
  */
 export default function PieChartBalance({ balance }) {
-const {course, product} = balance
+let {course, product} = balance
   const data = [
     { value: course || 0, label: "Course" },
     { value: product || 0, label: "Product" },

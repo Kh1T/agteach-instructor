@@ -20,7 +20,7 @@ export const courseApi = createApi({
 
     getCourse: builder.query({
       query: (id) => ({
-        url: `/api/course/getOneCourse/${id}`,
+        url: `/api/course/getOneCourseDetail/${id}`,
         method: "GET",
       }),
       providesTags: ["Course"],
@@ -83,12 +83,34 @@ export const courseApi = createApi({
 
     updateCourse: builder.mutation({
       query: ({courseId, formData}) => ({
-        url: `/api/course/${courseId}`,
+        url: `/api/course/updateCourse/${courseId}`,
         method: "PATCH",
         body: formData,
       }),
       invalidatesTags: ["Course"],
     }),
+
+    getEnrollmentCourse: builder.query({
+      providesTags: ["Course"],
+      query: ({ name = "", order = "Newest" }) => {
+        let url = `/api/enrollment/getEnrollment?name=${name}`;
+        if (order !== "Newest") {
+          url += `&order=${order}`;
+        } 
+      
+        console.log("API Request URL:", url); // Log the final URL
+        return { url, method: "GET" };
+      },
+    }),
+    
+    getEnrollmentDetails: builder.query({
+      providesTags: ["Course"],
+      query: (courseId) => ({
+        url: `/api/enrollment/getEnrollmentDetail/${courseId}`,
+        method: "GET",
+      }),
+    }), 
+
   }),
 });
 
@@ -100,4 +122,6 @@ export const {
   useSearchCoursesQuery,
   useConfirmDeleteMutation,
   useUpdateCourseMutation,
+  useGetEnrollmentCourseQuery,
+  useGetEnrollmentDetailsQuery,
 } = courseApi;
