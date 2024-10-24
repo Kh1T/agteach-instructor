@@ -68,6 +68,7 @@ function AdditionalInformation() {
     const phonePattern = /^[0-9]+$/;
     if (!value) return true;
     if (value.length > 15) return "Phone number cannot exceed 15 digits";
+    if (value?.length < 8) return 'A Valid phone number should contains atleast 8 digits'
     return phonePattern.test(value) || "Please enter a valid phone number";
   };
 
