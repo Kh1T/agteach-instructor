@@ -9,8 +9,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import CustomTableHeader from "./CustomTableHeader";
-import CustomTable from "./CustomTable";
-import { recentData } from "../data/recentData";
+import CustomTable from "./CustomTable"; 
 
 /**
  * RecentTransaction component
@@ -23,21 +22,18 @@ function RecentTransaction({ data }) {
   const { course, product } = data || [];
 
   const mapData = (data) => {
-    if (!data) return [];
+    if (data.length === 0) return [];
     return data.map((item, id) => {
-      return {
-        No: id + 1,
-        Date: item.date,
-        Name: item.name,
-        Amount: `$ ${item.price}`,
-      };
+      return { Date: item.date, Name: item.name, Amount: `$ ${item.price}` };
     });
   };
 
   const courseRecentList = mapData(course) || [];
   const productRecentList = mapData(product) || [];
+
   const [recentTransactions, setRecentTransactions] =
     useState(courseRecentList);
+
   const handleSelect = (e) => {
     if (e.target.value === 10) {
       setRecentTransactions(courseRecentList);
@@ -46,11 +42,12 @@ function RecentTransaction({ data }) {
     }
     setTransaction(e.target.value);
   };
-
+ 
   return (
     <Box
       sx={{
-        height: "440px",
+        minHeight: "440px",
+        // height: "440px",
         px: "20px",
         borderRadius: 4,
         boxShadow: "0px 10px 33px 0px rgba(5,27,58,0.1)",
@@ -86,7 +83,7 @@ function RecentTransaction({ data }) {
           </FormControl>
         </Box>
       </Stack>
-      {!data ? (
+      {recentTransactions.length === 0 ? (
         <Typography>There is no transaction yet!</Typography>
       ) : (
         <CustomTable data={recentTransactions} />

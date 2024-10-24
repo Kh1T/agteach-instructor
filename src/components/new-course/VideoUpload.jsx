@@ -9,15 +9,16 @@ export default function VideoUpload({
   onFileChange,
   isPreviewVisible,
   file,
+  error,
 }) {
   const {
     register,
     setValue,
-    watch,
     formState: { errors },
+    watch,
   } = useFormContext();
 
-  const [showPreview, setShowPreview] = useState(isPreviewVisible);
+  console.log("error", errors[name]);
   const [isError, setIsError] = useState(false);
   const [fileInfo, setFileInfo] = useState(
     file ? { name: file.name, size: "N/A" } : {}
@@ -27,11 +28,10 @@ export default function VideoUpload({
   const [errorMessage, setErrorMessage] = useState("Video is required");
 
   useEffect(() => {
-    // Clear errors if a video is uploaded
     if (videoFile) {
       setIsError(false);
     }
-  }, [videoFile]);
+  }, [videoFile, error, errors, name]);
 
   const handleVideoUpload = (event) => {
     const newFile = event.target.files[0];
@@ -39,13 +39,15 @@ export default function VideoUpload({
     // If no file is selected (e.g., user cancels file dialog)
     if (!newFile) {
       return;
+    } else {
+      setIsError(false);
+      setErrorMessage("");
     }
 
-    setIsError(false); // Clear any previous errors
-    const MAX_FILE_SIZE = 150 * 1024 * 1024; // 150MB
-    const MAX_VIDEO_DURATION = 10 * 60; // 10 minutes
+    setIsError(false);
+    const MAX_FILE_SIZE = 150 * 1024 * 1024;
+    const MAX_VIDEO_DURATION = 10 * 60;
 
-    // Check file size
     if (newFile.size > MAX_FILE_SIZE) {
       setIsError(true);
       setErrorMessage(
@@ -85,7 +87,7 @@ export default function VideoUpload({
       setValue(lectureDuration, video.duration.toString());
       setFileInfo({
         name: newFile.name,
-        size: (newFile.size / (1024*1024)).toFixed(2) + " MB",
+        size: (newFile.size / (1024 * 1024)).toFixed(2) + " MB",
       });
 
       // Call onFileChange to update the parent component
@@ -108,11 +110,11 @@ export default function VideoUpload({
 
   return (
     <Box sx={{ my: 2 }}>
-      {!showPreview && !videoFile ? (
+      {!isPreviewVisible && !videoFile ? (
         <Box
           sx={{
-            backgroundColor: isError ? "red.light" : "grey.300",
-            border: `2px dashed ${isError ? "red" : "grey"}`,
+            backgroundColor: isError || error ? "red.light" : "grey.300",
+            border: `2px dashed ${isError || error ? "red" : "grey"}`,
             cursor: "pointer",
             alignItems: "center",
             justifyItems: "center",
@@ -147,12 +149,16 @@ export default function VideoUpload({
             Change
           </Button>
           <Stack spacing={1}>
-            <Typography variant="bmdr"><strong>Name :</strong> {fileInfo.name}</Typography>
-            <Typography variant="bmdr"><strong>Size :</strong> {fileInfo.size}</Typography>
+            <Typography variant="bmdr">
+              <strong>Name :</strong> {fileInfo.name}
+            </Typography>
+            <Typography variant="bmdr">
+              <strong>Size :</strong> {fileInfo.size}
+            </Typography>
           </Stack>
         </Stack>
       )}
-      {isError && (
+      {(error || isError) && (
         <FormHelperText sx={{ pl: 2 }} error>
           {errorMessage}
         </FormHelperText>

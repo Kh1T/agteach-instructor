@@ -15,14 +15,10 @@ import CourseThumbnail from "../course-product/CourseThumbnail";
  *   - TextSection component with title and description
  *   - PhotoPreview component with icon .
  */
+
 export default function AddThumbnail() {
   const course = useSelector((state) => state.course.courseData);
-  let url;
-
-  if (course) {
-    url = course.thumbnailUrl;
-    console.log("url", url);
-  }
+  let url = course?.thumbnailUrl;
 
   return (
     <Box>
@@ -46,6 +42,11 @@ export default function AddThumbnail() {
         </Typography>
         <Typography color="gray">580 x 580 (Limit size: 1 MB)</Typography>
       </CourseThumbnail>
+      <Typography component="ul">
+        <Typography component="li" color="dark.300" variant="bsr">
+          The image will be resized to 580 x 580 for best display
+        </Typography>
+      </Typography>
     </Box>
   );
 }
