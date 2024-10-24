@@ -42,7 +42,6 @@ export default function AddManyPhotos({
   useEffect(() => {
     if (defaultValue && defaultValue.images && defaultValue.images.length > 0) {
       const imageUrls = defaultValue.images.map((image) => image.imageUrl);
-      console.log({ imageUrls });
       setExistingUrls(imageUrls);
       setValue(name, imageUrls, { shouldValidate: true });
       if (imageUrls) {
@@ -77,7 +76,6 @@ export default function AddManyPhotos({
       const removedUrl = existingUrls[index];
       const newUrls = existingUrls.filter((_, i) => i !== index);
       setExistingUrls(newUrls);
-      console.log({newUrls})
       if (newUrls.length === 0) {
         setValidated(false);
       }
