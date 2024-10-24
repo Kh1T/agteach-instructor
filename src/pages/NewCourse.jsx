@@ -29,19 +29,14 @@ function NewCoursePage() {
   const methods = useForm();
   const { handleSubmit, reset } = methods;
 
-  const [
-    addCourse,
-    { isLoading: isLoadingAddCourse },
-  ] = useAddCourseMutation();
+  const [addCourse, { isLoading: isLoadingAddCourse }] = useAddCourseMutation();
 
   const { data } = useGetCourseQuery(action, {
     skip: action === "new",
   });
 
-  const [
-    updateCourse,
-    { isLoading: isLoadingUpdateCourse},
-  ] = useUpdateCourseMutation();
+  const [updateCourse, { isLoading: isLoadingUpdateCourse }] =
+    useUpdateCourseMutation();
 
   const [snackbar, setSnackbar] = useState({
     open: false,
@@ -74,6 +69,7 @@ function NewCoursePage() {
 
     const formData = new FormData();
     let totalDuration = 0;
+    let numberOfVideo = 0;
 
     // Append course details
     formData.append("courseName", courseName.trim());
@@ -130,10 +126,12 @@ function NewCoursePage() {
             newLecture++;
           }
         }
+        numberOfVideo += 1;
         totalDuration += parseFloat(lecture.lectureDuration);
       });
     });
 
+    formData.append("numberOfVideo", numberOfVideo);
     formData.append("totalDuration", totalDuration);
 
     try {
@@ -144,9 +142,9 @@ function NewCoursePage() {
           severity: "success",
           msg: "Course created successfully",
         });
-        navigate('/course')
+        navigate("/course");
       } else {
-          await updateCourse({
+        await updateCourse({
           courseId: action,
           formData,
         }).unwrap();
@@ -155,7 +153,7 @@ function NewCoursePage() {
           severity: "success",
           msg: "Course updated successfully",
         });
-        navigate('/course')
+        navigate("/course");
       }
     } catch (error) {
       if (error)
