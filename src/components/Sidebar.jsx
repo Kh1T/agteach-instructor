@@ -12,6 +12,12 @@ import {
   useParams,
   useNavigate,
 } from "react-router-dom";
+import {
+  useLocation,
+  Link as RouterLink,
+  useParams,
+  useNavigate,
+} from "react-router-dom";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 
 import logoIcon from "../assets/logo.svg";
@@ -86,6 +92,7 @@ export default function Sidebar({ children }) {
   if (data) {
     instructorInfo = data.data.instructor;
   }
+  let profileImage = instructorInfo?.imageUrl + `?${new Date().getTime()}`;
 
   const drawerContent = (
     <Drawer

@@ -1,4 +1,4 @@
-import { Box, Typography, Divider, Button } from "@mui/material";
+import { Box, Typography, Divider } from "@mui/material";
 import ButtonComponent from "../course-product/ButtonInBox";
 import IconWithTitle from "../course-product/IconWithTitle";
 import BurstModeOutlinedIcon from "@mui/icons-material/BurstModeOutlined";
@@ -18,12 +18,9 @@ export default function CourseContents() {
   const course = useSelector((state) => state.course.courseData);
 
   useEffect(() => {
-    console.log("\n\nsection", sections)
     if (course) {
       // Check if course has sections and lectures
       if (course.sections && course.sections.length > 0) {
-        console.log("course.sections", course.sections);
-
         const updatedSections = course.sections.map(
           (section, sectionIndex) => ({
             sectionId: section.sectionId,
@@ -58,7 +55,6 @@ export default function CourseContents() {
             section.sectionName
           );
           setValue(`allSection[${sectionIndex}].sectionId`, section.sectionId);
-          console.log("sectioId", section);
 
           section.lectures.forEach((lecture, lectureIndex) => {
             setValue(
