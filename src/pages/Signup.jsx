@@ -10,7 +10,7 @@ import { setEmail, setDob } from "../features/user/userSlice";
 import { useSignupMutation } from "../services/api/authApi";
 import { CustomAlert } from "../components/CustomAlert";
 import { useDispatch } from "react-redux";
-// import { differenceInYears } from 'date-fns';
+import { differenceInYears } from 'date-fns';
 
 function Signup() {
   const navigate = useNavigate();
