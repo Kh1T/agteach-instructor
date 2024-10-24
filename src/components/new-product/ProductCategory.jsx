@@ -7,6 +7,7 @@ import {
   Stack,
   Box,
   FormHelperText,
+  CircularProgress,
 } from "@mui/material";
 
 import React from "react";
@@ -33,10 +34,18 @@ import TextSection from "../course-product/TextSection";
  * When the category is changed, the `handleCategoryChange` function is called with the new value as argument.
  */
 import { useGetAllCategoriesQuery } from "../../services/api/categoryApi";
-export default function ProductCategoryForm({ register, errors , defaultValue }) {
-  const {data , isLoading} = useGetAllCategoriesQuery();
+export default function ProductCategoryForm({
+  register,
+  errors,
+  defaultValue,
+}) {
+  const { data, isLoading } = useGetAllCategoriesQuery();
   if (isLoading) {
-    return <Box>Loading...</Box>
+    return (
+      <Stack fullWidth alignContent="center">
+        <CircularProgress size={24} />
+      </Stack>
+    );
   }
   const cateData = data.data || [];
   return (
