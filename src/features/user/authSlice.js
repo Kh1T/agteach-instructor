@@ -11,8 +11,9 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     checkLoginStatus: (state, action) => {
-      state.isAuthenticated = action.payload;
-      state.isVerify = action.payload;
+      const { IsAuthenticated, IsVerify } = action.payload;  
+      state.isAuthenticated = IsAuthenticated;
+      state.isVerify = IsVerify;
       state.isLoading = false;
     },
     startLoading: (state) => {

@@ -16,7 +16,7 @@ function App() {
 
   useEffect(() => {
     if (data && !isLoading) {
-      dispatch(checkLoginStatus(data.IsAuthenticated));
+      dispatch(checkLoginStatus(data));
       dispatch(getInstructorId(data.instructorId));
     }
   }, [data, isLoading, dispatch]);
