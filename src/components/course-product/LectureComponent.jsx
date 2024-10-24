@@ -10,7 +10,6 @@ export default function LectureComponent({
   onDelete,
   lectureNumber,
   sectionNumber,
-  sectionId,
 }) {
   const {
     register,
@@ -46,6 +45,9 @@ export default function LectureComponent({
   const lectureTitle = watch(
     `allSection[${sectionNumber - 1}].allLecture[${lectureNumber - 1}].lectureName`
   );
+
+  const lectureError =
+    errors?.allSection?.[sectionNumber - 1]?.allLecture?.[lectureNumber - 1] || {};
 
   return (
     <Box
@@ -97,6 +99,8 @@ export default function LectureComponent({
         }}
         file={videoUrl ? new File([videoUrl], videoUrl) : null}
         isPreviewVisible={videoUrl ? true : false}
+        error={!!lectureError?.video}
+        helperText={lectureError?.video?.message}
       />
       <DeleteConfirmModal
         open={modalOpen}

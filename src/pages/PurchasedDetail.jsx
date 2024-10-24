@@ -1,6 +1,14 @@
 import React, { useState, useMemo } from "react";
 import { ChevronLeft } from "@mui/icons-material";
-import { Box, Button, Divider, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Divider,
+  Stack,
+  Typography,
+  List,
+  ListItem,
+} from "@mui/material";
 import { useNavigate, useParams, useLocation } from "react-router-dom"; // Import useLocation
 import CustomTable from "../components/CustomTable";
 import CustomChip from "../components/CustomChip";
@@ -12,6 +20,7 @@ import {
 import CustomButton from "../components/CustomButton";
 import profileImg from "../assets/monsters-standing.png";
 import { CustomAlert } from "../components/CustomAlert";
+import InfoIcon from "@mui/icons-material/Info";
 
 function PurchasedDetailPage() {
   const navigate = useNavigate();
@@ -63,7 +72,15 @@ function PurchasedDetailPage() {
 
   const handleDelivery = async () => {
     try {
-      await updatePurchasedDetails({ purchasedId });
+      const customerEmail = customer.email;
+      if (!customerEmail) {
+        console.error("Email is missing");
+        return;
+      }
+
+      // Send both purchasedId and email to the backend
+      await updatePurchasedDetails({ purchasedId, customerEmail });
+
       setIsDelivered(true); // Update local state to "delivered"
       setIsAlertOpen(true); // Show success alert
     } catch (error) {
@@ -131,26 +148,61 @@ function PurchasedDetailPage() {
       {isLoadingDetails ? (
         <Typography>Loading purchased details...</Typography>
       ) : (
-        <>
-          <CustomTable data={tableData} />
-          {!isDelivered && (
-            <CustomButton
-              sx={{ backgroundColor: "blue.main" }}
-              variant="contained"
-              onClick={handleDelivery}
-            >
-              Delivered
-            </CustomButton>
-          )}
-          <CustomAlert
-            severity="success"
-            open={isAlertOpen}
-            onClose={() => setIsAlertOpen(false)} // Close the alert without changing isDelivered
-            duration={100}
-            label="The products has been delivered."
-          />
-        </>
+        <CustomTable data={tableData} />
       )}
+      <Stack gap={2}>
+        {!isDelivered && (
+          <Stack>
+            <Box
+              variant="bxsr"
+              sx={{
+                color: "dark.200",
+                display: "flex",
+                flexDirection: "column",
+                gap: 1, // Space between items
+                mb: 2,
+              }}
+            >
+              <Box display="flex" alignItems="center" gap={1}>
+                <InfoIcon fontSize="small" />
+                <Typography variant="bxsr">
+                  Clicking the <strong>'Delivered'</strong> button will update
+                  the status to 'Delivered,' indicating that the customer's
+                  order is on its way.
+                </Typography>
+              </Box>
+
+              <Box display="flex" alignItems="center" gap={1}>
+                <InfoIcon fontSize="small" />
+                <Typography variant="bxsr">
+                  An email will be sent to the customer whenever the product
+                  status is updated.
+                </Typography>
+              </Box>
+            </Box>
+            {/* Wrap the button in a Box or div to control its width */}
+            <Box sx={{ display: "flex", justifyContent: "flex-start" }}>
+              <CustomButton
+                sx={{
+                  backgroundColor: "blue.main",
+                  mt: 0,
+                }}
+                variant="contained"
+                onClick={handleDelivery}
+              >
+                Delivered
+              </CustomButton>
+            </Box>
+          </Stack>
+        )}
+        <CustomAlert
+          severity="success"
+          open={isAlertOpen}
+          onClose={() => setIsAlertOpen(false)}
+          duration={100}
+          label="The product has been delivered."
+        />
+      </Stack>
     </Stack>
   );
 }

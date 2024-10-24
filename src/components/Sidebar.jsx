@@ -6,11 +6,15 @@ import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
-import { useLocation, Link as RouterLink, useParams, useNavigate } from "react-router-dom";
+import {
+  useLocation,
+  Link as RouterLink,
+  useParams,
+  useNavigate,
+} from "react-router-dom";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 
 import logoIcon from "../assets/logo.svg";
-import avtarChip from "../assets/avatar-chip.png";
 import { Avatar, Chip, Container, Link, Stack } from "@mui/material";
 
 import sidebarList from "../data/sideBarData";
@@ -48,7 +52,7 @@ export default function Sidebar({ children }) {
   const handleLogout = () => {
     logout();
     nagivate("/auth/login");
-  }
+  };
 
   const description = des && des.description;
   const headerTitle = head && head.title;
@@ -57,6 +61,7 @@ export default function Sidebar({ children }) {
   if (data) {
     instructorInfo = data.data.instructor;
   }
+  let profileImage = instructorInfo?.imageUrl + `?${new Date().getTime()}`;
 
   const drawerContent = (
     <Drawer
@@ -193,8 +198,12 @@ export default function Sidebar({ children }) {
               </Typography>
             </Stack>
             <Chip
-              avatar={<Avatar src={instructorInfo?.imageUrl} label="Avatar" />}
-              label={instructorInfo?.firstName ? instructorInfo?.firstName : "Instructor"}
+              avatar={<Avatar src={profileImage} label="Avatar" />}
+              label={
+                instructorInfo?.firstName
+                  ? instructorInfo?.firstName
+                  : "Instructor"
+              }
               sx={{
                 height: "40px",
                 borderRadius: "63px",

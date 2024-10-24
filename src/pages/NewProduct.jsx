@@ -3,7 +3,6 @@ import AboutProduct from "../components/new-product/AboutProduct";
 import ProductQuantity from "../components/new-product/ProductQuantity";
 import ProductPhoto from "../components/new-product/ProductPhoto";
 import AdditionalPhoto from "../components/new-product/AdditionalPhoto";
-import ButtonComponent from "../components/course-product/ButtonInBox";
 import { CircularProgress } from "@mui/material";
 
 import { Box, Button, Typography } from "@mui/material";
