@@ -76,7 +76,7 @@ function EnrollmentDetailPage() {
     "Student Name": `${item.first_name || ""} ${item.last_name || ""}`,
     Email: item.email,
     Phone: item.phone,
-    "Order Date": new Date(item.created_at).toISOString().split("T")[0],
+    "Enrolled at": new Date(item.created_at).toISOString().split("T")[0],
   }));
 
   const course = enrollmentDetails?.course || [];

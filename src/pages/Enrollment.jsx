@@ -96,7 +96,7 @@ function EnromentPage() {
       ) : error ? (
         <Typography>Error: {error.message}</Typography>
       ) : Array.isArray(enrollmentList) && enrollmentList.length > 0 ? (
-        <CustomTable data={enrollmentList} />
+        <CustomTable data={enrollmentList} rowLimit={10} isPagination={true}/>
       ) : (
         <Box
           display="flex"
