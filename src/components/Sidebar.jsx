@@ -17,7 +17,6 @@ import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import logoIcon from "../assets/logo.svg";
 import {
   Avatar,
-  Chip,
   Container,
   Link,
   Stack,
@@ -48,7 +47,8 @@ export default function Sidebar({ children }) {
     return element.route === pathname;
   });
 
-  const [logout, { isLoading, isError, error, isSuccess }] = useLogoutMutation();
+  const [logout, { isLoading, isError, error, isSuccess }] =
+    useLogoutMutation();
   const navigate = useNavigate();
 
   const [open, setOpen] = useState(false); // State to control dialog visibility
@@ -64,6 +64,10 @@ export default function Sidebar({ children }) {
 
   const handleClose = () => {
     setOpen(false); // Close the confirmation dialog
+  };
+
+  const handleNavigateSetting = () => {
+    navigate("/setting");
   };
 
   const description = des && des.description;
@@ -264,25 +268,22 @@ export default function Sidebar({ children }) {
                 {description}
               </Typography>
             </Stack>
-            <Chip
-              avatar={<Avatar src={profileImage} label="Avatar" />}
-              label={
-                instructorInfo?.firstName
-                  ? instructorInfo?.firstName.length > 6 ? 
-                  instructorInfo?.firstName.slice(0, 6) + '...' :
-                  instructorInfo?.firstName
-                  : "Instructor"
-              }
-              sx={{
-                height: "40px",
-                borderRadius: "63px",
-                backgroundColor: "common.black",
-                "& .MuiChip-label": {
-                  color: "common.white",
-                  fontSize: 18,
-                },
-              }}
-            />
+            <Button
+              onClick={handleNavigateSetting}
+              sx={(theme) => ({
+                minWidth: "auto",
+                p: 0.5,
+                bgcolor: "common.white",
+                width: "hug-content",
+                borderRadius: "100%",
+                border: "2px solid transparent",
+                background: `linear-gradient(${theme.palette.common.white}, ${theme.palette.common.white}) padding-box, 
+                 linear-gradient(to right, ${theme.palette.teal.main}, ${theme.palette.blue.main}) border-box`,
+                backgroundClip: "padding-box, border-box",
+              })}
+            >
+              <Avatar src={profileImage} sx={{ width: 35, height: 35 }} />
+            </Button>
           </Stack>
         </Box>
       </Toolbar>

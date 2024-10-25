@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { useEffect, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
 import {
   useGetInstructorInfoQuery,
   useGetLocationsQuery,
   useUpdateInstructorInfoMutation,
   useUpdateInstructorPasswordMutation,
-} from '../services/api/authApi';
+} from "../services/api/authApi";
 
 import {
   Avatar,
@@ -19,15 +19,15 @@ import {
   Select,
   MenuItem,
   FormHelperText,
-  InputLabel
-} from '@mui/material';
+  InputLabel,
+} from "@mui/material";
 
-import { CustomAlert } from '../components/CustomAlert';
-import CustomButton from '../components/CustomButton';
-import CustomFileUpload from '../components/CustomFileUpload';
-import FormInput from '../components/login-signup/FormInput';
-import { validate } from 'uuid';
-import TextInput from '../components/login-signup/TextInputComponent';
+import { CustomAlert } from "../components/CustomAlert";
+import CustomButton from "../components/CustomButton";
+import CustomFileUpload from "../components/CustomFileUpload";
+import FormInput from "../components/login-signup/FormInput";
+import { validate } from "uuid";
+import TextInput from "../components/login-signup/TextInputComponent";
 
 function SettingPage() {
   // BasicInfo From Control
@@ -75,7 +75,7 @@ function SettingPage() {
     new: false,
   });
   const [isImageSelected, setIsImageSelected] = useState(false);
-  const [profileImage, setProfileImage] = useState('');
+  const [profileImage, setProfileImage] = useState("");
   const [loading, setLoading] = useState({
     profileImg: false,
     basicInfo: false,
@@ -86,8 +86,8 @@ function SettingPage() {
   // MUI Component State Management
   const [snackbar, setSnackbar] = useState({
     open: false,
-    message: '',
-    severity: 'success',
+    message: "",
+    severity: "success",
   });
 
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -107,19 +107,19 @@ function SettingPage() {
         resetBasicInfo({
           firstName: instructorInfo?.firstName,
           lastName: instructorInfo?.lastName,
-          bio: instructorInfo?.bio || '',
-          phone: instructorInfo?.phone || '',
-          address: instructorInfo?.address || '',
+          bio: instructorInfo?.bio || "",
+          phone: instructorInfo?.phone || "",
+          address: instructorInfo?.address || "",
           locationId: instructorInfo?.location?.locationId,
         });
         resetSecurity({
           email: instructorInfo.email,
-          currentPassword: '',
-          newPassword: '',
-          confirmNewPassword: '',
+          currentPassword: "",
+          newPassword: "",
+          confirmNewPassword: "",
         });
       } catch (error) {
-        console.log('An error occured', error);
+        console.log("An error occured", error);
       }
       setProfileImage(`${instructorInfo.imageUrl}?${new Date().getTime()}`);
     }
@@ -134,7 +134,7 @@ function SettingPage() {
     setProfileImage(URL.createObjectURL(file));
 
     const formData = new FormData();
-    formData.append('photo', file);
+    formData.append("photo", file);
 
     try {
       setLoading((prev) => ({ ...prev, profileImg: true }));
@@ -142,14 +142,14 @@ function SettingPage() {
       refetch();
       setSnackbar({
         open: true,
-        message: 'Profile image updated successfully',
-        severity: 'success',
+        message: "Profile image updated successfully",
+        severity: "success",
       });
     } catch (error) {
       setSnackbar({
         open: true,
-        message: 'Error uploading image',
-        severity: 'error',
+        message: "Error uploading image",
+        severity: "error",
       });
     } finally {
       setLoading((prev) => ({ ...prev, profileImg: false }));
@@ -168,14 +168,14 @@ function SettingPage() {
       refetch();
       setSnackbar({
         open: true,
-        message: 'Information updated successfully',
-        severity: 'success',
+        message: "Information updated successfully",
+        severity: "success",
       });
     } catch (error) {
       setSnackbar({
         open: true,
-        message: 'Error updating information',
-        severity: 'error',
+        message: "Error updating information",
+        severity: "error",
       });
     } finally {
       setLoading((prev) => ({ ...prev, basicInfo: false }));
@@ -193,19 +193,19 @@ function SettingPage() {
         passwordConfirm: confirmNewPassword,
       }).unwrap();
 
-      if (response.status === 'success') {
+      if (response.status === "success") {
         setSnackbar({
           open: true,
-          message: 'Password updated successfully',
-          severity: 'success',
+          message: "Password updated successfully",
+          severity: "success",
         });
         resetSecurity();
       }
     } catch (err) {
       setSnackbar({
         open: true,
-        message: 'Error updating password',
-        severity: 'error',
+        message: "Error updating password",
+        severity: "error",
       });
     }
   };
@@ -213,9 +213,10 @@ function SettingPage() {
   const validatePhone = (value) => {
     const phonePattern = /^[0-9]+$/; // Only digits
     if (!value) return true; // Allow empty input if not required
-    if (value.length > 15) return 'Phone number cannot exceed 15 digits';
-    if (value?.length < 8) return 'A Valid phone number should contains atleast 8 digits'
-    return phonePattern.test(value) || 'Please enter a valid phone number';
+    if (value.length > 15) return "Phone number cannot exceed 15 digits";
+    if (value?.length < 8)
+      return "A Valid phone number should contains atleast 8 digits";
+    return phonePattern.test(value) || "Please enter a valid phone number";
   };
 
   //*********************************************************/
@@ -235,10 +236,10 @@ function SettingPage() {
           />
           <CustomButton
             variant="outlined"
-            sx={{ color: 'blue.main', borderColor: 'blue.main' }}
+            sx={{ color: "blue.main", borderColor: "blue.main" }}
             onClick={() => setDialogOpen(true)}
           >
-            {loading.profileImg && isImageSelected ? 'CHANGING...' : 'CHANGE'}
+            {loading.profileImg && isImageSelected ? "CHANGING..." : "CHANGE"}
           </CustomButton>
           {dialogOpen && !isImageSelected && (
             <CustomFileUpload
@@ -260,8 +261,8 @@ function SettingPage() {
                 <TextField
                   label="First Name"
                   fullWidth
-                  {...registerBasicInfo('firstName', {
-                    required: 'First name is required',
+                  {...registerBasicInfo("firstName", {
+                    required: "First name is required",
                   })}
                   error={!!basicInfoErrors.firstName}
                   helperText={basicInfoErrors.firstName?.message}
@@ -269,8 +270,8 @@ function SettingPage() {
                 <TextField
                   label="Last Name"
                   fullWidth
-                  {...registerBasicInfo('lastName', {
-                    required: 'Last name is required',
+                  {...registerBasicInfo("lastName", {
+                    required: "Last name is required",
                   })}
                   error={!!basicInfoErrors.lastName}
                   helperText={basicInfoErrors.lastName?.message}
@@ -281,7 +282,7 @@ function SettingPage() {
                 rows={4}
                 label="Bio"
                 fullWidth
-                {...registerBasicInfo('bio')}
+                {...registerBasicInfo("bio")}
               />
             </Stack>
 
@@ -292,13 +293,14 @@ function SettingPage() {
             <TextField
               label="Address"
               fullWidth
-              {...registerBasicInfo('address', {
-                required: 'Address is required',
+              {...registerBasicInfo("address", {
+                required: "Address is required",
               })}
               error={!!basicInfoErrors.address}
               helperText={basicInfoErrors.address?.message}
             />
             <FormControl fullWidth>
+              <InputLabel>City</InputLabel>
               <Controller
                 name="locationId"
                 control={control}
@@ -307,8 +309,8 @@ function SettingPage() {
                   validate: (value) =>
                     value
                       ? locations.some((city) => city.locationId === value) ||
-                        'Please provide a valid city'
-                      : 'Please select a city',
+                        "Please provide a valid city"
+                      : "Please select a city",
                 }}
                 render={({ field }) => (
                   <Select {...field} label="City">
@@ -328,30 +330,32 @@ function SettingPage() {
               Contact Information
             </Typography>
             <FormControl variant="outlined" error={!!basicInfoErrors?.phone}>
-            <TextInput
-              id="phone-number"
-              label="Phone Number"
-              placeholder="e.g. 1234567890"
-              {...registerBasicInfo('phone', {
-                required: 'Phone number is required',
-                validate: validatePhone,
-              })}
-            />
-            {basicInfoErrors.phone && (
-              <FormHelperText>{basicInfoErrors?.phone?.message}</FormHelperText>
-            )}
-        </FormControl>
+              <TextInput
+                id="phone-number"
+                label="Phone Number"
+                placeholder="e.g. 1234567890"
+                {...registerBasicInfo("phone", {
+                  required: "Phone number is required",
+                  validate: validatePhone,
+                })}
+              />
+              {basicInfoErrors.phone && (
+                <FormHelperText>
+                  {basicInfoErrors?.phone?.message}
+                </FormHelperText>
+              )}
+            </FormControl>
             <Box display="flex" justifyContent="flex-end" gap={2}>
               <CustomButton
                 type="submit"
                 variant="contained"
-                sx={{ bgcolor: 'blue.main' }}
+                sx={{ bgcolor: "blue.main" }}
               >
-                {loading.basicInfo ? 'SAVING...' : 'SAVE CHANGES'}
+                {loading.basicInfo ? "SAVING..." : "SAVE CHANGES"}
               </CustomButton>
               <CustomButton
                 variant="outlined"
-                sx={{ color: 'blue.main', borderColor: 'blue.main' }}
+                sx={{ color: "blue.main", borderColor: "blue.main" }}
                 onClick={() => resetBasicInfo()}
               >
                 CANCEL
@@ -368,7 +372,7 @@ function SettingPage() {
             <Typography variant="h5" color="primary">
               Account Security
             </Typography>
-            <TextField label="Email" disabled {...registerSecurity('email')} />
+            <TextField label="Email" disabled {...registerSecurity("email")} />
             <FormInput
               label="Current Password"
               type="password"
@@ -378,8 +382,8 @@ function SettingPage() {
                   current: !prev.current,
                 }))
               }
-              {...registerSecurity('currentPassword', {
-                required: 'Current password is required',
+              {...registerSecurity("currentPassword", {
+                required: "Current password is required",
               })}
               error={!!securityErrors.currentPassword}
               helperText={securityErrors.currentPassword?.message}
@@ -391,11 +395,11 @@ function SettingPage() {
               handleClickShowPassword={() =>
                 setIsPasswordVisible((prev) => ({ ...prev, new: !prev.new }))
               }
-              {...registerSecurity('newPassword', {
-                required: 'New password is required',
+              {...registerSecurity("newPassword", {
+                required: "New password is required",
                 minLength: {
                   value: 8,
-                  message: 'Password must be at least 8 characters',
+                  message: "Password must be at least 8 characters",
                 },
               })}
               error={!!securityErrors.newPassword}
@@ -408,10 +412,10 @@ function SettingPage() {
               handleClickShowPassword={() =>
                 setIsPasswordVisible((prev) => ({ ...prev, new: !prev.new }))
               }
-              {...registerSecurity('confirmNewPassword', {
-                required: 'Please confirm the new password',
+              {...registerSecurity("confirmNewPassword", {
+                required: "Please confirm the new password",
                 validate: (value) =>
-                  value === watch('newPassword') || 'Passwords do not match',
+                  value === watch("newPassword") || "Passwords do not match",
               })}
               error={!!securityErrors.confirmNewPassword}
               helperText={securityErrors.confirmNewPassword?.message}
@@ -421,13 +425,13 @@ function SettingPage() {
               <CustomButton
                 type="submit"
                 variant="contained"
-                sx={{ bgcolor: 'blue.main' }}
+                sx={{ bgcolor: "blue.main" }}
               >
-                {isUpdatingPassword ? 'SAVING...' : 'SAVE CHANGES'}
+                {isUpdatingPassword ? "SAVING..." : "SAVE CHANGES"}
               </CustomButton>
               <CustomButton
                 variant="outlined"
-                sx={{ color: 'blue.main', borderColor: 'blue.main' }}
+                sx={{ color: "blue.main", borderColor: "blue.main" }}
                 onClick={() => resetSecurity()}
               >
                 CANCEL
@@ -444,7 +448,7 @@ function SettingPage() {
           severity={snackbar.severity}
           open={snackbar.open}
           onClose={() =>
-            setSnackbar({ open: false, message: '', severity: 'success' })
+            setSnackbar({ open: false, message: "", severity: "success" })
           }
         />
       )}
