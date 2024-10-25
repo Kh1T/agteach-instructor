@@ -265,7 +265,7 @@ export default function Sidebar({ children }) {
               </Typography>
             </Stack>
             <Chip
-              avatar={<Avatar src={instructorInfo?.imageUrl} label="Avatar" />}
+              avatar={<Avatar src={profileImage} label="Avatar" />}
               label={
                 instructorInfo?.firstName
                   ? instructorInfo?.firstName.length > 6 ? 

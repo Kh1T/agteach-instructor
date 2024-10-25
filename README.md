@@ -27,44 +27,43 @@ We use folder structure to organize our project and it is essential for maintain
 
 ```
 project-root/
-├── client/
-│   ├── public/
-│   ├── src/
-│   │   ├── components/
-│   │   │   └── Button.js
-│   │   ├── hooks/
-│   │   ├── pages/
-│   │   ├── services/
-│   │   │   └── api.js
-│   │   ├── utils/
-│   │   └── index.js
-│   ├── config/
-│   │   └── api.js
-│   ├── .env
-│   └── package.json
-├── server/
-│   ├── config/
-│   │   └── db.js
-│   ├── controllers/
-│   │   └── userController.js
-│   ├── models/
-│   │   └── userModel.js
+├── public/
+│   └── favicon.ico
+│
+├── src/
+│   ├── assets/
+│   │   └── images-1.png
+│   │
+│   ├── components/
+│   │   └── Button.jsx
+│   │
+│   ├── constants/
+│   │   └── apiConstants.js
+│   │
+│   ├── features/
+│   │
+│   ├── pages/
+│   │
 │   ├── routes/
-│   │   └── userRoutes.js
+│   │   └── index.js
+│   │
 │   ├── services/
-│   │   └── userService.js
+│   │   └── api/
+│   │
+│   ├── store/
+│   │
+│   ├── theme/
+│   │   └── theme.js
+│   │
 │   ├── utils/
-│   ├── app.js
-│   ├── server.js
-│   ├── .env
-│   └── package.json
-├── scripts/
-│   ├── build/
-│   ├── deploy/
-│   └── start/
+│   ├── App.jsx
+│   └── index.js
+├── .env
 ├── .gitignore
-├── README.md
-└── package.json
+├── package.json
+├── package-lock.json
+└── README.md
+
 
 ```
 
@@ -78,23 +77,14 @@ project-root/
 | -------------------------- | ----------------------------------------------------------- |
 | **client/public/**         | Contains static files like HTML, CSS, and images.           |
 | **client/src/**            | main source code for the React application                  |
+| **client/src/assets/**     | Contains images need to import into your React components   |
 | **client/src/components/** | Reusable UI components.                                     |
+| **client/src/constants/**  | API base url                                                |
 | **client/src/pages/**      | Components representing different pages of the application. |
+| **client/src/routes/**     | Components root layout and router navigate to pages         |
 | **client/src/services/**   | API service functions.                                      |
+| **client/src/store/**      | Application state that have slice, reducer and middleware   |
 | **client/src/utils/**      | Utility functions and helpers.                              |
-| **client/config/**         | configuration files.                                        |
-
-### Server Side Folder
-
-| **Folder Name**        | **Contain**                                                                |
-| ---------------------- | -------------------------------------------------------------------------- |
-| **project-name/**      | All file and folder in project                                             |
-| **server/config**      | contain configuration file                                                 |
-| **server/controllers** | Handle HTTP requests and responses.                                        |
-| **server/model**       | files that define the data schema and interact with the database directly. |
-| **server/routes/**     | Contains route definitions                                                 |
-| **server/views/**      | Components for displaying the data to the users                            |
-| **server/utils/**      | Contains utility functions and helpers.                                    |
 
 <!-- ## Pages Included
 
@@ -120,11 +110,12 @@ project-root/
 | -------------------- | -------------------- |
 | **Bet Sela**         | Backend and Server   |
 | **Pav Munyphalla**   | Backend and Server   |
-| **Song Seyla**       | Middle man           |
-| **Khom Khit**        | Middle man           |
+| **Song Seyla**       | Backend              |
+| **Khom Khit**        | Backend              |
 | **Panha Phosda**     | Front-end            |
 | **Chiv Sovanchitra** | Front-end            |
 | **Rith Sohak Neadh** | Front-end            |
+| **Pann SengLay**     | Front-end            |
 
 ## Usage
 

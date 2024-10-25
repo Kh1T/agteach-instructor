@@ -7,12 +7,15 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import CustomButton from "../components/CustomButton"; // custom component
+import CustomButton from "../components/CustomButton";
 import Logo from "../assets/agteach.png";
-import { useForm } from "react-hook-form";
-import { useAdditionalInfoMutation } from "../services/api/authApi";
+import { useForm, Controller } from "react-hook-form";
+import {
+  useAdditionalInfoMutation,
+  useGetLocationsQuery,
+} from "../services/api/authApi";
 import FormInput from "../components/login-signup/FormInput";
 import { useSelector } from "react-redux";
 
@@ -34,20 +37,24 @@ function AdditionalInformation() {
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm();
-  const [addPerosnalInfo, { isLoading }] =
-    useAdditionalInfoMutation();
+
+  const [addPerosnalInfo, { isLoading }] = useAdditionalInfoMutation();
+  const { data: locationData, isLoading: isLoadingLocation } =
+    useGetLocationsQuery();
 
   const onSubmit = async (data) => {
     try {
-      const { firstName, lastName, phone, address, city } = data;
+      const { firstName, lastName, phone, address, locationId } = data;
+      console.log(dob, "error");
       const response = await addPerosnalInfo({
         firstName,
         lastName,
         phone,
         address,
-        city,
+        locationId: locationId.value, // Now correctly accessing the locationId
         dateOfBirth: dob,
       }).unwrap();
       console.log("Success:", response);
@@ -58,23 +65,20 @@ function AdditionalInformation() {
   };
 
   const validatePhone = (value) => {
-    const phonePattern = /^[0-9]+$/; // Only digits numbers
-    if (!value) return true; // Allow empty input if not required
+    const phonePattern = /^[0-9]+$/;
+    if (!value) return true;
     if (value.length > 15) return "Phone number cannot exceed 15 digits";
+    if (value?.length < 8) return 'A Valid phone number should contains atleast 8 digits'
     return phonePattern.test(value) || "Please enter a valid phone number";
   };
 
   return (
     <Grid2 container justifyContent="center" direction="column" my={12} gap={5}>
-      {/* Container for the entire form */}
       <Box sx={{ display: "flex", justifyContent: "center" }}>
         <img src={Logo} alt="Logo" />
       </Box>
-      {/* Add alt text for accessibility */}
       <Grid2 container justifyContent="center" alignItems="center" gap={12}>
-        {/* Container for the main content area */}
         <Stack textAlign="center" gap={2}>
-          {/* Stack for the header and description */}
           <Box
             width={500}
             height={500}
@@ -97,7 +101,6 @@ function AdditionalInformation() {
           <Stack flexDirection="column" gap={2}>
             <Typography variant="blgsm">Name & Address</Typography>
             <Stack flexDirection="row" gap={2}>
-              {/* Stack for the name fields */}
               <FormInput
                 label="First Name"
                 placeholder="e.g. Jane"
@@ -125,29 +128,43 @@ function AdditionalInformation() {
                 helperText={errors?.lastName?.message}
               />
             </Stack>
-
-            {/* Address Field */}
-            <Autocomplete
-              id="country-select-demo"
-              fullWidth
-              options={city}
-              getOptionLabel={(option) => option.label}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="City"
-                  slotProps={{
-                    htmlInput: {
-                      ...params.inputProps,
-                    },
+            <Controller
+              name="locationId"
+              control={control}
+              rules={{ required: "City is required" }}
+              render={({
+                field: { onChange, value },
+                fieldState: { error },
+              }) => (
+                <Autocomplete
+                  id="location-select"
+                  options={
+                    isLoadingLocation
+                      ? []
+                      : locationData.data.map((location) => ({
+                          label: location.name,
+                          value: location.locationId,
+                        }))
+                  }
+                  value={value}
+                  onChange={(_, newValue) => {
+                    onChange(newValue);
                   }}
-                  {...register("city", { required: "City is required" })}
-                  error={!!errors.city}
-                  helperText={errors?.city?.message}
+                  getOptionLabel={(option) => option?.label || ""}
+                  isOptionEqualToValue={(option, value) =>
+                    option.value === value?.value
+                  }
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="City"
+                      error={!!error}
+                      helperText={error?.message}
+                    />
+                  )}
                 />
               )}
             />
-
             <FormInput
               label="Address"
               placeholder="e.g. 1234 Main St"
@@ -157,9 +174,7 @@ function AdditionalInformation() {
               error={!!errors.address}
               helperText={errors?.address?.message}
             />
-
             <Divider />
-
             <Typography variant="blgsm">Contact Information</Typography>
             <Stack flexDirection="row" gap={2}>
               <FormInput
@@ -176,6 +191,7 @@ function AdditionalInformation() {
               color="primary"
               disabled={isLoading}
               variant="contained"
+              type="submit"
             >
               {isLoading ? "Submitting..." : "Continue"}
             </CustomButton>
@@ -187,14 +203,3 @@ function AdditionalInformation() {
 }
 
 export default AdditionalInformation;
-
-const city = [
-  { label: "Phnom Penh" },
-  { label: "Siem Reap" },
-  { label: "Battambang" },
-  { label: "Sihanoukville" },
-  { label: "Kampot" },
-  { label: "Kratie" },
-  { label: "Pursat" },
-  { label: "Koh Kong" },
-];

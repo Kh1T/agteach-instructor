@@ -6,20 +6,19 @@ import {
   FormControlLabel,
   Stack,
   Button,
-} from '@mui/material';
-
-import { useForm } from 'react-hook-form';
-import FormInput from '../components/login-signup/FormInput';
-import SideBarImg from '../components/SideBarImg';
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import { useLoginMutation } from '../services/api/authApi';
-import { CustomAlert } from '../components/CustomAlert';
-import { useDispatch } from 'react-redux';
-import { checkLoginStatus } from '../features/user/authSlice';
-
-import AgTeachLogo from '../assets/agteach.png';
+} from "@mui/material";
+import { useForm } from "react-hook-form";
+import FormInput from "../components/login-signup/FormInput";
+import SideBarImg from "../components/SideBarImg";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useLoginMutation } from "../services/api/authApi";
+import { CustomAlert } from "../components/CustomAlert";
+import { useDispatch } from "react-redux";
+import { checkLoginStatus } from "../features/user/authSlice";
+import AgTeachLogo from "../assets/agteach.png";
+import { setEmail } from "../features/user/userSlice";
 
 function LoginPage() {
   const [login, { isLoading, isError }] = useLoginMutation();
@@ -31,11 +30,12 @@ function LoginPage() {
     register,
     handleSubmit,
     setError,
+    watch,
     formState: { errors },
   } = useForm({
     defaultValues: {
-      email: '',
-      password: '',
+      email: "",
+      password: "",
       keepMeLoggedIn: false,
     },
   });
@@ -44,19 +44,30 @@ function LoginPage() {
 
   const submitHandler = async (data) => {
     try {
-      await login(data).unwrap();
-      dispatch(checkLoginStatus(true));
-      navigator('/');
+      const res = await login(data).unwrap();
+      console.log("res", res.data.user.isVerify);
+      if (res.token) {
+        let verification = res?.data?.user?.isVerify;
+        dispatch(
+          checkLoginStatus({ IsAuthenticated: true, IsVerify: verification })
+        );
+        dispatch(setEmail(watch("email")));
+        if (verification) {
+          navigator("/");
+          return;
+        }
+        navigator("/auth/signup/verification");
+      }
     } catch (error) {
       setOpen(true);
       setError(
-        'email',
-        { type: 'manual', message: 'Incorrect email or password' },
+        "email",
+        { type: "manual", message: "Incorrect email or password" },
         { shouldFocus: true }
       );
       setError(
-        'password',
-        { type: 'manual', message: 'Incorrect email or password' },
+        "password",
+        { type: "manual", message: "Incorrect email or password" },
         { shouldFocus: true }
       );
     }
@@ -68,16 +79,17 @@ function LoginPage() {
       direction="row"
       alignItems="center"
       sx={{
-        justifyContent: { xs: 'center', md: 'center', lg: 'start' },
-        flexWrap: 'nowrap',
+        justifyContent: { xs: "center", md: "center", lg: "start" },
+        flexWrap: "nowrap",
         mx: { xs: 2, md: 0, lg: 0 },
       }}
-      mt={{ xs: 50, md: 50, lg: 0 }}
+      mt={{ xs: 5, md: 30, lg: 0 }}
+      mb={5}
       spacing={10}
     >
       <CustomAlert
-        label={isError ? 'Incorrect email or password.' : 'Login Successful!'}
-        severity={isError ? 'error' : 'success'}
+        label={isError ? "Incorrect email or password." : "Login Successful!"}
+        severity={isError ? "error" : "success"}
         onClose={() => setOpen(false)}
         open={open}
       />
@@ -85,7 +97,7 @@ function LoginPage() {
         item
         xs={12}
         md={6}
-        sx={{ width: '100%', display: { xs: 'none', md: 'none', lg: 'block' } }}
+        sx={{ width: "100%", display: { xs: "none", md: "none", lg: "block" } }}
       >
         <SideBarImg />
       </Grid>
@@ -93,11 +105,11 @@ function LoginPage() {
         item
         xs={12}
         md={6}
-        sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}
+        sx={{ width: "100%", display: "flex", justifyContent: "center" }}
       >
         <Stack>
-          <Stack textAlign="center" py={3} gap={1} alignItems='center'>
-            <Box component="img" src={AgTeachLogo} sx={{ width: '100px' }} />
+          <Stack textAlign="center" py={3} gap={1} alignItems="center">
+            <Box component="img" src={AgTeachLogo} sx={{ width: "100px", mb: 5 }} />
             <Typography variant="h1">Welcome back Instructor</Typography>
             <Typography color="dark.300">
               Please login to continue to your account.
@@ -106,17 +118,17 @@ function LoginPage() {
           <Box>
             <form
               onSubmit={handleSubmit(submitHandler)}
-              style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}
+              style={{ display: "flex", flexDirection: "column", gap: "20px" }}
             >
               <FormInput
                 variant="outlined"
                 label="Email"
                 fullWidth
-                {...register('email', {
-                  required: 'Please enter your email',
+                {...register("email", {
+                  required: "Please enter your email",
                   pattern: {
                     value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                    message: 'Invalid email address',
+                    message: "Invalid email address",
                   },
                 })}
                 error={!!errors.email}
@@ -127,8 +139,8 @@ function LoginPage() {
                 label="Password"
                 fullWidth
                 type="password"
-                {...register('password', {
-                  required: 'Please enter your password',
+                {...register("password", {
+                  required: "Please enter your password",
                 })}
                 error={!!errors.password}
                 helperText={errors.password?.message}
@@ -137,7 +149,7 @@ function LoginPage() {
               />
 
               <FormControlLabel
-                control={<Checkbox {...register('keepMeLoggedIn')} />}
+                control={<Checkbox {...register("keepMeLoggedIn")} />}
                 label="Keep me logged in"
               />
               <Link to="/auth/forgot-password">Forgot Password?</Link>
@@ -146,11 +158,11 @@ function LoginPage() {
                 variant="contained"
                 fullWidth
                 style={{
-                  marginTop: '10px',
-                  padding: '12px',
+                  marginTop: "10px",
+                  padding: "12px",
                 }}
               >
-                {isLoading ? 'Logging in...' : 'Login'}
+                {isLoading ? "Logging in..." : "Login"}
               </Button>
               <Typography>
                 Need an account? <Link to="/auth/signup">Create one</Link>

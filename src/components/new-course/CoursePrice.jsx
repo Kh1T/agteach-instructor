@@ -22,19 +22,22 @@ import { useEffect } from "react";
  * @returns {JSX.Element} Box component with children
  */
 export default function CoursePrice() {
-  const { register, setValue, watch, formState: { errors } } = useFormContext();
+  const {
+    register,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useFormContext();
   const course = useSelector((state) => state.course.courseData);
-
 
   useEffect(() => {
     if (course) {
       const { price } = course;
-      
+
       setValue("coursePrice", price);
     }
   }, [course, setValue]);
 
-  
   return (
     <Box className="container">
       <IconWithTitle
@@ -52,13 +55,17 @@ export default function CoursePrice() {
         id="outlined-controlled"
         label="Price"
         slotProps={{
-          inputLabel: { shrink: course && !!course.price || !!watch("coursePrice") },
+          inputLabel: {
+            shrink: (course && !!course.price) || !!watch("coursePrice"),
+          },
+          htmlInput: { step: "0.01" },
         }}
         type="number"
-        {...register("coursePrice", { required: "Price is required", 
+        {...register("coursePrice", {
+          required: "Price is required",
           min: { value: 1, message: "Price must be greater than $0" },
-          max: { value: 1000, message: "Price must be less than $1000" }
-         })}
+          max: { value: 1000, message: "Price must be less than $1000" },
+        })}
         error={!!errors.coursePrice}
         helperText={errors.coursePrice?.message}
       />

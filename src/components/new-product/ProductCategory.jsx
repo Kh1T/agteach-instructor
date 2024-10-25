@@ -7,6 +7,7 @@ import {
   Stack,
   Box,
   FormHelperText,
+  CircularProgress,
 } from "@mui/material";
 
 import React from "react";
@@ -23,22 +24,17 @@ import TextSection from "../course-product/TextSection";
  * a TextSection component with title "Product Category" and description "Please choose an appropriate category for this product",
  * a FormControl component with a Select component with the categories.
  *
- * The categories are:
- *   - Plant
- *   - Fertilizer
- *   - Tool
- *
  * The value of the selected category is stored in the state variable `selectedCategory`.
  *
  * When the category is changed, the `handleCategoryChange` function is called with the new value as argument.
  */
 import { useGetAllCategoriesQuery } from "../../services/api/categoryApi";
-export default function ProductCategoryForm({ register, errors , defaultValue }) {
-  const {data , isLoading} = useGetAllCategoriesQuery();
-  if (isLoading) {
-    return <Box>Loading...</Box>
-  }
-  const cateData = data.data || [];
+export default function ProductCategoryForm({
+  register,
+  errors,
+  defaultValue,
+}) {
+  const { data, isLoading } = useGetAllCategoriesQuery();
   return (
     <Stack className="container" gap={1} alignItems="flex-start">
       <Box sx={{ width: "100%" }}>
@@ -54,26 +50,37 @@ export default function ProductCategoryForm({ register, errors , defaultValue })
         />
       </Box>
 
-      <FormControl fullWidth sx={{ my: 2 }}>
-        <InputLabel error={!!errors.categoryId}>Category</InputLabel>
-        <Select
-          label="Category"
-          defaultValue={defaultValue}
-          {...register("categoryId", {
-            required: "Category is required",
-          })}
-          error={!!errors.categoryId}
+      {isLoading ? (
+        <Box
+          sx={{ width: "100%" }}
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
         >
-          {cateData.map((option) => (
-            <MenuItem key={option.categoryId} value={option.categoryId}>
-              {option.name}
-            </MenuItem>
-          ))}
-        </Select>
-        <FormHelperText error={!!errors.categoryId}>
-          {errors.categoryId?.message}
-        </FormHelperText>
-      </FormControl>
+          <CircularProgress size={24} />
+        </Box>
+      ) : (
+        <FormControl fullWidth sx={{ my: 2 }}>
+          <InputLabel error={!!errors.categoryId}>Category</InputLabel>
+          <Select
+            label="Category"
+            defaultValue={defaultValue}
+            {...register("categoryId", {
+              required: "Category is required",
+            })}
+            error={!!errors.categoryId}
+          >
+            {data.data.map((option) => (
+              <MenuItem key={option.categoryId} value={option.categoryId}>
+                {option.name}
+              </MenuItem>
+            ))}
+          </Select>
+          <FormHelperText error={!!errors.categoryId}>
+            {errors.categoryId?.message}
+          </FormHelperText>
+        </FormControl>
+      )}
       <Divider />
     </Stack>
   );
