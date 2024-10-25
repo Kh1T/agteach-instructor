@@ -55,7 +55,11 @@ export default function ProductQuantity({ register, errors, watch, setValue }) {
               message: "Quantity must be greater than 0",
             },
             max: { value: 10000, message: "Quantity must be less than 10000" },
+            validate: (value) =>
+              Number.isInteger(Number(value)) ||
+              "Quantity must be a whole number",
           })}
+          slotProps={{ htmlInput: { step: "1" } }}
           error={!!errors.quantity}
           helperText={errors.quantity?.message}
         />
