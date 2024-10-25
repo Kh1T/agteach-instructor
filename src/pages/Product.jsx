@@ -16,25 +16,37 @@ import {
   useConfirmDeleteMutation,
   useGetAllProductsQuery,
 } from "../services/api/productApi";
+import { useGetAllCategoriesQuery } from "../services/api/categoryApi";
 import { useNavigate } from "react-router";
-import deletBin from "../assets/Go Green Grey Hanger Bag.png";
-import emptyProduct from "../assets/Spooky Stickers Sweet Franky.png";
+import deletBin from "../assets/go-green-grey-hanger-bag.png";
+import emptyProduct from "../assets/spooky-stickers-sweet-franky.png";
+import { Category } from "@mui/icons-material";
 
 function ProductPage() {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectState, setSelectState] = useState();
+  const [selectState, setSelectState] = useState(0); // 0 for "Newest", 1 for "Oldest"
   const [isLoadingSearch, setIsLoadingSearch] = useState(false);
+
+  // Fetch products, sorted by the selected state (Newest = 0, Oldest = 1)
   const {
     data: products,
     isLoading: isSearching,
     refetch,
-  } = useGetAllProductsQuery({ name: searchTerm, order: selectState });
+  } = useGetAllProductsQuery({
+    name: searchTerm,
+    order: selectState === 0 ? 'desc' : 'asc', // Newest: desc, Oldest: asc
+  });
+  const { data: categories , isLoading: isCategoryLoading} = useGetAllCategoriesQuery();
+
   const [confirmDelete] = useConfirmDeleteMutation();
   const searchRef = useRef();
   const label = "Sort";
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
+
+  console.log("This is the products: ", products);
+  console.log("This is the categories: ", categories);
 
   const handleDeleteClick = (product) => {
     setSelectedProduct(product);
@@ -59,13 +71,19 @@ function ProductPage() {
   };
 
   const productList =
-    isSearching || !products
-      ? []
-      : products?.item?.map((item) => ({
-          Name: item.name,
-          Category: item.categoryId,
+  isSearching || !products || isCategoryLoading
+    ? []
+    : [...products.item] // Clone the array to avoid mutating the original one
+        ?.sort((a, b) =>
+          new Date(selectState === 0 ? b.createdAt : a.createdAt) - 
+          new Date(selectState === 0 ? a.createdAt : b.createdAt)
+        )
+        .map((item) => ({
+          "Product Name": item.name,
+          Category: categories?.data?.find((category) => item.categoryId === category.categoryId)?.name || "N/A",
+          // Category: categories[0].data.name,
           Quantity: item.quantity,
-          Price: item.price,
+          Price: `$${item.price}`,
           edit: (
             <EditIcon
               sx={{ cursor: "pointer" }}
@@ -88,6 +106,7 @@ function ProductPage() {
             />
           ),
         })) || [];
+
 
   const handleSearch = () => {
     setIsLoadingSearch(true);

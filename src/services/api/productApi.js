@@ -26,7 +26,7 @@ export const productApi = createApi({
 
         // Include order only if it's defined
         if (order) {
-          const dataOrder = order === "Newest" ? "desc" : "asc";
+          const dataOrder = order === "Newest" ? "DESC" : "ASC";
           url += `&order=${dataOrder}`;
         }
 

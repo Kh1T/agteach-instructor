@@ -268,7 +268,9 @@ export default function Sidebar({ children }) {
               avatar={<Avatar src={profileImage} label="Avatar" />}
               label={
                 instructorInfo?.firstName
-                  ? instructorInfo?.firstName
+                  ? instructorInfo?.firstName.length > 6 ? 
+                  instructorInfo?.firstName.slice(0, 6) + '...' :
+                  instructorInfo?.firstName
                   : "Instructor"
               }
               sx={{

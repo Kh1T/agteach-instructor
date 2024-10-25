@@ -4,7 +4,7 @@ import QueryHeader from "../components/QueryHeader";
 import CustomTable from "../components/CustomTable";
 import CustomChip from "../components/CustomChip";
 import { useGetPurchasedProductQuery, useGetPurchasedDetailsQuery } from "../services/api/productApi";
-import emptyProduct from "../assets/Spooky Stickers Sweet Franky.png";
+import emptyProduct from "../assets/spooky-stickers-sweet-franky.png";
 import { useNavigate } from "react-router";
 import CustomButton from "../components/CustomButton";
 
