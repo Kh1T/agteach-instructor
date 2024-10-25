@@ -48,7 +48,7 @@ export default function AboutCourse() {
       <Divider sx={{ my: 2 }} />
       <TextSection
         title="Let's craft a course title"
-        description="Crafted a good title would help your content engage more students."
+        description="Craft a good title would help your content engage more students."
       />
       <TextField
         sx={{ my: 2 }}
@@ -76,7 +76,7 @@ export default function AboutCourse() {
       <Box mt={4}>
         <TextSection
           title="Tell us more about your course"
-          description="Crafted a good title would help your content engage more students."
+          description="It is important to describe your course in detail so that it is easy for students to understand the course."
         />
         <TextField
           id="description"
