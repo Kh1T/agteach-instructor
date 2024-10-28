@@ -45,9 +45,6 @@ function ProductPage() {
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
 
-  console.log("This is the products: ", products);
-  console.log("This is the categories: ", categories);
-
   const handleDeleteClick = (product) => {
     setSelectedProduct(product);
     setOpenDialog(true);

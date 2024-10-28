@@ -13,7 +13,6 @@ import { setEmail } from "./features/user/userSlice";
 function App() {
   const dispatch = useDispatch();
   const { data, isLoading } = useIsLoginQuery();
-  console.log("islogin", data);
 
   useEffect(() => {
     if (data && !isLoading) {
