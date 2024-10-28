@@ -97,8 +97,6 @@ export const courseApi = createApi({
         if (order !== "Newest") {
           url += `&order=${order}`;
         } 
-      
-        console.log("API Request URL:", url); // Log the final URL
         return { url, method: "GET" };
       },
     }),

@@ -161,7 +161,6 @@ function SettingPage() {
   //*********************************************************/
   // Handle Basic Info Submission
   const handleBasicInfoSubmission = async (data) => {
-    console.log(data);
     try {
       setLoading((prev) => ({ ...prev, basicInfo: true }));
       await updateInfo(data).unwrap();

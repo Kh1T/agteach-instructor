@@ -14,7 +14,7 @@ import profileImg from "../assets/folder-sticker.png";
 function EnrollmentDetailPage() {
   const { enrollmentId } = useParams();
 
-  console.log("courseId from params:", enrollmentId);
+
   const { data: enrollmentData, isLoading: isLoadingPurchased } =
     useGetEnrollmentCourseQuery();
 
@@ -23,9 +23,6 @@ function EnrollmentDetailPage() {
     isLoading: isLoadingDetails,
     error,
   } = useGetEnrollmentDetailsQuery(enrollmentId);
-
-  console.log("Enrollment Details: ", enrollmentDetails?.students);
-  console.log("Enrollment Details: ", enrollmentDetails);
 
   if (error) {
     console.error("API Error:", error);
@@ -48,9 +45,6 @@ function EnrollmentDetailPage() {
     Array.isArray(enrollmentDetails.enrollmentDetails)
       ? enrollmentDetails.enrollmentDetails
       : [];
-
-  // Log processed enrollment items
-  console.log("Processed Enrollment Items: ", enrollmentItems);
 
   // Combine customer data with enrollmentDetails
   const combinedEnrollmentDetails = useMemo(() => {

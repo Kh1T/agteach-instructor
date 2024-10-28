@@ -25,7 +25,6 @@ function EnromentPage() {
     order: selectState,
   });
 
-  console.log("order ", selectState);
 
   let enrollmentList = [];
   if (!isLoading && enrollmentData) {
@@ -64,8 +63,6 @@ function EnromentPage() {
       ),
     }));
   }
-
-  console.log("Enrollment List: ", enrollmentList);
 
   // Handle Select Change
   const handleSelectChange = (event) => {
