@@ -10,9 +10,7 @@ import EnromentPage from "../pages/Enrollment";
 import BalancePage from "../pages/Balance";
 import SettingPage from "../pages/Setting";
 import NewProductPage from "../pages/NewProduct";
-import EditProductPage from "../pages/EditProduct";
 import NewCoursePage from "../pages/NewCourse";
-import EditCoursePage from "../pages/EditCourse";
 import ForgotPassword from "../pages/ForgotPassword";
 import Signup from "../pages/Signup";
 import AdditionalInformation from "../pages/AdditionalInformation";
@@ -35,13 +33,11 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <DashboardPage /> },
       { path: "course", element: <CoursePage /> },
-      { path: "course/new", element: <NewCoursePage /> },
-      { path: "course/:courseId/edit", element: <EditCoursePage /> },
+      { path: "course/:action", element: <NewCoursePage /> }, // action: "new" or "edit/:courseId"
       { path: "product", element: <ProductPage /> },
       { path: "product/new", element: <NewProductPage /> },
-      { path: "product/:productId/edit", element: <EditProductPage /> },
       { path: "purchased", element: <PurchasedPage /> },
-      { path: "purchased/:purchaseId", element: <PurchasedDetailPage /> },
+      { path: "/purchased/:purchasedId/:customerId", element: <PurchasedDetailPage /> },
       { path: "enrollment", element: <EnromentPage /> },
       { path: "enrollment/:enrollmentId", element: <EnrollmentDetailPage /> },
       { path: "balance", element: <BalancePage /> },

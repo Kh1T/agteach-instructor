@@ -1,363 +1,458 @@
-import {
-  Avatar,
-  Grid2 as Grid,
-  Typography,
-  Stack,
-  MenuItem,
-  Divider,
-  Box,
-  TextField,
-} from "@mui/material";
 import { useEffect, useState } from "react";
-import AvatarImg from "../assets/dashboard-setting/profile-img.png";
-import CustomButton from "../components/CustomButton";
-import CustomFileUpload from "../components/CustomFileUpload";
+import { Controller, useForm } from "react-hook-form";
 import {
   useGetInstructorInfoQuery,
+  useGetLocationsQuery,
+  useUpdateInstructorInfoMutation,
   useUpdateInstructorPasswordMutation,
 } from "../services/api/authApi";
-import { useForm } from "react-hook-form";
-import FormInput from "../components/login-signup/FormInput";
+
+import {
+  Avatar,
+  Grid,
+  Typography,
+  Stack,
+  TextField,
+  Box,
+  Divider,
+  FormControl,
+  Select,
+  MenuItem,
+  FormHelperText,
+  InputLabel,
+} from "@mui/material";
+
 import { CustomAlert } from "../components/CustomAlert";
+import CustomButton from "../components/CustomButton";
+import CustomFileUpload from "../components/CustomFileUpload";
+import FormInput from "../components/login-signup/FormInput";
+import { validate } from "uuid";
+import TextInput from "../components/login-signup/TextInputComponent";
 
 function SettingPage() {
-  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
-  const [showNewPasswords, setShowNewPasswords] = useState(false);
-  const [open, setOpen] = useState(false);
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState("");
-  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
-
-  const handleCloseSnackbar = () => {
-    setSnackbarOpen(false);
-  };
-
-  const [profileImg, setProfileImg] = useState(AvatarImg);
-
-  const [updateInstructorPassword] = useUpdateInstructorPasswordMutation();
-
-  const handleImageUpload = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setProfileImg(imageUrl); // Update state with the new image URL
-    }
-  };
-
+  // BasicInfo From Control
+  //******************************************************** */
   const {
-    register: basicInfoRegister,
+    control,
+    register: registerBasicInfo,
     handleSubmit: handleBasicInfoSubmit,
+    reset: resetBasicInfo,
     formState: { errors: basicInfoErrors },
-    reset: basicInfoReset,
   } = useForm();
 
+  //******************************************************** */
+  // Password From Control
   const {
-    register: securityRegister,
+    register: registerSecurity,
     handleSubmit: handleSecuritySubmit,
+    reset: resetSecurity,
     formState: { errors: securityErrors },
     watch,
-    reset: securityReset,
   } = useForm();
 
-  const handleBasicInfoReset = (instructorInfo) => {
-    basicInfoReset({
-      firstName: instructorInfo.firstName,
-      lastName: instructorInfo.lastName,
-      bio: instructorInfo.bio || "",
-      phone: instructorInfo.phone || "",
-      address: instructorInfo.address || "",
-      location: instructorInfo.location_id || "",
-      city: instructorInfo.city || "",
-    });
-  };
+  //******************************************************** */
+  // API Instructor Update
+  const {
+    data: instructorData,
+    refetch,
+    isLoading,
+  } = useGetInstructorInfoQuery();
+  const [updateInfo] = useUpdateInstructorInfoMutation();
 
-  const handleSecurityReset = (instructorInfo) => {
-    securityReset({
-      email: instructorInfo.email,
-      currentPassword: "",
-      newPassword: "",
-      confirmNewPassword: "",
-    });
-  };
+  //******************************************************** */
+  //API Password Update
+  const [updatePassword, { isLoading: isUpdatingPassword }] =
+    useUpdateInstructorPasswordMutation();
+  //******************************************************** */
 
-  const { data, isLoading: isAccountInformationLoading } =
-    useGetInstructorInfoQuery();
-  let instructorInfo = {};
+  const { data: locationData } = useGetLocationsQuery();
 
+  //******************************************************** */
+
+  // State Management
+  const [isPasswordVisible, setIsPasswordVisible] = useState({
+    current: false,
+    new: false,
+  });
+  const [isImageSelected, setIsImageSelected] = useState(false);
+  const [profileImage, setProfileImage] = useState("");
+  const [loading, setLoading] = useState({
+    profileImg: false,
+    basicInfo: false,
+  });
+
+  //*********************************************************/
+
+  // MUI Component State Management
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "success",
+  });
+
+  const [dialogOpen, setDialogOpen] = useState(false);
+
+  //*********************************************************/
+  //Data Destructuring
+
+  const locations = locationData?.data || [];
+  const instructorInfo = instructorData?.data?.instructor;
+
+  //*********************************************************/
+
+  // Populate form on mount with instructor's info
   useEffect(() => {
-    if (data) {
-      instructorInfo = data.data.instructor;
-      handleBasicInfoReset(instructorInfo);
-      handleSecurityReset(instructorInfo);
+    if (!isLoading) {
+      try {
+        resetBasicInfo({
+          firstName: instructorInfo?.firstName,
+          lastName: instructorInfo?.lastName,
+          bio: instructorInfo?.bio || "",
+          phone: instructorInfo?.phone || "",
+          address: instructorInfo?.address || "",
+          locationId: instructorInfo?.location?.locationId,
+        });
+        resetSecurity({
+          email: instructorInfo.email,
+          currentPassword: "",
+          newPassword: "",
+          confirmNewPassword: "",
+        });
+      } catch (error) {
+        console.log("An error occured", error);
+      }
+      setProfileImage(`${instructorInfo.imageUrl}?${new Date().getTime()}`);
     }
-  }, [data]);
+  }, [instructorInfo, isLoading, resetBasicInfo, resetSecurity]);
 
-  const handleSubmitUpdateBasicInfo = (data) => {
-    console.log(data);
-  };
+  // Image Upload Handler
+  const handleImageUpload = async (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
 
-  const handleSubmitUpdatePassword = async (data) => {
-    const { currentPassword, newPassword, confirmNewPassword } = data;
+    setIsImageSelected(true);
+    setProfileImage(URL.createObjectURL(file));
+
+    const formData = new FormData();
+    formData.append("photo", file);
 
     try {
-      const response = await updateInstructorPassword({
+      setLoading((prev) => ({ ...prev, profileImg: true }));
+      await updateInfo(formData).unwrap();
+      refetch();
+      setSnackbar({
+        open: true,
+        message: "Profile image updated successfully",
+        severity: "success",
+      });
+    } catch (error) {
+      setSnackbar({
+        open: true,
+        message: "Error uploading image",
+        severity: "error",
+      });
+    } finally {
+      setLoading((prev) => ({ ...prev, profileImg: false }));
+      setDialogOpen(false);
+      setIsImageSelected(false);
+    }
+  };
+
+  //*********************************************************/
+  // Handle Basic Info Submission
+  const handleBasicInfoSubmission = async (data) => {
+    try {
+      setLoading((prev) => ({ ...prev, basicInfo: true }));
+      await updateInfo(data).unwrap();
+      refetch();
+      setSnackbar({
+        open: true,
+        message: "Information updated successfully",
+        severity: "success",
+      });
+    } catch (error) {
+      setSnackbar({
+        open: true,
+        message: "Error updating information",
+        severity: "error",
+      });
+    } finally {
+      setLoading((prev) => ({ ...prev, basicInfo: false }));
+    }
+  };
+
+  //*********************************************************/
+  // Handle Password Submission
+  const handlePasswordSubmit = async (data) => {
+    const { currentPassword, newPassword, confirmNewPassword } = data;
+    try {
+      const response = await updatePassword({
         passwordCurrent: currentPassword,
         password: newPassword,
         passwordConfirm: confirmNewPassword,
       }).unwrap();
-      if (response?.status === "success") {
-        setSnackbarSeverity("success");
-        setSnackbarMessage("Password was updated successfully");
-        securityReset();
-      } else {
-        setSnackbarSeverity("error");
-        setSnackbarMessage("Something went wrong");
+
+      if (response.status === "success") {
+        setSnackbar({
+          open: true,
+          message: "Password updated successfully",
+          severity: "success",
+        });
+        resetSecurity();
       }
     } catch (err) {
-      setSnackbarSeverity("error");
-      setSnackbarMessage(err.data?.message);
-    } finally {
-      setSnackbarOpen(true);
+      setSnackbar({
+        open: true,
+        message: "Error updating password",
+        severity: "error",
+      });
     }
   };
 
-  let content = (
-    <Stack
-      sx={{
-        width: "100%",
-        height: "calc(100vh - 160px)",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      Loading...
-    </Stack>
-  );
+  const validatePhone = (value) => {
+    const phonePattern = /^[0-9]+$/; // Only digits
+    if (!value) return true; // Allow empty input if not required
+    if (value.length > 15) return "Phone number cannot exceed 15 digits";
+    if (value?.length < 8)
+      return "A Valid phone number should contains atleast 8 digits";
+    return phonePattern.test(value) || "Please enter a valid phone number";
+  };
 
-  if (!isAccountInformationLoading) {
-    content = (
-      <Grid container direction="column" gap={5} pb={4}>
+  //*********************************************************/
+  if (isLoading) return <Typography>Loading...</Typography>;
+  return (
+    <Box mb={15}>
+      <Grid container direction="column" gap={5}>
         {/* Profile Section */}
-        <Grid container direction="column" gap={2} alignContent="start">
-          <Typography variant="h5">Profile</Typography>
+        <Stack spacing={2} width="140px">
+          <Typography variant="h5" color="primary">
+            Profile
+          </Typography>
           <Avatar
-            sx={{ width: "140px", height: "140px" }}
-            src={profileImg}
+            src={profileImage}
             variant="square"
+            sx={{ width: 140, height: 140 }}
           />
           <CustomButton
-            sx={{ borderColor: "blue.main", color: "blue.main" }}
             variant="outlined"
-            onClick={() => setOpen(true)}
+            sx={{ color: "blue.main", borderColor: "blue.main" }}
+            onClick={() => setDialogOpen(true)}
           >
-            CHANGE
+            {loading.profileImg && isImageSelected ? "CHANGING..." : "CHANGE"}
           </CustomButton>
-          <CustomFileUpload
-            open={open}
-            handleClose={() => setOpen(false)}
-            onChange={handleImageUpload}
-          />
-        </Grid>
+          {dialogOpen && !isImageSelected && (
+            <CustomFileUpload
+              open={dialogOpen}
+              handleClose={() => setDialogOpen(false)}
+              onChange={handleImageUpload}
+            />
+          )}
+        </Stack>
 
-        {/* Information Section */}
-        <Grid container direction="column" gap={5}>
+        {/* Basic Info Form */}
+        <form onSubmit={handleBasicInfoSubmit(handleBasicInfoSubmission)}>
           <Stack spacing={2}>
-            <Typography variant="h5">Personal Information</Typography>
+            <Typography variant="h5" color="primary">
+              Personal Information
+            </Typography>
             <Stack direction="row" gap={2}>
-              <Grid item container size={4} gap={2}>
+              <Stack gap={2} width="50%">
                 <TextField
                   label="First Name"
                   fullWidth
-                  {...basicInfoRegister("firstName", {
-                    required: "Firstname is required",
+                  {...registerBasicInfo("firstName", {
+                    required: "First name is required",
                   })}
+                  error={!!basicInfoErrors.firstName}
                   helperText={basicInfoErrors.firstName?.message}
-                  error={basicInfoErrors.firstName}
                 />
-
                 <TextField
                   label="Last Name"
                   fullWidth
-                  {...basicInfoRegister("lastName", {
-                    required: "Lastname is required",
+                  {...registerBasicInfo("lastName", {
+                    required: "Last name is required",
                   })}
+                  error={!!basicInfoErrors.lastName}
                   helperText={basicInfoErrors.lastName?.message}
-                  error={basicInfoErrors.lastName}
-                />
-              </Grid>
-
-              <Grid item size={7} width="100%">
-                <TextField
-                  multiline
-                  rows={4}
-                  fullWidth
-                  label="Bio"
-                  {...basicInfoRegister("bio", {})}
-                />
-              </Grid>
-            </Stack>
-          </Stack>
-
-          {/* Address Information Section */}
-
-          <Stack gap={2}>
-            <Typography variant="h5">Address Information</Typography>
-            <TextField
-              label="Address"
-              {...basicInfoRegister("address", {
-                required: "address is required",
-              })}
-              helperText={basicInfoErrors.address?.message}
-              error={basicInfoErrors.address}
-            />
-
-            <TextField label="Location" noValidate autoComplete="off" select>
-              <MenuItem value="Phnom Penh">Phnom Penh</MenuItem>
-            </TextField>
-          </Stack>
-
-          {/* Contact Information Section */}
-          <Stack gap={2}>
-            <Typography variant="h5">Contact Information</Typography>
-            <TextField
-              label="Phone Number"
-              disabled
-              {...basicInfoRegister("phone", {
-                required: "phone is required",
-                maxLength: 13,
-                minLength: 11,
-              })}
-            />
-          </Stack>
-
-          {/* Button */}
-
-          <Grid container gap={2} justifyContent="end">
-            <CustomButton
-              sx={{ backgroundColor: "blue.main" }}
-              variant="contained"
-              size="large"
-            >
-              SAVE CHANGES
-            </CustomButton>
-            <CustomButton
-              sx={{ borderColor: "blue.main", color: "blue.main" }}
-              variant="outlined"
-              size="large"
-              onClick={() => handleSecurityReset(instructorInfo)}
-            >
-              CANCEL
-            </CustomButton>
-          </Grid>
-        </Grid>
-
-        <Divider />
-
-        {/* Acount Security */}
-        <form onSubmit={handleSecuritySubmit(handleSubmitUpdatePassword)}>
-          <Stack container gap={2} sx={{ mb: "80px" }}>
-            <Typography variant="h5">Account Security</Typography>
-
-            <Stack gap={2} width={"full"}>
-              <TextField
-                disabled
-                label="Email"
-                {...securityRegister("email", {
-                  required: "Email is required",
-                })}
-              />
-
-              <Stack gap={2} width={"full"}>
-                <FormInput
-                  label="Current Password"
-                  type="password"
-                  handleClickShowPassword={() =>
-                    setShowCurrentPassword(!showCurrentPassword)
-                  }
-                  {...securityRegister("currentPassword", {
-                    required: "Current password is required",
-                  })}
-                  helperText={securityErrors.currentPassword?.message}
-                  error={securityErrors.currentPassword}
-                  showPassword={showCurrentPassword}
-                />
-
-                <FormInput
-                  label="New Password"
-                  type="password"
-                  handleClickShowPassword={() =>
-                    setShowNewPasswords(!showNewPasswords)
-                  }
-                  {...securityRegister("newPassword", {
-                    required: "New password is required",
-                    minLength: {
-                      value: 8,
-                      message:
-                        "New password must be at least 8 characters long",
-                    },
-                  })}
-                  helperText={securityErrors.newPassword?.message}
-                  error={securityErrors.newPassword}
-                  showPassword={showNewPasswords}
-                />
-
-                <FormInput
-                  label="Confirm New Password"
-                  type="password"
-                  handleClickShowPassword={() =>
-                    setShowNewPasswords(!showNewPasswords)
-                  }
-                  {...securityRegister("confirmNewPassword", {
-                    required: "New password confirmation is required",
-                    validate: (value) =>
-                      value === watch("newPassword") || "Passwords don't match",
-                  })}
-                  helperText={securityErrors.confirmNewPassword?.message}
-                  error={securityErrors.confirmNewPassword}
-                  showPassword={showNewPasswords}
                 />
               </Stack>
+              <TextField
+                multiline
+                rows={4}
+                label="Bio"
+                fullWidth
+                {...registerBasicInfo("bio")}
+              />
             </Stack>
-            <Grid
-              container
-              width="100%"
-              gap={2}
-              direction="row"
-              justifyContent="end"
-            >
+
+            {/* Address Information */}
+            <Typography variant="h5" pt={2} color="primary">
+              Address Information
+            </Typography>
+            <TextField
+              label="Address"
+              fullWidth
+              {...registerBasicInfo("address", {
+                required: "Address is required",
+              })}
+              error={!!basicInfoErrors.address}
+              helperText={basicInfoErrors.address?.message}
+            />
+            <FormControl fullWidth>
+              <InputLabel>City</InputLabel>
+              <Controller
+                name="locationId"
+                control={control}
+                defaultValue=""
+                rules={{
+                  validate: (value) =>
+                    value
+                      ? locations.some((city) => city.locationId === value) ||
+                        "Please provide a valid city"
+                      : "Please select a city",
+                }}
+                render={({ field }) => (
+                  <Select {...field} label="City">
+                    {locations.map((city) => (
+                      <MenuItem key={city.locationId} value={city.locationId}>
+                        {city.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                )}
+              />
+
+              <FormHelperText>{basicInfoErrors?.city?.message}</FormHelperText>
+            </FormControl>
+
+            <Typography variant="h5" pt={2} color="primary">
+              Contact Information
+            </Typography>
+            <FormControl variant="outlined" error={!!basicInfoErrors?.phone}>
+              <TextInput
+                id="phone-number"
+                label="Phone Number"
+                placeholder="e.g. 1234567890"
+                {...registerBasicInfo("phone", {
+                  required: "Phone number is required",
+                  validate: validatePhone,
+                })}
+              />
+              {basicInfoErrors.phone && (
+                <FormHelperText>
+                  {basicInfoErrors?.phone?.message}
+                </FormHelperText>
+              )}
+            </FormControl>
+            <Box display="flex" justifyContent="flex-end" gap={2}>
               <CustomButton
                 type="submit"
-                sx={{ backgroundColor: "blue.main" }}
                 variant="contained"
-                size="large"
+                sx={{ bgcolor: "blue.main" }}
               >
-                SAVE CHANGES
+                {loading.basicInfo ? "SAVING..." : "SAVE CHANGES"}
               </CustomButton>
               <CustomButton
-                sx={{ borderColor: "blue.main", color: "blue.main" }}
                 variant="outlined"
-                size="large"
-                onClick={() => handleSecurityReset(instructorInfo)}
+                sx={{ color: "blue.main", borderColor: "blue.main" }}
+                onClick={() => resetBasicInfo()}
               >
                 CANCEL
               </CustomButton>
-            </Grid>
+            </Box>
           </Stack>
         </form>
 
-        {/* Snackbar for displaying messages */}
-        <CustomAlert
-          label={snackbarMessage}
-          open={snackbarOpen}
-          onClose={handleCloseSnackbar}
-          severity={snackbarSeverity}
-        />
-      </Grid>
-    );
-  }
+        <Divider />
 
-  return <div>{content}</div>;
+        {/* Security Form */}
+        <form onSubmit={handleSecuritySubmit(handlePasswordSubmit)}>
+          <Stack spacing={2}>
+            <Typography variant="h5" color="primary">
+              Account Security
+            </Typography>
+            <TextField label="Email" disabled {...registerSecurity("email")} />
+            <FormInput
+              label="Current Password"
+              type="password"
+              handleClickShowPassword={() =>
+                setIsPasswordVisible((prev) => ({
+                  ...prev,
+                  current: !prev.current,
+                }))
+              }
+              {...registerSecurity("currentPassword", {
+                required: "Current password is required",
+              })}
+              error={!!securityErrors.currentPassword}
+              helperText={securityErrors.currentPassword?.message}
+              showPassword={isPasswordVisible.current}
+            />
+            <FormInput
+              label="New Password"
+              type="password"
+              handleClickShowPassword={() =>
+                setIsPasswordVisible((prev) => ({ ...prev, new: !prev.new }))
+              }
+              {...registerSecurity("newPassword", {
+                required: "New password is required",
+                minLength: {
+                  value: 8,
+                  message: "Password must be at least 8 characters",
+                },
+              })}
+              error={!!securityErrors.newPassword}
+              helperText={securityErrors.newPassword?.message}
+              showPassword={isPasswordVisible.new}
+            />
+            <FormInput
+              label="Confirm New Password"
+              type="password"
+              handleClickShowPassword={() =>
+                setIsPasswordVisible((prev) => ({ ...prev, new: !prev.new }))
+              }
+              {...registerSecurity("confirmNewPassword", {
+                required: "Please confirm the new password",
+                validate: (value) =>
+                  value === watch("newPassword") || "Passwords do not match",
+              })}
+              error={!!securityErrors.confirmNewPassword}
+              helperText={securityErrors.confirmNewPassword?.message}
+              showPassword={isPasswordVisible.new}
+            />
+            <Box display="flex" justifyContent="flex-end" gap={2}>
+              <CustomButton
+                type="submit"
+                variant="contained"
+                sx={{ bgcolor: "blue.main" }}
+              >
+                {isUpdatingPassword ? "SAVING..." : "SAVE CHANGES"}
+              </CustomButton>
+              <CustomButton
+                variant="outlined"
+                sx={{ color: "blue.main", borderColor: "blue.main" }}
+                onClick={() => resetSecurity()}
+              >
+                CANCEL
+              </CustomButton>
+            </Box>
+          </Stack>
+        </form>
+      </Grid>
+
+      {/* Snackbar Alert */}
+      {snackbar.open && (
+        <CustomAlert
+          label={snackbar.message}
+          severity={snackbar.severity}
+          open={snackbar.open}
+          onClose={() =>
+            setSnackbar({ open: false, message: "", severity: "success" })
+          }
+        />
+      )}
+    </Box>
+  );
 }
 
 export default SettingPage;

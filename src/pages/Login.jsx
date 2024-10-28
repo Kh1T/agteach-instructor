@@ -7,19 +7,18 @@ import {
   Stack,
   Button,
 } from "@mui/material";
-
 import { useForm } from "react-hook-form";
 import FormInput from "../components/login-signup/FormInput";
-import CustomInputField from "../components/CustomInputField";
 import SideBarImg from "../components/SideBarImg";
 import { Link } from "react-router-dom";
-import CustomButton from "../components/CustomButton";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useLoginMutation } from "../services/api/authApi";
 import { CustomAlert } from "../components/CustomAlert";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { checkLoginStatus } from "../features/user/authSlice";
+import AgTeachLogo from "../assets/agteach.png";
+import { setEmail } from "../features/user/userSlice";
 
 function LoginPage() {
   const [login, { isLoading, isError }] = useLoginMutation();
@@ -31,25 +30,35 @@ function LoginPage() {
     register,
     handleSubmit,
     setError,
+    watch,
     formState: { errors },
   } = useForm({
     defaultValues: {
       email: "",
       password: "",
+      keepMeLoggedIn: false,
     },
   });
 
   const handleShowPassword = () => setShowPassword((prev) => !prev);
 
   const submitHandler = async (data) => {
-    console.log(data);
     try {
-      const response = await login(data).unwrap();
-      console.log("Login successful", response);
-      dispatch(checkLoginStatus(true));
-      navigator("/");
+      const res = await login(data).unwrap();
+      console.log("res", res.data.user.isVerify);
+      if (res.token) {
+        let verification = res?.data?.user?.isVerify;
+        dispatch(
+          checkLoginStatus({ IsAuthenticated: true, IsVerify: verification })
+        );
+        dispatch(setEmail(watch("email")));
+        if (verification) {
+          navigator("/");
+          return;
+        }
+        navigator("/auth/signup/verification");
+      }
     } catch (error) {
-      console.error("Incorrect email or password", error);
       setOpen(true);
       setError(
         "email",
@@ -64,9 +73,6 @@ function LoginPage() {
     }
   };
 
-  const { isAuthenticated } = useSelector((state) => state.auth);
-  console.log('login',isAuthenticated);
-
   return (
     <Grid
       container
@@ -74,37 +80,41 @@ function LoginPage() {
       alignItems="center"
       sx={{
         justifyContent: { xs: "center", md: "center", lg: "start" },
+        flexWrap: "nowrap",
         mx: { xs: 2, md: 0, lg: 0 },
       }}
-      mt={{ xs: 50, md: 50, lg: 0 }}
+      mt={{ xs: 5, md: 30, lg: 0 }}
+      mb={5}
       spacing={10}
     >
       <CustomAlert
-        label={
-          isError
-            ? "Incorrect email or password."
-            : "Login Successful!"
-        }
+        label={isError ? "Incorrect email or password." : "Login Successful!"}
         severity={isError ? "error" : "success"}
         onClose={() => setOpen(false)}
         open={open}
       />
-      <Grid sx={{ display: { xs: "none", md: "none", lg: "block" } }}>
+      <Grid
+        item
+        xs={12}
+        md={6}
+        sx={{ width: "100%", display: { xs: "none", md: "none", lg: "block" } }}
+      >
         <SideBarImg />
       </Grid>
-      <Grid>
+      <Grid
+        item
+        xs={12}
+        md={6}
+        sx={{ width: "100%", display: "flex", justifyContent: "center" }}
+      >
         <Stack>
-          <Box
-            display="flex"
-            flexDirection="column"
-            textAlign="center"
-            gap="20px"
-          >
+          <Stack textAlign="center" py={3} gap={1} alignItems="center">
+            <Box component="img" src={AgTeachLogo} sx={{ width: "100px", mb: 5 }} />
             <Typography variant="h1">Welcome back Instructor</Typography>
             <Typography color="dark.300">
               Please login to continue to your account.
             </Typography>
-          </Box>
+          </Stack>
           <Box>
             <form
               onSubmit={handleSubmit(submitHandler)}
@@ -139,7 +149,7 @@ function LoginPage() {
               />
 
               <FormControlLabel
-                control={<Checkbox value="remember" />}
+                control={<Checkbox {...register("keepMeLoggedIn")} />}
                 label="Keep me logged in"
               />
               <Link to="/auth/forgot-password">Forgot Password?</Link>

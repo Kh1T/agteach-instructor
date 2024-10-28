@@ -1,11 +1,13 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { API_BASE_URL } from "../../constants/apiConstant";
 
 export const authApi = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://api.agteach.site",
-    credentials: "include", // Move this line here
+    baseUrl: API_BASE_URL,
+    credentials: "include",
   }),
+  tagTypes: ["Instructor"],
   endpoints: (builder) => ({
     signup: builder.mutation({
       query: (signupData) => ({
@@ -13,6 +15,7 @@ export const authApi = createApi({
         method: "POST",
         body: signupData,
       }),
+      invalidatesTags: ["Instructor"],
     }),
 
     login: builder.mutation({
@@ -20,7 +23,6 @@ export const authApi = createApi({
         url: "/api/users/login",
         method: "POST",
         body: loginData,
-        headers: { "X-Frontend-URL": window.location },
       }),
     }),
 
@@ -82,6 +84,23 @@ export const authApi = createApi({
       query: () => ({
         url: "/api/users/isLoginedIn",
         method: "GET",
+        // headers: { "X-Frontend-URL": window.location },
+      }),
+    }),
+
+    updateInstructorInfo: builder.mutation({
+      query: (additionalInfoData) => ({
+        url: "/api/instructor/updateMe",
+        method: "PATCH",
+        body: additionalInfoData,
+      }),
+      invalidatesTags: ["Instructor"],
+    }),
+
+    getLocations: builder.query({
+      query: () => ({
+        url: "/api/users/getLocation",
+        method: "GET",
       }),
     }),
 
@@ -100,11 +119,13 @@ export const {
   useResetPasswordMutation,
   useSignupMutation,
   useLoginMutation,
+  useGetLocationsQuery,
   useLogoutMutation,
   useVerifyEmailMutation,
   useResendVerifyCodeMutation,
   useAdditionalInfoMutation,
   useGetInstructorInfoQuery,
+  useUpdateInstructorInfoMutation,
   useIsLoginQuery,
   useUpdateInstructorPasswordMutation,
 } = authApi;

@@ -27,6 +27,14 @@ export default function QueryHeader({
   placeholder = "Search",
   isCreateNew = false,
 }) {
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      handleSearch(); // Trigger search when Enter is pressed
+    }
+  };
+
+
   // const selectComponent =
   const content = (
     <Stack direction="row" sx={{ justifyContent: "space-between", mb: 2 }}>
@@ -38,6 +46,7 @@ export default function QueryHeader({
           placeholder={placeholder}
           inputRef={searchRef}
           sx={{ width: 300 }}
+          onKeyDown={handleKeyDown}  
         />
         <CustomSelect
           label="Sort"
@@ -61,7 +70,7 @@ export default function QueryHeader({
           variant="contained"
           sx={{ backgroundColor: "purple.main", textTransform: "uppercase" ,height: "100%"}}
           // handleCreateNew={handleCreateNew}
-          path={pathCreated}
+          path={pathCreated === "/" ? "/course/new" : pathCreated}
         >
           {labelCreate}
           <AddIcon sx={{ ml: 1 }} />
