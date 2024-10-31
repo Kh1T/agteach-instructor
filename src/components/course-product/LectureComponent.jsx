@@ -59,7 +59,7 @@ export default function LectureComponent({
           <strong>Lecture {lectureNumber}:</strong> Write your lecture title
           below
         </Typography>
-        <Delete color="red" onClick={handleOpenModal} />
+        <Delete color="red" sx={{ cursor: "pointer" }} onClick={handleOpenModal} />
       </Stack>
       <TextField
         fullWidth
