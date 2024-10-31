@@ -20,11 +20,12 @@ export default function ProductQuantity({ register, errors, watch, setValue }) {
   const quantity = watch("quantity", "");
 
   const handleIncrease = () => {
-    setValue("quantity", parseInt(quantity || 0) + 1);
+    if (quantity < 10000) setValue("quantity", parseInt(quantity || 0) + 1);
   };
 
   const handleDecrease = () => {
-    setValue("quantity", Math.max(0, parseInt(quantity || 0) - 1));
+    if (quantity > 0)
+      setValue("quantity", Math.max(0, parseInt(quantity || 0) - 1));
   };
 
   const handleQuantityChange = (e) => {
@@ -64,13 +65,21 @@ export default function ProductQuantity({ register, errors, watch, setValue }) {
           helperText={errors.quantity?.message}
         />
         <Button
-          sx={{ color: "white", backgroundColor: "grey", height: "56px" }}
+          sx={{
+            color: "white",
+            backgroundColor: quantity <= 0 ? "grey" : "black",
+            height: "56px",
+          }}
           onClick={handleDecrease}
         >
           <Remove />
         </Button>
         <Button
-          sx={{ color: "white", backgroundColor: "black", height: "56px" }}
+          sx={{
+            color: "white",
+            backgroundColor: quantity >= 10000 ? "grey" : "black",
+            height: "56px",
+          }}
           onClick={handleIncrease}
         >
           <Add />
