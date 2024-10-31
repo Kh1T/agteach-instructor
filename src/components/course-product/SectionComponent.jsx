@@ -86,7 +86,7 @@ export default function SectionComponent({
         <Typography variant="blgr">
           <strong>Section {number}:</strong> Write your section title below
         </Typography>
-        <MoreVertRounded onClick={handleClickOnVert} />
+        <MoreVertRounded onClick={handleClickOnVert} sx={{ cursor: "pointer" }} />
         {showDelete && (
           <Stack
             onClick={handleOpenModal}
@@ -101,6 +101,7 @@ export default function SectionComponent({
               p: 1,
               gap: 1,
               justifyItems: "center",
+              cursor: "pointer",
             }}
           >
             <Delete color="error" />

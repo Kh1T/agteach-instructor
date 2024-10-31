@@ -1,4 +1,12 @@
-import { Box, Divider, TextField, Typography, Stack, Snackbar, Alert } from "@mui/material";
+import {
+  Box,
+  Divider,
+  TextField,
+  Typography,
+  Stack,
+  Snackbar,
+  Alert,
+} from "@mui/material";
 import { useState, useEffect } from "react";
 import ProductCard from "./ProductCard";
 import ButtonComponent from "../course-product/ButtonInBox";
@@ -103,7 +111,11 @@ export default function RelatedProduct({ courseData }) {
         title="Suggest products for practical learning"
         description="Recommend products that are relevant to this course where students can buy for practical learning"
       />
-
+      <Typography component="ul">
+        <Typography component="li" color="dark.300" variant="bsr">
+          NOTE: If you don't have any product available, you can add them later
+        </Typography>
+      </Typography>
       <Divider sx={{ my: 3 }} />
 
       <AddedProduct
@@ -125,18 +137,18 @@ export default function RelatedProduct({ courseData }) {
       <Stack mt={3} direction="column" gap={1}>
         {searchResults.length > 0 ? (
           <>
-          <Stack mt={3} direction="row" gap={1} flexWrap="wrap">
-            {currentData.map((product) => (
-              <ProductCard
-                key={product.id}
-                title={product.title}
-                price={product.price}
-                src={product.src}
-                onAdd={() => handleAddProduct(product)}
-                canAdd
-              />
-            ))}
-          </Stack>
+            <Stack mt={3} direction="row" gap={1} flexWrap="wrap">
+              {currentData.map((product) => (
+                <ProductCard
+                  key={product.id}
+                  title={product.title}
+                  price={product.price}
+                  src={product.src}
+                  onAdd={() => handleAddProduct(product)}
+                  canAdd
+                />
+              ))}
+            </Stack>
             <PaginationComponent
               totalItems={searchResults.length}
               itemsPerPage={cardsPerPage}
