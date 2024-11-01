@@ -15,8 +15,7 @@ import { differenceInYears } from 'date-fns';
 function Signup() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [signup, { isLoading, isError }] = useSignupMutation();
-  const [open, setOpen] = useState(false);
+  const [signup, { isLoading }] = useSignupMutation();
   const [snackbar, setSnackbar] = useState({
     open: false,
     message: "",
@@ -59,7 +58,6 @@ function Signup() {
       navigate("additional");
     } catch (error) {
       console.log('error', error.data.message);
-      // setOpen(true);
       setSnackbar({
         open: true,
         message: error?.data?.message,
@@ -177,11 +175,6 @@ function Signup() {
                   value: 20,
                   message: "Password must be at most 20 characters",
                 },
-                // pattern: {
-                //   value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}$/,
-                //   message:
-                //     "Password must contain at least one letter and one number",
-                // },
                 validate: validatePassword
               })}
               error={!!errors.password}
