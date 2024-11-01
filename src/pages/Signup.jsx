@@ -17,6 +17,11 @@ function Signup() {
   const dispatch = useDispatch();
   const [signup, { isLoading, isError }] = useSignupMutation();
   const [open, setOpen] = useState(false);
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "",
+  });
   const [showPassword, setShowPassword] = useState(false);
   const {
     control,
@@ -53,7 +58,13 @@ function Signup() {
       dispatch(setEmail(data.email));
       navigate("additional");
     } catch (error) {
-      setOpen(true);
+      console.log('error', error.data.message);
+      // setOpen(true);
+      setSnackbar({
+        open: true,
+        message: error?.data?.message,
+        severity: "error",
+      })
     }
   };
 
@@ -66,14 +77,10 @@ function Signup() {
       alignItems={"center"}
     >
       <CustomAlert
-        label={
-          isError
-            ? "Email already exists. Please try another email."
-            : "Signup Successful!"
-        }
-        severity={isError ? "error" : "success"}
-        open={open}
-        onClose={() => setOpen(false)}
+        label={snackbar.message}
+        severity={snackbar.severity}
+        open={snackbar.open}
+        onClose={() => setSnackbar({ ...snackbar, open: false })}
       />
       <Grid2 item xs={12} md={6} sx={{width: '100%', display: { xs: "none", md: "none", lg: "block" } }}>
         <SideBarImg />
