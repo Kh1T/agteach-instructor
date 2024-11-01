@@ -15,8 +15,12 @@ import { differenceInYears } from 'date-fns';
 function Signup() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [signup, { isLoading, isError }] = useSignupMutation();
-  const [open, setOpen] = useState(false);
+  const [signup, { isLoading }] = useSignupMutation();
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "",
+  });
   const [showPassword, setShowPassword] = useState(false);
   const {
     control,
@@ -37,6 +41,14 @@ function Signup() {
 
   const handleShowPassword = () => setShowPassword((prev) => !prev);
 
+  const validatePassword = (value) => {
+    if (!/[a-z]/.test(value)) return "Password must contain at least one lowercase letter.";
+    if (!/[A-Z]/.test(value)) return "Password must contain at least one uppercase letter.";
+    if (!/\d/.test(value)) return "Password must contain at least one number.";
+    if (!/[@$!%*?&]/.test(value)) return "Password must contain at least one special character.";
+    return true; 
+  };
+
   const submitHandler = async (data) => {
     try {
       data.dateOfBirth = dayjs(data.dateOfBirth).format("YYYY/MM/DD");
@@ -45,7 +57,12 @@ function Signup() {
       dispatch(setEmail(data.email));
       navigate("additional");
     } catch (error) {
-      setOpen(true);
+      console.log('error', error.data.message);
+      setSnackbar({
+        open: true,
+        message: error?.data?.message,
+        severity: "error",
+      })
     }
   };
 
@@ -58,14 +75,10 @@ function Signup() {
       alignItems={"center"}
     >
       <CustomAlert
-        label={
-          isError
-            ? "Email already exists. Please try another email."
-            : "Signup Successful!"
-        }
-        severity={isError ? "error" : "success"}
-        open={open}
-        onClose={() => setOpen(false)}
+        label={snackbar.message}
+        severity={snackbar.severity}
+        open={snackbar.open}
+        onClose={() => setSnackbar({ ...snackbar, open: false })}
       />
       <Grid2 item xs={12} md={6} sx={{width: '100%', display: { xs: "none", md: "none", lg: "block" } }}>
         <SideBarImg />
@@ -92,6 +105,18 @@ function Signup() {
               label="Username"
               {...register("username", {
                 required: "Please enter your name",
+                minLength: {
+                  value: 3,
+                  message: "Username must be at least 3 characters",
+                },
+                maxLength: {
+                  value: 20,
+                  message: "Username must be at most 20 characters",
+                },
+                pattern: {
+                  value: /^[A-Za-z0-9]+$/,
+                  message: "Username can only contain letters and numbers",
+                },
               })}
               error={!!errors.username}
               helperText={errors.username?.message}
@@ -150,11 +175,7 @@ function Signup() {
                   value: 20,
                   message: "Password must be at most 20 characters",
                 },
-                pattern: {
-                  value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}$/,
-                  message:
-                    "Password must contain at least one letter and one number",
-                },
+                validate: validatePassword
               })}
               error={!!errors.password}
               helperText={errors.password?.message}
