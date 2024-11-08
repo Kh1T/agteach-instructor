@@ -402,7 +402,7 @@ function SettingPage() {
                 },
               })}
               error={!!securityErrors.newPassword}
-              helperText={securityErrors.newPassword?.message}
+              helperText={securityErrors.newPassword?.message || 'Password must contains at least one lowercase letter, one uppercase letter, one number, and one special character.'}
               showPassword={isPasswordVisible.new}
             />
             <FormInput
