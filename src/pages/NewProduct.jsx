@@ -9,6 +9,7 @@ import { Box, Button, Typography } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ProductPrice from "../components/new-product/ProductPrice";
 import { CustomAlert } from "../components/CustomAlert";
+import trimText from "../utils/trimText";
 
 import {
   useCreateProductMutation,
@@ -57,8 +58,8 @@ function NewProductPage() {
     const formData = new FormData();
 
     formData.append("categoryId", data.categoryId);
-    formData.append("name", data.name);
-    formData.append("description", data.description);
+    formData.append("name", trimText(data.name));
+    formData.append("description", trimText(data.description));
     formData.append("quantity", data.quantity);
     formData.append("price", data.price);
     formData.append("removedImages", JSON.stringify(removedImages));
