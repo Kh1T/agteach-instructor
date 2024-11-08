@@ -110,7 +110,7 @@ function BalancePage() {
               </Box>
               <Stack width={"100%"} direction="column" spacing={2}>
                 <BalanceCard balance={balanceData} />
-                <TotalCard total={total} />
+                <TotalCard total={total.toFixed(2)} />
               </Stack>
             </Stack>
           </Box>
