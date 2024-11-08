@@ -1,19 +1,10 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { ChevronLeft } from "@mui/icons-material";
-import {
-  Box,
-  Button,
-  Divider,
-  Stack,
-  Typography,
-  List,
-  ListItem,
-} from "@mui/material";
-import { useNavigate, useParams, useLocation } from "react-router-dom"; // Import useLocation
+import { Box, Button, Divider, Stack, Typography } from "@mui/material";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import CustomTable from "../components/CustomTable";
 import CustomChip from "../components/CustomChip";
 import {
-  useGetPurchasedProductQuery,
   useGetPurchasedDetailsQuery,
   useUpdatePurchasedDetailsMutation,
 } from "../services/api/productApi";
@@ -25,19 +16,23 @@ import InfoIcon from "@mui/icons-material/Info";
 function PurchasedDetailPage() {
   const navigate = useNavigate();
   const { purchasedId, customerId } = useParams();
-
-  const location = useLocation(); // Get the state passed from the previous page
-  const { isDelivered: initialIsDelivered } = location.state || {}; // Destructure and provide a fallback
-
   const { data: purchasedDetails, isLoading: isLoadingDetails } =
     useGetPurchasedDetailsQuery({ purchasedId, customerId });
 
   const [updatePurchasedDetails] = useUpdatePurchasedDetailsMutation();
 
-  const [isDelivered, setIsDelivered] = useState(initialIsDelivered ?? false);
+  // State to track the delivery status, initialized to `null`
+  const [isDelivered, setIsDelivered] = useState(null);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
 
-  // Combine customer data with purchasedDetails
+  // Update `isDelivered` state once `purchasedDetails` is loaded
+  useEffect(() => {
+    if (purchasedDetails && purchasedDetails.isDelivered !== undefined) {
+      console.log(purchasedDetails.isDelivered);
+      setIsDelivered(purchasedDetails.isDelivered);
+    }
+  }, [purchasedDetails]);
+
   const combinedPurchasedDetails = useMemo(() => {
     if (purchasedDetails?.purchasedDetails && purchasedDetails?.customer) {
       return purchasedDetails.purchasedDetails.map((item) => ({
@@ -78,9 +73,7 @@ function PurchasedDetailPage() {
         return;
       }
 
-      // Send both purchasedId and email to the backend
       await updatePurchasedDetails({ purchasedId, customerEmail });
-
       setIsDelivered(true); // Update local state to "delivered"
       setIsAlertOpen(true); // Show success alert
     } catch (error) {
@@ -135,7 +128,13 @@ function PurchasedDetailPage() {
         </Stack>
 
         <CustomChip
-          label={isDelivered ? "Delivered" : "Not Yet Delivered"}
+          label={
+            isDelivered === null
+              ? "Loading..."
+              : isDelivered
+                ? "Delivered"
+                : "Not Yet Delivered"
+          }
           danger={!isDelivered}
           success={isDelivered}
           sx={{ py: "15px" }}
@@ -159,7 +158,7 @@ function PurchasedDetailPage() {
                 color: "dark.200",
                 display: "flex",
                 flexDirection: "column",
-                gap: 1, // Space between items
+                gap: 1,
                 mb: 2,
               }}
             >
@@ -180,7 +179,6 @@ function PurchasedDetailPage() {
                 </Typography>
               </Box>
             </Box>
-            {/* Wrap the button in a Box or div to control its width */}
             <Box sx={{ display: "flex", justifyContent: "flex-start" }}>
               <CustomButton
                 sx={{
