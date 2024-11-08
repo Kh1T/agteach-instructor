@@ -2,7 +2,6 @@ import React from "react";
 import {
   Box,
   Button,
-  CircularProgress,
   Stack,
   Typography,
 } from "@mui/material";
@@ -10,7 +9,6 @@ import { useResendVerifyCodeMutation } from "../../services/api/authApi";
 import { useState } from "react";
 import { CustomAlert } from "../CustomAlert";
 import { useSelector } from "react-redux";
-import { ArrowForwardRounded } from "@mui/icons-material";
 
 const ResendCodeButton = ({ email, timeoutRef }) => {
   const [open, setOpen] = useState(true);

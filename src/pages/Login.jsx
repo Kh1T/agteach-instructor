@@ -21,15 +21,18 @@ import AgTeachLogo from "../assets/agteach.png";
 import { setEmail } from "../features/user/userSlice";
 
 function LoginPage() {
-  const [login, { isLoading, isError }] = useLoginMutation();
+  const [login, { isLoading }] = useLoginMutation();
   const [showPassword, setShowPassword] = useState(false);
-  const [open, setOpen] = useState(false);
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "",
+  });
   const navigator = useNavigate();
   const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
-    setError,
     watch,
     formState: { errors },
   } = useForm({
@@ -59,17 +62,11 @@ function LoginPage() {
         navigator("/auth/signup/verification");
       }
     } catch (error) {
-      setOpen(true);
-      setError(
-        "email",
-        { type: "manual", message: "Incorrect email or password" },
-        { shouldFocus: true }
-      );
-      setError(
-        "password",
-        { type: "manual", message: "Incorrect email or password" },
-        { shouldFocus: true }
-      );
+      setSnackbar({
+        open: true,
+        message: error?.data?.message,
+        severity: "error",
+      });
     }
   };
 
@@ -88,10 +85,10 @@ function LoginPage() {
       spacing={10}
     >
       <CustomAlert
-        label={isError ? "Incorrect email or password." : "Login Successful!"}
-        severity={isError ? "error" : "success"}
-        onClose={() => setOpen(false)}
-        open={open}
+        label={snackbar.message}
+        severity={snackbar.severity}
+        onClose={() => setSnackbar({ ...snackbar, open: false })}
+        open={snackbar.open}
       />
       <Grid
         item
@@ -109,7 +106,11 @@ function LoginPage() {
       >
         <Stack>
           <Stack textAlign="center" py={3} gap={1} alignItems="center">
-            <Box component="img" src={AgTeachLogo} sx={{ width: "100px", mb: 5 }} />
+            <Box
+              component="img"
+              src={AgTeachLogo}
+              sx={{ width: "100px", mb: 5 }}
+            />
             <Typography variant="h1">Welcome back Instructor</Typography>
             <Typography color="dark.300">
               Please login to continue to your account.
@@ -157,6 +158,7 @@ function LoginPage() {
                 type="submit"
                 variant="contained"
                 fullWidth
+                disabled={isLoading}
                 style={{
                   marginTop: "10px",
                   padding: "12px",
