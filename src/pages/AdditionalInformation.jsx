@@ -7,7 +7,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import CustomButton from "../components/CustomButton";
 import Logo from "../assets/agteach.png";
@@ -48,8 +48,7 @@ function AdditionalInformation() {
   const onSubmit = async (data) => {
     try {
       const { firstName, lastName, phone, address, locationId } = data;
-      console.log(dob, "error");
-      const response = await addPerosnalInfo({
+      await addPerosnalInfo({
         firstName,
         lastName,
         phone,
@@ -57,7 +56,6 @@ function AdditionalInformation() {
         locationId: locationId.value, // Now correctly accessing the locationId
         dateOfBirth: dob,
       }).unwrap();
-      console.log("Success:", response);
       navigate("/auth/signup/verification");
     } catch (error) {
       console.error("Error:", error);

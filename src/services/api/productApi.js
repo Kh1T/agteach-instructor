@@ -24,7 +24,6 @@ export const productApi = createApi({
       query: ({ name = "", order }) => {
         let url = `/api/product/getInstructorProduct?name=${name}`;
 
-        // Include order only if it's defined
         if (order) {
           const dataOrder = order === "Newest" ? "DESC" : "ASC";
           url += `&order=${dataOrder}`;
@@ -82,7 +81,6 @@ export const productApi = createApi({
           url += `&order=${order}`;
         } 
       
-        console.log("API Request URL:", url); // Log the final URL
         return { url, method: "GET" };
       },
     }),
@@ -91,14 +89,12 @@ export const productApi = createApi({
       providesTags: ["Product"],
       query: ({ purchasedId, customerId }) => ({
         url: `/api/purchased/purchasedDetail/${purchasedId}?cid=${customerId}`,
-        // url: `/api/purchased/purchasedDetail/52?cid=132`,
         method: "GET",
       }),
     }), 
 
     updatePurchasedDetails: builder.mutation({
       providesTags: ["Product"],
-
       query: (purchasedData) => ({
         url: `/api/purchased/updateDeliver`,
         method: "PATCH",
