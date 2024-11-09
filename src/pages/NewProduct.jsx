@@ -83,13 +83,10 @@ function NewProductPage() {
     try {
       if (editMode) {
         await updateProduct({ productId, productData: formData }).unwrap();
-        // console.log("Product updated successfully");
       } else {
         await createProduct(formData).unwrap();
-        // console.log("Product created successfully");
       }
     } catch (error) {
-      // Differentiate error messages for better debugging
       if (editMode) {
         console.error("Failed to update product:", error);
       } else {

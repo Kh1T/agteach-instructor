@@ -57,7 +57,6 @@ function Signup() {
       dispatch(setEmail(data.email));
       navigate("additional");
     } catch (error) {
-      console.log('error', error.data.message);
       setSnackbar({
         open: true,
         message: error?.data?.message,

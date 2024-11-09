@@ -18,7 +18,6 @@ export default function VideoUpload({
     watch,
   } = useFormContext();
 
-  console.log("error", errors[name]);
   const [isError, setIsError] = useState(false);
   const [fileInfo, setFileInfo] = useState(
     file ? { name: file.name, size: "N/A" } : {}
