@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect } from "react";
 import { ChevronLeft } from "@mui/icons-material";
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
-import { useNavigate, useParams, useLocation } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import CustomTable from "../components/CustomTable";
 import CustomChip from "../components/CustomChip";
 import {
@@ -16,22 +16,17 @@ import InfoIcon from "@mui/icons-material/Info";
 function PurchasedDetailPage() {
   const navigate = useNavigate();
   const { purchasedId, customerId } = useParams();
-  const { data: purchasedDetails, isLoading: isLoadingDetails } =
-    useGetPurchasedDetailsQuery({ purchasedId, customerId });
+  const {
+    data: purchasedDetails,
+    isLoading: isLoadingDetails,
+    refetch,
+  } = useGetPurchasedDetailsQuery({ purchasedId, customerId });
 
   const [updatePurchasedDetails] = useUpdatePurchasedDetailsMutation();
-
-  // State to track the delivery status, initialized to `null`
-  const [isDelivered, setIsDelivered] = useState(null);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
 
-  // Update `isDelivered` state once `purchasedDetails` is loaded
-  useEffect(() => {
-    if (purchasedDetails && purchasedDetails.isDelivered !== undefined) {
-      console.log(purchasedDetails.isDelivered);
-      setIsDelivered(purchasedDetails.isDelivered);
-    }
-  }, [purchasedDetails]);
+  // Remove the separate isDelivered state and use the data directly
+  const isDelivered = purchasedDetails?.isDelivered;
 
   const combinedPurchasedDetails = useMemo(() => {
     if (purchasedDetails?.purchasedDetails && purchasedDetails?.customer) {
@@ -74,12 +69,18 @@ function PurchasedDetailPage() {
       }
 
       await updatePurchasedDetails({ purchasedId, customerEmail });
-      setIsDelivered(true); // Update local state to "delivered"
-      setIsAlertOpen(true); // Show success alert
+      setIsAlertOpen(true);
+      // Refetch the data to update the UI
+      // await refetch();
+      window.location.reload();
     } catch (error) {
       console.error("Failed to update delivery status", error);
     }
   };
+
+  // Only render the delivery button section if we have loaded the data and it's not delivered
+  const showDeliveryButton =
+    !isLoadingDetails && purchasedDetails && !isDelivered;
 
   return (
     <Stack alignItems="start" gap={5}>
@@ -127,18 +128,14 @@ function PurchasedDetailPage() {
           </Stack>
         </Stack>
 
-        <CustomChip
-          label={
-            isDelivered === null
-              ? "Loading..."
-              : isDelivered
-                ? "Delivered"
-                : "Not Yet Delivered"
-          }
-          danger={!isDelivered}
-          success={isDelivered}
-          sx={{ py: "15px" }}
-        />
+        {!isLoadingDetails && (
+          <CustomChip
+            label={isDelivered ? "Delivered" : "Not Yet Delivered"}
+            danger={!isDelivered}
+            success={isDelivered}
+            sx={{ py: "15px" }}
+          />
+        )}
       </Stack>
 
       <Divider />
@@ -149,8 +146,9 @@ function PurchasedDetailPage() {
       ) : (
         <CustomTable data={tableData} />
       )}
+
       <Stack gap={2}>
-        {!isDelivered && (
+        {showDeliveryButton && (
           <Stack>
             <Box
               variant="bxsr"
