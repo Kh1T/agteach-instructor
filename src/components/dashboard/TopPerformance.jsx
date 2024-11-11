@@ -22,39 +22,6 @@ import {
  * @returns {JSX.Element} A JSX element representing the TopPerformance component
  */
 export default function TopPerformance() {
-  // const data = [
-  //   {
-  //     no: 1,
-  //     product: "Advanced Vegetable Farming",
-  //     category: "Course",
-  //     earning: "$150",
-  //   },
-  //   {
-  //     no: 2,
-  //     product: "Advanced Vegetable Farming",
-  //     category: "Course",
-  //     earning: "$150",
-  //   },
-  //   {
-  //     no: 3,
-  //     product: "Advanced Vegetable Farming",
-  //     category: "Course",
-  //     earning: "$150",
-  //   },
-  //   {
-  //     no: 4,
-  //     product: "Advanced Vegetable Farming",
-  //     category: "Course",
-  //     earning: "$150",
-  //   },
-  //   {
-  //     no: 5,
-  //     product: "Advanced Vegetable Farming",
-  //     category: "Course",
-  //     earning: "$150",
-  //   },
-  // ];
-
   const [transaction, setTransaction] = useState(10);
   const { data: courseData, isLoading: isLoadingCourses } =
     useGetCourseTopSalesQuery();
@@ -144,7 +111,7 @@ export default function TopPerformance() {
                 height: "20vh",
               }}
             >
-              <Typography variant="bssm" color="dark.300">
+              <Typography variant="bsr">
                 No {transaction === 10 ? "Course" : "Product"} Found in Top 5
                 Performance
               </Typography>

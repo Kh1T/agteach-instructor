@@ -23,17 +23,13 @@ export default function VerificationPage() {
   } = useForm();
 
   const email = useSelector((state) => state.user.email);
-  console.log("email", email);
 
-  const [verifyEmail, { isLoading, isSuccess, isError, error }] =
+  const [verifyEmail, { isLoading, isSuccess, isError }] =
     useVerifyEmailMutation();
-
-  console.log("verficatio error", error);
 
   const onSubmit = async (data) => {
     try {
-      const response = await verifyEmail(data.emailVerifyCode).unwrap();
-      console.log("Verification successful", response);
+      await verifyEmail(data.emailVerifyCode).unwrap();
       dispatch(checkLoginStatus({ IsVerify: true }));
       navigate("/");
     } catch (err) {
