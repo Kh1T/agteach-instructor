@@ -354,6 +354,7 @@ function SettingPage() {
               </CustomButton>
               <CustomButton
                 variant="outlined"
+                type="button"
                 sx={{ color: "blue.main", borderColor: "blue.main" }}
                 onClick={() => resetBasicInfo()}
               >
@@ -433,6 +434,7 @@ function SettingPage() {
               </CustomButton>
               <CustomButton
                 variant="outlined"
+                type="button"
                 sx={{ color: "blue.main", borderColor: "blue.main" }}
                 onClick={() => resetSecurity()}
               >
