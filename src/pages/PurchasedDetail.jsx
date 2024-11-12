@@ -145,7 +145,6 @@ function PurchasedDetailPage() {
       {isLoadingDetails ? (
         <Typography>Loading purchased details...</Typography>
       ) : (
-        // <CustomTable data={tableData} rowLimit={5} isPagination={true} />
         <CustomTable data={tableData} rowLimit={5} isPagination={true}/>
       )}
       </Grid>
