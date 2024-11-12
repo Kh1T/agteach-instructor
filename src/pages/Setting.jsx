@@ -287,6 +287,10 @@ function SettingPage() {
                   fullWidth
                   {...registerBasicInfo("lastName", {
                     required: "Last name is required",
+                    pattern: {
+                      value: /^[A-Za-z]+$/i,
+                      message: "First name can only contain letters",
+                    },
                     validate: (value) => {
                       if (value.length < 2) return "Last name must be at least 2 characters";
                       if (value.length > 25) return "Last name must be at most 25 characters";
