@@ -113,8 +113,8 @@ function Signup() {
                   message: "Username must be at most 20 characters",
                 },
                 pattern: {
-                  value: /^[A-Za-z0-9]+$/,
-                  message: "Username can only contain letters and numbers",
+                  value: /^[a-zA-Z][a-zA-Z0-9]*$/,
+                  message: "Username must at least start with a letter.",
                 },
               })}
               error={!!errors.username}
