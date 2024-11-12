@@ -177,7 +177,7 @@ function Signup() {
                 validate: validatePassword
               })}
               error={!!errors.password}
-              helperText={errors.password?.message || 'Password must contains at least one lowercase letter, one uppercase letter, one number, and one special character.'}
+              helperText={errors.password?.message}
             />
             <br />
             <FormInput
@@ -196,6 +196,9 @@ function Signup() {
               error={!!errors.passwordConfirm}
               helperText={errors.passwordConfirm?.message}
             />
+            <Typography color="dark.300" fontSize="12px" marginTop={"10px"}>
+              Password must contains at least one lowercase letter, one uppercase letter, one number, and one special character.
+            </Typography>
             <br />
             <Button
               type="submit"
