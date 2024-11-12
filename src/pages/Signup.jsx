@@ -57,7 +57,6 @@ function Signup() {
       dispatch(setEmail(data.email));
       navigate("additional");
     } catch (error) {
-      console.log('error', error.data.message);
       setSnackbar({
         open: true,
         message: error?.data?.message,
@@ -197,6 +196,9 @@ function Signup() {
               error={!!errors.passwordConfirm}
               helperText={errors.passwordConfirm?.message}
             />
+            <Typography color="dark.300" fontSize="12px" marginTop={"10px"}>
+              Password must contains at least one lowercase letter, one uppercase letter, one number, and one special character.
+            </Typography>
             <br />
             <Button
               type="submit"

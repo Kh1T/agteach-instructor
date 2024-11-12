@@ -23,7 +23,6 @@ const ResendCodeButton = ({ email, timeoutRef }) => {
   const { isAuthenticated: isLogin, isVerify } = useSelector(
     (state) => state.auth
   );
-  console.log("isLogin", isLogin, "isVerify", isVerify);
 
   const handleOnClick = () => {
     if (timeoutRef.current) {

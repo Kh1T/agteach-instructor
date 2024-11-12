@@ -420,6 +420,9 @@ function SettingPage() {
               helperText={securityErrors.confirmNewPassword?.message}
               showPassword={isPasswordVisible.new}
             />
+            <Typography color="dark.300" fontSize="12px" marginTop={"10px"}>
+              Password must contains at least one lowercase letter, one uppercase letter, one number, and one special character.
+            </Typography>
             <Box display="flex" justifyContent="flex-end" gap={2}>
               <CustomButton
                 type="submit"

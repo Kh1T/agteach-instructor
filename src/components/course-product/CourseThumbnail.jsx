@@ -20,18 +20,15 @@ export default function CourseThumbnail({
     formState: { errors },
   } = useFormContext();
 
-  console.log('thumbnail error', errors, name)
   const [selectedImage, setSelectedImage] = useState(
     file ? URL.createObjectURL(file) : null
   );
-  console.log("url", url + new Date().getTime());
   
   useEffect(() => {
     setValue(name, url);
     setSelectedImage(url);
     if (file) {
       const imageUrl = URL.createObjectURL(file);
-      console.log("imageUrl", imageUrl);
 
       setSelectedImage(imageUrl);
       setFileInfo({

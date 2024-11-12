@@ -128,6 +128,9 @@ const ResetPasswordPage = () => {
                       showPassword={showPassword}
                       handleClickShowPassword={handleClickShowPassword}
                     />
+                    <Typography color="dark.300" fontSize="12px" marginTop={"10px"}>
+                      Password must contains at least one lowercase letter, one uppercase letter, one number, and one special character.
+                    </Typography>
                     <Link to="/auth/login">
                       <Button
                         type="submit"

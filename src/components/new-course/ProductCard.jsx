@@ -39,7 +39,11 @@ export default function ProductCard({
       {canRemove && (
         <Box sx={{ position: "absolute", top: 1, right: 1, zIndex: 1 }}>
           <IconButton
-            sx={{ backgroundColor: "common.white" }}
+            sx={{
+              backgroundColor: "white",
+              opacity: 0.5,
+              "&:hover": { backgroundColor: "white", opacity: 1 },
+            }}
             onClick={onRemove}
           >
             <ClearIcon color="error" />

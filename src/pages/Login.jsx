@@ -48,7 +48,6 @@ function LoginPage() {
   const submitHandler = async (data) => {
     try {
       const res = await login(data).unwrap();
-      console.log("res", res.data.user.isVerify);
       if (res.token) {
         let verification = res?.data?.user?.isVerify;
         dispatch(
