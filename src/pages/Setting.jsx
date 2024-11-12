@@ -211,11 +211,18 @@ function SettingPage() {
 
   const validatePhone = (value) => {
     const phonePattern = /^[0-9]+$/; // Only digits
-    if (!value) return true; // Allow empty input if not required
+    if (!value.startsWith("0")) return "Phone number must start with 0";
+    if (!phonePattern.test(value)) return "Please enter a valid phone number";
     if (value.length > 15) return "Phone number cannot exceed 15 digits";
-    if (value?.length < 8)
-      return "A Valid phone number should contains atleast 8 digits";
-    return phonePattern.test(value) || "Please enter a valid phone number";
+    if  (value?.length < 8) return "A valid phone number should contains atleast 8 digits";
+  };
+
+  const validatePassword = (value) => {
+    if (!/[a-z]/.test(value)) return "Password must contain at least one lowercase letter.";
+    if (!/[A-Z]/.test(value)) return "Password must contain at least one uppercase letter.";
+    if (!/\d/.test(value)) return "Password must contain at least one number.";
+    if (!/[@$!%*?&]/.test(value)) return "Password must contain at least one special character.";
+    return true; 
   };
 
   //*********************************************************/
@@ -262,6 +269,15 @@ function SettingPage() {
                   fullWidth
                   {...registerBasicInfo("firstName", {
                     required: "First name is required",
+                    pattern: {
+                      value: /^[A-Za-z]+$/i,
+                      message: "First name can only contain letters",
+                    },
+                    validate: (value) => {
+                      if (value.length < 2) return "First name must be at least 2 characters";
+                      if (value.length > 25) return "First name must be at most 25 characters";
+                      return true;
+                    }
                   })}
                   error={!!basicInfoErrors.firstName}
                   helperText={basicInfoErrors.firstName?.message}
@@ -271,6 +287,15 @@ function SettingPage() {
                   fullWidth
                   {...registerBasicInfo("lastName", {
                     required: "Last name is required",
+                    pattern: {
+                      value: /^[A-Za-z]+$/i,
+                      message: "First name can only contain letters",
+                    },
+                    validate: (value) => {
+                      if (value.length < 2) return "Last name must be at least 2 characters";
+                      if (value.length > 25) return "Last name must be at most 25 characters";
+                      return true;
+                    }
                   })}
                   error={!!basicInfoErrors.lastName}
                   helperText={basicInfoErrors.lastName?.message}
@@ -281,7 +306,11 @@ function SettingPage() {
                 rows={4}
                 label="Bio"
                 fullWidth
-                {...registerBasicInfo("bio")}
+                {...registerBasicInfo("bio", {
+                  validate: (value) => {
+                    if (value.length > 1000) return "Bio must be at most 1000 characters";
+                  }
+                })}
               />
             </Stack>
 
@@ -294,6 +323,11 @@ function SettingPage() {
               fullWidth
               {...registerBasicInfo("address", {
                 required: "Address is required",
+                validate: (value) => {
+                  if (value.length < 2) return "Address must be at least 2 characters";
+                  if (value.length > 100) return "Address must be at most 100 characters";
+                  return true;
+                }
               })}
               error={!!basicInfoErrors.address}
               helperText={basicInfoErrors.address?.message}
@@ -354,6 +388,7 @@ function SettingPage() {
               </CustomButton>
               <CustomButton
                 variant="outlined"
+                type="button"
                 sx={{ color: "blue.main", borderColor: "blue.main" }}
                 onClick={() => resetBasicInfo()}
               >
@@ -400,6 +435,7 @@ function SettingPage() {
                   value: 8,
                   message: "Password must be at least 8 characters",
                 },
+                validate: validatePassword,
               })}
               error={!!securityErrors.newPassword}
               helperText={securityErrors.newPassword?.message}
@@ -433,6 +469,7 @@ function SettingPage() {
               </CustomButton>
               <CustomButton
                 variant="outlined"
+                type="button"
                 sx={{ color: "blue.main", borderColor: "blue.main" }}
                 onClick={() => resetSecurity()}
               >

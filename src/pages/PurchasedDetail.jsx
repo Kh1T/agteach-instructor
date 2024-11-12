@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from "react";
 import { ChevronLeft } from "@mui/icons-material";
-import { Box, Button, Divider, Stack, Typography } from "@mui/material";
+import { Box, Button, Divider, Stack, Typography, Grid2 as Grid } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import CustomTable from "../components/CustomTable";
 import CustomChip from "../components/CustomChip";
@@ -138,13 +138,16 @@ function PurchasedDetailPage() {
       </Stack>
 
       <Divider />
+      <Grid width={'100%'} container direction="column" gap={1}>
+
       <Typography variant="h3">Purchased Detail</Typography>
 
       {isLoadingDetails ? (
         <Typography>Loading purchased details...</Typography>
       ) : (
-        <CustomTable data={tableData} />
+        <CustomTable data={tableData} rowLimit={5} isPagination={true}/>
       )}
+      </Grid>
 
       <Stack gap={2}>
         {showDeliveryButton && (

@@ -1,8 +1,7 @@
-import React, { useState, useMemo } from "react";
+import React, { useMemo } from "react";
 import { Link } from "react-router-dom";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { Box, Grid2 as Grid, Typography, Stack, Divider } from "@mui/material";
-import courseCover from "./../assets/dashboard-enrollment/course-cover.png";
 import { useParams } from "react-router-dom";
 import CustomTable from "../components/CustomTable";
 import {
@@ -61,7 +60,7 @@ function EnrollmentDetailPage() {
     Photo: (
       <img
         src={item.image_url || "https://via.placeholder.com/80"}
-        alt="Product Image"
+        alt="Product"
         width="80"
         height="80"
         style={{ borderRadius: "5px" }}
@@ -126,7 +125,7 @@ function EnrollmentDetailPage() {
         {isLoadingDetails ? (
           <Typography>Loading Enrollment...</Typography>
         ) : tableData.length > 0 ? (
-          <CustomTable data={tableData} />
+          <CustomTable data={tableData} rowLimit={5} isPagination={true}/>
         ) : (
           <Typography>No enrollment data available...</Typography>
         )}
