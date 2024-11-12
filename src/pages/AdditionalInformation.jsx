@@ -7,7 +7,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import CustomButton from "../components/CustomButton";
 import Logo from "../assets/agteach.png";
@@ -48,16 +48,14 @@ function AdditionalInformation() {
   const onSubmit = async (data) => {
     try {
       const { firstName, lastName, phone, address, locationId } = data;
-      console.log(dob, "error");
-      const response = await addPerosnalInfo({
+      await addPerosnalInfo({
         firstName,
         lastName,
         phone,
         address,
-        locationId: locationId.value, // Now correctly accessing the locationId
+        locationId: locationId?.value || null, // Now correctly accessing the locationId
         dateOfBirth: dob,
       }).unwrap();
-      console.log("Success:", response);
       navigate("/auth/signup/verification");
     } catch (error) {
       console.error("Error:", error);
@@ -66,11 +64,11 @@ function AdditionalInformation() {
 
   const validatePhone = (value) => {
     const phonePattern = /^[0-9]+$/;
-    if (!value) return true;
+    if (!value) return true
+    if (!value.startsWith("0")) return "Phone number must start with 0";
+    if (!phonePattern.test(value)) return "Please enter a valid phone number";
     if (value.length > 15) return "Phone number cannot exceed 15 digits";
-    if (value?.length < 8)
-      return "A Valid phone number should contains atleast 8 digits";
-    return phonePattern.test(value) || "Please enter a valid phone number";
+    if  (value?.length < 8) return "A valid phone number should contains atleast 8 digits";
   };
 
   return (
@@ -106,11 +104,16 @@ function AdditionalInformation() {
                 label="First Name"
                 placeholder="e.g. Jane"
                 {...register("firstName", {
-                  required: "First name is required",
                   pattern: {
                     value: /^[A-Za-z]+$/i,
                     message: "First name can only contain letters",
                   },
+                  validate: (value) => {
+                    if (!value) return true
+                    if (value.length < 2) return "First name must be at least 2 characters";
+                    if (value.length > 25) return "First name must be at most 25 characters";
+                    return true;
+                  }
                 })}
                 error={!!errors.firstName}
                 helperText={errors?.firstName?.message}
@@ -119,11 +122,16 @@ function AdditionalInformation() {
                 label="Last Name"
                 placeholder="e.g. Smith"
                 {...register("lastName", {
-                  required: "Last name is required",
                   pattern: {
                     value: /^[A-Za-z]+$/i,
                     message: "Last name can only contain letters",
                   },
+                  validate: (value) => {
+                    if (!value) return true
+                    if (value.length < 2) return "Last name must be at least 2 characters";
+                    if (value.length > 25) return "Last name must be at most 25 characters";
+                    return true;
+                  }
                 })}
                 error={!!errors.lastName}
                 helperText={errors?.lastName?.message}
@@ -132,7 +140,7 @@ function AdditionalInformation() {
             <Controller
               name="locationId"
               control={control}
-              rules={{ required: "City is required" }}
+              rules={{ required: false }}
               render={({
                 field: { onChange, value },
                 fieldState: { error },
@@ -170,7 +178,12 @@ function AdditionalInformation() {
               label="Address"
               placeholder="e.g. 1234 Main St"
               {...register("address", {
-                required: "Address is required",
+                validate: (value) => {
+                  if (!value) return true
+                  if (value.length < 2) return "Address must be at least 2 characters";
+                  if (value.length > 100) return "Address must be at most 100 characters";
+                  return true;
+                }
               })}
               error={!!errors.address}
               helperText={errors?.address?.message}
@@ -188,6 +201,9 @@ function AdditionalInformation() {
                 helperText={errors?.phone?.message}
               />
             </Stack>
+            <Typography color="dark.300" fontSize="12px" marginTop={"10px"}>
+              Can skip this step by clicking "Continue" and complete later.
+            </Typography>
             <CustomButton
               color="primary"
               disabled={isLoading}

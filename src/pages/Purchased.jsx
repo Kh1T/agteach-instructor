@@ -3,7 +3,10 @@ import { Stack, Typography, Box } from "@mui/material";
 import QueryHeader from "../components/QueryHeader";
 import CustomTable from "../components/CustomTable";
 import CustomChip from "../components/CustomChip";
-import { useGetPurchasedProductQuery, useGetPurchasedDetailsQuery } from "../services/api/productApi";
+import {
+  useGetPurchasedProductQuery,
+  useGetPurchasedDetailsQuery,
+} from "../services/api/productApi";
 import emptyProduct from "../assets/spooky-stickers-sweet-franky.png";
 import { useNavigate } from "react-router";
 import CustomButton from "../components/CustomButton";
@@ -64,7 +67,7 @@ function PurchasedPage() {
     if (searchRef.current) {
       const term = searchRef.current.value;
       setSearchTerm(term);
-      refetch(); 
+      refetch();
     }
   };
 
@@ -73,8 +76,6 @@ function PurchasedPage() {
     setSelectState(event.target.value);
     refetch();
   };
-
-
 
   return (
     <Stack gap="30px">

@@ -1,19 +1,10 @@
 import React, { useState, useMemo } from "react";
 import { ChevronLeft } from "@mui/icons-material";
-import {
-  Box,
-  Button,
-  Divider,
-  Stack,
-  Typography,
-  List,
-  ListItem,
-} from "@mui/material";
-import { useNavigate, useParams, useLocation } from "react-router-dom"; // Import useLocation
+import { Box, Button, Divider, Stack, Typography, Grid2 as Grid } from "@mui/material";
+import { useNavigate, useParams } from "react-router-dom";
 import CustomTable from "../components/CustomTable";
 import CustomChip from "../components/CustomChip";
 import {
-  useGetPurchasedProductQuery,
   useGetPurchasedDetailsQuery,
   useUpdatePurchasedDetailsMutation,
 } from "../services/api/productApi";
@@ -25,19 +16,17 @@ import InfoIcon from "@mui/icons-material/Info";
 function PurchasedDetailPage() {
   const navigate = useNavigate();
   const { purchasedId, customerId } = useParams();
-
-  const location = useLocation(); // Get the state passed from the previous page
-  const { isDelivered: initialIsDelivered } = location.state || {}; // Destructure and provide a fallback
-
-  const { data: purchasedDetails, isLoading: isLoadingDetails } =
-    useGetPurchasedDetailsQuery({ purchasedId, customerId });
+  const {
+    data: purchasedDetails,
+    isLoading: isLoadingDetails,
+  } = useGetPurchasedDetailsQuery({ purchasedId, customerId });
 
   const [updatePurchasedDetails] = useUpdatePurchasedDetailsMutation();
-
-  const [isDelivered, setIsDelivered] = useState(initialIsDelivered ?? false);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
 
-  // Combine customer data with purchasedDetails
+  // Remove the separate isDelivered state and use the data directly
+  const isDelivered = purchasedDetails?.isDelivered;
+
   const combinedPurchasedDetails = useMemo(() => {
     if (purchasedDetails?.purchasedDetails && purchasedDetails?.customer) {
       return purchasedDetails.purchasedDetails.map((item) => ({
@@ -52,7 +41,7 @@ function PurchasedDetailPage() {
     Photo: (
       <img
         src={item.product?.imageUrl || profileImg}
-        alt="Product Image"
+        alt={item.product?.name || "Product"}
         width="80"
         height="80"
         style={{ borderRadius: "5px" }}
@@ -78,15 +67,19 @@ function PurchasedDetailPage() {
         return;
       }
 
-      // Send both purchasedId and email to the backend
       await updatePurchasedDetails({ purchasedId, customerEmail });
-
-      setIsDelivered(true); // Update local state to "delivered"
-      setIsAlertOpen(true); // Show success alert
+      setIsAlertOpen(true);
+      // Refetch the data to update the UI
+      // await refetch();
+      window.location.reload();
     } catch (error) {
       console.error("Failed to update delivery status", error);
     }
   };
+
+  // Only render the delivery button section if we have loaded the data and it's not delivered
+  const showDeliveryButton =
+    !isLoadingDetails && purchasedDetails && !isDelivered;
 
   return (
     <Stack alignItems="start" gap={5}>
@@ -134,24 +127,30 @@ function PurchasedDetailPage() {
           </Stack>
         </Stack>
 
-        <CustomChip
-          label={isDelivered ? "Delivered" : "Not Yet Delivered"}
-          danger={!isDelivered}
-          success={isDelivered}
-          sx={{ py: "15px" }}
-        />
+        {!isLoadingDetails && (
+          <CustomChip
+            label={isDelivered ? "Delivered" : "Not Yet Delivered"}
+            danger={!isDelivered}
+            success={isDelivered}
+            sx={{ py: "15px" }}
+          />
+        )}
       </Stack>
 
       <Divider />
+      <Grid width={'100%'} container direction="column" gap={1}>
+
       <Typography variant="h3">Purchased Detail</Typography>
 
       {isLoadingDetails ? (
         <Typography>Loading purchased details...</Typography>
       ) : (
-        <CustomTable data={tableData} />
+        <CustomTable data={tableData} rowLimit={5} isPagination={true}/>
       )}
+      </Grid>
+
       <Stack gap={2}>
-        {!isDelivered && (
+        {showDeliveryButton && (
           <Stack>
             <Box
               variant="bxsr"
@@ -159,7 +158,7 @@ function PurchasedDetailPage() {
                 color: "dark.200",
                 display: "flex",
                 flexDirection: "column",
-                gap: 1, // Space between items
+                gap: 1,
                 mb: 2,
               }}
             >
@@ -180,7 +179,6 @@ function PurchasedDetailPage() {
                 </Typography>
               </Box>
             </Box>
-            {/* Wrap the button in a Box or div to control its width */}
             <Box sx={{ display: "flex", justifyContent: "flex-start" }}>
               <CustomButton
                 sx={{
