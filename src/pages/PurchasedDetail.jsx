@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo } from "react";
 import { ChevronLeft } from "@mui/icons-material";
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
@@ -19,7 +19,6 @@ function PurchasedDetailPage() {
   const {
     data: purchasedDetails,
     isLoading: isLoadingDetails,
-    refetch,
   } = useGetPurchasedDetailsQuery({ purchasedId, customerId });
 
   const [updatePurchasedDetails] = useUpdatePurchasedDetailsMutation();
