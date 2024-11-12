@@ -41,7 +41,7 @@ function PurchasedDetailPage() {
     Photo: (
       <img
         src={item.product?.imageUrl || profileImg}
-        alt="Product Image"
+        alt={item.product?.name || "Product"}
         width="80"
         height="80"
         style={{ borderRadius: "5px" }}
