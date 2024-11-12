@@ -211,11 +211,18 @@ function SettingPage() {
 
   const validatePhone = (value) => {
     const phonePattern = /^[0-9]+$/; // Only digits
-    if (!value) return true; // Allow empty input if not required
+    if (!value.startsWith("0")) return "Phone number must start with 0";
+    if (!phonePattern.test(value)) return "Please enter a valid phone number";
     if (value.length > 15) return "Phone number cannot exceed 15 digits";
-    if (value?.length < 8)
-      return "A Valid phone number should contains atleast 8 digits";
-    return phonePattern.test(value) || "Please enter a valid phone number";
+    if  (value?.length < 8) return "A valid phone number should contains atleast 8 digits";
+  };
+
+  const validatePassword = (value) => {
+    if (!/[a-z]/.test(value)) return "Password must contain at least one lowercase letter.";
+    if (!/[A-Z]/.test(value)) return "Password must contain at least one uppercase letter.";
+    if (!/\d/.test(value)) return "Password must contain at least one number.";
+    if (!/[@$!%*?&]/.test(value)) return "Password must contain at least one special character.";
+    return true; 
   };
 
   //*********************************************************/
@@ -401,6 +408,7 @@ function SettingPage() {
                   value: 8,
                   message: "Password must be at least 8 characters",
                 },
+                validate: validatePassword,
               })}
               error={!!securityErrors.newPassword}
               helperText={securityErrors.newPassword?.message}
