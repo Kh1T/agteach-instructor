@@ -179,6 +179,11 @@ function AdditionalInformation() {
               placeholder="e.g. 1234 Main St"
               {...register("address", {
                 required: "Address is required",
+                validate: (value) => {
+                  if (value.length < 2) return "Address must be at least 2 characters";
+                  if (value.length > 100) return "Address must be at most 100 characters";
+                  return true;
+                }
               })}
               error={!!errors.address}
               helperText={errors?.address?.message}
