@@ -114,7 +114,7 @@ function Signup() {
                 },
                 pattern: {
                   value: /^[a-zA-Z][a-zA-Z0-9]*$/,
-                  message: "Username must at least start with a letter.",
+                  message: "Username must at least start with a letter and contain only letters and numbers",
                 },
               })}
               error={!!errors.username}
