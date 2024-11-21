@@ -10,7 +10,7 @@ import {
 import InsertPhotoIcon from "@mui/icons-material/InsertPhoto";
 import ClearIcon from "@mui/icons-material/Clear";
 
-import { UploadedPhotoStyle } from "../../theme/CourseProductStyle";
+import { UploadedPhotoStyle } from "../../theme/courseProductStyles";
 
 /**
  * AddManyPhotos component renders an upload area for multiple photos

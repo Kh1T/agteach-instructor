@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 
-import RecycleBagIcon from "../../assets/course-page/Go Green Grey Hanger Bag.svg";
+import RecycleBagIcon from "../../assets/go-green-grey-hanger-bag.png";
 /**
  * DeleteConfirmModal component renders a modal dialog for the user to confirm
  * deletion of a given type (e.g. 'section', 'lecture', etc.).
