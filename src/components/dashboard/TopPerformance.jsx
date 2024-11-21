@@ -14,7 +14,7 @@ import CustomTable from "../CustomTable";
 import {
   useGetCourseTopSalesQuery,
   useGetProductTopSalesQuery,
-} from "../../services/salesApi";
+} from "../../services/api/salesApi";
 
 /**
  * TopPerformance component renders a table of top 5 performing products or courses, with a select dropdown to filter by course or product.
