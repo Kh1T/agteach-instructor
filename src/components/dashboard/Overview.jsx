@@ -1,6 +1,6 @@
 import { Box,  Typography } from "@mui/material";
 import SimpleBarChart from "./SimpleBarChart";
-import { useGetSalesOverviewQuery } from "../../services/salesApi";
+import { useGetSalesOverviewQuery } from "../../services/api/salesApi";
 
 function Overview() {
   const {data} = useGetSalesOverviewQuery()

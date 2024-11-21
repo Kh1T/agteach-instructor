@@ -5,7 +5,7 @@ import { productApi } from "../services/api/productApi";
 import { courseApi } from "../services/api/courseApi";
 import userReducer from "../features/user/userSlice";
 import { balanceApi } from "../services/api/balanceApi";
-import { salesApi } from "../services/salesApi";
+import { salesApi } from "../services/api/salesApi";
 import authSlice from "../features/user/authSlice";
 import courseSlice from "../features/course/courseSlice";
 import { categoryApi } from "../services/api/categoryApi";
@@ -23,8 +23,7 @@ export const store = createStore({
     [categoryApi.reducerPath]: categoryApi.reducer,
     user: userReducer,
     auth: authSlice,
-    course: courseSlice,
-    // products: productReducer,
+    course: courseSlice
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
