@@ -6,7 +6,7 @@ import React from "react";
 import {
   modalStyleFirstBox,
   modalStyleSecondBox,
-} from "../../theme/CourseProductStyle";
+} from "../../theme/courseProductStyles";
 
 /**
  * AddPhotoModal component renders a modal with a drag and drop area and a file input

@@ -1,5 +1,5 @@
 import { Box, Stack, Typography } from "@mui/material";
-import { iconContainerStyle } from "../../theme/CourseProductStyle";
+import { iconContainerStyle } from "../../theme/courseProductStyles";
 /**
  * IconWithTitle component renders an icon and a title.
  *
