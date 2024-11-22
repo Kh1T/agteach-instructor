@@ -3,9 +3,11 @@ import Grid from "@mui/material/Grid2";
 import TopPerformance from "../components/dashboard/TopPerformance";
 import Overview from "../components/dashboard/Overview";
 import NotApprove from "../components/dashboard/NotApprove";
-
 export default function DashboardPage() {
   const isApprove = false;
+  const isRejected = false;
+  const isFormSubmitted = false;
+
   const notApprovedContent = <NotApprove />;
   const approvedContent = (
       <Grid container spacing={4}>
