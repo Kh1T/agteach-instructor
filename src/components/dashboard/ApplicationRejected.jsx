@@ -10,8 +10,8 @@ export const ApplicationRejected = () => {
         information.
       </Alert>
       <CustomPageMessage
-        title="Your application has been rejected"
-        subtitle="Please check your email for more information"
+        title="Your application has been rejected by AgTeach Admin"
+        subtitle="Thank you for your interest in AgTeach. Unfortunately, your application has been rejected. Please check your email for more information."
       />
     </Stack>
   );
