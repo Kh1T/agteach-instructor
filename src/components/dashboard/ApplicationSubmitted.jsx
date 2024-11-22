@@ -4,7 +4,7 @@ import NotApproveImage from '../../assets/dashboard-not-approve.svg';
 
 export const ApplicationSubmitted = () => {
   return (
-    <Stack>
+    <Stack gap={3}>
       <Alert severity="success">
         <AlertTitle>Application Submitted</AlertTitle>
         Your application has been submitted successfully, hang on tight while we

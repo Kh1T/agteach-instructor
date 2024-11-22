@@ -4,7 +4,7 @@ import rejectedImage from '../../assets/dashboard-rejected-bg.svg';
 
 export const ApplicationRejected = () => {
   return (
-    <Stack>
+    <Stack gap={3}>
       <Alert severity="error">
         <AlertTitle>Application Rejected</AlertTitle>
         Your application has been rejected, please check your email for more
