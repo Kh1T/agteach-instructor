@@ -1,6 +1,16 @@
 import React from 'react';
 import { Typography, Divider, List, ListItem, Stack } from '@mui/material';
 
+/**
+ * ApplicationInstruction component provides detailed instructions for verifying
+ * eligibility and submitting an application. It includes sections on the steps
+ * to verify eligibility, what follows after submission, and features accessible
+ * upon approval. Each section is presented with a heading and a list of steps
+ * or features.
+ *
+ * @returns {JSX.Element} A JSX element representing the ApplicationInstruction
+ * component with instructions for the user.
+ */
 export const ApplicationInstruction = () => {
   return (
     <Stack p={3} gap={1}>
@@ -36,6 +46,14 @@ export const ApplicationInstruction = () => {
   );
 };
 
+/**
+ * SimpleList
+ *
+ * @description A simple list component that displays a given heading and data.
+ * @param {string} heading - The heading to display above the list.
+ * @param {string[]} data - An array of strings to display in the list.
+ * @return {ReactElement} A simple list component with a heading and the given data.
+ */
 const SimpleList = ({ heading, data }) => {
   return (
     <Stack>
