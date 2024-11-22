@@ -6,15 +6,13 @@ import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
+import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import {
   useLocation,
   Link as RouterLink,
   useParams,
   useNavigate,
 } from "react-router-dom";
-import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
-
-import logoIcon from "../assets/logo.svg";
 import {
   Avatar,
   Container,
@@ -26,19 +24,28 @@ import {
   DialogContentText,
   Button,
 } from "@mui/material";
+import { useState } from "react";
+
+import logoIcon from "../assets/logo.svg";
+import logoutIcon from "../assets/red-circle-logout.png";
 
 import sidebarList from "../data/sideBarData";
 import { useLogoutMutation } from "../services/api/authApi";
 import { useGetInstructorInfoQuery } from "../services/api/authApi";
-import logoutIcon from "../assets/red-circle-logout.png";
-import { useState } from "react";
 
+
+/**
+ * A custom sidebar component that renders the app bar and the drawer.
+ * @param {object} children The content of the page.
+ * @returns {React.ReactElement} The custom sidebar component.
+ */
 export default function Sidebar({ children }) {
   const { pathname } = useLocation();
   const { data } = useGetInstructorInfoQuery();
   const drawerWidth = 250;
   const param = useParams();
-
+  const isApproved = false;
+  
   const des = sidebarList.find((element) => element.route === pathname);
   const head = sidebarList.find((element) => {
     if (param.productId) element.route = `/product/${param.productId}/edit`;
@@ -46,6 +53,15 @@ export default function Sidebar({ children }) {
     if (element.route !== pathname) return false;
     return element.route === pathname;
   });
+
+  const description = des && des.description;
+  const headerTitle = head && head.title;
+
+  let instructorInfo = {};
+  if (data) {
+    instructorInfo = data.data.instructor;
+  }
+  let profileImage = instructorInfo?.imageUrl + `?${new Date().getTime()}`;
 
   const [logout, { isLoading, isError, error, isSuccess }] =
     useLogoutMutation();
@@ -70,14 +86,6 @@ export default function Sidebar({ children }) {
     navigate("/setting");
   };
 
-  const description = des && des.description;
-  const headerTitle = head && head.title;
-
-  let instructorInfo = {};
-  if (data) {
-    instructorInfo = data.data.instructor;
-  }
-  let profileImage = instructorInfo?.imageUrl + `?${new Date().getTime()}`;
 
   const drawerContent = (
     <Drawer
