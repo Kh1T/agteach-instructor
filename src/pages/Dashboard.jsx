@@ -12,17 +12,6 @@ export default function DashboardPage() {
         <Grid size={{ xs: 12, md: 12 }}>
           <Overview />
         </Grid>
-        {/* <Grid size={{ xs: 12, md: 4 }}>
-          <Box>
-            <RecentTransaction />
-          </Box>
-        </Grid> */}
-        {/* <Grid size={{ xs: 12, md: 4 }}>
-          <Stack direction="column" spacing={2}>
-            <CardSale title="Monthly" sale="12,000" percent="10" />
-            <CardSale title="Yearly" sale="15,000" percent="20" />
-          </Stack>
-        </Grid> */}
         <Grid size={{ xs: 12, md: 12 }}>
           <TopPerformance />
         </Grid>
