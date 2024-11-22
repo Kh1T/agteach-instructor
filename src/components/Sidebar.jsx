@@ -61,9 +61,14 @@ export default function Sidebar({ children }) {
     instructorInfo = data.data.instructor;
   }
   let profileImage = instructorInfo?.imageUrl + `?${new Date().getTime()}`;
+  let sideBarList = SIDEBARROUTE;
+  if (!isApproved) {
+    sideBarList = SIDEBARROUTE.filter((element) => {
+      return element.route === "/" || element.route === "/setting";
+    });
+  }
 
-  const [logout, { isLoading, isError, error, isSuccess }] =
-    useLogoutMutation();
+  const [logout, { isLoading, isSuccess }] = useLogoutMutation();
   const navigate = useNavigate();
 
   const [open, setOpen] = useState(false); // State to control dialog visibility
@@ -123,7 +128,7 @@ export default function Sidebar({ children }) {
             />
           </Link>
           <Toolbar />
-          {SIDEBARROUTE.map(({ title = "Title", Icon, route }, index) => (
+          {sideBarList.map(({ title, Icon, route }) => (
             <Link
               component={RouterLink}
               to={route}
@@ -230,7 +235,7 @@ export default function Sidebar({ children }) {
         width: `calc(100% - ${drawerWidth}px)`,
         pt: 5,
         ml: `${drawerWidth}px`,
-        backgroundColor: "common.white",
+        backgroundColor: isApproved ? "common.white" : "grey.100",
         color: "common.black",
         boxShadow: "none",
       }}
@@ -305,7 +310,12 @@ export default function Sidebar({ children }) {
   );
 
   const sideBarContent = (
-    <Box sx={{ display: "flex" }}>
+    <Box
+      sx={{
+        display: "flex",
+        backgroundColor: isApproved ? "common.white" : "grey.100",
+      }}
+    >
       {appBarContent}
       {drawerContent}
       {childContent}
