@@ -30,9 +30,9 @@ import logoIcon from "../assets/logo.svg";
 import logoutIcon from "../assets/red-circle-logout.png";
 
 import sidebarList from "../data/sideBarData";
+import { SIDEBARROUTE } from "../constants/sideBarRoute";
 import { useLogoutMutation } from "../services/api/authApi";
 import { useGetInstructorInfoQuery } from "../services/api/authApi";
-
 
 /**
  * A custom sidebar component that renders the app bar and the drawer.
@@ -45,9 +45,9 @@ export default function Sidebar({ children }) {
   const drawerWidth = 250;
   const param = useParams();
   const isApproved = false;
-  
-  const des = sidebarList.find((element) => element.route === pathname);
-  const head = sidebarList.find((element) => {
+
+  const des = SIDEBARROUTE.find((element) => element.route === pathname);
+  const head = SIDEBARROUTE.find((element) => {
     if (param.productId) element.route = `/product/${param.productId}/edit`;
     if (param.courseId) element.route = `/course/${param.courseId}/edit`;
     if (element.route !== pathname) return false;
@@ -85,7 +85,6 @@ export default function Sidebar({ children }) {
   const handleNavigateSetting = () => {
     navigate("/setting");
   };
-
 
   const drawerContent = (
     <Drawer
@@ -125,42 +124,38 @@ export default function Sidebar({ children }) {
             />
           </Link>
           <Toolbar />
-          {sidebarList.map(
-            ({ title = "Title", Icon, route }, index) =>
-              Icon && (
-                <Link
-                  component={RouterLink}
-                  to={route}
-                  key={title}
-                  underline="none"
-                  sx={{
-                    "& .MuiListItem-root": {
-                      backgroundColor:
-                        route === pathname ? "purple.main" : "common.white",
-                      borderRadius: 1,
-                    },
-                    "& .MuiTypography-root": {
+          {SIDEBARROUTE.map(({ title = "Title", Icon, route }, index) => (
+            <Link
+              component={RouterLink}
+              to={route}
+              key={title}
+              underline="none"
+              sx={{
+                "& .MuiListItem-root": {
+                  backgroundColor:
+                    route === pathname ? "purple.main" : "common.white",
+                  borderRadius: 1,
+                },
+                "& .MuiTypography-root": {
+                  color: route === pathname ? "common.white" : "dark.300",
+                },
+              }}
+            >
+              <ListItem key={title} disablePadding>
+                <ListItemButton>
+                  <Icon
+                    sx={{
                       color: route === pathname ? "common.white" : "dark.300",
-                    },
-                  }}
-                >
-                  <ListItem key={title} disablePadding>
-                    <ListItemButton>
-                      <Icon
-                        sx={{
-                          color:
-                            route === pathname ? "common.white" : "dark.300",
-                          mr: "20px",
-                        }}
-                      />
-                      <Typography variant="bmdr" sx={{ color: "dark.300" }}>
-                        {title}
-                      </Typography>
-                    </ListItemButton>
-                  </ListItem>
-                </Link>
-              )
-          )}
+                      mr: "20px",
+                    }}
+                  />
+                  <Typography variant="bmdr" sx={{ color: "dark.300" }}>
+                    {title}
+                  </Typography>
+                </ListItemButton>
+              </ListItem>
+            </Link>
+          ))}
         </List>
       </Stack>
 
