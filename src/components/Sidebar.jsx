@@ -235,7 +235,7 @@ export default function Sidebar({ children }) {
         width: `calc(100% - ${drawerWidth}px)`,
         pt: 5,
         ml: `${drawerWidth}px`,
-        backgroundColor: isApproved ? "common.white" : "grey.100",
+        backgroundColor: "common.white",
         color: "common.black",
         boxShadow: "none",
       }}
@@ -310,12 +310,7 @@ export default function Sidebar({ children }) {
   );
 
   const sideBarContent = (
-    <Box
-      sx={{
-        display: "flex",
-        backgroundColor: isApproved ? "common.white" : "grey.100",
-      }}
-    >
+    <Box sx={{ display: "flex" }}>
       {appBarContent}
       {drawerContent}
       {childContent}
