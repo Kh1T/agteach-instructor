@@ -6,7 +6,7 @@ import CardSale from "../components/dashboard/CardSale";
 import Overview from "../components/dashboard/Overview";
 import NotApprove from "../components/dashboard/NotApprove";
 export default function DashboardPage() {
-  const isApprove = true;
+  const isApprove = false;
   const notApprovedContent = <NotApprove />;
   const approvedContent = (
     <Box sx={{ flexGrow: 1, mb: 4 }}>

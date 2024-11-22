@@ -1,5 +1,11 @@
 import { Box, Stack, Typography } from "@mui/material";
 import IconNotApprove from "../../assets/dashboard-not-approve.svg";
+/**
+ * NotApprove component renders a section with a centered stack, containing
+ * an alert icon, a heading, and three paragraphs of text.
+ *
+ * @returns {JSX.Element} A JSX element representing the NotApprove component.
+ */
 function NotApprove() {
   return (
     <Box
