@@ -1,8 +1,6 @@
-import { Box, Stack } from "@mui/material";
+import { Box } from "@mui/material";
 import TopPerformance from "../components/dashboard/TopPerformance";
-import RecentTransaction from "../components/RecentTransaction";
 import Grid from "@mui/material/Grid2";
-import CardSale from "../components/dashboard/CardSale";
 import Overview from "../components/dashboard/Overview";
 import NotApprove from "../components/dashboard/NotApprove";
 export default function DashboardPage() {
