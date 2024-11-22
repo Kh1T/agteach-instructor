@@ -1,4 +1,4 @@
-import { Alert, AlertTitle, Box, Stack, Typography } from '@mui/material';
+import { Alert, AlertTitle, Stack } from '@mui/material';
 import { CustomPageMessage } from '../CustomPageMessage';
 
 /**
