@@ -18,7 +18,7 @@ export const ApplicationInstruction = () => {
       <Typography variant="blgsm">Last Step: Verify Eligibility</Typography>
       <Divider />
       {/* Intro */}
-      <Typography variant="body1" sx={{ mb: 2 }}>
+      <Typography sx={{ mb: 2 }}>
         To ensure your content aligns with our standards, we require you to
         answer a few questions for verification. Please read the instructions
         carefully before submitting, as you can only submit your application
