@@ -1,79 +1,71 @@
-import React from "react";
-import { Box, Typography, Divider, List, ListItem, ListItemText } from "@mui/material";
+import React from 'react';
+import { Typography, Divider, List, ListItem, Stack } from '@mui/material';
 
 export const ApplicationInstruction = () => {
   return (
-    <Box sx={{ p: 3, backgroundColor: "#1a1a1a", color: "#ffffff", borderRadius: "8px" }}>
+    <Stack p={3} gap={1}>
       {/* Title */}
-      <Typography variant="h5" fontWeight="bold" gutterBottom>
-        Last Step: Verify Eligibility
-      </Typography>
-
-      <Divider sx={{ borderColor: "#444", mb: 2 }} />
-
+      <Typography variant="blgsm">Last Step: Verify Eligibility</Typography>
+      <Divider />
       {/* Intro */}
       <Typography variant="body1" sx={{ mb: 2 }}>
-        To ensure your content aligns with our standards, we require you to answer a few
-        questions for verification. Please read the instructions carefully before
-        submitting, as you can only submit your application once.
+        To ensure your content aligns with our standards, we require you to
+        answer a few questions for verification. Please read the instructions
+        carefully before submitting, as you can only submit your application
+        once.
       </Typography>
-
-      <Divider sx={{ borderColor: "#444", mb: 2 }} />
-
+      <Divider />
       {/* Section 1: How to Verify */}
-      <Typography variant="h6" fontWeight="bold" sx={{ mb: 1 }}>
-        How to Verify Your Eligibility?
-      </Typography>
-      <List sx={{ mb: 2, pl: 2 }}>
-        <ListItem disableGutters>
-          <ListItemText primary="Complete the required additional information." />
-        </ListItem>
-        <ListItem disableGutters>
-          <ListItemText primary="Submit your details for review by the AgTeach admin team." />
-        </ListItem>
-      </List>
-
-      <Divider sx={{ borderColor: "#444", mb: 2 }} />
-
+      <SimpleList
+        data={eligibilitySteps}
+        heading="How to Verify Your Eligibility?"
+      />
+      <Divider />
       {/* Section 2: What Happens After */}
-      <Typography variant="h6" fontWeight="bold" sx={{ mb: 1 }}>
-        What Happens After Submitting Your Application?
-      </Typography>
-      <List sx={{ mb: 2, pl: 2 }}>
-        <ListItem disableGutters>
-          <ListItemText primary="Your application will be reviewed by the AgTeach admin team." />
-        </ListItem>
-        <ListItem disableGutters>
-          <ListItemText primary="This process typically takes 24 hours but may extend to several days." />
-        </ListItem>
-        <ListItem disableGutters>
-          <ListItemText primary="You will receive an email either approved or rejected." />
-        </ListItem>
-      </List>
-
-      <Divider sx={{ borderColor: "#444", mb: 2 }} />
-
+      <SimpleList
+        data={applicationSteps}
+        heading="What Happens After Submitting Your Application?"
+      />
+      <Divider />
       {/* Section 3: Features */}
-      <Typography variant="h6" fontWeight="bold" sx={{ mb: 1 }}>
-        Once approved, you will gain access to features such as:
-      </Typography>
-      <List sx={{ pl: 2 }}>
-        <ListItem disableGutters>
-          <ListItemText primary="Creating and managing courses." />
-        </ListItem>
-        <ListItem disableGutters>
-          <ListItemText primary="Creating and listing products." />
-        </ListItem>
-        <ListItem disableGutters>
-          <ListItemText primary="Allowing customers to purchase your products." />
-        </ListItem>
-        <ListItem disableGutters>
-          <ListItemText primary="Enabling customers to enroll in your courses." />
-        </ListItem>
-        <ListItem disableGutters>
-          <ListItemText primary="Tracking your daily sales and more." />
-        </ListItem>
-      </List>
-    </Box>
+      <SimpleList
+        data={features}
+        heading="Once approved, you will gain access to features such as:"
+      />
+    </Stack>
   );
 };
+
+const SimpleList = ({ heading, data }) => {
+  return (
+    <Stack>
+      <Typography>{heading}</Typography>
+      <List sx={{ listStyleType: 'disc', listStylePosition: 'inside' }}>
+        {data.map((item, index) => (
+          <ListItem key={index} sx={{ display: 'list-item' }}>
+            {item}
+          </ListItem>
+        ))}
+      </List>
+    </Stack>
+  );
+};
+
+const eligibilitySteps = [
+  'Complete the required additional information.',
+  'Submit your details for review by the AgTeach admin team.',
+];
+
+const applicationSteps = [
+  'Your application will be reviewed by the AgTeach admin team.',
+  'This process typically takes 24 hours but may extend to several days.',
+  'You will receive an email either approved or rejected.',
+];
+
+const features = [
+  'Creating and managing courses.',
+  'Creating and listing products.',
+  'Allowing customers to purchase your products.',
+  'Enabling customers to enroll in your courses.',
+  'Tracking your daily sales and more.',
+];

@@ -1,6 +1,7 @@
 import { Stack } from '@mui/material';
 import { ApplicationSubmitted } from './ApplicationSubmitted';
 import { ApplicationRejected } from './ApplicationRejected';
+import { ApplicationInstruction } from './ApplicationInstruction';
 
 /**
  * NotApprove component renders a section with a centered stack, containing
@@ -13,6 +14,7 @@ function NotApprove() {
     <Stack gap={3} width="100%">
       <ApplicationRejected />
       <ApplicationSubmitted />
+      <ApplicationInstruction />
     </Stack>
   );
 }
