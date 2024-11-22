@@ -1,4 +1,5 @@
 import { Alert, AlertTitle, Stack } from '@mui/material';
+import { ApplicationSubmitted } from './ApplicationSubmitted';
 
 /**
  * NotApprove component renders a section with a centered stack, containing
@@ -9,13 +10,12 @@ import { Alert, AlertTitle, Stack } from '@mui/material';
 function NotApprove() {
   return (
     <Stack gap={3} width="100%">
-
       <Alert severity="error">
         <AlertTitle>Application Rejected</AlertTitle>
         Your application has been rejected, please check your email for more
         information.
       </Alert>
-
+      <ApplicationSubmitted />
     </Stack>
   );
 }
