@@ -29,7 +29,6 @@ import { useState } from "react";
 import logoIcon from "../assets/logo.svg";
 import logoutIcon from "../assets/red-circle-logout.png";
 
-import sidebarList from "../data/sideBarData";
 import { SIDEBARROUTE } from "../constants/sideBarRoute";
 import { useLogoutMutation } from "../services/api/authApi";
 import { useGetInstructorInfoQuery } from "../services/api/authApi";
