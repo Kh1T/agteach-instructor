@@ -4,7 +4,7 @@ import TopPerformance from '../components/dashboard/TopPerformance';
 import Overview from '../components/dashboard/Overview';
 import { ApplicationSubmitted } from '../components/dashboard/ApplicationSubmitted';
 import { ApplicationRejected } from '../components/dashboard/ApplicationRejected';
-import { Typography } from '@mui/material';
+import FormApproval from '../components/dashboard/FormApproval';
 
 export default function DashboardPage() {
   const isApproved = false;
@@ -18,7 +18,7 @@ export default function DashboardPage() {
     if (isFormSubmitted && isRejected) {
       return <ApplicationRejected />;
     }
-    return <Typography>Add Application Form Component and Application Instruction Here</Typography>;
+    return <FormApproval />;
   }
 
   return (

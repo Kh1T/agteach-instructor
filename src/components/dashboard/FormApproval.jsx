@@ -1,6 +1,6 @@
 import { Stack, Button, TextField, Typography, Box } from "@mui/material";
 import { useState } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useFormApprovalMutation } from "../../services/api/approvalApi";
 
 export default function FormApproval() {
@@ -14,6 +14,12 @@ export default function FormApproval() {
 
   const [approval] = useFormApprovalMutation();
 
+  const [touchedFields, setTouchedFields] = useState({
+    targetCourse: false,
+    targetProduct: false,
+    profileBackground: false,
+  });
+
   const wordCount = (text) => {
     return text?.trim() ? text?.trim().split(/\s+/).length : 0;
   };
@@ -22,23 +28,14 @@ export default function FormApproval() {
   const targetCourse = watch("targetCourse");
   const targetProduct = watch("targetProduct");
 
-  const profileBackgroundWordCount = wordCount(profileBackground);
-  const targetCourseWordCount = wordCount(targetCourse);
-  const targetProductWordCount = wordCount(targetProduct);
-
   const wordCountError = (identifier) => {
     if (wordCount(identifier) > 500) {
-      return {error: true, helperText: "Please enter less than 500 words"};
+      return { error: true, helperText: "Please enter less than 500 words" };
     } else if (wordCount(identifier) < 150) {
-      return {error: true, helperText: "Please enter more than 150 words"};
+      return { error: true, helperText: "Please enter more than 150 words" };
     }
-  }
-
-//   const buttonDisabled = !(
-//     profileBackgroundWordCount > 500 ||
-//     targetCourseWordCount > 500 ||
-//     targetProductWordCount > 500
-//   );
+    return { error: false };
+  };
 
   const handleSubmission = async (data) => {
     console.log(data);
@@ -49,6 +46,7 @@ export default function FormApproval() {
       console.log(error);
     }
   };
+
   return (
     <Stack
       component={"form"}
@@ -57,9 +55,10 @@ export default function FormApproval() {
       onSubmit={handleSubmit(handleSubmission)}
     >
       <Typography variant="h4" sx={{ color: "dark.400" }}>
-        Additional Information
+        Verification Form
       </Typography>
 
+      {/* Other fields remain unchanged */}
       <Stack spacing={2}>
         <Typography variant="bmdr" color="grey">
           National ID Card Number
@@ -104,43 +103,55 @@ export default function FormApproval() {
 
         <TextField
           variant="outlined"
-          label={`Description ${targetCourse ? `: ${targetCourseWordCount} / 500 word` : ""}`}
+          label={`Description ${targetCourse ? `: ${wordCount(targetCourse)} / 500 word` : ""}`}
           multiline
           minRows={4}
           size="small"
           fullWidth
           {...register("targetCourse", {
             required: "Please enter a description",
+            onBlur: () =>
+              setTouchedFields((prev) => ({ ...prev, targetCourse: true })),
           })}
-          error={!!errors.targetCourse || wordCountError(targetCourse).error}
+          error={
+            !!errors.targetCourse ||
+            (touchedFields.targetCourse && wordCountError(targetCourse).error)
+          }
           helperText={
             errors.targetCourse?.message ||
-            (wordCountError(targetCourse).error && wordCountError(targetCourse).helperText)
+            (touchedFields.targetCourse &&
+              wordCountError(targetCourse).error &&
+              wordCountError(targetCourse).helperText)
           }
         />
-
       </Stack>
 
       <Stack spacing={2}>
         <Typography variant="bmdr" color="grey">
-          Tell us, what inspires you to sell products ?
+          Describe what product you will be selling on AgTeach Platform?
         </Typography>
 
         <TextField
           variant="outlined"
-          label={`Description ${targetProduct ? `: ${targetProductWordCount} / 500 word` : ""}`}
+          label={`Description ${targetProduct ? `: ${wordCount(targetProduct)} / 500 word` : ""}`}
           multiline
           minRows={4}
           size="small"
           fullWidth
           {...register("targetProduct", {
             required: "Please enter a description",
+            onBlur: () =>
+              setTouchedFields((prev) => ({ ...prev, targetProduct: true })),
           })}
-          error={!!errors.targetProduct || targetProductWordCount > 500}
+          error={
+            !!errors.targetProduct ||
+            (touchedFields.targetProduct && wordCountError(targetProduct).error)
+          }
           helperText={
             errors.targetProduct?.message ||
-            (wordCount(targetProduct) > 500 &&
-              "Description must be less than 500 words")
+            (touchedFields.targetProduct &&
+              wordCountError(targetProduct).error &&
+              wordCountError(targetProduct).helperText)
           }
         />
       </Stack>
@@ -151,19 +162,29 @@ export default function FormApproval() {
         </Typography>
         <TextField
           variant="outlined"
-          label={`Description ${profileBackground ? `: ${profileBackgroundWordCount} / 500 word` : ""}`}
+          label={`Description ${profileBackground ? `: ${wordCount(profileBackground)} / 500 word` : ""}`}
           multiline
           minRows={4}
           size="small"
           fullWidth
           {...register("profileBackground", {
             required: "Please enter a description",
+            onBlur: () =>
+              setTouchedFields((prev) => ({
+                ...prev,
+                profileBackground: true,
+              })),
           })}
-          error={!!errors.profileBackground || profileBackgroundWordCount > 500}
+          error={
+            !!errors.profileBackground ||
+            (touchedFields.profileBackground &&
+              wordCountError(profileBackground).error)
+          }
           helperText={
             errors.profileBackground?.message ||
-            (wordCount(profileBackground) > 500 &&
-              "Description must be less than 500 words")
+            (touchedFields.profileBackground &&
+              wordCountError(profileBackground).error &&
+              wordCountError(profileBackground).helperText)
           }
         />
       </Stack>
@@ -199,21 +220,13 @@ export default function FormApproval() {
           }}
         />
       </Stack>
-
       <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
         <Button
           type="submit"
           variant="contained"
-          size="small"
-        //   disabled={!buttonDisabled}
-          sx={{
-            bgcolor: "blue.main",
-            width: "100px",
-            height: "40px",
-            typography: "bmdr",
-          }}
+          sx={{ width: "110px", height: "50px", bgcolor: "blue.main" }}
         >
-          Submit
+          SUBMIT
         </Button>
       </Box>
     </Stack>
