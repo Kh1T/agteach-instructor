@@ -1,5 +1,6 @@
 import { Alert, AlertTitle, Stack } from '@mui/material';
 import { CustomPageMessage } from '../CustomPageMessage';
+import rejectedImage from '../../assets/dashboard-rejected-bg.svg';
 
 export const ApplicationRejected = () => {
   return (
@@ -10,6 +11,7 @@ export const ApplicationRejected = () => {
         information.
       </Alert>
       <CustomPageMessage
+        image={rejectedImage}
         title="Your application has been rejected by AgTeach Admin"
         subtitle="Thank you for your interest in AgTeach. Unfortunately, your application has been rejected. Please check your email for more information."
       />
