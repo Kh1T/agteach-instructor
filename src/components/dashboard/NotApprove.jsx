@@ -9,13 +9,13 @@ import IconNotApprove from '../../assets/dashboard-not-approve.svg';
 function NotApprove() {
   return (
     <Stack gap={3} width="100%">
-      <Alert severity="info">
-        <AlertTitle>Info</AlertTitle>
-        This is an info Alert with an informative title.
+      <Alert severity="success">
+        <AlertTitle>Application Submitted</AlertTitle>
+        Your application has been submitted successfully, hang on tight while we review your application.
       </Alert>
       <Alert severity="error">
-        <AlertTitle>Error</AlertTitle>
-        This is an error Alert with a scary title.
+        <AlertTitle>Application Rejected</AlertTitle>
+        Your application has been rejected, please check your email for more information.
       </Alert>
       <Stack component="section" sx={{ backgroundColor: 'grey.100', pb: 5 }}>
         <Stack
