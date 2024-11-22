@@ -226,9 +226,9 @@ export default function Sidebar({ children }) {
       position="fixed"
       sx={{
         width: `calc(100% - ${drawerWidth}px)`,
+        backgroundColor: "grey.100",
         pt: 5,
-        ml: `${drawerWidth}px`,
-        backgroundColor: "common.white",
+        ml: `${drawerWidth}px`, 
         color: "common.black",
         boxShadow: "none",
       }}
@@ -303,7 +303,8 @@ export default function Sidebar({ children }) {
   );
 
   const sideBarContent = (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex",
+      backgroundColor: "grey.100"  }}>
       {appBarContent}
       {drawerContent}
       {childContent}

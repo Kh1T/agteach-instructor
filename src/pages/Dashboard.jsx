@@ -5,6 +5,7 @@ import Overview from '../components/dashboard/Overview';
 import { ApplicationSubmitted } from '../components/dashboard/ApplicationSubmitted';
 import { ApplicationRejected } from '../components/dashboard/ApplicationRejected';
 import FormApproval from '../components/dashboard/FormApproval';
+import VerificationForm from '../components/dashboard/VerificationForm';
 
 export default function DashboardPage() {
   const isApproved = false;
@@ -18,7 +19,7 @@ export default function DashboardPage() {
     if (isFormSubmitted && isRejected) {
       return <ApplicationRejected />;
     }
-    return <FormApproval />;
+    return <VerificationForm />;
   }
 
   return (
