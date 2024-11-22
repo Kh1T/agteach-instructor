@@ -1,25 +1,34 @@
-import Grid from "@mui/material/Grid2";
+import Grid from '@mui/material/Grid2';
 
-import TopPerformance from "../components/dashboard/TopPerformance";
-import Overview from "../components/dashboard/Overview";
-import NotApprove from "../components/dashboard/NotApprove";
+import TopPerformance from '../components/dashboard/TopPerformance';
+import Overview from '../components/dashboard/Overview';
+import { ApplicationSubmitted } from '../components/dashboard/ApplicationSubmitted';
+import { ApplicationRejected } from '../components/dashboard/ApplicationRejected';
+import { Typography } from '@mui/material';
+
 export default function DashboardPage() {
-  const isApprove = false;
+  const isApproved = false;
   const isRejected = false;
   const isFormSubmitted = false;
 
-  const notApprovedContent = <NotApprove />;
-  const approvedContent = (
-      <Grid container spacing={4}>
-        <Grid size={{ xs: 12, md: 12 }}>
-          <Overview />
-        </Grid>
-        <Grid size={{ xs: 12, md: 12 }}>
-          <TopPerformance />
-        </Grid>
-      </Grid>
-  );
-  const content = isApprove ? approvedContent : notApprovedContent;
+  if (!isApproved) {
+    if (isFormSubmitted && !isRejected) {
+      return <ApplicationSubmitted />;
+    }
+    if (isFormSubmitted && isRejected) {
+      return <ApplicationRejected />;
+    }
+    return <Typography>Add Application Form Component and Application Instruction Here</Typography>;
+  }
 
-  return content;
+  return (
+    <Grid container spacing={4}>
+      <Grid size={{ xs: 12, md: 12 }}>
+        <Overview />
+      </Grid>
+      <Grid size={{ xs: 12, md: 12 }}>
+        <TopPerformance />
+      </Grid>
+    </Grid>
+  );
 }

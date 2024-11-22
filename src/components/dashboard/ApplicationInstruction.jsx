@@ -13,7 +13,7 @@ import { Typography, Divider, List, ListItem, Stack } from '@mui/material';
  */
 export const ApplicationInstruction = () => {
   return (
-    <Stack p={3} gap={1}>
+    <Stack p={3} gap={1} color='dark.300'>
       {/* Title */}
       <Typography variant="blgsm">Last Step: Verify Eligibility</Typography>
       <Divider />
