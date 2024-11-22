@@ -10,11 +10,7 @@ import { ApplicationSubmitted } from './ApplicationSubmitted';
 function NotApprove() {
   return (
     <Stack gap={3} width="100%">
-      <Alert severity="error">
-        <AlertTitle>Application Rejected</AlertTitle>
-        Your application has been rejected, please check your email for more
-        information.
-      </Alert>
+  
       <ApplicationSubmitted />
     </Stack>
   );
