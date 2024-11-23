@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useFormApprovalMutation } from "../../services/api/approvalApi";
 import { CustomAlert } from "../CustomAlert";
+import FormTextSection from "./FormTextSection";
 
 export default function FormApproval() {
   const {
@@ -25,7 +26,7 @@ export default function FormApproval() {
     open: false,
     message: "",
     severity: "",
-  })
+  });
 
   const wordCount = (text) => {
     return text?.trim() ? text?.trim().split(/\s+/).length : 0;
@@ -52,20 +53,20 @@ export default function FormApproval() {
         open: true,
         message: res.message,
         severity: "success",
-      })
+      });
       console.log("res", res);
     } catch (error) {
       setSnackbar({
         open: true,
         message: error.data.message,
         severity: "error",
-      })
+      });
     }
   };
 
   return (
-    <Box bgcolor="common.white" sx={{ backdrop: "10" }} p={4} width={"65%"}>
-      <CustomAlert 
+    <Box bgcolor="common.white" p={4} width={"65%"}>
+      <CustomAlert
         open={snackbar.open}
         label={snackbar.message}
         severity={snackbar.severity}
@@ -73,19 +74,15 @@ export default function FormApproval() {
       />
       <Stack
         component={"form"}
-        spacing={4}
+        spacing={5}
         onSubmit={handleSubmit(handleSubmission)}
       >
         <Typography variant="h4" pb={2} sx={{ color: "primary.main" }}>
           Verification Form
         </Typography>
         <Stack spacing={2}>
-          <Typography variant="bmdr" color="grey">
-            National ID Card Number
-          </Typography>
+          <FormTextSection title="National ID Card Number" />
           <TextField
-            variant="outlined"
-            label="ID Number"
             fullWidth
             inputProps={{ maxLength: 11 }}
             slotProps={{
@@ -116,15 +113,21 @@ export default function FormApproval() {
               }
             }}
           />
+          <Typography component="ul">
+            <Typography component="li" color="dark.300" variant="bsr">
+              NOTE: A National ID number ensures identification and access to
+              services.
+            </Typography>
+          </Typography>
         </Stack>
 
         <Stack spacing={2}>
-          <Typography variant="bmdr" color="grey">
-            Tell us, what inspires you to sell courses ?
-          </Typography>
+          <FormTextSection
+            title="Tell us, what inspires you to sell course ?"
+            description="What kind of courses will you be producing?"
+          />
 
           <TextField
-            variant="outlined"
             label={`Description ${targetCourse ? `: ${wordCount(targetCourse)} / 500 word` : ""}`}
             multiline
             minRows={4}
@@ -148,12 +151,12 @@ export default function FormApproval() {
         </Stack>
 
         <Stack spacing={2}>
-          <Typography variant="bmdr" color="grey">
-            Describe what product you will be selling on AgTeach Platform?
-          </Typography>
+          <FormTextSection
+            title="Tell us, what inspires you to sell product ?"
+            description="Describe what product you will be selling on AgTeach Platform?"
+          />
 
           <TextField
-            variant="outlined"
             label={`Description ${targetProduct ? `: ${wordCount(targetProduct)} / 500 word` : ""}`}
             multiline
             minRows={4}
@@ -178,11 +181,12 @@ export default function FormApproval() {
         </Stack>
 
         <Stack spacing={2}>
-          <Typography variant="bmdr" color="grey">
-            Describe who you are
-          </Typography>
+          <FormTextSection
+            title="Describe who you are"
+            description="Tell us more about you? And why you want to sell and teach on AgTeach?"
+          />
+
           <TextField
-            variant="outlined"
             label={`Description ${profileBackground ? `: ${wordCount(profileBackground)} / 500 word` : ""}`}
             multiline
             minRows={4}
@@ -210,12 +214,8 @@ export default function FormApproval() {
         </Stack>
 
         <Stack spacing={2}>
-          <Typography variant="bmdr" color="grey">
-            Bank Card Number (PAN)
-          </Typography>
+          <FormTextSection title="Bank Card Number (PAN)" />
           <TextField
-            variant="outlined"
-            label="Bank Number"
             fullWidth
             inputProps={{ maxLength: 11 }}
             {...register("bankNumber", {
@@ -241,6 +241,11 @@ export default function FormApproval() {
               }
             }}
           />
+          <Typography component="ul">
+            <Typography component="li" color="dark.300" variant="bsr">
+              NOTE: A bank card number enables transactions and security.
+            </Typography>
+          </Typography>
         </Stack>
         <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
           <Button
