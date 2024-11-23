@@ -2,6 +2,7 @@ import { Stack, Button, TextField, Typography, Box } from "@mui/material";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useFormApprovalMutation } from "../../services/api/approvalApi";
+import { CustomAlert } from "../CustomAlert";
 
 export default function FormApproval() {
   const {
@@ -19,6 +20,12 @@ export default function FormApproval() {
     targetProduct: false,
     profileBackground: false,
   });
+
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "",
+  })
 
   const wordCount = (text) => {
     return text?.trim() ? text?.trim().split(/\s+/).length : 0;
@@ -41,14 +48,29 @@ export default function FormApproval() {
     console.log(data);
     try {
       const res = await approval(data).unwrap();
+      setSnackbar({
+        open: true,
+        message: res.message,
+        severity: "success",
+      })
       console.log("res", res);
     } catch (error) {
-      console.log(error);
+      setSnackbar({
+        open: true,
+        message: error.data.message,
+        severity: "error",
+      })
     }
   };
 
   return (
     <Box bgcolor="common.white" sx={{ backdrop: "10" }} p={4} width={"65%"}>
+      <CustomAlert 
+        open={snackbar.open}
+        label={snackbar.message}
+        severity={snackbar.severity}
+        onClose={() => setSnackbar({ ...snackbar, open: false })}
+      />
       <Stack
         component={"form"}
         spacing={4}
