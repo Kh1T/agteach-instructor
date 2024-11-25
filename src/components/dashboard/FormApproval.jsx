@@ -7,6 +7,29 @@ import FormTextSection from "./FormTextSection";
 import { useDispatch, useSelector } from "react-redux";
 import { setInstructorVerificationStatus } from "../../features/user/approvalSlice";
 
+/**
+ * FormApproval
+ *
+ * This component is used to create the instructor verification form.
+ *
+ * The form will be used to collect the following information:
+ * - National ID Card Number
+ * - Bank Account Number
+ * - Target Course
+ * - Target Product
+ * - Describe who you are
+ *
+ * The form will be validated to ensure that:
+ * - The National ID Card Number is 9 digits
+ * - The Bank Account Number is 9 digits
+ * - The Target Course, Target Product, and Describe who you are fields are not empty
+ * - The Target Course, Target Product, and Describe who you are fields are not more than 500 words
+ *
+ * The form will be submitted to the server, and the response will be displayed in a snackbar.
+ *
+ * @param {{}} props - the component props
+ * @returns {JSX.Element} - the form component
+ */
 export default function FormApproval() {
   const { register, handleSubmit, watch, setValue, formState } = useForm();
   const dispatch = useDispatch();

@@ -8,6 +8,19 @@ import VerificationForm from "../components/dashboard/VerificationForm";
 import { useSelector } from "react-redux";
 import { Box, CircularProgress } from "@mui/material";
 
+/**
+ * DashboardPage renders the main dashboard page for the application.
+ *
+ * If the user is loading their approval status, a loading screen is displayed.
+ *
+ * If the user is not approved, they are shown a verification form to fill out.
+ * After submitting the verification form, the user is shown a success message.
+ * If the user has submitted the verification form and has been rejected, they
+ * are shown a rejection message.
+ *
+ * If the user is approved, they are shown an overview of their sales and top
+ * performing products/courses.
+ */
 export default function DashboardPage() {
   const { isApproved, isRejected, isFormSubmitted, isApprovalLoading } =
     useSelector((state) => state.approval);
