@@ -29,7 +29,7 @@ export const SIDEBARROUTE = [
   {
     title: "Edit Course",
     Icon: null,
-    route: "/course/id/edit",
+    route: "/course/id",
     description: "Edit courses for your portfolio",
   },
   {

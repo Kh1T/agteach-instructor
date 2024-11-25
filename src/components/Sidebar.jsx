@@ -10,7 +10,6 @@ import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import {
   useLocation,
   Link as RouterLink,
-  useParams,
   useNavigate,
 } from "react-router-dom";
 import {
@@ -42,31 +41,7 @@ export default function Sidebar({ children }) {
   const { pathname } = useLocation();
   const { data } = useGetInstructorInfoQuery();
   const drawerWidth = 250;
-  const param = useParams();
   const isApproved = true;
-  // console.log(pathname);
-  // Current Description
-  const des = SIDEBARROUTE.find((element) => {
-    if (element.route.includes("id")) {
-      const dynamicPath = `/${pathname.split("/")[1]}/id`;
-      if (element.route === dynamicPath) {
-        console.log("find");
-        console.log(element.route, dynamicPath);
-        return element.route === dynamicPath;
-      }
-    }
-    return element.route === pathname;
-  });
-  console.log(des);
-  // Current Title
-  // Fitler to get current title
-  const head = SIDEBARROUTE.find((element) => {
-    if (param.productId) element.route = `/product/${param.productId}/edit`;
-    if (param.courseId) element.route = `/course/${param.courseId}/edit/abc`;
-    // if (param.enrollmentId) element.route = `/product/abc`;
-    if (element.route !== pathname) return false;
-    return element.route === pathname;
-  });
 
   const appBarHeader = SIDEBARROUTE.find((element) => {
     if (element.route.includes("id")) {
@@ -80,10 +55,6 @@ export default function Sidebar({ children }) {
     return element.route === pathname;
   });
 
-
-
-  // const description = des && des.description;
-  // const headerTitle = head && head.title;
   const description = appBarHeader && appBarHeader.description;
   const headerTitle = appBarHeader && appBarHeader.title;
 
@@ -128,17 +99,8 @@ export default function Sidebar({ children }) {
     // Highlight routes that match the start of the pathname
     return pathname.startsWith(route);
   };
-  // Utility function to find the active sidebar item
-  const getActiveSidebarRoute = (pathname) => {
-    return SIDEBARROUTE.find((route) => {
-      const isExactMatch = route.route === pathname;
-      const isWildcardMatch =
-        route.route.includes(":") &&
-        new RegExp(`^${route.route.replace(/:\w+/g, "\\w+")}$`).test(pathname);
-      return isExactMatch || isWildcardMatch;
-    });
-  };
-  const activeRoute = getActiveSidebarRoute(pathname);
+
+
   const drawerContent = (
     <Drawer
       sx={{
