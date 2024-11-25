@@ -6,15 +6,12 @@ import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
+import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import {
   useLocation,
   Link as RouterLink,
-  useParams,
   useNavigate,
 } from "react-router-dom";
-import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
-
-import logoIcon from "../assets/logo.svg";
 import {
   Avatar,
   Container,
@@ -26,29 +23,52 @@ import {
   DialogContentText,
   Button,
 } from "@mui/material";
-
-import sidebarList from "../data/sideBarData";
-import { useLogoutMutation } from "../services/api/authApi";
-import { useGetInstructorInfoQuery } from "../services/api/authApi";
-import logoutIcon from "../assets/red-circle-logout.png";
 import { useState } from "react";
 
+import logoIcon from "../assets/logo.svg";
+import logoutIcon from "../assets/red-circle-logout.png";
+
+import { SIDEBARROUTE } from "../constants/sideBarConstant";
+import { useLogoutMutation } from "../services/api/authApi";
+import { useGetInstructorInfoQuery } from "../services/api/authApi";
+
+/**
+ * A custom sidebar component that renders the app bar and the drawer.
+ * @param {object} children The content of the page.
+ * @returns {React.ReactElement} The custom sidebar component.
+ */
 export default function Sidebar({ children }) {
   const { pathname } = useLocation();
   const { data } = useGetInstructorInfoQuery();
   const drawerWidth = 250;
-  const param = useParams();
+  const isApproved = true;
 
-  const des = sidebarList.find((element) => element.route === pathname);
-  const head = sidebarList.find((element) => {
-    if (param.productId) element.route = `/product/${param.productId}/edit`;
-    if (param.courseId) element.route = `/course/${param.courseId}/edit`;
-    if (element.route !== pathname) return false;
+  const appBarHeader = SIDEBARROUTE.find((element) => {
+    if (element.route.includes("id")) {
+      const dynamicPath = `/${pathname.split("/")[1]}/id`;
+      if (element.route === dynamicPath) {
+        return element.route === dynamicPath;
+      }
+    }
     return element.route === pathname;
   });
 
-  const [logout, { isLoading, isError, error, isSuccess }] =
-    useLogoutMutation();
+  const description = appBarHeader && appBarHeader.description;
+  const headerTitle = appBarHeader && appBarHeader.title;
+
+  let instructorInfo = {};
+  if (data) {
+    instructorInfo = data.data.instructor;
+  }
+  let profileImage = instructorInfo?.imageUrl + `?${new Date().getTime()}`;
+  let sideBarList = SIDEBARROUTE;
+  if (!isApproved) {
+    sideBarList = SIDEBARROUTE.filter((element) => {
+      return element.route === "/" || element.route === "/setting";
+    });
+  }
+
+  const [logout, { isLoading, isSuccess }] = useLogoutMutation();
   const navigate = useNavigate();
 
   const [open, setOpen] = useState(false); // State to control dialog visibility
@@ -69,15 +89,15 @@ export default function Sidebar({ children }) {
   const handleNavigateSetting = () => {
     navigate("/setting");
   };
+  const getActiveStyle = (route, pathname) => {
+    // Special case for the dashboard route "/"
+    if (route === "/") {
+      return pathname === "/";
+    }
+    // Highlight routes that match the start of the pathname
+    return pathname.startsWith(route);
+  };
 
-  const description = des && des.description;
-  const headerTitle = head && head.title;
-
-  let instructorInfo = {};
-  if (data) {
-    instructorInfo = data.data.instructor;
-  }
-  let profileImage = instructorInfo?.imageUrl + `?${new Date().getTime()}`;
 
   const drawerContent = (
     <Drawer
@@ -117,8 +137,8 @@ export default function Sidebar({ children }) {
             />
           </Link>
           <Toolbar />
-          {sidebarList.map(
-            ({ title = "Title", Icon, route }, index) =>
+          {sideBarList.map(
+            ({ title, Icon, route }) =>
               Icon && (
                 <Link
                   component={RouterLink}
@@ -127,12 +147,16 @@ export default function Sidebar({ children }) {
                   underline="none"
                   sx={{
                     "& .MuiListItem-root": {
-                      backgroundColor:
-                        route === pathname ? "purple.main" : "common.white",
+                      backgroundColor: getActiveStyle(route, pathname)
+                        ? "purple.main"
+                        : "common.white",
+
                       borderRadius: 1,
                     },
                     "& .MuiTypography-root": {
-                      color: route === pathname ? "common.white" : "dark.300",
+                      color: getActiveStyle(route, pathname)
+                        ? "common.white"
+                        : "dark.300",
                     },
                   }}
                 >
@@ -140,8 +164,9 @@ export default function Sidebar({ children }) {
                     <ListItemButton>
                       <Icon
                         sx={{
-                          color:
-                            route === pathname ? "common.white" : "dark.300",
+                          color: getActiveStyle(route, pathname)
+                            ? "common.white"
+                            : "dark.300",
                           mr: "20px",
                         }}
                       />
