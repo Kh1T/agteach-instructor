@@ -29,7 +29,7 @@ import { useState } from "react";
 import logoIcon from "../assets/logo.svg";
 import logoutIcon from "../assets/red-circle-logout.png";
 
-import { SIDEBARROUTE } from "../constants/sideBarRoute";
+import { SIDEBARROUTE } from "../constants/sideBarConstant";
 import { useLogoutMutation } from "../services/api/authApi";
 import { useGetInstructorInfoQuery } from "../services/api/authApi";
 
@@ -43,18 +43,49 @@ export default function Sidebar({ children }) {
   const { data } = useGetInstructorInfoQuery();
   const drawerWidth = 250;
   const param = useParams();
-  const isApproved = false;
-
-  const des = SIDEBARROUTE.find((element) => element.route === pathname);
+  const isApproved = true;
+  // console.log(pathname);
+  // Current Description
+  const des = SIDEBARROUTE.find((element) => {
+    if (element.route.includes("id")) {
+      const dynamicPath = `/${pathname.split("/")[1]}/id`;
+      if (element.route === dynamicPath) {
+        console.log("find");
+        console.log(element.route, dynamicPath);
+        return element.route === dynamicPath;
+      }
+    }
+    return element.route === pathname;
+  });
+  console.log(des);
+  // Current Title
+  // Fitler to get current title
   const head = SIDEBARROUTE.find((element) => {
     if (param.productId) element.route = `/product/${param.productId}/edit`;
-    if (param.courseId) element.route = `/course/${param.courseId}/edit`;
+    if (param.courseId) element.route = `/course/${param.courseId}/edit/abc`;
+    // if (param.enrollmentId) element.route = `/product/abc`;
     if (element.route !== pathname) return false;
     return element.route === pathname;
   });
 
-  const description = des && des.description;
-  const headerTitle = head && head.title;
+  const appBarHeader = SIDEBARROUTE.find((element) => {
+    if (element.route.includes("id")) {
+      const dynamicPath = `/${pathname.split("/")[1]}/id`;
+      if (element.route === dynamicPath) {
+        console.log("find");
+        console.log(element.route, dynamicPath);
+        return element.route === dynamicPath;
+      }
+    }
+    return element.route === pathname;
+  });
+
+
+
+  // const description = des && des.description;
+  // const headerTitle = head && head.title;
+  const description = appBarHeader && appBarHeader.description;
+  const headerTitle = appBarHeader && appBarHeader.title;
 
   let instructorInfo = {};
   if (data) {
@@ -89,7 +120,25 @@ export default function Sidebar({ children }) {
   const handleNavigateSetting = () => {
     navigate("/setting");
   };
-
+  const getActiveStyle = (route, pathname) => {
+    // Special case for the dashboard route "/"
+    if (route === "/") {
+      return pathname === "/";
+    }
+    // Highlight routes that match the start of the pathname
+    return pathname.startsWith(route);
+  };
+  // Utility function to find the active sidebar item
+  const getActiveSidebarRoute = (pathname) => {
+    return SIDEBARROUTE.find((route) => {
+      const isExactMatch = route.route === pathname;
+      const isWildcardMatch =
+        route.route.includes(":") &&
+        new RegExp(`^${route.route.replace(/:\w+/g, "\\w+")}$`).test(pathname);
+      return isExactMatch || isWildcardMatch;
+    });
+  };
+  const activeRoute = getActiveSidebarRoute(pathname);
   const drawerContent = (
     <Drawer
       sx={{
@@ -128,38 +177,47 @@ export default function Sidebar({ children }) {
             />
           </Link>
           <Toolbar />
-          {sideBarList.map(({ title, Icon, route }) => (
-            <Link
-              component={RouterLink}
-              to={route}
-              key={title}
-              underline="none"
-              sx={{
-                "& .MuiListItem-root": {
-                  backgroundColor:
-                    route === pathname ? "purple.main" : "common.white",
-                  borderRadius: 1,
-                },
-                "& .MuiTypography-root": {
-                  color: route === pathname ? "common.white" : "dark.300",
-                },
-              }}
-            >
-              <ListItem key={title} disablePadding>
-                <ListItemButton>
-                  <Icon
-                    sx={{
-                      color: route === pathname ? "common.white" : "dark.300",
-                      mr: "20px",
-                    }}
-                  />
-                  <Typography variant="bmdr" sx={{ color: "dark.300" }}>
-                    {title}
-                  </Typography>
-                </ListItemButton>
-              </ListItem>
-            </Link>
-          ))}
+          {sideBarList.map(
+            ({ title, Icon, route }) =>
+              Icon && (
+                <Link
+                  component={RouterLink}
+                  to={route}
+                  key={title}
+                  underline="none"
+                  sx={{
+                    "& .MuiListItem-root": {
+                      backgroundColor: getActiveStyle(route, pathname)
+                        ? "purple.main"
+                        : "common.white",
+
+                      borderRadius: 1,
+                    },
+                    "& .MuiTypography-root": {
+                      color: getActiveStyle(route, pathname)
+                        ? "common.white"
+                        : "dark.300",
+                    },
+                  }}
+                >
+                  <ListItem key={title} disablePadding>
+                    <ListItemButton>
+                      <Icon
+                        sx={{
+                          color: getActiveStyle(route, pathname)
+                            ? "common.white"
+                            : "dark.300",
+                          mr: "20px",
+                        }}
+                      />
+                      <Typography variant="bmdr" sx={{ color: "dark.300" }}>
+                        {title}
+                      </Typography>
+                    </ListItemButton>
+                  </ListItem>
+                </Link>
+              )
+          )}
         </List>
       </Stack>
 

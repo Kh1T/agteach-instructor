@@ -7,6 +7,7 @@ import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined";
 import HdrAutoOutlinedIcon from "@mui/icons-material/HdrAutoOutlined";
 
 export const SIDEBARROUTE = [
+  
   {
     title: "Dashboard",
     Icon: DashboardCustomizeOutlinedIcon,
@@ -20,10 +21,34 @@ export const SIDEBARROUTE = [
     description: "View or List more courses",
   },
   {
+    title: "Create Course",
+    Icon: null,
+    route: "/course/new",
+    description: "Create new courses for your portfolio",
+  },
+  {
+    title: "Edit Course",
+    Icon: null,
+    route: "/course/id/edit",
+    description: "Edit courses for your portfolio",
+  },
+  {
     title: "Product",
     Icon: FilterNoneOutlinedIcon,
     route: "/product",
     description: "View or List more products",
+  },
+  {
+    title: "Create Product",
+    Icon: null,
+    route: "/product/new",
+    description: "Create new product for your porfolio",
+  },
+  {
+    title: "Edit Product",
+    Icon: null,
+    route: "/product/abc/edit",
+    description: "Edit product for your porfolio",
   },
   {
     title: "Purchased",
@@ -32,10 +57,22 @@ export const SIDEBARROUTE = [
     description: "View purchased history",
   },
   {
+    title: "Purchased Item",
+    Icon: null,
+    route: "/purchased/id",
+    description: "View purchased detail",
+  },
+  {
     title: "Enrollment",
     Icon: SchoolOutlinedIcon,
     route: "/enrollment",
     description: "View enrolled history",
+  },
+  {
+    title: "Enrollment Item",
+    Icon: null,
+    route: "/enrollment/id",
+    description: "View enrolled detail",
   },
   {
     title: "Balance",
@@ -48,6 +85,13 @@ export const SIDEBARROUTE = [
     Icon: SettingsApplicationsOutlinedIcon,
     route: "/setting",
     description: "Make change to your profile",
+  },
+
+  {
+    title: "Login",
+    Icon: null,
+    route: "/auth/login",
+    description: "Login to your account",
   },
 ];
  
