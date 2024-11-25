@@ -47,8 +47,6 @@ export default function Sidebar({ children }) {
     if (element.route.includes("id")) {
       const dynamicPath = `/${pathname.split("/")[1]}/id`;
       if (element.route === dynamicPath) {
-        console.log("find");
-        console.log(element.route, dynamicPath);
         return element.route === dynamicPath;
       }
     }
