@@ -32,10 +32,25 @@ import { useLogoutMutation } from "../services/api/authApi";
 import { useGetInstructorInfoQuery } from "../services/api/authApi";
 import logoutIcon from "../assets/red-circle-logout.png";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { setInstructorVerificationStatus } from "../features/user/approvalSlice";
 
 export default function Sidebar({ children }) {
+  const dispatch = useDispatch();
   const { pathname } = useLocation();
   const { data } = useGetInstructorInfoQuery();
+
+  if (data) {
+    const { isApproved, isRejected, isFormSubmitted } = data?.data?.instructor;
+    console.log(isApproved, isRejected, isFormSubmitted);
+    dispatch(setInstructorVerificationStatus({
+      IsApproved: isApproved,
+      IsRejected: isRejected,
+      IsFormSubmitted: isFormSubmitted,
+      IsLoading: !data
+    }));
+  }
+
   const drawerWidth = 250;
   const param = useParams();
 

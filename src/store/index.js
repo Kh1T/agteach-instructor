@@ -10,7 +10,7 @@ import authSlice from "../features/user/authSlice";
 import courseSlice from "../features/course/courseSlice";
 import { categoryApi } from "../services/api/categoryApi";
 import { approvalApi } from "../services/api/approvalApi";
-// import productReducer from "./productStore";
+import approvalSlice from "../features/user/approvalSlice";
 
 export const store = createStore({
   reducer: {
@@ -25,7 +25,8 @@ export const store = createStore({
     [approvalApi.reducerPath]: approvalApi.reducer,
     user: userReducer,
     auth: authSlice,
-    course: courseSlice
+    course: courseSlice,
+    approval: approvalSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
@@ -36,6 +37,6 @@ export const store = createStore({
       salesApi.middleware,
       balanceApi.middleware,
       categoryApi.middleware,
-      approvalApi.middleware,
+      approvalApi.middleware
     ),
 });

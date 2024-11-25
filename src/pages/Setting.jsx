@@ -26,7 +26,6 @@ import { CustomAlert } from "../components/CustomAlert";
 import CustomButton from "../components/CustomButton";
 import CustomFileUpload from "../components/CustomFileUpload";
 import FormInput from "../components/login-signup/FormInput";
-import { validate } from "uuid";
 import TextInput from "../components/login-signup/TextInputComponent";
 
 function SettingPage() {
