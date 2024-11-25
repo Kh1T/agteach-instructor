@@ -41,7 +41,7 @@ export default function CoursePrice() {
   return (
     <Box className="container">
       <IconWithTitle
-        title={"COURSE PRICE"}
+        title={"Course Price"}
         icon={<AttachMoneyOutlinedIcon sx={{ color: "common.white" }} />}
       />
       <Divider sx={{ my: 2 }} />
