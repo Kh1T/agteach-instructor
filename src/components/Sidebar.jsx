@@ -39,7 +39,23 @@ export default function Sidebar({ children }) {
   const dispatch = useDispatch();
   const { pathname } = useLocation();
   const { data, isLoading: isDataLoading } = useGetInstructorInfoQuery();
+
+  const appBarHeader = SIDEBARROUTE.find((element) => {
+    if (element.route.includes("id")) {
+      const dynamicPath = `/${pathname.split("/")[1]}/id`;
+      if (element.route === dynamicPath) {
+        return element.route === dynamicPath;
+      }
+    }
+    return element.route === pathname;
+  })
+
+  const description = appBarHeader && appBarHeader.description;
+  const headerTitle = appBarHeader && appBarHeader.title;
+
+
   let bgColor;
+  let sideBarList = !data ? [] : SIDEBARROUTE;
 
   if (data) {
     const { isApproved, isRejected, isFormSubmitted } = data?.data?.instructor;
@@ -53,35 +69,14 @@ export default function Sidebar({ children }) {
       })
     );
     isApproved ? (bgColor = "common.white") : (bgColor = "grey.100");
+    !isApproved && (sideBarList = SIDEBARROUTE.filter((element) => {
+      return element.route === "/" || element.route === "/setting";
+    }))
   }
 
   const drawerWidth = 250;
-  const isApproved = true;
 
-  const appBarHeader = SIDEBARROUTE.find((element) => {
-    if (element.route.includes("id")) {
-      const dynamicPath = `/${pathname.split("/")[1]}/id`;
-      if (element.route === dynamicPath) {
-        return element.route === dynamicPath;
-      }
-    }
-    return element.route === pathname;
-  });
-
-  const description = appBarHeader && appBarHeader.description;
-  const headerTitle = appBarHeader && appBarHeader.title;
-
-  let instructorInfo = {};
-  if (data) {
-    instructorInfo = data.data.instructor;
-  }
-  let profileImage = instructorInfo?.imageUrl + `?${new Date().getTime()}`;
-  let sideBarList = SIDEBARROUTE;
-  if (!isApproved) {
-    sideBarList = SIDEBARROUTE.filter((element) => {
-      return element.route === "/" || element.route === "/setting";
-    });
-  }
+  let profileImage = data?.data?.instructor?.imageUrl + `?${new Date().getTime()}`;
 
   const [logout, { isLoading: isLogoutLoading, isSuccess }] =
     useLogoutMutation();
@@ -269,7 +264,7 @@ export default function Sidebar({ children }) {
       position="fixed"
       sx={{
         width: `calc(100% - ${drawerWidth}px)`,
-        backgroundColor: bgColor,
+        backgroundColor: bgColor || "common.white",
         pt: 5,
         ml: `${drawerWidth}px`,
         color: "common.black",
@@ -346,7 +341,7 @@ export default function Sidebar({ children }) {
   );
 
   const sideBarContent = (
-    <Box sx={{ display: "flex", backgroundColor: bgColor }} minHeight={"100vh"}>
+    <Box sx={{ display: "flex", backgroundColor: bgColor || "common.white" }} minHeight={"100vh"}>
       {appBarContent}
       {drawerContent}
       {childContent}
