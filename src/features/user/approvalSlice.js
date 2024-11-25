@@ -4,7 +4,7 @@ const initialState = {
   isApproved: false,
   isRejected: false,
   isFormSubmitted: false,
-  isLoading: true,
+  isApprovalLoading: true,
 };
 
 const approvalSlice = createSlice({
@@ -12,11 +12,12 @@ const approvalSlice = createSlice({
   initialState,
   reducers: {
     setInstructorVerificationStatus: (state, action) => {
-      const { IsApproved, IsRejected, IsFormSubmitted, IsLoading } = action.payload;
+      const { IsApproved, IsRejected, IsFormSubmitted, IsApprovalLoading } =
+        action.payload;
       state.isApproved = IsApproved;
       state.isRejected = IsRejected;
       state.isFormSubmitted = IsFormSubmitted;
-      state.isLoading = IsLoading;
+      state.isApprovalLoading = IsApprovalLoading;
     },
   },
 });

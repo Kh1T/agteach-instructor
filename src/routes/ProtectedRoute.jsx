@@ -7,11 +7,14 @@ export default function ProtectedRoute({ children }) {
   const { isAuthenticated, isVerify, isLoading } = useSelector(
     (state) => state.auth
   );
-  const { isApproved } = useSelector((state) => state.approval);
+  const { isApproved, isApprovalLoading } = useSelector(
+    (state) => state.approval
+  );
   const navigate = useNavigate();
 
+  console.log("Protected route", isApproved, isApprovalLoading);
+
   const location = useLocation();
-  console.log(location);
   useEffect(() => {
     if (isAuthenticated && !isVerify) {
       navigate("/auth/signup/verification");
@@ -19,10 +22,10 @@ export default function ProtectedRoute({ children }) {
     if (!isLoading && !isAuthenticated && !isVerify) {
       navigate("/auth/login");
     }
-    if (location.pathname === "/setting") {
+    if (location.pathname === "/setting" && !isApprovalLoading) {
       return () => children;
     }
-    if (isAuthenticated && isVerify && !isApproved) {
+    if (!isApproved && location.pathname !== "/" && !isApprovalLoading) {
       navigate("/");
     }
   }, [
@@ -31,6 +34,7 @@ export default function ProtectedRoute({ children }) {
     isVerify,
     isApproved,
     location,
+    isApprovalLoading,
     children,
     navigate,
   ]);

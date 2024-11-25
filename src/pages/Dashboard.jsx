@@ -9,18 +9,10 @@ import { useSelector } from "react-redux";
 import { Box, CircularProgress } from "@mui/material";
 
 export default function DashboardPage() {
-  const { isApproved, isRejected, isFormSubmitted, isLoading } = useSelector(
-    (state) => state.approval
-  );
-  console.log(
-    "on dashboard",
-    isApproved,
-    isRejected,
-    isFormSubmitted,
-    isLoading
-  );
+  const { isApproved, isRejected, isFormSubmitted, isApprovalLoading } =
+    useSelector((state) => state.approval);
 
-  if (isLoading) {
+  if (isApprovalLoading) {
     return (
       <Box
         height="100vh"

@@ -42,7 +42,6 @@ export default function FormApproval() {
   const handleSubmission = async (data) => {
     try {
       const res = await approval(data).unwrap();
-      console.log(res);
       if (res.status === "success") {
         dispatch(
           setInstructorVerificationStatus({
@@ -82,6 +81,7 @@ export default function FormApproval() {
         <Stack spacing={2}>
           <FormTextSection title="National ID Card Number" />
           <TextField
+            label="xxx xxx xxx"
             inputProps={{ maxLength: 11 }}
             {...register("nationalId", {
               required: "Please enter an ID number",
@@ -211,8 +211,9 @@ export default function FormApproval() {
         </Stack>
 
         <Stack spacing={2}>
-          <FormTextSection title="Bank Card Number (PAN)" />
+          <FormTextSection title="Bank Account Number" />
           <TextField
+            label="xxx xxx xxx"
             inputProps={{ maxLength: 11 }}
             {...register("bankNumber", {
               required: "Please enter a bank number",
@@ -239,7 +240,7 @@ export default function FormApproval() {
           />
           <Typography component="ul">
             <Typography component="li" color="dark.300" variant="bsr">
-              NOTE: A bank card number enables transactions and security.
+              NOTE: A bank account number enables transactions and security.
             </Typography>
           </Typography>
         </Stack>

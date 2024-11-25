@@ -18,9 +18,10 @@ import {
   DialogContent,
   DialogContentText,
   Button,
+  CircularProgress,
 } from "@mui/material";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setInstructorVerificationStatus } from "../features/user/approvalSlice";
 
 import logoIcon from "../assets/logo.svg";
@@ -39,6 +40,7 @@ export default function Sidebar({ children }) {
   const dispatch = useDispatch();
   const { pathname } = useLocation();
   const { data, isLoading: isDataLoading } = useGetInstructorInfoQuery();
+  const { isApprovalLoading } = useSelector((state) => state.approval);
 
   const appBarHeader = SIDEBARROUTE.find((element) => {
     if (element.route.includes("id")) {
@@ -48,35 +50,35 @@ export default function Sidebar({ children }) {
       }
     }
     return element.route === pathname;
-  })
+  });
 
   const description = appBarHeader && appBarHeader.description;
   const headerTitle = appBarHeader && appBarHeader.title;
-
 
   let bgColor;
   let sideBarList = !data ? [] : SIDEBARROUTE;
 
   if (data) {
     const { isApproved, isRejected, isFormSubmitted } = data?.data?.instructor;
-    console.log(isApproved, isRejected, isFormSubmitted);
     dispatch(
       setInstructorVerificationStatus({
         IsApproved: isApproved,
         IsRejected: isRejected,
         IsFormSubmitted: isFormSubmitted,
-        IsLoading: isDataLoading,
+        IsApprovalLoading: isDataLoading,
       })
     );
     isApproved ? (bgColor = "common.white") : (bgColor = "grey.100");
-    !isApproved && (sideBarList = SIDEBARROUTE.filter((element) => {
-      return element.route === "/" || element.route === "/setting";
-    }))
+    !isApproved &&
+      (sideBarList = SIDEBARROUTE.filter((element) => {
+        return element.route === "/" || element.route === "/setting";
+      }));
   }
 
   const drawerWidth = 250;
 
-  let profileImage = data?.data?.instructor?.imageUrl + `?${new Date().getTime()}`;
+  let profileImage =
+    data?.data?.instructor?.imageUrl + `?${new Date().getTime()}`;
 
   const [logout, { isLoading: isLogoutLoading, isSuccess }] =
     useLogoutMutation();
@@ -340,8 +342,22 @@ export default function Sidebar({ children }) {
     </Container>
   );
 
+  if (isApprovalLoading) {
+    return (
+      <Box
+        height="100vh"
+        sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
+
   const sideBarContent = (
-    <Box sx={{ display: "flex", backgroundColor: bgColor || "common.white" }} minHeight={"100vh"}>
+    <Box
+      sx={{ display: "flex", backgroundColor: bgColor || "common.white" }}
+      minHeight={"100vh"}
+    >
       {appBarContent}
       {drawerContent}
       {childContent}
