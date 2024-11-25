@@ -84,7 +84,6 @@ export const authApi = createApi({
       query: () => ({
         url: "/api/users/isLoginedIn",
         method: "GET",
-        // headers: { "X-Frontend-URL": window.location },
       }),
     }),
 

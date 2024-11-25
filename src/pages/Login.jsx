@@ -55,7 +55,7 @@ function LoginPage() {
         );
         dispatch(setEmail(watch("email")));
         if (verification) {
-          navigator("/");
+          navigator("/", { replace: true });
           return;
         }
         navigator("/auth/signup/verification");

@@ -37,10 +37,16 @@ export const router = createBrowserRouter([
       { path: "product", element: <ProductPage /> },
       { path: "product/new", element: <NewProductPage /> },
       { path: "purchased", element: <PurchasedPage /> },
-      { path: "/purchased/:purchasedId/:customerId", element: <PurchasedDetailPage /> },
+      {
+        path: "/purchased/:purchasedId/:customerId",
+        element: <PurchasedDetailPage />,
+      },
       { path: "enrollment", element: <EnromentPage /> },
       { path: "enrollment/:enrollmentId", element: <EnrollmentDetailPage /> },
-      { path: "balance", element: <BalancePage /> },
+      {
+        path: "balance",
+        element: <BalancePage />,
+      },
       { path: "setting", element: <SettingPage /> },
     ],
   },

@@ -1,6 +1,6 @@
 import loginImg from "./../assets/login/login-img.png";
 import logo from "./../assets/login/agteach-logo.svg";
-import { Box, Container, Grid2, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 function SideBarImg() {
   return (

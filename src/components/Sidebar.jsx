@@ -7,11 +7,7 @@ import Typography from "@mui/material/Typography";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
-import {
-  useLocation,
-  Link as RouterLink,
-  useNavigate,
-} from "react-router-dom";
+import { useLocation, Link as RouterLink, useNavigate } from "react-router-dom";
 import {
   Avatar,
   Container,
@@ -22,8 +18,11 @@ import {
   DialogContent,
   DialogContentText,
   Button,
+  CircularProgress,
 } from "@mui/material";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setInstructorVerificationStatus } from "../features/user/approvalSlice";
 
 import logoIcon from "../assets/logo.svg";
 import logoutIcon from "../assets/red-circle-logout.png";
@@ -38,10 +37,10 @@ import { useGetInstructorInfoQuery } from "../services/api/authApi";
  * @returns {React.ReactElement} The custom sidebar component.
  */
 export default function Sidebar({ children }) {
+  const dispatch = useDispatch();
   const { pathname } = useLocation();
-  const { data } = useGetInstructorInfoQuery();
-  const drawerWidth = 250;
-  const isApproved = true;
+  const { data, isLoading: isDataLoading } = useGetInstructorInfoQuery();
+  const { isApprovalLoading } = useSelector((state) => state.approval);
 
   const appBarHeader = SIDEBARROUTE.find((element) => {
     if (element.route.includes("id")) {
@@ -56,26 +55,43 @@ export default function Sidebar({ children }) {
   const description = appBarHeader && appBarHeader.description;
   const headerTitle = appBarHeader && appBarHeader.title;
 
-  let instructorInfo = {};
+  let bgColor;
+  let sideBarList = !data ? [] : SIDEBARROUTE;
+
   if (data) {
-    instructorInfo = data.data.instructor;
-  }
-  let profileImage = instructorInfo?.imageUrl + `?${new Date().getTime()}`;
-  let sideBarList = SIDEBARROUTE;
-  if (!isApproved) {
-    sideBarList = SIDEBARROUTE.filter((element) => {
-      return element.route === "/" || element.route === "/setting";
-    });
+    const { isApproved, isRejected, isFormSubmitted } = data?.data?.instructor;
+    dispatch(
+      setInstructorVerificationStatus({
+        IsApproved: isApproved,
+        IsRejected: isRejected,
+        IsFormSubmitted: isFormSubmitted,
+        IsApprovalLoading: isDataLoading,
+      })
+    );
+    isApproved ? (bgColor = "common.white") : (bgColor = "grey.100");
+    !isApproved &&
+      (sideBarList = SIDEBARROUTE.filter((element) => {
+        return element.route === "/" || element.route === "/setting";
+      }));
   }
 
-  const [logout, { isLoading, isSuccess }] = useLogoutMutation();
+  const drawerWidth = 250;
+
+  let profileImage =
+    data?.data?.instructor?.imageUrl + `?${new Date().getTime()}`;
+
+  const [logout, { isLoading: isLogoutLoading, isSuccess }] =
+    useLogoutMutation();
   const navigate = useNavigate();
 
   const [open, setOpen] = useState(false); // State to control dialog visibility
 
   const handleLogout = async () => {
     await logout();
-    if (isSuccess || !isLoading) navigate("/auth/login");
+    if (isSuccess || !isLogoutLoading) {
+      window.location.reload();
+      navigate("/auth/login");
+    }
   };
 
   const handleClickOpen = () => {
@@ -97,7 +113,6 @@ export default function Sidebar({ children }) {
     // Highlight routes that match the start of the pathname
     return pathname.startsWith(route);
   };
-
 
   const drawerContent = (
     <Drawer
@@ -251,9 +266,9 @@ export default function Sidebar({ children }) {
       position="fixed"
       sx={{
         width: `calc(100% - ${drawerWidth}px)`,
+        backgroundColor: bgColor || "common.white",
         pt: 5,
         ml: `${drawerWidth}px`,
-        backgroundColor: "common.white",
         color: "common.black",
         boxShadow: "none",
       }}
@@ -327,8 +342,22 @@ export default function Sidebar({ children }) {
     </Container>
   );
 
+  if (isApprovalLoading) {
+    return (
+      <Box
+        height="100vh"
+        sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
+
   const sideBarContent = (
-    <Box sx={{ display: "flex" }}>
+    <Box
+      sx={{ display: "flex", backgroundColor: bgColor || "common.white" }}
+      minHeight={"100vh"}
+    >
       {appBarContent}
       {drawerContent}
       {childContent}
