@@ -2,7 +2,7 @@ import { Stack, Typography } from "@mui/material";
 
 export default function FormTextSection({ title, description }) {
   return (
-    <Stack spacing={1.5}>
+    <Stack spacing={1.5} mb={10}>
       <Typography variant="blgsm" color="grey.700">
         {title}
       </Typography>

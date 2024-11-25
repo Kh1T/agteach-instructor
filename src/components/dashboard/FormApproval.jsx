@@ -6,55 +6,38 @@ import { CustomAlert } from "../CustomAlert";
 import FormTextSection from "./FormTextSection";
 
 export default function FormApproval() {
-  const {
-    register,
-    handleSubmit,
-    watch,
-    setValue,
-    formState: { errors },
-  } = useForm();
-
-  const [approval] = useFormApprovalMutation();
-
-  const [touchedFields, setTouchedFields] = useState({
-    targetCourse: false,
-    targetProduct: false,
-    profileBackground: false,
-  });
-
+  const { register, handleSubmit, watch, setValue, formState } = useForm();
+  const { errors, touchedFields } = formState;
   const [snackbar, setSnackbar] = useState({
     open: false,
     message: "",
     severity: "",
   });
 
-  const wordCount = (text) => {
-    return text?.trim() ? text?.trim().split(/\s+/).length : 0;
-  };
+  const [approval] = useFormApprovalMutation();
 
-  const profileBackground = watch("profileBackground");
-  const targetCourse = watch("targetCourse");
-  const targetProduct = watch("targetProduct");
-
-  const wordCountError = (identifier) => {
-    if (wordCount(identifier) > 500) {
-      return { error: true, helperText: "Please enter less than 500 words" };
-    } else if (wordCount(identifier) < 150) {
-      return { error: true, helperText: "Please enter more than 150 words" };
+  const wordCountError = (identifier, maxLength = 500) => {
+    const count = watch(identifier)?.trim().split(/\s+/).length || 0;
+    if (count > maxLength) {
+      return {
+        error: true,
+        helperText: `Please enter less than ${maxLength} words`,
+        count,
+      };
+    } else if (count < 150) {
+      return {
+        error: true,
+        helperText: "Please enter more than 150 words",
+        count,
+      };
     }
-    return { error: false };
+    return { error: false, count };
   };
 
   const handleSubmission = async (data) => {
-    console.log(data);
     try {
       const res = await approval(data).unwrap();
-      setSnackbar({
-        open: true,
-        message: res.message,
-        severity: "success",
-      });
-      console.log("res", res);
+      setSnackbar({ open: true, message: res.message, severity: "success" });
     } catch (error) {
       setSnackbar({
         open: true,
@@ -65,7 +48,7 @@ export default function FormApproval() {
   };
 
   return (
-    <Box bgcolor="common.white" p={4} width={"65%"}>
+    <Box bgcolor="common.white" p={4} width="65%">
       <CustomAlert
         open={snackbar.open}
         label={snackbar.message}
@@ -73,7 +56,7 @@ export default function FormApproval() {
         onClose={() => setSnackbar({ ...snackbar, open: false })}
       />
       <Stack
-        component={"form"}
+        component="form"
         spacing={5}
         onSubmit={handleSubmit(handleSubmission)}
       >
@@ -83,13 +66,7 @@ export default function FormApproval() {
         <Stack spacing={2}>
           <FormTextSection title="National ID Card Number" />
           <TextField
-            fullWidth
             inputProps={{ maxLength: 11 }}
-            slotProps={{
-              input: {
-                inputMode: "numeric",
-              },
-            }}
             {...register("nationalId", {
               required: "Please enter an ID number",
               validate: {
@@ -128,24 +105,27 @@ export default function FormApproval() {
           />
 
           <TextField
-            label={`Description ${targetCourse ? `: ${wordCount(targetCourse)} / 500 word` : ""}`}
+            label={`Description ${watch("targetCourse") ? `: ${wordCountError("targetCourse").count} / 500 word` : ""}`}
             multiline
             minRows={4}
-            fullWidth
             {...register("targetCourse", {
               required: "Please enter a description",
               onBlur: () =>
-                setTouchedFields((prev) => ({ ...prev, targetCourse: true })),
+                setValue("touchedFields", {
+                  ...touchedFields,
+                  targetCourse: true,
+                }),
             })}
             error={
               !!errors.targetCourse ||
-              (touchedFields.targetCourse && wordCountError(targetCourse).error)
+              (touchedFields.targetCourse &&
+                wordCountError("targetCourse").error)
             }
             helperText={
               errors.targetCourse?.message ||
               (touchedFields.targetCourse &&
-                wordCountError(targetCourse).error &&
-                wordCountError(targetCourse).helperText)
+                wordCountError("targetCourse").error &&
+                wordCountError("targetCourse").helperText)
             }
           />
         </Stack>
@@ -157,25 +137,27 @@ export default function FormApproval() {
           />
 
           <TextField
-            label={`Description ${targetProduct ? `: ${wordCount(targetProduct)} / 500 word` : ""}`}
+            label={`Description ${watch("targetProduct") ? `: ${wordCountError("targetProduct").count} / 500 word` : ""}`}
             multiline
             minRows={4}
-            fullWidth
             {...register("targetProduct", {
               required: "Please enter a description",
               onBlur: () =>
-                setTouchedFields((prev) => ({ ...prev, targetProduct: true })),
+                setValue("touchedFields", {
+                  ...touchedFields,
+                  targetProduct: true,
+                }),
             })}
             error={
               !!errors.targetProduct ||
               (touchedFields.targetProduct &&
-                wordCountError(targetProduct).error)
+                wordCountError("targetProduct").error)
             }
             helperText={
               errors.targetProduct?.message ||
               (touchedFields.targetProduct &&
-                wordCountError(targetProduct).error &&
-                wordCountError(targetProduct).helperText)
+                wordCountError("targetProduct").error &&
+                wordCountError("targetProduct").helperText)
             }
           />
         </Stack>
@@ -187,28 +169,27 @@ export default function FormApproval() {
           />
 
           <TextField
-            label={`Description ${profileBackground ? `: ${wordCount(profileBackground)} / 500 word` : ""}`}
+            label={`Description ${watch("profileBackground") ? `: ${wordCountError("profileBackground").count} / 500 word` : ""}`}
             multiline
             minRows={4}
-            fullWidth
             {...register("profileBackground", {
               required: "Please enter a description",
               onBlur: () =>
-                setTouchedFields((prev) => ({
-                  ...prev,
+                setValue("touchedFields", {
+                  ...touchedFields,
                   profileBackground: true,
-                })),
+                }),
             })}
             error={
               !!errors.profileBackground ||
               (touchedFields.profileBackground &&
-                wordCountError(profileBackground).error)
+                wordCountError("profileBackground").error)
             }
             helperText={
               errors.profileBackground?.message ||
               (touchedFields.profileBackground &&
-                wordCountError(profileBackground).error &&
-                wordCountError(profileBackground).helperText)
+                wordCountError("profileBackground").error &&
+                wordCountError("profileBackground").helperText)
             }
           />
         </Stack>
@@ -216,7 +197,6 @@ export default function FormApproval() {
         <Stack spacing={2}>
           <FormTextSection title="Bank Card Number (PAN)" />
           <TextField
-            fullWidth
             inputProps={{ maxLength: 11 }}
             {...register("bankNumber", {
               required: "Please enter a bank number",
@@ -260,3 +240,4 @@ export default function FormApproval() {
     </Box>
   );
 }
+
