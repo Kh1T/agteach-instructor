@@ -39,7 +39,8 @@ export default function Sidebar({ children }) {
   const dispatch = useDispatch();
   const { pathname } = useLocation();
   const { data, isLoading: isDataLoading } = useGetInstructorInfoQuery();
-
+  let bgColor;
+  
   if (data) {
     const { isApproved, isRejected, isFormSubmitted } = data?.data?.instructor;
     console.log(isApproved, isRejected, isFormSubmitted);
@@ -51,6 +52,7 @@ export default function Sidebar({ children }) {
         IsLoading: isDataLoading,
       })
     );
+    isApproved ? (bgColor = "common.white") : (bgColor = "grey.100");
   }
 
   const drawerWidth = 250;
@@ -74,7 +76,8 @@ export default function Sidebar({ children }) {
     await logout();
     if (isSuccess || !isLogoutLoading) {
       window.location.reload();
-      navigate("/auth/login")};
+      navigate("/auth/login");
+    }
   };
 
   const handleClickOpen = () => {
@@ -245,7 +248,7 @@ export default function Sidebar({ children }) {
       position="fixed"
       sx={{
         width: `calc(100% - ${drawerWidth}px)`,
-        backgroundColor: "grey.100",
+        backgroundColor: bgColor,
         pt: 5,
         ml: `${drawerWidth}px`,
         color: "common.black",
@@ -322,7 +325,7 @@ export default function Sidebar({ children }) {
   );
 
   const sideBarContent = (
-    <Box sx={{ display: "flex", backgroundColor: "grey.100" }}>
+    <Box sx={{ display: "flex", backgroundColor: bgColor }} minHeight={"100vh"}>
       {appBarContent}
       {drawerContent}
       {childContent}
