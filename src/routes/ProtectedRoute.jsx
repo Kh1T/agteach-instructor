@@ -21,8 +21,6 @@ export default function ProtectedRoute({ children }) {
   );
   const navigate = useNavigate();
 
-  console.log("Protected route", isApproved, isApprovalLoading);
-
   const location = useLocation();
   useEffect(() => {
     if (isAuthenticated && !isVerify) {

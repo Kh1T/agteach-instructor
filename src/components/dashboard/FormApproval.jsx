@@ -65,17 +65,16 @@ export default function FormApproval() {
   const handleSubmission = async (data) => {
     try {
       const res = await approval(data).unwrap();
-      if (res.status === "success") {
         dispatch(
           setInstructorVerificationStatus({
             IsApproved: isApproved,
             IsRejected: isRejected,
             IsFormSubmitted: true,
-            IsLoading: false,
+            IsApprovalLoading: false,
           })
         );
-      }
       setSnackbar({ open: true, message: res.message, severity: "success" });
+      window.location.reload();
     } catch (error) {
       setSnackbar({
         open: true,
