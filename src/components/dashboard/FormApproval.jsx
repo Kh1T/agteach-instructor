@@ -17,7 +17,7 @@ export default function FormApproval() {
     severity: "",
   });
 
-  const [approval, { isLoading }] = useFormApprovalMutation();
+  const [approval, { isLoading, isSuccess }] = useFormApprovalMutation();
 
   const wordCountError = (identifier, maxLength = 500) => {
     const count = watch(identifier)?.trim().split(/\s+/).length || 0;
@@ -43,6 +43,7 @@ export default function FormApproval() {
     try {
       const res = await approval(data).unwrap();
       console.log(res);
+      console.log(isSuccess);
       if (res.status === "success") {
         dispatch(
           setInstructorVerificationStatus({
