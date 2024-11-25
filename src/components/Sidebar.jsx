@@ -38,17 +38,19 @@ import { setInstructorVerificationStatus } from "../features/user/approvalSlice"
 export default function Sidebar({ children }) {
   const dispatch = useDispatch();
   const { pathname } = useLocation();
-  const { data } = useGetInstructorInfoQuery();
+  const { data, isLoading: isDataLoading } = useGetInstructorInfoQuery();
 
   if (data) {
     const { isApproved, isRejected, isFormSubmitted } = data?.data?.instructor;
     console.log(isApproved, isRejected, isFormSubmitted);
-    dispatch(setInstructorVerificationStatus({
-      IsApproved: isApproved,
-      IsRejected: isRejected,
-      IsFormSubmitted: isFormSubmitted,
-      IsLoading: !data
-    }));
+    dispatch(
+      setInstructorVerificationStatus({
+        IsApproved: isApproved,
+        IsRejected: isRejected,
+        IsFormSubmitted: isFormSubmitted,
+        IsLoading: isDataLoading,
+      })
+    );
   }
 
   const drawerWidth = 250;
@@ -62,7 +64,7 @@ export default function Sidebar({ children }) {
     return element.route === pathname;
   });
 
-  const [logout, { isLoading, isError, error, isSuccess }] =
+  const [logout, { isLoading: isLogoutLoading, isSuccess }] =
     useLogoutMutation();
   const navigate = useNavigate();
 
@@ -70,7 +72,7 @@ export default function Sidebar({ children }) {
 
   const handleLogout = async () => {
     await logout();
-    if (isSuccess || !isLoading) navigate("/auth/login");
+    if (isSuccess || !isLogoutLoading) navigate("/auth/login");
   };
 
   const handleClickOpen = () => {
@@ -243,7 +245,7 @@ export default function Sidebar({ children }) {
         width: `calc(100% - ${drawerWidth}px)`,
         backgroundColor: "grey.100",
         pt: 5,
-        ml: `${drawerWidth}px`, 
+        ml: `${drawerWidth}px`,
         color: "common.black",
         boxShadow: "none",
       }}
@@ -318,8 +320,7 @@ export default function Sidebar({ children }) {
   );
 
   const sideBarContent = (
-    <Box sx={{ display: "flex",
-      backgroundColor: "grey.100"  }}>
+    <Box sx={{ display: "flex", backgroundColor: "grey.100" }}>
       {appBarContent}
       {drawerContent}
       {childContent}
