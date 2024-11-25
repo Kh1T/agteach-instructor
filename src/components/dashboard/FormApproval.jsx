@@ -4,9 +4,12 @@ import { useForm } from "react-hook-form";
 import { useFormApprovalMutation } from "../../services/api/approvalApi";
 import { CustomAlert } from "../CustomAlert";
 import FormTextSection from "./FormTextSection";
+import { useDispatch, useSelector } from "react-redux";
+import { setInstructorVerificationStatus } from "../../features/user/approvalSlice";
 
 export default function FormApproval() {
   const { register, handleSubmit, watch, setValue, formState } = useForm();
+  const dispatch = useDispatch();
   const { errors, touchedFields } = formState;
   const [snackbar, setSnackbar] = useState({
     open: false,
@@ -14,7 +17,7 @@ export default function FormApproval() {
     severity: "",
   });
 
-  const [approval] = useFormApprovalMutation();
+  const [approval, { isLoading }] = useFormApprovalMutation();
 
   const wordCountError = (identifier, maxLength = 500) => {
     const count = watch(identifier)?.trim().split(/\s+/).length || 0;
@@ -34,9 +37,22 @@ export default function FormApproval() {
     return { error: false, count };
   };
 
+  const { isApproved, isRejected } = useSelector((state) => state.approval);
+
   const handleSubmission = async (data) => {
     try {
       const res = await approval(data).unwrap();
+      console.log(res);
+      if (res.status === "success") {
+        dispatch(
+          setInstructorVerificationStatus({
+            IsApproved: isApproved,
+            IsRejected: isRejected,
+            IsFormSubmitted: true,
+            IsLoading: false,
+          })
+        );
+      }
       setSnackbar({ open: true, message: res.message, severity: "success" });
     } catch (error) {
       setSnackbar({
@@ -231,13 +247,13 @@ export default function FormApproval() {
           <Button
             type="submit"
             variant="contained"
+            disabled={isLoading}
             sx={{ width: "110px", height: "50px", bgcolor: "blue.main" }}
           >
-            SUBMIT
+            {isLoading ? "SUBMITTING" : "SUBMIT"}
           </Button>
         </Box>
       </Stack>
     </Box>
   );
 }
-

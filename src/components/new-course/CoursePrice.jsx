@@ -1,4 +1,4 @@
-import { Divider, Box, TextField, Typography, InputLabel } from "@mui/material";
+import { Divider, Box, TextField, Typography } from "@mui/material";
 
 import AttachMoneyOutlinedIcon from "@mui/icons-material/AttachMoneyOutlined";
 import IconWithTitle from "../course-product/IconWithTitle";

@@ -72,7 +72,9 @@ export default function Sidebar({ children }) {
 
   const handleLogout = async () => {
     await logout();
-    if (isSuccess || !isLogoutLoading) navigate("/auth/login");
+    if (isSuccess || !isLogoutLoading) {
+      window.location.reload();
+      navigate("/auth/login")};
   };
 
   const handleClickOpen = () => {
