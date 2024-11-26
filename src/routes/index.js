@@ -33,9 +33,9 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <DashboardPage /> },
       { path: "course", element: <CoursePage /> },
-      { path: "course/:action", element: <NewCoursePage /> }, // action: "new" or "edit/:courseId"
+      { path: "course/:action", element: <NewCoursePage /> }, 
       { path: "product", element: <ProductPage /> },
-      { path: "product/new", element: <NewProductPage /> },
+      { path: "product/:action", element: <NewProductPage /> },
       { path: "purchased", element: <PurchasedPage /> },
       {
         path: "/purchased/:purchasedId/:customerId",

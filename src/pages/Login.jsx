@@ -152,7 +152,15 @@ function LoginPage() {
                 control={<Checkbox {...register("keepMeLoggedIn")} />}
                 label="Keep me logged in"
               />
-              <Link to="/auth/forgot-password">Forgot Password?</Link>
+              <Link to="/auth/forgot-password">
+                <Typography
+                  color="blue.main"
+                  variant="bmdsm"
+                  sx={{ textDecoration: "underline" }}
+                >
+                  Forgot Password ?
+                </Typography>
+              </Link>
               <Button
                 type="submit"
                 variant="contained"
@@ -166,7 +174,17 @@ function LoginPage() {
                 {isLoading ? "Logging in..." : "Login"}
               </Button>
               <Typography>
-                Need an account? <Link to="/auth/signup">Create one</Link>
+                Need an account?{" "}
+                <Link to="/auth/signup">
+                  {" "}
+                  <Typography
+                    color="blue.main"
+                    variant="bmdsm"
+                    sx={{ textDecoration: "underline" }}
+                  >
+                    Create one
+                  </Typography>
+                </Link>
               </Typography>
             </form>
           </Box>

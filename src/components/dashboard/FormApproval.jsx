@@ -101,9 +101,10 @@ export default function FormApproval() {
           Verification Form
         </Typography>
         <Stack spacing={2}>
-          <FormTextSection title="National ID Card Number" />
+          <FormTextSection title="Enter National ID Card Number" />
           <TextField
-            label="xxx xxx xxx"
+            label="National ID Card Number"
+            placeholder="xxx xxx xxx"
             inputProps={{ maxLength: 11 }}
             {...register("nationalId", {
               required: "Please enter an ID number",
@@ -233,9 +234,10 @@ export default function FormApproval() {
         </Stack>
 
         <Stack spacing={2}>
-          <FormTextSection title="Bank Account Number" />
+          <FormTextSection title="Enter Bank Account Number" />
           <TextField
-            label="xxx xxx xxx"
+            label="Account Number"
+            placeholder="xxx xxx xxx"
             inputProps={{ maxLength: 11 }}
             {...register("bankNumber", {
               required: "Please enter a bank number",

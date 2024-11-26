@@ -77,7 +77,7 @@ function CoursePage() {
   const handleConfirmDelete = async () => {
     if (selectedCourse) {
       try {
-        const response = await confirmDelete(selectedCourse.courseId).unwrap();
+        await confirmDelete(selectedCourse.courseId).unwrap();
         setSnackbar({
           open: true,
           msg: "Course deleted successfully",
