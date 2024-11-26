@@ -47,7 +47,7 @@ export const SIDEBARROUTE = [
   {
     title: "Edit Product",
     Icon: null,
-    route: "/product/abc/edit",
+    route: "/product/id",
     description: "Edit product for your porfolio",
   },
   {
