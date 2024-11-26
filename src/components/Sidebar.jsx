@@ -43,7 +43,6 @@ export default function Sidebar({ children }) {
   const { isApprovalLoading } = useSelector((state) => state.approval);
 
   const appBarHeader = SIDEBARROUTE.find((element) => {
-    console.log('element.route', element.route)
     if (element.route.includes("id")) {
       const dynamicPath = `/${pathname.split("/")[1]}/id`;
       if (element.route === dynamicPath) {
