@@ -10,7 +10,7 @@ import { setEmail, setDob } from "../features/user/userSlice";
 import { useSignupMutation } from "../services/api/authApi";
 import { CustomAlert } from "../components/CustomAlert";
 import { useDispatch } from "react-redux";
-import { differenceInYears } from 'date-fns';
+import { differenceInYears } from "date-fns";
 
 function Signup() {
   const navigate = useNavigate();
@@ -42,11 +42,14 @@ function Signup() {
   const handleShowPassword = () => setShowPassword((prev) => !prev);
 
   const validatePassword = (value) => {
-    if (!/[a-z]/.test(value)) return "Password must contain at least one lowercase letter.";
-    if (!/[A-Z]/.test(value)) return "Password must contain at least one uppercase letter.";
+    if (!/[a-z]/.test(value))
+      return "Password must contain at least one lowercase letter.";
+    if (!/[A-Z]/.test(value))
+      return "Password must contain at least one uppercase letter.";
     if (!/\d/.test(value)) return "Password must contain at least one number.";
-    if (!/[@$!%*?&]/.test(value)) return "Password must contain at least one special character.";
-    return true; 
+    if (!/[@$!%*?&]/.test(value))
+      return "Password must contain at least one special character.";
+    return true;
   };
 
   const submitHandler = async (data) => {
@@ -61,14 +64,18 @@ function Signup() {
         open: true,
         message: error?.data?.message,
         severity: "error",
-      })
+      });
     }
   };
 
   return (
     <Grid2
       container
-      sx={{ justifyContent: { xs: "center", md: "center", lg: "start" }, flexWrap: "nowrap", padding: { lg: "0 100px 0 0"} }}
+      sx={{
+        justifyContent: { xs: "center", md: "center", lg: "start" },
+        flexWrap: "nowrap",
+        padding: { lg: "0 100px 0 0" },
+      }}
       my={{ xs: 15, lg: 0 }}
       spacing={{ xs: 5, md: 15, lg: 20 }}
       alignItems={"center"}
@@ -79,11 +86,21 @@ function Signup() {
         open={snackbar.open}
         onClose={() => setSnackbar({ ...snackbar, open: false })}
       />
-      <Grid2 item xs={12} md={6} sx={{width: '100%', display: { xs: "none", md: "none", lg: "block" } }}>
+      <Grid2
+        item
+        xs={12}
+        md={6}
+        sx={{ width: "100%", display: { xs: "none", md: "none", lg: "block" } }}
+      >
         <SideBarImg />
       </Grid2>
 
-      <Grid2 item xs={12} md={6} sx={{width: '100%', display: 'flex', justifyContent: 'center'}}>
+      <Grid2
+        item
+        xs={12}
+        md={6}
+        sx={{ width: "100%", display: "flex", justifyContent: "center" }}
+      >
         <Stack gap="20px">
           <Box
             display="flex"
@@ -114,14 +131,15 @@ function Signup() {
                 },
                 pattern: {
                   value: /^[a-zA-Z][a-zA-Z0-9]*$/,
-                  message: "Username must at least start with a letter and contain only letters and numbers",
+                  message:
+                    "Username must at least start with a letter and contain only letters and numbers",
                 },
               })}
               error={!!errors.username}
               helperText={errors.username?.message}
             />
             <br />
-            
+
             <Controller
               name="dateOfBirth"
               control={control}
@@ -174,7 +192,7 @@ function Signup() {
                   value: 20,
                   message: "Password must be at most 20 characters",
                 },
-                validate: validatePassword
+                validate: validatePassword,
               })}
               error={!!errors.password}
               helperText={errors.password?.message}
@@ -197,7 +215,8 @@ function Signup() {
               helperText={errors.passwordConfirm?.message}
             />
             <Typography color="dark.300" fontSize="12px" marginTop={"10px"}>
-              Password must contains at least one lowercase letter, one uppercase letter, one number, and one special character.
+              Password must contains at least one lowercase letter, one
+              uppercase letter, one number, and one special character.
             </Typography>
             <br />
             <Button
@@ -211,8 +230,16 @@ function Signup() {
             </Button>
           </form>
           <Typography textAlign="center">
-            Already have an account?
-            <Link to="/auth/login">Go Back</Link>
+            Already have an account?{" "}
+            <Link to="/auth/login" style={{ textDecoration: "none" }}>
+              <Typography
+                color="blue.main"
+                variant="bmdsm"
+                sx={{ textDecoration: "underline" }}
+              >
+                Go Back
+              </Typography>
+            </Link>
           </Typography>
         </Stack>
       </Grid2>
