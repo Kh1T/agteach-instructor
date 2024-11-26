@@ -20,7 +20,6 @@ import { useGetAllCategoriesQuery } from "../services/api/categoryApi";
 import { useNavigate } from "react-router";
 import deletBin from "../assets/go-green-grey-hanger-bag.png";
 import emptyProduct from "../assets/spooky-stickers-sweet-franky.png";
-import { Category } from "@mui/icons-material";
 
 function ProductPage() {
   const navigate = useNavigate();
@@ -85,7 +84,7 @@ function ProductPage() {
             <EditIcon
               sx={{ cursor: "pointer" }}
               onClick={() => {
-                navigate("/product/new", {
+                navigate(`/product/${item.productId}`, {
                   state: {
                     product: item,
                     editMode: true,
