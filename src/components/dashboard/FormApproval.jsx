@@ -103,7 +103,8 @@ export default function FormApproval() {
         <Stack spacing={2}>
           <FormTextSection title="National ID Card Number" />
           <TextField
-            label="xxx xxx xxx"
+            label="National ID Card Number"
+            placeholder="xxx xxx xxx"
             inputProps={{ maxLength: 11 }}
             {...register("nationalId", {
               required: "Please enter an ID number",
@@ -235,7 +236,8 @@ export default function FormApproval() {
         <Stack spacing={2}>
           <FormTextSection title="Bank Account Number" />
           <TextField
-            label="xxx xxx xxx"
+            label="Bank Account Number"
+            placeholder="xxx xxx xxx"
             inputProps={{ maxLength: 11 }}
             {...register("bankNumber", {
               required: "Please enter a bank number",
