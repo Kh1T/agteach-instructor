@@ -75,34 +75,17 @@ project-root/
 
 | **Folder Name**            | **Contain**                                                 |
 | -------------------------- | ----------------------------------------------------------- |
-| **client/public/**         | Contains static files like HTML, CSS, and images.           |
-| **client/src/**            | main source code for the React application                  |
-| **client/src/assets/**     | Contains images need to import into your React components   |
-| **client/src/components/** | Reusable UI components.                                     |
-| **client/src/constants/**  | API base url                                                |
-| **client/src/pages/**      | Components representing different pages of the application. |
-| **client/src/routes/**     | Components root layout and router navigate to pages         |
-| **client/src/services/**   | API service functions.                                      |
-| **client/src/store/**      | Application state that have slice, reducer and middleware   |
-| **client/src/utils/**      | Utility functions and helpers.                              |
+| **public/**         | Contains static files like HTML, CSS, and images.           |
+| **src/**            | main source code for the React application                  |
+| **src/assets/**     | Contains images need to import into your React components   |
+| **src/components/** | Reusable UI components.                                     |
+| **src/constants/**  | API base url                                                |
+| **src/pages/**      | Components representing different pages of the application. |
+| **src/routes/**     | Components root layout and router navigate to pages         |
+| **src/services/**   | API service functions.                                      |
+| **src/store/**      | Application state that have slice, reducer and middleware   |
+| **src/utils/**      | Utility functions and helpers.                              |
 
-<!-- ## Pages Included
-
-| Page Names                                                                                             |
-| ------------------------------------------------------------------------------------------------------ |
-| <a href="https://samsungalphabeez.netlify.app/index.html">🏡 Home</a>                                  |
-| <a href="https://samsungalphabeez.netlify.app/pages/product-detail/">🛍️ Product Detail</a>             |
-| <a href="https://samsungalphabeez.netlify.app/pages/nearby-store/index.html">📍 Nearby Store</a>       |
-| <a href="https://samsungalphabeez.netlify.app/pages/cart/index.html">🛒 Cart</a>                       |
-| <a href="https://samsungalphabeez.netlify.app/pages/checkout/">📊 Checkout</a>                         |
-| <a href="https://samsungalphabeez.netlify.app/pages/login/index.html">🔒 Login</a>                     |
-| <a href="https://samsungalphabeez.netlify.app/pages/continue-shopping/index.html">💎 All Offers</a>    |
-| <a href="https://samsungalphabeez.netlify.app/pages/smartphone/index.html">📱 Smartphone</a>           |
-| <a href="https://samsungalphabeez.netlify.app/pages/galaxy-ai/index.html">🤖 Galaxy AI</a>             |
-| <a href="https://samsungalphabeez.netlify.app/pages/support/index.html">🥷 Support</a>                 |
-| <a href="https://samsungalphabeez.netlify.app/pages/privacy-page/index.html">🔑 Privacy</a>            |
-| <a href="https://samsungalphabeez.netlify.app/pages/account-benefit/index.html">🎁 Account Benefit</a> |
-| <a href="https://samsungalphabeez.netlify.app/pages/track-order/index.html">📦 Track Orders</a>        | -->
 
 ## Contributors
 
@@ -114,7 +97,7 @@ project-root/
 | **Khom Khit**        | Backend              |
 | **Panha Phosda**     | Front-end            |
 | **Chiv Sovanchitra** | Front-end            |
-| **Rith Sohak Neadh** | Front-end            |
+| **Rith Sokha Neadh** | Front-end            |
 | **Pann SengLay**     | Front-end            |
 
 ## Usage
