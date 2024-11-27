@@ -1,12 +1,4 @@
-import {
-  Stack,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  Button,
-  Typography,
-  Box,
-} from "@mui/material";
+import { Stack, Typography, Box } from "@mui/material";
 import { useRef, useState } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
@@ -17,12 +9,11 @@ import {
   useGetAllCoursesQuery,
 } from "../services/api/courseApi";
 import { useNavigate } from "react-router";
-import deletBin from "../assets/go-green-grey-hanger-bag.png";
 import emptyProduct from "../assets/spooky-stickers-sweet-franky.png";
 import { useDispatch } from "react-redux";
 import { setId } from "../features/course/courseSlice";
 import { CustomAlert } from "../components/CustomAlert";
-
+import DeleteConfirmModal from "../components/course-product/DeleteConfirmModal";
 
 /**
  * CoursePage renders a page for viewing and managing courses.
@@ -73,7 +64,7 @@ function CoursePage() {
     setOpenDialog(false);
     setSelectedCourse(null);
   };
-  
+
   const handleConfirmDelete = async () => {
     if (selectedCourse) {
       try {
@@ -159,52 +150,16 @@ function CoursePage() {
           />
           <Typography variant="bmdr">No courses found</Typography>
         </Box>
-
-        
       ) : (
         <CustomTable data={courseList} rowLimit={10} isPagination={true} />
       )}
 
-      <Dialog open={openDialog} onClose={handleCloseDialog}>
-        <DialogContent>
-          <Box
-            display="flex"
-            flexDirection="column"
-            alignItems="center"
-            justifyContent="center"
-            sx={{ textAlign: "center" }}
-          >
-            <img
-              src={deletBin}
-              alt="Confirmation"
-              style={{ width: "136px", height: "136px", marginBottom: "10px" }}
-            />
-            <Typography variant="blgsm" padding={"10px"}>
-              Delete Confirmation
-            </Typography>
-            <Typography variant="bxsr">
-              Are you sure you want to delete this course? <br /> You won't be
-              able to retrieve it back.
-            </Typography>
-          </Box>
-        </DialogContent>
-        <DialogActions sx={{ justifyContent: "center", mb: "16px" }}>
-          <Button
-            onClick={handleConfirmDelete}
-            variant="contained"
-            sx={{ bgcolor: "red.main", marginRight: 1 }}
-          >
-            Delete
-          </Button>
-          <Button
-            onClick={handleCloseDialog}
-            color="primary"
-            variant="outlined"
-          >
-            Cancel
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <DeleteConfirmModal
+        open={openDialog}
+        onClose={handleCloseDialog}
+        onConfirm={handleConfirmDelete}
+        type="course"
+      />
       <CustomAlert
         label={snackbar?.msg}
         open={snackbar?.open}

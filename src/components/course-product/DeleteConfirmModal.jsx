@@ -32,20 +32,29 @@ const DeleteConfirmModal = ({ open, onClose, onConfirm, type }) => {
   return (
     <Dialog open={open} onClose={onClose}>
       <DialogContent
-        sx={{ textAlign: "center", justifyContent: "center", padding: 6 }}
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          textAlign: "center",
+          alignItems: "center",
+        }}
       >
-        <Box component="img" src={RecycleBagIcon} />
-        <DialogTitle fontWeight={"bold"}>Delete Confirmation</DialogTitle>
-        <Typography>Are you sure you want to delete this {type}?</Typography>
-        <Typography>You won't be able to retrieve it back</Typography>
+        <Box
+          component="img"
+          src={RecycleBagIcon}
+          style={{ width: "136px", height: "136px", marginBottom: "10px" }}
+        />
+        <DialogTitle variant="blgsm" padding={"10px"}>
+          Delete Confirmation
+        </DialogTitle>
+        <Typography variant="bxsr">
+          Are you sure you want to delete this {type}? <br /> You won't be able
+          to retrieve it back
+        </Typography>
       </DialogContent>
-      <DialogActions
-        sx={{ justifyContent: "center", gap: 2, paddingBottom: 4 }}
-      >
+      <DialogActions sx={{ justifyContent: "center", gap: 2, mb: "16px" }}>
         <Button
           sx={{
-            paddingY: 2,
-            paddingX: 5,
             bgcolor: "red.main",
           }}
           variant="contained"
@@ -54,16 +63,16 @@ const DeleteConfirmModal = ({ open, onClose, onConfirm, type }) => {
             onClose();
           }}
         >
-          <Typography variant="bxsmd">DELETE</Typography>
+          Delete
         </Button>
         <Button
-          sx={{ paddingY: 2, paddingX: 5 }}
+          sx={{ paddingY: 0.8 }}
           variant="outlined"
           size="small"
           onClick={onClose}
           color="primary"
         >
-          <Typography variant="bxsmd">CANCEL</Typography>
+          Cancel
         </Button>
       </DialogActions>
     </Dialog>
