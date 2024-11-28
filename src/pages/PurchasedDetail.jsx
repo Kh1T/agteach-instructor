@@ -187,7 +187,7 @@ function PurchasedDetailPage() {
                 variant="contained"
                 onClick={handleDelivery}
               >
-                Delivered
+                DELIVERED
               </CustomButton>
             </Box>
           </Stack>
