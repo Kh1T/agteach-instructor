@@ -43,7 +43,7 @@ function PurchasedPage() {
         item.is_delivered === "true" || item.is_delivered === true ? (
           <CustomChip label="Delivered" />
         ) : (
-          <CustomChip label="Not Delivered" danger />
+          <CustomChip label="Not Yet Delivered" danger />
         ),
       View: (
         <CustomButton
@@ -81,7 +81,7 @@ function PurchasedPage() {
       <QueryHeader
         label="Sort"
         useSelectState={[selectState, setSelectState]}
-        selectData={["All", "Delivered", "Not Delivered"]}
+        selectData={["All", "Delivered", "Not Yet Delivered"]}
         handleSelectChange={handleSelectChange}
         handleSearch={handleSearch}
         searchRef={searchRef}
