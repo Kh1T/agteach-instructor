@@ -1,9 +1,5 @@
 import {
   Stack,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  Button,
   Typography,
   Box,
 } from "@mui/material";
@@ -18,9 +14,8 @@ import {
 } from "../services/api/productApi";
 import { useGetAllCategoriesQuery } from "../services/api/categoryApi";
 import { useNavigate } from "react-router";
-import deletBin from "../assets/go-green-grey-hanger-bag.png";
 import emptyProduct from "../assets/spooky-stickers-sweet-franky.png";
-import { Category } from "@mui/icons-material";
+import DeleteConfirmModal from "../components/course-product/DeleteConfirmModal";
 
 function ProductPage() {
   const navigate = useNavigate();
@@ -85,7 +80,7 @@ function ProductPage() {
             <EditIcon
               sx={{ cursor: "pointer" }}
               onClick={() => {
-                navigate("/product/new", {
+                navigate(`/product/${item.productId}`, {
                   state: {
                     product: item,
                     editMode: true,
@@ -145,47 +140,12 @@ function ProductPage() {
       ) : (
         <CustomTable data={productList} rowLimit={10} isPagination={true} />
       )}
-
-      <Dialog open={openDialog} onClose={handleCloseDialog}>
-        <DialogContent>
-          <Box
-            display="flex"
-            flexDirection="column"
-            alignItems="center"
-            justifyContent="center"
-            sx={{ textAlign: "center" }}
-          >
-            <img
-              src={deletBin}
-              alt="Confirmation"
-              style={{ width: "136px", height: "136px", marginBottom: "10px" }}
-            />
-            <Typography variant="blgsm" padding={"10px"}>
-              Delete Confirmation
-            </Typography>
-            <Typography variant="bxsr">
-              Are you sure you want to delete this product? <br /> You won't be
-              able to retrieve it back.
-            </Typography>
-          </Box>
-        </DialogContent>
-        <DialogActions sx={{ justifyContent: "center", mb: "16px" }}>
-          <Button
-            onClick={handleConfirmDelete}
-            variant="contained"
-            sx={{ bgcolor: "red.main", marginRight: 1 }}
-          >
-            Delete
-          </Button>
-          <Button
-            onClick={handleCloseDialog}
-            color="primary"
-            variant="outlined"
-          >
-            Cancel
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <DeleteConfirmModal
+        open={openDialog}
+        onClose={handleCloseDialog}
+        onConfirm={handleConfirmDelete}
+        type="product"
+      />
     </Stack>
   );
 }

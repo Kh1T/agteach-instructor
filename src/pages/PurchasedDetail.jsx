@@ -48,7 +48,7 @@ function PurchasedDetailPage() {
       />
     ),
     "Product Name": item.product?.name || "N/A",
-    category: item.product?.categoryId || "N/A",
+    category: item.product?.product_category?.name || "N/A",
     Quantity: item.quantity || 0,
     price: `$ ${item.price || 0}`,
     Total: `$ ${item.total || 0}`,
@@ -56,7 +56,6 @@ function PurchasedDetailPage() {
       ? new Date(item.createdAt).toISOString().split("T")[0]
       : "N/A",
   }));
-
   const customer = purchasedDetails?.customer || {};
 
   const handleDelivery = async () => {
@@ -188,7 +187,7 @@ function PurchasedDetailPage() {
                 variant="contained"
                 onClick={handleDelivery}
               >
-                Delivered
+                DELIVERED
               </CustomButton>
             </Box>
           </Stack>

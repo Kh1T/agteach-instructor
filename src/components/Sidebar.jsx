@@ -6,15 +6,8 @@ import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
-import {
-  useLocation,
-  Link as RouterLink,
-  useParams,
-  useNavigate,
-} from "react-router-dom";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
-
-import logoIcon from "../assets/logo.svg";
+import { useLocation, Link as RouterLink, useNavigate } from "react-router-dom";
 import {
   Avatar,
   Container,
@@ -25,29 +18,71 @@ import {
   DialogContent,
   DialogContentText,
   Button,
+  CircularProgress,
 } from "@mui/material";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setInstructorVerificationStatus } from "../features/user/approvalSlice";
 
-import sidebarList from "../data/sideBarData";
+import logoIcon from "../assets/logo.svg";
+import logoutIcon from "../assets/red-circle-logout.png";
+
+import { SIDEBARROUTE } from "../constants/sideBarConstant";
 import { useLogoutMutation } from "../services/api/authApi";
 import { useGetInstructorInfoQuery } from "../services/api/authApi";
-import logoutIcon from "../assets/red-circle-logout.png";
-import { useState } from "react";
 
+/**
+ * A custom sidebar component that renders the app bar and the drawer.
+ * @param {object} children The content of the page.
+ * @returns {React.ReactElement} The custom sidebar component.
+ */
 export default function Sidebar({ children }) {
+  const dispatch = useDispatch();
   const { pathname } = useLocation();
-  const { data } = useGetInstructorInfoQuery();
-  const drawerWidth = 250;
-  const param = useParams();
+  const { data, isLoading: isDataLoading } = useGetInstructorInfoQuery();
+  const { isApprovalLoading } = useSelector((state) => state.approval);
 
-  const des = sidebarList.find((element) => element.route === pathname);
-  const head = sidebarList.find((element) => {
-    if (param.productId) element.route = `/product/${param.productId}/edit`;
-    if (param.courseId) element.route = `/course/${param.courseId}/edit`;
-    if (element.route !== pathname) return false;
+  const appBarHeader = SIDEBARROUTE.find((element) => {
+    if (element.route.includes("id")) {
+      const dynamicPath = `/${pathname.split("/")[1]}/id`;
+      if (element.route === dynamicPath) {
+        return element.route === dynamicPath;
+      }
+    }
     return element.route === pathname;
   });
 
-  const [logout, { isLoading, isError, error, isSuccess }] =
+  const description = appBarHeader && appBarHeader.description;
+  const headerTitle = appBarHeader && appBarHeader.title;
+
+  let bgColor;
+  let sideBarList = !data ? [] : SIDEBARROUTE;
+
+  console.log(data);
+
+  if (data) {
+    const { isApproved, isRejected, isFormSubmitted } = data?.data?.instructor;
+    dispatch(
+      setInstructorVerificationStatus({
+        IsApproved: isApproved,
+        IsRejected: isRejected,
+        IsFormSubmitted: isFormSubmitted,
+        IsApprovalLoading: isDataLoading,
+      })
+    );
+    isApproved ? (bgColor = "common.white") : (bgColor = "grey.100");
+    !isApproved &&
+      (sideBarList = SIDEBARROUTE.filter((element) => {
+        return element.route === "/" || element.route === "/setting";
+      }));
+  }
+
+  const drawerWidth = 250;
+
+  let profileImage =
+    data?.data?.instructor?.imageUrl + `?${new Date().getTime()}`;
+
+  const [logout, { isLoading: isLogoutLoading, isSuccess }] =
     useLogoutMutation();
   const navigate = useNavigate();
 
@@ -55,7 +90,10 @@ export default function Sidebar({ children }) {
 
   const handleLogout = async () => {
     await logout();
-    if (isSuccess || !isLoading) navigate("/auth/login");
+    if (isSuccess || !isLogoutLoading) {
+      window.location.reload();
+      navigate("/auth/login");
+    }
   };
 
   const handleClickOpen = () => {
@@ -69,15 +107,14 @@ export default function Sidebar({ children }) {
   const handleNavigateSetting = () => {
     navigate("/setting");
   };
-
-  const description = des && des.description;
-  const headerTitle = head && head.title;
-
-  let instructorInfo = {};
-  if (data) {
-    instructorInfo = data.data.instructor;
-  }
-  let profileImage = instructorInfo?.imageUrl + `?${new Date().getTime()}`;
+  const getActiveStyle = (route, pathname) => {
+    // Special case for the dashboard route "/"
+    if (route === "/") {
+      return pathname === "/";
+    }
+    // Highlight routes that match the start of the pathname
+    return pathname.startsWith(route);
+  };
 
   const drawerContent = (
     <Drawer
@@ -117,8 +154,8 @@ export default function Sidebar({ children }) {
             />
           </Link>
           <Toolbar />
-          {sidebarList.map(
-            ({ title = "Title", Icon, route }, index) =>
+          {sideBarList.map(
+            ({ title, Icon, route }) =>
               Icon && (
                 <Link
                   component={RouterLink}
@@ -127,12 +164,16 @@ export default function Sidebar({ children }) {
                   underline="none"
                   sx={{
                     "& .MuiListItem-root": {
-                      backgroundColor:
-                        route === pathname ? "purple.main" : "common.white",
+                      backgroundColor: getActiveStyle(route, pathname)
+                        ? "purple.main"
+                        : "common.white",
+
                       borderRadius: 1,
                     },
                     "& .MuiTypography-root": {
-                      color: route === pathname ? "common.white" : "dark.300",
+                      color: getActiveStyle(route, pathname)
+                        ? "common.white"
+                        : "dark.300",
                     },
                   }}
                 >
@@ -140,8 +181,9 @@ export default function Sidebar({ children }) {
                     <ListItemButton>
                       <Icon
                         sx={{
-                          color:
-                            route === pathname ? "common.white" : "dark.300",
+                          color: getActiveStyle(route, pathname)
+                            ? "common.white"
+                            : "dark.300",
                           mr: "20px",
                         }}
                       />
@@ -210,10 +252,10 @@ export default function Sidebar({ children }) {
               color="error"
               autoFocus
             >
-              Logout
+              LOGOUT
             </Button>
             <Button onClick={handleClose} variant="contained" color="grey.500">
-              Cancel
+              CANCEL
             </Button>
           </DialogActions>
         </Dialog>
@@ -226,9 +268,9 @@ export default function Sidebar({ children }) {
       position="fixed"
       sx={{
         width: `calc(100% - ${drawerWidth}px)`,
+        backgroundColor: bgColor || "common.white",
         pt: 5,
         ml: `${drawerWidth}px`,
-        backgroundColor: "common.white",
         color: "common.black",
         boxShadow: "none",
       }}
@@ -302,8 +344,22 @@ export default function Sidebar({ children }) {
     </Container>
   );
 
+  if (isApprovalLoading) {
+    return (
+      <Box
+        height="100vh"
+        sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
+
   const sideBarContent = (
-    <Box sx={{ display: "flex" }}>
+    <Box
+      sx={{ display: "flex", backgroundColor: bgColor || "common.white" }}
+      minHeight={"100vh"}
+    >
       {appBarContent}
       {drawerContent}
       {childContent}

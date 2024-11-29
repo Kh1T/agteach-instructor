@@ -49,7 +49,7 @@ export default function ProductPhoto({
         defaultValue={defaultValue}
         editMode={editMode}
       >
-        <Typography color="gray">Upload Product image, png, jpg</Typography>
+        <Typography color="gray">Upload product image, png, jpg</Typography>
         <Typography color="gray">580 x 580 (Limit size: 1 MB)</Typography>
       </PhotoPreview>
     </Box>

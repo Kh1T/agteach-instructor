@@ -6,7 +6,8 @@ import CollectionsBookmarkOutlinedIcon from "@mui/icons-material/CollectionsBook
 import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined";
 import HdrAutoOutlinedIcon from "@mui/icons-material/HdrAutoOutlined";
 
-const sidebarList = [
+export const SIDEBARROUTE = [
+  
   {
     title: "Dashboard",
     Icon: DashboardCustomizeOutlinedIcon,
@@ -28,7 +29,7 @@ const sidebarList = [
   {
     title: "Edit Course",
     Icon: null,
-    route: "/course/id/edit",
+    route: "/course/id",
     description: "Edit courses for your portfolio",
   },
   {
@@ -46,7 +47,7 @@ const sidebarList = [
   {
     title: "Edit Product",
     Icon: null,
-    route: "/product/abc/edit",
+    route: "/product/id",
     description: "Edit product for your porfolio",
   },
   {
@@ -56,10 +57,22 @@ const sidebarList = [
     description: "View purchased history",
   },
   {
+    title: "Purchased Item",
+    Icon: null,
+    route: "/purchased/id",
+    description: "View purchased detail",
+  },
+  {
     title: "Enrollment",
     Icon: SchoolOutlinedIcon,
     route: "/enrollment",
     description: "View enrolled history",
+  },
+  {
+    title: "Enrollment Item",
+    Icon: null,
+    route: "/enrollment/id",
+    description: "View enrolled detail",
   },
   {
     title: "Balance",
@@ -81,5 +94,4 @@ const sidebarList = [
     description: "Login to your account",
   },
 ];
-
-export default sidebarList;
+ 
