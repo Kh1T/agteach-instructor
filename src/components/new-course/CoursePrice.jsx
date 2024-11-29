@@ -1,4 +1,4 @@
-import { Divider, Box, TextField, Typography, InputLabel } from "@mui/material";
+import { Divider, Box, TextField, Typography } from "@mui/material";
 
 import AttachMoneyOutlinedIcon from "@mui/icons-material/AttachMoneyOutlined";
 import IconWithTitle from "../course-product/IconWithTitle";
@@ -41,7 +41,7 @@ export default function CoursePrice() {
   return (
     <Box className="container">
       <IconWithTitle
-        title={"COURSE PRICE"}
+        title={"Course Price"}
         icon={<AttachMoneyOutlinedIcon sx={{ color: "common.white" }} />}
       />
       <Divider sx={{ my: 2 }} />

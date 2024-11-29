@@ -51,7 +51,7 @@ export default function AboutProduct({
   return (
     <Box>
       <IconWithTitle
-        title="About this Product"
+        title="About This Product"
         icon={<InfoIcon sx={{ color: "common.white" }} />}
       />
       <Divider sx={{ my: 2 }} />

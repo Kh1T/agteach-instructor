@@ -19,6 +19,14 @@ const VisuallyHiddenInput = styled("input")({
   width: 1,
 });
 
+/**
+ * A MUI Modal component for uploading a file.
+ *
+ * @param {boolean} open - Whether the modal is open or not
+ * @param {Function} handleClose - A function to call when the modal is closed
+ * @param {Object} props - Additional props to pass to the VisuallyHiddenInput component
+ * @returns {React.ReactElement} - A React component representing the modal dialog
+ */
 function CustomFileUpload({ open, handleClose, ...props }) {
   return (
     <Modal
@@ -73,13 +81,3 @@ function CustomFileUpload({ open, handleClose, ...props }) {
 }
 
 export default CustomFileUpload;
-
-
-
-
-
-
-
-// {
-//   /* <input type="file" hidden accept="image/*" onChange={handleImageUpload} />; */
-// }
