@@ -250,10 +250,10 @@ export default function Sidebar({ children }) {
               color="error"
               autoFocus
             >
-              Logout
+              LOGOUT
             </Button>
             <Button onClick={handleClose} variant="contained" color="grey.500">
-              Cancel
+              CANCEL
             </Button>
           </DialogActions>
         </Dialog>

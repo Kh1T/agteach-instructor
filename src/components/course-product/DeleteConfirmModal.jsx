@@ -63,7 +63,7 @@ const DeleteConfirmModal = ({ open, onClose, onConfirm, type }) => {
             onClose();
           }}
         >
-          Delete
+          DELETE
         </Button>
         <Button
           sx={{ paddingY: 0.8 }}
@@ -72,7 +72,7 @@ const DeleteConfirmModal = ({ open, onClose, onConfirm, type }) => {
           onClick={onClose}
           color="primary"
         >
-          Cancel
+          CANCEL
         </Button>
       </DialogActions>
     </Dialog>

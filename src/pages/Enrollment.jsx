@@ -58,7 +58,7 @@ function EnromentPage() {
           variant="contained"
           onClick={() => navigate(`/enrollment/${item.courseId}`)}
         >
-          <Typography variant="bsr">View</Typography>
+          <Typography variant="bsr">VIEW</Typography>
         </CustomButton>
       ),
     }));

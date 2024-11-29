@@ -55,7 +55,7 @@ function PurchasedPage() {
             })
           }
         >
-          <Typography variant="bsr">View</Typography>
+          <Typography variant="bsr">VIEW</Typography>
         </CustomButton>
       ),
     }));
