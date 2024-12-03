@@ -58,8 +58,6 @@ export default function Sidebar({ children }) {
   let bgColor;
   let sideBarList = !data ? [] : SIDEBARROUTE;
 
-  console.log(data);
-
   if (data) {
     const { isApproved, isRejected, isFormSubmitted } = data?.data?.instructor;
     dispatch(
